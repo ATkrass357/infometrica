@@ -94,8 +94,39 @@ const MitarbeiterDokumente = () => {
       return;
     }
 
-    setDocuments(prev => prev.filter(d => d.id !== docId));
-    toast.success('Dokument gelöscht');
+    try {
+      const token = localStorage.getItem('employee_token');
+      await axios.delete(`${BACKEND_URL}/api/employee/documents/${docId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      setDocuments(prev => prev.filter(d => d.id !== docId));
+      toast.success('Dokument gelöscht');
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Fehler beim Löschen');
+    }
+  };
+
+  const handleDownload = async (doc) => {
+    try {
+      const token = localStorage.getItem('employee_token');
+      const response = await axios.get(`${BACKEND_URL}/api/employee/documents/${doc.id}/download`, {
+        headers: { Authorization: `Bearer ${token}` },
+        responseType: 'blob'
+      });
+      
+      // Create download link
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', doc.name);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      toast.error('Fehler beim Download');
+    }
   };
 
   const getStatusBadge = (status) => {
