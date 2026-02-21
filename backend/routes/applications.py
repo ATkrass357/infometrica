@@ -237,6 +237,12 @@ async def accept_application(
         {"$set": {"status": "Akzeptiert", "accepted_at": datetime.utcnow()}}
     )
     
+    # Send acceptance email
+    await send_application_accepted(
+        to_email=application["email"],
+        applicant_name=application["name"]
+    )
+    
     return {"message": "Bewerbung akzeptiert", "status": "Akzeptiert"}
 
 
