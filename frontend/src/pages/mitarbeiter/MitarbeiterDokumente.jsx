@@ -16,6 +16,9 @@ import {
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { toast } from 'sonner';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const MitarbeiterDokumente = () => {
   const [documents, setDocuments] = useState([]);
@@ -29,49 +32,19 @@ const MitarbeiterDokumente = () => {
   }, []);
 
   const loadDocuments = async () => {
-    // Simulate loading documents
-    await new Promise(resolve => setTimeout(resolve, 500));
-    
-    // Mock documents
-    setDocuments([
-      {
-        id: '1',
-        name: 'Arbeitsvertrag.pdf',
-        type: 'contract',
-        category: 'Verträge',
-        size: '245 KB',
-        uploadedAt: '2024-01-15',
-        status: 'approved'
-      },
-      {
-        id: '2',
-        name: 'Gehaltsabrechnung_Januar.pdf',
-        type: 'payslip',
-        category: 'Gehaltsabrechnungen',
-        size: '128 KB',
-        uploadedAt: '2024-02-01',
-        status: 'approved'
-      },
-      {
-        id: '3',
-        name: 'Steuer-ID_Bescheinigung.pdf',
-        type: 'tax',
-        category: 'Steuer',
-        size: '89 KB',
-        uploadedAt: '2024-01-10',
-        status: 'approved'
-      },
-      {
-        id: '4',
-        name: 'Krankenkassen_Nachweis.pdf',
-        type: 'insurance',
-        category: 'Versicherungen',
-        size: '156 KB',
-        uploadedAt: '2024-01-12',
-        status: 'pending'
-      }
-    ]);
-    setLoading(false);
+    try {
+      const token = localStorage.getItem('employee_token');
+      const response = await axios.get(`${BACKEND_URL}/api/employee/documents`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      setDocuments(response.data);
+    } catch (error) {
+      console.error('Error loading documents:', error);
+      toast.error('Fehler beim Laden der Dokumente');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleUpload = async (e) => {
