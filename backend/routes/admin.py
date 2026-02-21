@@ -1,9 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends, Header
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from models.admin import AdminLogin, TokenResponse, AdminResponse
+from models.employee import Task, TaskCreate
 from utils.auth import verify_password, create_access_token, decode_token, get_password_hash
 from datetime import timedelta, datetime
-import os
+from typing import List
+import uuid
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -91,3 +93,110 @@ async def initialize_admin(db: AsyncIOMotorDatabase = Depends(get_db)):
         "email": "admin@infometrica.de",
         "password": "Admin123!"
     }
+
+# ========== TASK MANAGEMENT ==========
+
+def verify_admin_token(authorization: str = Header(None)):
+    """Helper to verify admin token"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine gültige Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload or payload.get("role") != "admin":
+        raise HTTPException(status_code=401, detail="Ungültiger oder abgelaufener Token")
+    
+    return payload
+
+@router.get("/employees")
+async def get_employees(
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Get all employees for task assignment dropdown"""
+    verify_admin_token(authorization)
+    
+    employees = await db.employees.find(
+        {"is_active": True},
+        {"_id": 0, "id": 1, "name": 1, "email": 1, "position": 1, "department": 1}
+    ).to_list(100)
+    
+    return employees
+
+@router.post("/tasks", response_model=Task)
+async def create_task(
+    task_data: TaskCreate,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Create a new task and assign to employee"""
+    admin_payload = verify_admin_token(authorization)
+    
+    # Get employee info
+    employee = await db.employees.find_one({"id": task_data.assigned_to})
+    if not employee:
+        raise HTTPException(status_code=404, detail="Mitarbeiter nicht gefunden")
+    
+    # Create task
+    task = Task(
+        id=str(uuid.uuid4()),
+        title=task_data.title,
+        website=task_data.website,
+        einleitung=task_data.einleitung,
+        schritt1=task_data.schritt1,
+        schritt2=task_data.schritt2,
+        schritt3=task_data.schritt3,
+        assigned_to=task_data.assigned_to,
+        assigned_to_name=employee["name"],
+        assigned_by=admin_payload.get("id"),
+        priority=task_data.priority,
+        due_date=task_data.due_date,
+        status="Offen",
+        created_at=datetime.utcnow()
+    )
+    
+    # Insert into database
+    task_dict = task.model_dump()
+    task_dict["created_at"] = task_dict["created_at"].isoformat()
+    if task_dict.get("completed_at"):
+        task_dict["completed_at"] = task_dict["completed_at"].isoformat()
+    
+    await db.tasks.insert_one(task_dict)
+    
+    return task
+
+@router.get("/tasks", response_model=List[Task])
+async def get_all_tasks(
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Get all tasks (admin view)"""
+    verify_admin_token(authorization)
+    
+    tasks = await db.tasks.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
+    
+    # Convert datetime strings back
+    for task in tasks:
+        if isinstance(task.get("created_at"), str):
+            task["created_at"] = datetime.fromisoformat(task["created_at"])
+        if task.get("completed_at") and isinstance(task["completed_at"], str):
+            task["completed_at"] = datetime.fromisoformat(task["completed_at"])
+    
+    return tasks
+
+@router.delete("/tasks/{task_id}")
+async def delete_task(
+    task_id: str,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Delete a task"""
+    verify_admin_token(authorization)
+    
+    result = await db.tasks.delete_one({"id": task_id})
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
+    
+    return {"message": "Aufgabe gelöscht"}
