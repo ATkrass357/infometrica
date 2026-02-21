@@ -429,6 +429,57 @@ const Karriere = () => {
                 </div>
               </div>
 
+              {/* Account-Daten */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                  <Lock className="inline mr-2 text-orange-500" size={20} />
+                  Zugangsdaten
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Mit diesen Daten können Sie sich einloggen und den Status Ihrer Bewerbung verfolgen.
+                </p>
+                
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="password">Passwort wählen *</Label>
+                    <div className="relative">
+                      <Input
+                        id="password"
+                        name="password"
+                        type={showPassword ? "text" : "password"}
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Mindestens 8 Zeichen"
+                        required
+                        minLength={8}
+                        className="h-12 pr-10"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                      >
+                        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="passwordConfirm">Passwort bestätigen *</Label>
+                    <Input
+                      id="passwordConfirm"
+                      name="passwordConfirm"
+                      type={showPassword ? "text" : "password"}
+                      value={formData.passwordConfirm}
+                      onChange={handleChange}
+                      placeholder="Passwort wiederholen"
+                      required
+                      minLength={8}
+                      className="h-12"
+                    />
+                  </div>
+                </div>
+              </div>
+
               {/* Anschrift */}
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-200">
