@@ -1,0 +1,171 @@
+<analysis>**original_problem_statement:**
+The user wants to build a full-stack application for their app testing agency, Infometrica.
+
+PRODUCT REQUIREMENTS:
+1.  **Public Website:**
+    *   A modern, professional website with a white and orange color scheme.
+    *   Must be in German.
+    *   Pages: Startseite (Home), Unternehmen und Agentur (About), Dienstleistung und Fachgebiete (Services), Kontakt und Helpdesk (Contact), Karriere und Stellen (Careers), Impressum (Imprint), and Datenschutz (Privacy Policy).
+    *   The Karriere page needs a detailed application form.
+    *   A simple, modern logo for Infometrica.
+    *   A link to the admin login page in the footer.
+
+2.  **Admin Panel:**
+    *   A secure login page ().
+    *   A dashboard with a Tokyo Night theme.
+    *   Functionality to view all applications submitted through the career page in a table format.
+    *   **New Requirement:** A system to create tasks with a title, website URL, and a four-part description (Introduction, Step 1, Step 2, Step 3).
+    *   **New Requirement:** Ability to assign these created tasks to specific employees.
+
+3.  **Employee Dashboard:**
+    *   A separate, secure login page ().
+    *   A dashboard with an orange and white theme, matching the public website.
+    *   Sidebar navigation with tabs: Main, Aufträge (Orders/Tasks), Einstellungen (Settings), Dokumente (Documents), Auszahlung (Payout).
+    *   The Aufträge section should display tasks assigned by the admin.
+
+**User's preferred language**: German. The user communicates in German, and the agent MUST continue to respond in German.
+
+**what currently exists?**
+A full-stack application with a React frontend and FastAPI backend.
+-   **Public Website:** All requested pages (Home, About, Services, Contact, Career, etc.) have been created with a white and orange theme, a logo, and professional German placeholder text. The career application form successfully submits data to the backend.
+-   **Admin Panel:** A functional admin portal exists at  with a Tokyo Night theme. After logging in, admins can view a table of job applications.
+-   **Employee Dashboard:** The basic structure for the employee dashboard is in place at . It uses an orange/white theme and has the requested sidebar navigation, but the pages are currently placeholders.
+-   **Backend:** JWT-based authentication is implemented for both admins and employees. Endpoints exist for user creation, login, and submitting/retrieving applications. Test users for both roles have been created.
+
+**Last working item**:
+-   Last item agent was working: The user requested the implementation of a task management system. The agent was about to start building the feature allowing admins to create detailed tasks (Title, Website, 4-part description) and assign them to employees.
+-   Status: NOT STARTED
+-   Agent Testing Done: N
+-   Which testing method agent to use? both
+-   User Testing Done: N
+
+**All Pending/In progress Issue list**:
+-   There are no pending issues or bugs. The last reported login issue was resolved.
+
+**In progress Task List**:
+-   None.
+
+**Upcoming and Future Tasks**
+*   **Upcoming Tasks:**
+    *   **(P0) Implement Task Management System:** This is the immediate next step.
+        *   **Backend:**
+            *   Create a  model in the database (e.g., in ).
+            *   Create API endpoints in  for:
+                *   Creating a new task ().
+                *   Fetching all employees to populate an assignment dropdown ().
+                *   Assigning a task to an employee ().
+                *   Fetching tasks assigned to the logged-in employee ().
+        *   **Frontend (Admin Panel):**
+            *   Create a new page/component (e.g., ) with a form for creating tasks as per the user's specification.
+            *   Add a dropdown to the form to select and assign the task to an employee.
+        *   **Frontend (Employee Dashboard):**
+            *   Implement the  page () to fetch and display the list of tasks assigned to the logged-in employee.
+
+*   **Future Tasks:**
+    *   (P1) Build out the remaining employee dashboard pages: , , .
+    *   (P1) Implement document upload functionality for employees.
+    *   (P2) Integrate a third-party service for online document signatures (e.g., DocuSign).
+    *   (P2) Develop a full employee management module in the admin panel (CRUD operations).
+
+**Completed work in this session**
+-   **Public Website Creation:**
+    -   Built a multi-page website with a white/orange theme.
+    -   Created and integrated a logo ().
+    -   Implemented pages: Home, About, Services, Contact, Career, Imprint, Privacy.
+-   **Admin Portal Implementation:**
+    -   Created a secure admin login ().
+    -   Built the admin dashboard with a Tokyo Night theme and application viewing table ().
+-   **Employee Portal Scaffolding:**
+    -   Created a secure employee login ().
+    -   Set up the employee dashboard layout and placeholder pages with an orange/white theme ().
+-   **Backend Development:**
+    -   Implemented JWT authentication for  and  roles ().
+    -   Created API endpoints for user login, application submission, and application retrieval ().
+
+**Earlier issues found/mentioned but not fixed**
+-   None.
+
+**Known issue recurrence from previous fork**
+-   N/A
+
+**Code Architecture**
+
+
+**Key Technical Concepts**
+-   **Frontend:** React, React Router (), TailwindCSS, shadcn/ui components.
+-   **Backend:** FastAPI, MongoDB (with  for async operations), Pydantic.
+-   **Authentication:** JSON Web Tokens (JWT) with role-based access control.
+
+**key DB schema**
+-   **users:** 
+-   **applications:** 
+-   **tasks (to be created):** 
+
+**changes in tech stack**
+-   None.
+
+**All files of reference**
+-   : Contains all current backend logic, including auth, application, and user endpoints. Needs to be refactored for new task endpoints.
+-   : Handles JWT creation, verification, and password hashing.
+-   : Defines Pydantic models for API data and initial user/application structures.
+-   : Contains all routing for the public site, admin, and employee portals.
+-   : Directory for all admin panel components. A new task management component will be added here.
+-   : Placeholder file to be implemented for displaying assigned tasks.
+
+**Areas that need refactoring**:
+-   **Backend:** The main  file is growing too large. It should be broken down into separate routers for different concerns (e.g., , , ) to improve maintainability.
+-   **Frontend:** The  and  components are very similar. A generic  component could be created and customized via props to reduce code duplication.
+
+**key api endpoints**
+-   : Authenticates an admin and returns a JWT.
+-   : Authenticates an employee and returns a JWT.
+-   : Submits a job application from the career page.
+-   : Retrieves all job applications (protected, admin only).
+-   **(To be created)** : Creates a new task (protected, admin only).
+-   **(To be created)** : Retrieves tasks for the logged-in employee (protected, employee only).
+
+**Critical Info for New Agent**
+-   The project consists of three separate front-facing applications: the public website, the admin panel, and the employee dashboard. Pay close attention to the routes (, , ) and apply the correct layouts and themes.
+-   Authentication is role-based. Ensure endpoints are properly protected and that frontend requests include the correct JWT in the  header.
+-   The user has expressed interest in significant future enhancements (document management, e-signatures). Build the upcoming task management feature in a scalable way to facilitate future additions.
+
+**documents and test reports created in this job**
+-   None.
+
+**Last 10 User Messages and any pending HUMAN messages**
+1.  ** (PENDING):** Request to create a task management system in the admin panel to create and assign tasks to employees, with specific fields for task creation.
+2.  ** (DONE):** Request to create the employee dashboard with a separate login, orange/white theme, and specific navigation tabs.
+3.  ** (DONE):** Request to connect the career application form to a table in the admin panel.
+4.  ** (RESOLVED):** User confirming they are testing the login issue in the preview environment.
+5.  ** (RESOLVED):** User reporting that the admin login is not working.
+6.  ** (DONE):** Request to add a link to the admin login page in the website's footer.
+7.  ** (DONE):** User green-lighting the start of the admin panel, beginning with the login screen.
+8.  ** (INFO GATHERING):** User asking about the agent's capabilities to build a full backend/frontend system for employee management if they purchase credits.
+9.  ** (DONE):** Request to add more fields to the career page application form.
+10. ** (DONE):** Request to create a logo, a Career page, an Imprint page, and a Privacy Policy page.
+
+**Project Health Check:**
+-   **Broken:** None.
+-   **Mocked:** The employee dashboard pages (, , , , ) are UI placeholders without backend integration.
+
+**3rd Party Integrations**
+-   None currently implemented. DocuSign/HelloSign were mentioned as a potential future integration.
+
+**Testing status**
+-   **Testing agent used after significant changes:** NO
+-   **Troubleshoot agent used after agent stuck in loop:** NO
+-   **Test files created:** None
+-   **Known regressions:** None
+
+**Credentials to test flow:**
+-   **Admin Login:**
+    -   URL: 
+    -   Email: 
+    -   Password: 
+-   **Employee Login:**
+    -   URL: 
+    -   Email: 
+    -   Password: 
+
+**What agent forgot to execute**
+-   The agent did not explicitly show the creation or updating of  in parallel with  calls, which is a required step in the system prompt. The next agent should ensure this file is created and kept up-to-date.</analysis>

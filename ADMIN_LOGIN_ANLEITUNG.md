@@ -12,7 +12,7 @@
 
 ## Login-URL
 
-https://quality-assurance-de.preview.emergentagent.com/admin/login
+https://infometrica-tasks.preview.emergentagent.com/admin/login
 
 ## Schritte:
 
