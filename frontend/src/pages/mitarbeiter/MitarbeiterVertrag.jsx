@@ -382,13 +382,17 @@ const MitarbeiterVertrag = () => {
           onClick={() => setShowSignModal(false)}
         >
           <div
-            className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            className="bg-white rounded-2xl max-w-4xl w-full max-h-[95vh] overflow-hidden flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-6 border-b border-gray-200 flex items-center justify-between">
+            {/* Header */}
+            <div className="p-6 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
               <div>
-                <h2 className="text-xl font-bold text-gray-900">Vertrag unterschreiben</h2>
-                <p className="text-sm text-gray-500 mt-1">Arbeitsvertrag als {selectedContract.position}</p>
+                <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
+                  <ScrollText size={24} className="text-orange-500" />
+                  Arbeitsvertrag lesen & unterschreiben
+                </h2>
+                <p className="text-sm text-gray-500 mt-1">Bitte lesen Sie den Vertrag sorgfältig durch</p>
               </div>
               <button
                 onClick={() => setShowSignModal(false)}
@@ -398,93 +402,94 @@ const MitarbeiterVertrag = () => {
               </button>
             </div>
 
-            <div className="p-6">
-              {/* Contract Summary */}
-              <div className="bg-gray-50 rounded-xl p-4 mb-6">
-                <h3 className="font-semibold text-gray-900 mb-3">Vertragsdetails</h3>
-                <div className="grid grid-cols-2 gap-4 text-sm">
-                  <div>
-                    <span className="text-gray-500">Position:</span>
-                    <span className="ml-2 text-gray-900 font-medium">{selectedContract.position}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Startdatum:</span>
-                    <span className="ml-2 text-gray-900 font-medium">{selectedContract.start_date}</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Gehalt:</span>
-                    <span className="ml-2 text-gray-900 font-medium">{selectedContract.salary} € brutto/Monat</span>
-                  </div>
-                  <div>
-                    <span className="text-gray-500">Arbeitszeit:</span>
-                    <span className="ml-2 text-gray-900 font-medium">{selectedContract.working_hours} Stunden/Woche</span>
-                  </div>
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto p-6">
+              {/* Contract Preview */}
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <FileText size={20} className="text-orange-500" />
+                  <h3 className="font-semibold text-gray-900 text-lg">Vertragsinhalt</h3>
                 </div>
+                <ContractDocument contract={selectedContract} />
               </div>
 
-              {/* IBAN Input */}
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <CreditCard size={18} className="text-gray-500" />
-                  <Label htmlFor="iban" className="font-semibold text-gray-900">
-                    Bankverbindung für Gehaltszahlung *
-                  </Label>
-                </div>
-                <Input
-                  id="iban"
-                  type="text"
-                  value={iban}
-                  onChange={(e) => setIban(e.target.value.toUpperCase())}
-                  placeholder="DE00 0000 0000 0000 0000 00"
-                  className="h-12 font-mono text-lg"
-                  data-testid="iban-input"
-                />
-                <p className="text-xs text-gray-500 mt-2">
-                  Ihre IBAN wird im Arbeitsvertrag gespeichert und für die Gehaltszahlung verwendet.
-                </p>
+              {/* Scroll indicator */}
+              <div className="flex items-center justify-center py-4 text-gray-400">
+                <ChevronDown size={24} className="animate-bounce" />
               </div>
 
-              {/* Signature Area */}
-              <div className="mb-6">
-                <div className="flex items-center justify-between mb-3">
-                  <label className="block font-semibold text-gray-900">
-                    Ihre Unterschrift
-                  </label>
-                  <button
-                    onClick={clearSignature}
-                    className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
-                  >
-                    <RotateCcw size={14} />
-                    Löschen
-                  </button>
-                </div>
-                
-                <div className="border-2 border-dashed border-gray-300 rounded-xl bg-white">
-                  <SignatureCanvas
-                    ref={sigCanvas}
-                    canvasProps={{
-                      className: 'w-full h-48 rounded-xl',
-                      style: { width: '100%', height: '200px' }
-                    }}
-                    backgroundColor="white"
+              {/* Signature Section */}
+              <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+                <h3 className="font-semibold text-gray-900 text-lg mb-6 flex items-center gap-2">
+                  <PenTool size={20} className="text-orange-500" />
+                  Vertrag unterschreiben
+                </h3>
+
+                {/* IBAN Input */}
+                <div className="mb-6">
+                  <div className="flex items-center gap-2 mb-3">
+                    <CreditCard size={18} className="text-gray-500" />
+                    <Label htmlFor="iban" className="font-semibold text-gray-900">
+                      Bankverbindung für Gehaltszahlung *
+                    </Label>
+                  </div>
+                  <Input
+                    id="iban"
+                    type="text"
+                    value={iban}
+                    onChange={(e) => setIban(e.target.value.toUpperCase())}
+                    placeholder="DE00 0000 0000 0000 0000 00"
+                    className="h-12 font-mono text-lg bg-white"
+                    data-testid="iban-input"
                   />
+                  <p className="text-xs text-gray-500 mt-2">
+                    Ihre IBAN wird im Arbeitsvertrag gespeichert und für die Gehaltszahlung verwendet.
+                  </p>
                 </div>
-                <p className="text-xs text-gray-500 mt-2 text-center">
-                  Zeichnen Sie Ihre Unterschrift mit der Maus oder dem Finger
-                </p>
-              </div>
 
-              {/* Legal Notice */}
-              <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
-                <p className="text-sm text-amber-800">
-                  <strong>Rechtlicher Hinweis:</strong> Mit dem Klick auf "Vertrag unterschreiben" 
-                  bestätigen Sie, dass Sie den Vertrag gelesen haben und mit allen Bedingungen einverstanden sind. 
-                  Diese digitale Unterschrift ist rechtlich bindend.
-                </p>
+                {/* Signature Area */}
+                <div className="mb-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="block font-semibold text-gray-900">
+                      Ihre Unterschrift *
+                    </label>
+                    <button
+                      onClick={clearSignature}
+                      className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
+                    >
+                      <RotateCcw size={14} />
+                      Löschen
+                    </button>
+                  </div>
+                  
+                  <div className="border-2 border-dashed border-gray-300 rounded-xl bg-white">
+                    <SignatureCanvas
+                      ref={sigCanvas}
+                      canvasProps={{
+                        className: 'w-full h-48 rounded-xl',
+                        style: { width: '100%', height: '200px' }
+                      }}
+                      backgroundColor="white"
+                    />
+                  </div>
+                  <p className="text-xs text-gray-500 mt-2 text-center">
+                    Zeichnen Sie Ihre Unterschrift mit der Maus oder dem Finger
+                  </p>
+                </div>
+
+                {/* Legal Notice */}
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                  <p className="text-sm text-amber-800">
+                    <strong>Rechtlicher Hinweis:</strong> Mit dem Klick auf "Vertrag unterschreiben" 
+                    bestätigen Sie, dass Sie den Vertrag vollständig gelesen haben und mit allen Bedingungen einverstanden sind. 
+                    Diese digitale Unterschrift ist rechtlich bindend.
+                  </p>
+                </div>
               </div>
             </div>
 
-            <div className="p-6 border-t border-gray-200 flex justify-end gap-3">
+            {/* Footer with buttons */}
+            <div className="p-6 border-t border-gray-200 flex justify-end gap-3 flex-shrink-0 bg-gray-50">
               <Button
                 variant="outline"
                 onClick={() => setShowSignModal(false)}
