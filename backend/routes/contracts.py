@@ -326,14 +326,18 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
             f"Der Arbeitnehmer erhält ein monatliches Bruttogehalt von {contract['salary']} EUR.",
             "Die Zahlung erfolgt jeweils zum Monatsende."
         ]),
-        ("§4 Urlaub", [
+        ("§4 Bankverbindung", [
+            f"Die Vergütung wird auf folgendes Konto überwiesen:",
+            f"IBAN: {contract.get('iban', 'Nicht angegeben')}"
+        ]),
+        ("§5 Urlaub", [
             "Der Arbeitnehmer hat Anspruch auf 30 Arbeitstage bezahlten Urlaub pro Jahr."
         ]),
-        ("§5 Kündigung", [
+        ("§6 Kündigung", [
             "Die Kündigungsfrist beträgt während der Probezeit 2 Wochen.",
             "Nach der Probezeit gelten die gesetzlichen Kündigungsfristen."
         ]),
-        ("§6 Probezeit", [
+        ("§7 Probezeit", [
             "Die ersten 6 Monate gelten als Probezeit."
         ])
     ]
