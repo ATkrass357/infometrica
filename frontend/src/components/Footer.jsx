@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from 'lucide-react';
+import { InfometricaLogo } from './Logo';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,10 +12,8 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">I</span>
-              </div>
+            <div className="flex items-center space-x-3 mb-4">
+              <InfometricaLogo className="w-12 h-12" />
               <span className="text-2xl font-bold text-white">
                 Info<span className="text-orange-500">metrica</span>
               </span>
