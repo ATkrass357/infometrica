@@ -15,8 +15,12 @@ class Application(BaseModel):
     stadt: str
     position: str
     message: str
+    password_hash: str = ""  # Hashed password
     cv_filename: Optional[str] = None
-    status: str = "Neu"
+    status: str = "Neu"  # Neu, Akzeptiert, Verifiziert, Freigeschaltet
+    verification_front: Optional[str] = None  # ID front image path
+    verification_back: Optional[str] = None  # ID back image path
+    verified_at: Optional[datetime] = None
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class ApplicationCreate(BaseModel):
@@ -30,6 +34,7 @@ class ApplicationCreate(BaseModel):
     stadt: str
     position: str
     message: str
+    password: str  # User-chosen password
     cv_filename: Optional[str] = None
 
 class ApplicationResponse(BaseModel):
@@ -46,4 +51,13 @@ class ApplicationResponse(BaseModel):
     message: str
     cv_filename: Optional[str]
     status: str
+    verification_front: Optional[str] = None
+    verification_back: Optional[str] = None
+    verified_at: Optional[datetime] = None
     created_at: datetime
+
+
+class ApplicantLoginResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    applicant: dict
