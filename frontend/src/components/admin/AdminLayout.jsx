@@ -49,7 +49,6 @@ const AdminLayout = ({ children }) => {
     { icon: Shield, label: 'Verifikationen', path: '/admin/verifications' },
     { icon: FileSignature, label: 'Arbeitsverträge', path: '/admin/contracts' },
     { icon: ClipboardList, label: 'Aufgaben', path: '/admin/tasks' },
-    { icon: Users, label: 'Mitarbeiter', path: '/admin/employees' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
 
