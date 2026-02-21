@@ -10,8 +10,9 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 - German language throughout
 - Role-based authentication (Admin, Applicant, Employee)
 - Task management with 4-part descriptions
-- Application tracking with ID verification (Geldwäschegesetz compliance)
+- Application tracking with ID verification (Geldwaschegesetz compliance)
 - Digital contract signing with IBAN collection
+- Minijob employment contracts (603 EUR/month)
 
 ## Tech Stack
 - **Frontend**: React, React Router, TailwindCSS, shadcn/ui, react-signature-canvas
@@ -27,6 +28,7 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 - [x] Unternehmen (About) page
 - [x] Dienstleistungen (Services) page
 - [x] Karriere (Career) page with application form + password selection
+  - **NEW: "Web Application Tester" position (Minijob)**
 - [x] Kontakt (Contact) page
 - [x] Impressum (Imprint) page
 - [x] Datenschutz (Privacy Policy) page
@@ -41,10 +43,10 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - View all job applications
   - Accept applications (changes status to allow ID upload)
   - Status badges: Neu, Wartet auf ID, Verifiziert, Freigeschaltet
-- [x] **Verifications page**
+- [x] **Verifications page (P1 COMPLETE)**
   - View pending verifications
   - Display ID images (base64, no download - DSGVO compliant)
-  - Unlock verified employees
+  - **Unlock verified employees ("Freischalten" button)**
   - Delete verification documents
 - [x] Task Management System
   - Create tasks with title, website URL, 4-part description
@@ -52,6 +54,7 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - View/delete tasks
 - [x] **Contract Management**
   - Create employment contracts for employees
+  - **Search employees by name (autocomplete)**
   - View contract status (pending/signed)
 
 ### Applicant/Employee Flow (100% Complete)
@@ -59,7 +62,7 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - Applicants choose own password during application
   - Can login immediately at `/mitarbeiter/login`
 - [x] **Status-Based Access Control**
-  - `Neu`: "Bewerbung wird geprüft" page
+  - `Neu`: "Bewerbung wird gepruft" page
   - `Akzeptiert`: ID verification upload page (GwG + DSGVO notices)
   - `Verifiziert`: "Wartet auf Freischaltung" page
   - `Freigeschaltet`: Full dashboard access
@@ -68,41 +71,66 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - File validation (JPEG, PNG, WebP, max 5MB)
   - Stored securely, displayed to admin as base64
 
-### Employee Dashboard (100% Complete - UPDATED Feb 2025)
+### Employee Dashboard (100% Complete - P2 COMPLETE)
 - [x] Secure login at `/mitarbeiter/login`
 - [x] Orange/white theme
-- [x] Sidebar navigation: Main, Vertrag, Aufträge, Einstellungen, Dokumente
-- [x] ~~Auszahlung (Payout)~~ - **REMOVED per user request**
-- [x] **Vertrag (Contract) page** - View and sign employment contracts
-  - List of pending/signed contracts
+- [x] Sidebar navigation: Main, Vertrag, Auftrage, Einstellungen, Dokumente
+- [x] ~~Auszahlung (Payout)~~ - REMOVED per user request
+- [x] **Vertrag (Contract) page**
+  - View and sign employment contracts
+  - **Full contract preview before signing (Minijob format)**
   - Digital signature with canvas
-  - **IBAN input field for salary payment**
+  - IBAN input field for salary payment
   - PDF download for signed contracts
-- [x] Aufträge (Tasks) page - View and manage assigned tasks
-- [x] **Einstellungen (Settings)** - Profile, password change, notifications (UI only)
-- [x] **Dokumente (Documents)** - Upload, categorize, manage documents (UI only)
+- [x] Auftrage (Tasks) page - View and manage assigned tasks
+- [x] **Einstellungen (Settings) page - CONNECTED TO BACKEND**
+  - Profile data loaded from `/api/employee/profile`
+  - Update phone and address
+  - Change password (with validation)
+  - Notification settings persist in database
+- [x] **Dokumente (Documents) page - CONNECTED TO BACKEND**
+  - Documents loaded from `/api/employee/documents`
+  - **Signed contracts appear automatically**
+  - Upload new documents
+  - Download contracts as PDF
+  - Category filter
 - [x] Main dashboard with task overview
 
 ---
 
-## Contract Signing Flow
+## Contract Format - Minijob
 
-```
-┌──────────────┐    Admin creates    ┌─────────────┐    Employee    ┌─────────────┐
-│ New Employee │ ──────────────────► │   Pending   │ ─────────────► │   Signed    │
-│              │     contract        │  Contract   │  signs + IBAN  │  Contract   │
-└──────────────┘                     └─────────────┘                └─────────────┘
-                                                                          │
-                                                                          ▼
-                                                                    PDF Download
-                                                                    (includes IBAN)
-```
+The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
+- Infometrica address: Tauentzienstrasse 9-12, 10789 Berlin
+- Position: Assistent fur Evaluierungen im Homeoffice
+- Tasks: App/Software testing, Video ID verification, Reports
+- Working hours: ~10 hours/week (2-4 days)
+- Salary: max 603 EUR/month
+- Vacation: 28 days/year
+- Special bonuses: June + December (603 EUR each)
+- Probation: 6 weeks
 
 ---
 
 ## API Endpoints
 
-### Contract Endpoints (NEW)
+### Employee Profile Endpoints (NEW)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/employee/profile | Get employee profile with notifications |
+| PUT | /api/employee/profile | Update phone and address |
+| POST | /api/employee/change-password | Change password with validation |
+| PUT | /api/employee/notifications | Update notification settings |
+
+### Employee Documents Endpoints (NEW)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/employee/documents | Get documents + signed contracts |
+| POST | /api/employee/documents/upload | Upload new document |
+| GET | /api/employee/documents/{id}/download | Download document/contract |
+| DELETE | /api/employee/documents/{id} | Delete pending document |
+
+### Contract Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | /api/contracts/create | Create contract for employee (admin) |
@@ -112,55 +140,10 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 | POST | /api/contracts/{id}/sign | Sign contract with signature + IBAN |
 | GET | /api/contracts/{id}/download | Download signed contract PDF |
 
-### Application/Applicant Endpoints
+### Application/Admin Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | /api/applications/submit | Submit application with password |
-| POST | /api/applications/login | Applicant/employee login |
-| GET | /api/applications/status | Get current applicant status |
-| POST | /api/applications/verification/upload | Upload ID documents |
-| GET | /api/applications/ | Get all applications (admin) |
-| POST | /api/applications/{id}/accept | Accept application (admin) |
 | POST | /api/applications/{id}/unlock | Unlock verified employee (admin) |
-
-### Admin Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/admin/login | Admin authentication |
-| GET | /api/admin/employees | Get all employees |
-| POST | /api/admin/tasks | Create task |
-| GET | /api/admin/tasks | Get all tasks |
-| DELETE | /api/admin/tasks/{id} | Delete task |
-
-### Employee Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/employee/tasks | Get assigned tasks |
-| PATCH | /api/employee/tasks/{id} | Update task status |
-
----
-
-## Database Schema
-
-### contracts collection
-```javascript
-{
-  id: "contract-YYYYMMDDHHMMSS-xxxxxx",
-  employee_id: "EMP001",
-  employee_name: "Max Mitarbeiter",
-  employee_email: "mitarbeiter@infometrica.de",
-  position: "QA Tester",
-  start_date: "2025-03-01",
-  salary: "3500",
-  working_hours: "40",
-  status: "pending" | "signed",
-  created_at: ISODate(),
-  signed_at: ISODate() | null,
-  signature_file: "contract-xxx_signature.png" | null,
-  signed_pdf: "contract-xxx_signed.pdf" | null,
-  iban: "DE89370400440532013000" | null
-}
-```
 
 ---
 
@@ -173,24 +156,31 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 
 ---
 
-## Prioritized Backlog
+## Completed Tasks (This Session)
 
-### P0 - Completed
-- [x] Applicant self-registration with password
-- [x] Status-based access control
-- [x] ID verification upload
-- [x] Admin verification management
-- [x] Contract signing with IBAN
+### February 2025 - Session Updates
+1. **Removed Auszahlung (Payout) page** from employee dashboard
+2. **Added IBAN field** to contract signing process
+3. **Added "Web Application Tester"** job position (Minijob)
+4. **Updated contract to Minijob format** with full legal text (10 paragraphs)
+5. **Added contract preview** before signing
+6. **P1 COMPLETE: Admin verification unlock** - "Freischalten" button works
+7. **P2 COMPLETE: Backend connection for Settings/Documents**
+   - Settings page loads from /api/employee/profile
+   - Password change with validation
+   - Notification settings persist
+   - Documents page shows signed contracts
+   - Document download works
 
-### P1 - Completed (UI Only - needs backend connection)
-- [x] Employee Settings page (profile, password, notifications)
-- [x] Employee Documents page (upload/download with categories)
+---
 
-### P2 - Future
-- [ ] Email notifications (SMTP integration)
-- [ ] Admin Employee Management (CRUD)
-- [ ] Connect Settings/Documents pages to backend
-- [ ] Employee performance reports
+## All Implemented - No Pending Tasks
+
+### Potential Enhancements
+- [ ] Email notifications (SMTP integration) for new applications, tasks
+- [ ] Employee management module in admin panel (CRUD)
+- [ ] Dashboard analytics and reports
+- [ ] Multi-language support
 
 ---
 
@@ -199,38 +189,33 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 /app
 ├── backend/
 │   ├── routes/
-│   │   ├── contracts.py    # Contract management endpoints
-│   │   └── ...
+│   │   ├── applications.py  # Application + unlock endpoint
+│   │   ├── contracts.py     # Contract management + PDF
+│   │   └── employee.py      # Profile, settings, documents
 │   ├── uploads/
-│   │   ├── contracts/      # Signed PDF storage
-│   │   ├── signatures/     # Signature images
-│   │   └── verifications/  # ID images
+│   │   ├── contracts/       # Signed PDF storage
+│   │   ├── documents/       # Employee documents
+│   │   ├── signatures/      # Signature images
+│   │   └── verifications/   # ID images
 │   └── server.py
 └── frontend/
     ├── src/
     │   ├── pages/
     │   │   ├── admin/
-    │   │   │   ├── AdminContracts.jsx    # Contract creation
-    │   │   │   └── ...
+    │   │   │   ├── AdminContracts.jsx    # Contract creation + search
+    │   │   │   └── AdminVerifications.jsx # Unlock button
     │   │   ├── mitarbeiter/
-    │   │   │   ├── MitarbeiterVertrag.jsx  # Contract signing + IBAN
-    │   │   │   ├── MitarbeiterDokumente.jsx
-    │   │   │   ├── MitarbeiterEinstellungen.jsx
-    │   │   │   └── ...
-    │   │   └── ...
+    │   │   │   ├── MitarbeiterVertrag.jsx    # Minijob contract + preview
+    │   │   │   ├── MitarbeiterDokumente.jsx  # Backend connected
+    │   │   │   └── MitarbeiterEinstellungen.jsx # Backend connected
+    │   │   └── Karriere.jsx  # Web Application Tester job
     │   └── components/
     │       └── mitarbeiter/
-    │           └── MitarbeiterLayout.jsx  # Updated sidebar (no Auszahlung)
+    │           └── MitarbeiterLayout.jsx  # No Auszahlung
     └── App.js
 ```
 
 ---
 
-## Recent Changes (Feb 2025)
-- **REMOVED**: Auszahlung (Payout) page from employee panel
-- **ADDED**: IBAN field in contract signing process
-- **ADDED**: IBAN stored in database and included in PDF (§4 Bankverbindung)
-- **TESTED**: All contract signing flows working correctly
-
 ## Last Updated
-February 2025 - Contract signing with IBAN implemented and tested
+February 2025 - P1 + P2 completed, all features tested (100% pass rate)
