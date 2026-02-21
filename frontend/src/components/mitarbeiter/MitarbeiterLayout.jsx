@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -12,14 +12,59 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import { InfometricaLogo } from '../Logo';
+import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
+import MitarbeiterVerification from '../../pages/mitarbeiter/MitarbeiterVerification';
+import MitarbeiterAwaitingApproval from '../../pages/mitarbeiter/MitarbeiterAwaitingApproval';
+import axios from 'axios';
+
+const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const MitarbeiterLayout = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [applicantStatus, setApplicantStatus] = useState(null);
+  const [applicantData, setApplicantData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const employeeData = JSON.parse(localStorage.getItem('employee_data') || '{}');
+  useEffect(() => {
+    checkApplicantStatus();
+  }, []);
+
+  const checkApplicantStatus = async () => {
+    try {
+      const token = localStorage.getItem('employee_token');
+      const storedData = JSON.parse(localStorage.getItem('employee_data') || '{}');
+      
+      // If old employee (has employee_number), they're fully verified
+      if (storedData.employee_number) {
+        setApplicantStatus('Freigeschaltet');
+        setApplicantData(storedData);
+        setLoading(false);
+        return;
+      }
+
+      // Get current status from server
+      const response = await axios.get(`${BACKEND_URL}/api/applications/status`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      setApplicantStatus(response.data.status);
+      setApplicantData(response.data);
+      
+      // Update local storage
+      localStorage.setItem('employee_data', JSON.stringify(response.data));
+    } catch (error) {
+      console.error('Error checking status:', error);
+      // If error, redirect to login
+      navigate('/mitarbeiter/login');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const employeeData = applicantData || JSON.parse(localStorage.getItem('employee_data') || '{}');
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Main', path: '/mitarbeiter/dashboard' },
@@ -38,6 +83,34 @@ const MitarbeiterLayout = ({ children }) => {
 
   const isActive = (path) => location.pathname === path;
 
+  // Show loading
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
+
+  // Show different views based on status
+  if (applicantStatus === 'Neu') {
+    return <MitarbeiterPending applicant={applicantData} />;
+  }
+
+  if (applicantStatus === 'Akzeptiert') {
+    return (
+      <MitarbeiterVerification 
+        applicant={applicantData} 
+        onVerificationComplete={checkApplicantStatus}
+      />
+    );
+  }
+
+  if (applicantStatus === 'Verifiziert') {
+    return <MitarbeiterAwaitingApproval applicant={applicantData} />;
+  }
+
+  // Status: Freigeschaltet - show full dashboard
   return (
     <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar - Desktop */}
@@ -186,7 +259,7 @@ const MitarbeiterLayout = ({ children }) => {
           <div className="hidden sm:flex items-center space-x-4">
             <div className="text-right">
               <p className="text-sm font-medium text-gray-900">{employeeData.name}</p>
-              <p className="text-xs text-gray-500">{employeeData.employee_number}</p>
+              <p className="text-xs text-gray-500">{employeeData.employee_number || employeeData.id}</p>
             </div>
           </div>
         </header>
