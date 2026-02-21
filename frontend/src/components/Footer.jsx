@@ -73,6 +73,11 @@ export const Footer = () => {
                   Kontakt
                 </Link>
               </li>
+              <li>
+                <Link to="/admin/login" className="hover:text-orange-500 transition-colors duration-200">
+                  Admin-Login
+                </Link>
+              </li>
             </ul>
           </div>
 
