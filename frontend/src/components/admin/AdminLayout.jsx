@@ -11,6 +11,7 @@ import {
   ChevronRight,
   ClipboardList,
   Shield,
+  FileSignature,
 } from 'lucide-react';
 import { InfometricaLogo } from '../../components/Logo';
 
@@ -47,6 +48,7 @@ const AdminLayout = ({ children }) => {
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
     { icon: FileText, label: 'Bewerbungen', path: '/admin/applications', badge: appCount > 0 ? String(appCount) : null },
     { icon: Shield, label: 'Verifikationen', path: '/admin/verifications' },
+    { icon: FileSignature, label: 'Arbeitsverträge', path: '/admin/contracts' },
     { icon: ClipboardList, label: 'Aufgaben', path: '/admin/tasks' },
     { icon: Users, label: 'Mitarbeiter', path: '/admin/employees' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
