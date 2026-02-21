@@ -65,11 +65,19 @@ const Karriere = () => {
       setFormData({
         name: '',
         email: '',
-        phone: '',
+        mobilnummer: '',
+        geburtsdatum: '',
+        staatsangehoerigkeit: '',
+        strasse: '',
+        postleitzahl: '',
+        stadt: '',
         position: '',
         message: '',
         cv: null,
       });
+      // Reset file input
+      const fileInput = document.getElementById('cv');
+      if (fileInput) fileInput.value = '';
       setIsSubmitting(false);
     }, 1500);
   };
