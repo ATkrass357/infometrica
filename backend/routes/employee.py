@@ -1,9 +1,41 @@
-from fastapi import APIRouter, HTTPException, Depends, Header
+from fastapi import APIRouter, HTTPException, Depends, Header, UploadFile, File
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from models.employee import EmployeeLogin, TokenResponse, EmployeeResponse, Task, TaskCreate, TaskUpdate
 from utils.auth import verify_password, create_access_token, decode_token, get_password_hash
 from datetime import timedelta, datetime
-from typing import List
+from typing import List, Optional
+from pydantic import BaseModel
+import os
+import uuid
+
+router = APIRouter(prefix="/api/employee", tags=["employee"])
+
+# Directory for employee documents
+DOCUMENTS_DIR = "/app/backend/uploads/documents"
+os.makedirs(DOCUMENTS_DIR, exist_ok=True)
+
+# Models for settings and documents
+class ProfileUpdate(BaseModel):
+    phone: Optional[str] = None
+    address: Optional[str] = None
+
+class PasswordChange(BaseModel):
+    current_password: str
+    new_password: str
+
+class NotificationSettings(BaseModel):
+    email_notifications: bool = True
+    task_reminders: bool = True
+    payout_notifications: bool = True
+
+class DocumentResponse(BaseModel):
+    id: str
+    name: str
+    type: str
+    category: str
+    size: str
+    uploaded_at: str
+    status: str
 
 router = APIRouter(prefix="/api/employee", tags=["employee"])
 
