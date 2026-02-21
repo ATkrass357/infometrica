@@ -306,12 +306,12 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     c.setFont("Helvetica", 10)
     c.drawString(2*cm, y_pos, "Infometrica")
     y_pos -= 0.4*cm
-    c.drawString(2*cm, y_pos, "Tauentzienstraße 9–12")
+    c.drawString(2*cm, y_pos, "Tauentzienstrasse 9-12")
     y_pos -= 0.4*cm
     c.drawString(2*cm, y_pos, "10789 Berlin, Deutschland")
     y_pos -= 0.4*cm
     c.setFont("Helvetica-Oblique", 10)
-    c.drawString(2*cm, y_pos, "– nachfolgend „Arbeitgeber" genannt –")
+    c.drawString(2*cm, y_pos, "- nachfolgend Arbeitgeber genannt -")
     y_pos -= 0.8*cm
     
     c.setFont("Helvetica-Bold", 11)
@@ -324,7 +324,7 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     c.drawString(2*cm, y_pos, f"E-Mail: {contract['employee_email']}")
     y_pos -= 0.4*cm
     c.setFont("Helvetica-Oblique", 10)
-    c.drawString(2*cm, y_pos, "– nachfolgend „Arbeitnehmer" genannt –")
+    c.drawString(2*cm, y_pos, "- nachfolgend Arbeitnehmer genannt -")
     y_pos -= 0.8*cm
     
     c.setFont("Helvetica", 10)
