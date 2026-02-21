@@ -9,23 +9,41 @@ import Karriere from "@/pages/Karriere";
 import Kontakt from "@/pages/Kontakt";
 import Impressum from "@/pages/Impressum";
 import Datenschutz from "@/pages/Datenschutz";
+import AdminLogin from "@/pages/admin/AdminLogin";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminLayout from "@/components/admin/AdminLayout";
+import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/unternehmen" element={<Unternehmen />} />
-          <Route path="/dienstleistungen" element={<Dienstleistungen />} />
-          <Route path="/karriere" element={<Karriere />} />
-          <Route path="/kontakt" element={<Kontakt />} />
-          <Route path="/impressum" element={<Impressum />} />
-          <Route path="/datenschutz" element={<Datenschutz />} />
+          {/* Public Routes */}
+          <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+          <Route path="/unternehmen" element={<><Navbar /><Unternehmen /><Footer /></>} />
+          <Route path="/dienstleistungen" element={<><Navbar /><Dienstleistungen /><Footer /></>} />
+          <Route path="/karriere" element={<><Navbar /><Karriere /><Footer /></>} />
+          <Route path="/kontakt" element={<><Navbar /><Kontakt /><Footer /></>} />
+          <Route path="/impressum" element={<><Navbar /><Impressum /><Footer /></>} />
+          <Route path="/datenschutz" element={<><Navbar /><Datenschutz /><Footer /></>} />
+          
+          {/* Admin Login (No Layout) */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          
+          {/* Protected Admin Routes */}
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminDashboard />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
         </Routes>
-        <Footer />
         <Toaster position="top-right" richColors />
       </BrowserRouter>
     </div>
