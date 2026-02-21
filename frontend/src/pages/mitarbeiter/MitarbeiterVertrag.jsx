@@ -299,6 +299,28 @@ const MitarbeiterVertrag = () => {
                 </div>
               </div>
 
+              {/* IBAN Input */}
+              <div className="mb-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <CreditCard size={18} className="text-gray-500" />
+                  <Label htmlFor="iban" className="font-semibold text-gray-900">
+                    Bankverbindung für Gehaltszahlung *
+                  </Label>
+                </div>
+                <Input
+                  id="iban"
+                  type="text"
+                  value={iban}
+                  onChange={(e) => setIban(e.target.value.toUpperCase())}
+                  placeholder="DE00 0000 0000 0000 0000 00"
+                  className="h-12 font-mono text-lg"
+                  data-testid="iban-input"
+                />
+                <p className="text-xs text-gray-500 mt-2">
+                  Ihre IBAN wird im Arbeitsvertrag gespeichert und für die Gehaltszahlung verwendet.
+                </p>
+              </div>
+
               {/* Signature Area */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
