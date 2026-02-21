@@ -36,8 +36,13 @@ class TokenResponse(BaseModel):
 class Task(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
-    description: str
+    website: Optional[str] = None
+    einleitung: Optional[str] = None
+    schritt1: Optional[str] = None
+    schritt2: Optional[str] = None
+    schritt3: Optional[str] = None
     assigned_to: str  # employee_id
+    assigned_to_name: Optional[str] = None  # employee name for display
     assigned_by: str  # admin_id
     status: str = "Offen"  # Offen, In Bearbeitung, Abgeschlossen
     priority: str = "Normal"  # Niedrig, Normal, Hoch
@@ -47,7 +52,11 @@ class Task(BaseModel):
 
 class TaskCreate(BaseModel):
     title: str
-    description: str
+    website: Optional[str] = None
+    einleitung: Optional[str] = None
+    schritt1: Optional[str] = None
+    schritt2: Optional[str] = None
+    schritt3: Optional[str] = None
     assigned_to: str
     priority: str = "Normal"
     due_date: Optional[str] = None
