@@ -53,6 +53,13 @@ async def submit_application(
     # Insert into database
     await db.applications.insert_one(app_dict)
     
+    # Send confirmation email
+    await send_application_confirmation(
+        to_email=application.email,
+        applicant_name=application.name,
+        position=application.position
+    )
+    
     return ApplicationResponse(**app_dict)
 
 
