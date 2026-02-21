@@ -43,6 +43,7 @@ class ContractCreate(BaseModel):
 
 class SignatureSubmit(BaseModel):
     signature_data: str  # Base64 encoded signature image
+    iban: str  # Employee's IBAN for payment
 
 
 # Create employment contract for an employee
@@ -172,6 +173,11 @@ async def sign_contract(
     if contract["status"] == "signed":
         raise HTTPException(status_code=400, detail="Vertrag bereits unterschrieben")
     
+    # Validate IBAN
+    iban = signature.iban.replace(" ", "").strip()
+    if len(iban) < 15 or len(iban) > 34:
+        raise HTTPException(status_code=400, detail="Ungültige IBAN")
+    
     # Save signature image
     try:
         # Remove data URL prefix if present
@@ -188,6 +194,9 @@ async def sign_contract(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Fehler beim Speichern der Signatur: {str(e)}")
     
+    # Add IBAN to contract for PDF generation
+    contract["iban"] = iban
+    
     # Generate signed PDF
     try:
         pdf_filename = f"{contract_id}_signed.pdf"
@@ -197,14 +206,15 @@ async def sign_contract(
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Fehler beim Erstellen des PDFs: {str(e)}")
     
-    # Update contract in database
+    # Update contract in database with IBAN
     await db.contracts.update_one(
         {"id": contract_id},
         {"$set": {
             "status": "signed",
             "signed_at": datetime.utcnow(),
             "signature_file": sig_filename,
-            "signed_pdf": pdf_filename
+            "signed_pdf": pdf_filename,
+            "iban": iban
         }}
     )
     
