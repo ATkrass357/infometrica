@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, AlertCircle, Briefcase } from 'lucide-react';
 import { InfometricaLogo } from '../../components/Logo';
 import axios from 'axios';
@@ -30,20 +30,38 @@ const MitarbeiterLogin = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/employee/login`, {
+      // Try applicant login first (new flow)
+      const response = await axios.post(`${BACKEND_URL}/api/applications/login`, {
         email: formData.email,
         password: formData.password,
       });
 
-      // Store token and employee data
+      // Store token and applicant data
       localStorage.setItem('employee_token', response.data.access_token);
-      localStorage.setItem('employee_data', JSON.stringify(response.data.employee));
+      localStorage.setItem('employee_data', JSON.stringify(response.data.applicant));
       localStorage.setItem('employee_login_time', Date.now().toString());
 
-      // Redirect to employee dashboard
+      // Redirect to dashboard - the layout will handle status-based routing
       navigate('/mitarbeiter/dashboard');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.');
+      // If applicant login fails, try old employee login for backward compatibility
+      try {
+        const employeeResponse = await axios.post(`${BACKEND_URL}/api/employee/login`, {
+          email: formData.email,
+          password: formData.password,
+        });
+
+        localStorage.setItem('employee_token', employeeResponse.data.access_token);
+        localStorage.setItem('employee_data', JSON.stringify({
+          ...employeeResponse.data.employee,
+          status: 'Freigeschaltet' // Old employees are fully verified
+        }));
+        localStorage.setItem('employee_login_time', Date.now().toString());
+
+        navigate('/mitarbeiter/dashboard');
+      } catch (err2) {
+        setError(err.response?.data?.detail || 'Anmeldung fehlgeschlagen. Bitte versuchen Sie es erneut.');
+      }
     } finally {
       setIsLoading(false);
     }
@@ -78,8 +96,8 @@ const MitarbeiterLogin = () => {
           </div>
 
           <div className="mb-6 text-center">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">Willkommen zurück</h2>
-            <p className="text-gray-600">Melden Sie sich bei Ihrem Mitarbeiter-Konto an</p>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">Willkommen</h2>
+            <p className="text-gray-600">Melden Sie sich mit Ihren Bewerbungsdaten an</p>
           </div>
 
           {/* Error Message */}
@@ -107,7 +125,7 @@ const MitarbeiterLogin = () => {
                   required
                   data-testid="employee-login-email"
                   className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
-                  placeholder="mitarbeiter@infometrica.de"
+                  placeholder="ihre@email.de"
                 />
               </div>
             </div>
@@ -151,10 +169,13 @@ const MitarbeiterLogin = () => {
             </button>
           </form>
 
-          {/* Test Credentials Info */}
-          <div className="mt-6 pt-6 border-t border-gray-200">
-            <p className="text-xs text-gray-500 text-center">
-              Test-Zugang: mitarbeiter@infometrica.de / Mitarbeiter123!
+          {/* Apply Link */}
+          <div className="mt-6 pt-6 border-t border-gray-200 text-center">
+            <p className="text-sm text-gray-600">
+              Noch kein Konto?{' '}
+              <Link to="/karriere" className="text-orange-500 hover:text-orange-600 font-medium">
+                Jetzt bewerben
+              </Link>
             </p>
           </div>
         </div>
