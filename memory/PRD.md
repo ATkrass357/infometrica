@@ -145,8 +145,10 @@ Design: Modernes white & orange Farbschema mit Office-Stock-Photos
 
 ## Mocking/Temporary Solutions
 - Kontaktformular: Aktuell nur Frontend-Validierung und Toast-Benachrichtigung
+- Bewerbungsformular: Aktuell nur Frontend-Validierung und Toast-Benachrichtigung
 - Alle Bilder: Stock Photos von Unsplash/Pexels
 - Content: Professionelle Platzhaltertexte
+- Impressum & Datenschutz: Muster-Inhalte (müssen mit echten Firmendaten ersetzt werden)
 
 ## Notizen
 - Alle Inhalte in deutscher Sprache
