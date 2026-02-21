@@ -138,6 +138,18 @@ const Karriere = () => {
 
   const openPositions = [
     {
+      title: 'Web Application Tester',
+      location: 'Remote / Homeoffice',
+      type: 'Minijob',
+      description: 'Assistent für Evaluierungen im Homeoffice - Überprüfung von Apps und Software.',
+      requirements: [
+        'Interesse an App- und Software-Testing',
+        'Zuverlässige und selbstständige Arbeitsweise',
+        'Gute Deutschkenntnisse',
+        'PC/Laptop und stabile Internetverbindung',
+      ],
+    },
+    {
       title: 'Senior QA Engineer',
       location: 'Berlin',
       type: 'Vollzeit',
