@@ -13,7 +13,9 @@ import {
   Euro,
   Briefcase,
   X,
-  CreditCard
+  CreditCard,
+  ScrollText,
+  ChevronDown
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -22,6 +24,127 @@ import { toast } from 'sonner';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+// Contract text component
+const ContractDocument = ({ contract }) => {
+  const today = new Date().toLocaleDateString('de-DE');
+  
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl p-6 text-sm leading-relaxed">
+      {/* Header */}
+      <div className="text-center mb-8 pb-4 border-b-2 border-gray-300">
+        <h2 className="text-2xl font-bold text-gray-900 mb-1">ARBEITSVERTRAG</h2>
+        <p className="text-gray-600">Infometrica GmbH - App Testing Agency</p>
+      </div>
+
+      {/* Parties */}
+      <div className="mb-6">
+        <p className="font-semibold text-gray-900 mb-2">Zwischen</p>
+        <p className="text-gray-700 mb-1">Infometrica GmbH</p>
+        <p className="text-gray-700 mb-1">Teststraße 123, 10115 Berlin</p>
+        <p className="text-gray-600 italic mb-4">- nachfolgend "Arbeitgeber" genannt -</p>
+        
+        <p className="font-semibold text-gray-900 mb-2">und</p>
+        <p className="text-gray-700 mb-1">{contract.employee_name}</p>
+        <p className="text-gray-700 mb-1">E-Mail: {contract.employee_email}</p>
+        <p className="text-gray-600 italic mb-4">- nachfolgend "Arbeitnehmer" genannt -</p>
+        
+        <p className="text-gray-700">wird folgender Arbeitsvertrag geschlossen:</p>
+      </div>
+
+      {/* Contract Terms */}
+      <div className="space-y-6">
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§1 Beginn und Tätigkeit</h3>
+          <ul className="list-disc list-inside text-gray-700 space-y-1">
+            <li>Das Arbeitsverhältnis beginnt am <strong>{contract.start_date}</strong>.</li>
+            <li>Der Arbeitnehmer wird als <strong>{contract.position}</strong> eingestellt.</li>
+            <li>Der Arbeitsort ist Berlin mit Möglichkeit zum Home-Office.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§2 Arbeitszeit</h3>
+          <ul className="list-disc list-inside text-gray-700 space-y-1">
+            <li>Die regelmäßige wöchentliche Arbeitszeit beträgt <strong>{contract.working_hours} Stunden</strong>.</li>
+            <li>Die Verteilung der Arbeitszeit erfolgt nach betrieblichen Erfordernissen.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§3 Vergütung</h3>
+          <ul className="list-disc list-inside text-gray-700 space-y-1">
+            <li>Der Arbeitnehmer erhält ein monatliches Bruttogehalt von <strong>{contract.salary} EUR</strong>.</li>
+            <li>Die Zahlung erfolgt jeweils zum Monatsende.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§4 Bankverbindung</h3>
+          <p className="text-gray-700">
+            Die Vergütung wird auf das vom Arbeitnehmer angegebene Bankkonto überwiesen. 
+            Die IBAN wird bei der Vertragsunterzeichnung angegeben.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§5 Urlaub</h3>
+          <p className="text-gray-700">
+            Der Arbeitnehmer hat Anspruch auf <strong>30 Arbeitstage</strong> bezahlten Urlaub pro Jahr.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§6 Kündigung</h3>
+          <ul className="list-disc list-inside text-gray-700 space-y-1">
+            <li>Die Kündigungsfrist beträgt während der Probezeit 2 Wochen.</li>
+            <li>Nach der Probezeit gelten die gesetzlichen Kündigungsfristen.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§7 Probezeit</h3>
+          <p className="text-gray-700">
+            Die ersten <strong>6 Monate</strong> gelten als Probezeit.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§8 Verschwiegenheitspflicht</h3>
+          <p className="text-gray-700">
+            Der Arbeitnehmer verpflichtet sich, über alle betrieblichen Angelegenheiten, 
+            insbesondere Geschäfts- und Betriebsgeheimnisse, Stillschweigen zu bewahren. 
+            Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§9 Nebentätigkeit</h3>
+          <p className="text-gray-700">
+            Jede Nebentätigkeit bedarf der vorherigen schriftlichen Zustimmung des Arbeitgebers. 
+            Die Zustimmung ist zu erteilen, wenn die Nebentätigkeit die Arbeitsleistung nicht beeinträchtigt.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§10 Schlussbestimmungen</h3>
+          <ul className="list-disc list-inside text-gray-700 space-y-1">
+            <li>Änderungen und Ergänzungen dieses Vertrages bedürfen der Schriftform.</li>
+            <li>Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein, so wird dadurch die Wirksamkeit der übrigen Bestimmungen nicht berührt.</li>
+            <li>Es gilt das Recht der Bundesrepublik Deutschland.</li>
+          </ul>
+        </section>
+      </div>
+
+      {/* Footer */}
+      <div className="mt-8 pt-4 border-t border-gray-200">
+        <p className="text-gray-600 text-center">
+          Berlin, den {today}
+        </p>
+      </div>
+    </div>
+  );
+};
 
 const MitarbeiterVertrag = () => {
   const [contracts, setContracts] = useState([]);
