@@ -2,85 +2,63 @@
 The user wants to build a full-stack application for their app testing agency, Infometrica.
 
 PRODUCT REQUIREMENTS:
-1.  **Public Website:**
-    *   A modern, professional website with a white and orange color scheme.
-    *   Must be in German.
-    *   Pages: Startseite (Home), Unternehmen und Agentur (About), Dienstleistung und Fachgebiete (Services), Kontakt und Helpdesk (Contact), Karriere und Stellen (Careers), Impressum (Imprint), and Datenschutz (Privacy Policy).
-    *   The Karriere page needs a detailed application form.
-    *   A simple, modern logo for Infometrica.
-    *   A link to the admin login page in the footer.
-
-2.  **Admin Panel:**
-    *   A secure login page ().
-    *   A dashboard with a Tokyo Night theme.
-    *   Functionality to view all applications submitted through the career page in a table format.
-    *   **New Requirement:** A system to create tasks with a title, website URL, and a four-part description (Introduction, Step 1, Step 2, Step 3).
-    *   **New Requirement:** Ability to assign these created tasks to specific employees.
-
-3.  **Employee Dashboard:**
-    *   A separate, secure login page ().
-    *   A dashboard with an orange and white theme, matching the public website.
-    *   Sidebar navigation with tabs: Main, Aufträge (Orders/Tasks), Einstellungen (Settings), Dokumente (Documents), Auszahlung (Payout).
-    *   The Aufträge section should display tasks assigned by the admin.
+1.  **Public Website:** A modern, professional website in German with a white and orange color scheme. It needs several pages (Home, About, Services, Contact, Careers, Imprint, Privacy Policy). The Karriere page requires a detailed application form where applicants can set their own password to track their application status.
+2.  **Admin Panel:** A secure login () leading to a dashboard with a Tokyo Night theme. It must include:
+    *   A table to view and manage all job applications.
+    *   A system to create tasks (title, URL, 4-part description) and assign them to employees.
+    *   A page to view identity verification documents uploaded by employees.
+    *   A page to create and send employment contracts to employees for signing.
+3.  **Applicant/Employee Flow:**
+    *   Applicants register via the career page and can immediately log in to a status page.
+    *   Admins accept applications, which then prompts the applicant to upload ID documents for verification (front and back).
+    *   After verification, employees get access to the full dashboard.
+4.  **Employee Dashboard:** A secure login () leading to a dashboard with an orange and white theme. It must have a sidebar with pages for Main, Aufträge (Tasks), Einstellungen (Settings), Dokumente (Documents), and Auszahlung (Payout). Employees need to be able to sign their employment contract digitally within the app by drawing their signature.
 
 **User's preferred language**: German. The user communicates in German, and the agent MUST continue to respond in German.
 
 **what currently exists?**
-A full-stack application with a React frontend and FastAPI backend.
--   **Public Website:** All requested pages (Home, About, Services, Contact, Career, etc.) have been created with a white and orange theme, a logo, and professional German placeholder text. The career application form successfully submits data to the backend.
--   **Admin Panel:** A functional admin portal exists at  with a Tokyo Night theme. After logging in, admins can view a table of job applications.
--   **Employee Dashboard:** The basic structure for the employee dashboard is in place at . It uses an orange/white theme and has the requested sidebar navigation, but the pages are currently placeholders.
--   **Backend:** JWT-based authentication is implemented for both admins and employees. Endpoints exist for user creation, login, and submitting/retrieving applications. Test users for both roles have been created.
+A full-stack application using React, FastAPI, and MongoDB.
+-   **Public Website:** All pages are implemented. The career page has been updated to include password fields, allowing applicants to create an account directly.
+-   **Admin Panel:** A functional admin portal at  with the Tokyo Night theme. It includes features for viewing applications, a complete task management system (create, assign, view), a page to review uploaded ID documents, and a new page to create employment contracts.
+-   **Applicant/Employee Flow:** The entire multi-stage application process is implemented. Applicants can register, log in to see their status, get prompted to upload documents upon acceptance, and then wait for final verification.
+-   **Employee Dashboard:** The main dashboard layout is complete with the orange/white theme. The Aufträge (Tasks) page is fully functional. The Einstellungen, Dokumente, and Auszahlung pages have been created with complete UI and placeholder data. A contract signing page with a signature pad has been implemented.
+-   **Authentication:** JWT-based authentication is in place for both  and / roles, with logic that directs users to different pages based on their application status (, , , ).
 
 **Last working item**:
--   Last item agent was working: The user requested the implementation of a task management system. The agent was about to start building the feature allowing admins to create detailed tasks (Title, Website, 4-part description) and assign them to employees.
--   Status: NOT STARTED
--   Agent Testing Done: N
+-   Last item agent was working: Implementing a custom, in-app document signing solution for the employment contract. The agent built the backend endpoints to manage contracts, the admin UI to create contracts, and the employee UI with a signature pad for drawing a signature.
+-   Status: IN PROGRESS
+-   Agent Testing Done: Y (Manual testing with  and screenshots was performed, but a full end-to-end test with the testing agent has not been run on this specific feature).
 -   Which testing method agent to use? both
 -   User Testing Done: N
 
 **All Pending/In progress Issue list**:
--   There are no pending issues or bugs. The last reported login issue was resolved.
+-   Issue 1: The admin verification approval step is missing. Admins can view uploaded ID documents, but there is no functionality (e.g., an Approve button) to finalize the verification and change the employee's status to  to grant them full dashboard access. (Priority: P1)
+-   Issue 2: The  page is missing PDF download functionality. This was requested by the user along with the signing feature but was not implemented. (Priority: P1)
 
 **In progress Task List**:
--   None.
+-   Task 1: Complete and Test the Document Signing Feature
+    -   **Where to resume**: The core components have been created and manually tested. The next step is to run a comprehensive end-to-end test, preferably using the testing agent, to validate the entire flow: admin creates a contract, employee receives and signs it, and the signature is saved correctly in the backend.
+    -   **What will be achieved with this?**: A fully functional, legally compliant (as per user request) way for new hires to sign their employment contracts directly within the application.
+    -   **Status**: IN PROGRESS
+    -   **Should Test frontend/backend/both after fix?**: both
+    -   **Blocked on something**: No.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P0) Implement Task Management System:** This is the immediate next step.
-        *   **Backend:**
-            *   Create a  model in the database (e.g., in ).
-            *   Create API endpoints in  for:
-                *   Creating a new task ().
-                *   Fetching all employees to populate an assignment dropdown ().
-                *   Assigning a task to an employee ().
-                *   Fetching tasks assigned to the logged-in employee ().
-        *   **Frontend (Admin Panel):**
-            *   Create a new page/component (e.g., ) with a form for creating tasks as per the user's specification.
-            *   Add a dropdown to the form to select and assign the task to an employee.
-        *   **Frontend (Employee Dashboard):**
-            *   Implement the  page () to fetch and display the list of tasks assigned to the logged-in employee.
+    *   **(P0) Implement Admin Approval for Verifications:** Add a button and corresponding backend endpoint on the  page for an admin to approve a user's uploaded documents, which should change their status to .
+    *   **(P1) Implement PDF Download for Documents:** Add backend and frontend logic to allow employees to download their documents from the  page.
+    *   **(P1) Connect Employee Dashboard Pages to Backend:** Replace the placeholder data on the , , and  pages with real data by connecting them to backend API endpoints.
+    *   **(P1) Implement Document Upload Functionality:** Connect the Dokument hochladen button on the  page to a file upload endpoint.
 
 *   **Future Tasks:**
-    *   (P1) Build out the remaining employee dashboard pages: , , .
-    *   (P1) Implement document upload functionality for employees.
-    *   (P2) Integrate a third-party service for online document signatures (e.g., DocuSign).
     *   (P2) Develop a full employee management module in the admin panel (CRUD operations).
+    -   (P2) Integrate an email service (like Resend or SendGrid) to send automated alerts for events like new applications, accepted applications, and new task assignments.
 
 **Completed work in this session**
--   **Public Website Creation:**
-    -   Built a multi-page website with a white/orange theme.
-    -   Created and integrated a logo ().
-    -   Implemented pages: Home, About, Services, Contact, Career, Imprint, Privacy.
--   **Admin Portal Implementation:**
-    -   Created a secure admin login ().
-    -   Built the admin dashboard with a Tokyo Night theme and application viewing table ().
--   **Employee Portal Scaffolding:**
-    -   Created a secure employee login ().
-    -   Set up the employee dashboard layout and placeholder pages with an orange/white theme ().
--   **Backend Development:**
-    -   Implemented JWT authentication for  and  roles ().
-    -   Created API endpoints for user login, application submission, and application retrieval ().
+-   **Task Management System:** A complete system for admins to create, assign, and manage tasks, and for employees to view them, was implemented and tested.
+-   **Revamped Applicant-to-Employee Workflow:** The entire application process was rebuilt to allow applicants to create an account, log in to check their status, and go through a multi-stage verification process including ID document upload.
+-   **Employee Dashboard Page Implementation:** The UI for the  (Settings),  (Documents), and  (Payout) pages was fully built out.
+-   **Bug Fix:** Addressed a user-reported issue where the Accept Application button was seemingly missing, clarifying that it correctly appears only for new applications.
 
 **Earlier issues found/mentioned but not fixed**
 -   None.
@@ -92,67 +70,71 @@ A full-stack application with a React frontend and FastAPI backend.
 
 
 **Key Technical Concepts**
--   **Frontend:** React, React Router (), TailwindCSS, shadcn/ui components.
--   **Backend:** FastAPI, MongoDB (with  for async operations), Pydantic.
--   **Authentication:** JSON Web Tokens (JWT) with role-based access control.
+-   **Frontend:** React, React Router, TailwindCSS, shadcn/ui.
+-   **Backend:** FastAPI, MongoDB (using ), Pydantic.
+-   **Authentication:** JWT with a role and status-based system.
+-   **New:**  for drawing signatures,  for file uploads.
 
 **key DB schema**
 -   **users:** 
--   **applications:** 
--   **tasks (to be created):** 
+-   **tasks:** 
+-   **contracts (new):** 
 
 **changes in tech stack**
--   None.
+-   **Frontend:**  was added for the signature pad.
+-   **Backend:**  was added to handle file uploads for ID verification.
 
 **All files of reference**
--   : Contains all current backend logic, including auth, application, and user endpoints. Needs to be refactored for new task endpoints.
--   : Handles JWT creation, verification, and password hashing.
--   : Defines Pydantic models for API data and initial user/application structures.
--   : Contains all routing for the public site, admin, and employee portals.
--   : Directory for all admin panel components. A new task management component will be added here.
--   : Placeholder file to be implemented for displaying assigned tasks.
+-   : Core backend file containing routes for applications, authentication, tasks, and verifications.
+-   : New file containing all contract-related API endpoints.
+-   : Main router file, heavily modified with new routes for the applicant/employee status flow.
+-   : Component for the contract signing interface.
+-   : Admin page for creating contracts.
+-   : Page for applicants to upload their ID documents.
+-   : Page for admins to review uploaded ID documents.
 
 **Areas that need refactoring**:
--   **Backend:** The main  file is growing too large. It should be broken down into separate routers for different concerns (e.g., , , ) to improve maintainability.
--   **Frontend:** The  and  components are very similar. A generic  component could be created and customized via props to reduce code duplication.
+-   The main  file in the backend is still too large. Although a  router was created, the logic for applications, users, tasks, and verifications should also be broken out into separate router files to improve maintainability.
 
 **key api endpoints**
--   : Authenticates an admin and returns a JWT.
--   : Authenticates an employee and returns a JWT.
--   : Submits a job application from the career page.
--   : Retrieves all job applications (protected, admin only).
--   **(To be created)** : Creates a new task (protected, admin only).
--   **(To be created)** : Retrieves tasks for the logged-in employee (protected, employee only).
+-   : Logs in an applicant/employee.
+-   : Gets the status of the logged-in applicant to determine which page to show.
+-   : Admin accepts an application, changing the applicant's status.
+-   : Applicant uploads ID documents.
+-   : Admin creates a new employment contract.
+-   : Employee submits their drawn signature.
 
 **Critical Info for New Agent**
--   The project consists of three separate front-facing applications: the public website, the admin panel, and the employee dashboard. Pay close attention to the routes (, , ) and apply the correct layouts and themes.
--   Authentication is role-based. Ensure endpoints are properly protected and that frontend requests include the correct JWT in the  header.
--   The user has expressed interest in significant future enhancements (document management, e-signatures). Build the upcoming task management feature in a scalable way to facilitate future additions.
+-   The applicant/employee authentication flow is now complex and status-driven. The  field in the  collection is critical as it controls what UI the user sees upon logging in (, , or full ).
+-   The user flow from application to full dashboard access is: Apply -> Login to see Pending -> Admin accepts -> Login to see Upload ID page -> User uploads ID -> Admin reviews ID -> **(MISSING STEP: Admin approves verification)** -> User gets full dashboard access. The missing step is a high-priority upcoming task.
 
 **documents and test reports created in this job**
--   None.
+-   : This file was created and consistently updated after each major feature implementation.
+-   Test reports from the testing agent, such as , were generated and acted upon.
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  ** (PENDING):** Request to create a task management system in the admin panel to create and assign tasks to employees, with specific fields for task creation.
-2.  ** (DONE):** Request to create the employee dashboard with a separate login, orange/white theme, and specific navigation tabs.
-3.  ** (DONE):** Request to connect the career application form to a table in the admin panel.
-4.  ** (RESOLVED):** User confirming they are testing the login issue in the preview environment.
-5.  ** (RESOLVED):** User reporting that the admin login is not working.
-6.  ** (DONE):** Request to add a link to the admin login page in the website's footer.
-7.  ** (DONE):** User green-lighting the start of the admin panel, beginning with the login screen.
-8.  ** (INFO GATHERING):** User asking about the agent's capabilities to build a full backend/frontend system for employee management if they purchase credits.
-9.  ** (DONE):** Request to add more fields to the career page application form.
-10. ** (DONE):** Request to create a logo, a Career page, an Imprint page, and a Privacy Policy page.
+1.  ** (Actioned):** User confirmed requirements for the signature solution: a custom draw signature implementation for the employment contract, plus a request for PDF download functionality on the documents page.
+2.  ** (Actioned):** Agent asked clarifying questions before starting the document signing feature.
+3.  ** (Actioned):** User requested the implementation of an online document signing feature for the employment contract.
+4.  ** (Done):** Agent finished the implementation of the employee dashboard pages (, , ).
+5.  ** (Done):** Agent showed a screenshot confirming the Auszahlung (Payout) page was working.
+6.  ** (Done):** Agent showed a screenshot confirming the Dokumente (Documents) page was working.
+7.  ** (Done):** Agent showed a screenshot confirming the Einstellungen (Settings) page was working.
+8.  ** (Actioned):** User requested the agent to build out the remaining employee dashboard pages.
+9.  ** (Done):** Agent completed the rework of the applicant-to-employee workflow.
+10. ** (Done):** Agent showed a screenshot confirming the new password fields on the career application form.
 
 **Project Health Check:**
 -   **Broken:** None.
--   **Mocked:** The employee dashboard pages (, , , , ) are UI placeholders without backend integration.
+-   **Mocked:**
+    -   The , , and  pages in the employee dashboard are UI-only and not connected to backend data.
+    -   The admin's final approval step in the verification workflow is missing. Admins can view IDs but cannot approve them to grant full dashboard access.
 
 **3rd Party Integrations**
--   None currently implemented. DocuSign/HelloSign were mentioned as a potential future integration.
+-   ****: A frontend library used to create the signature drawing pad.
 
 **Testing status**
--   **Testing agent used after significant changes:** NO
+-   **Testing agent used after significant changes:** YES
 -   **Troubleshoot agent used after agent stuck in loop:** NO
 -   **Test files created:** None
 -   **Known regressions:** None
@@ -162,10 +144,15 @@ A full-stack application with a React frontend and FastAPI backend.
     -   URL: 
     -   Email: 
     -   Password: 
--   **Employee Login:**
+-   **Employee Login (pre-existing, full access):**
     -   URL: 
     -   Email: 
     -   Password: 
+-   **To test the new applicant flow:**
+    1.  Go to the  page on the public website.
+    2.  Fill out the form and create a new account with a password.
+    3.  Log in at  with the new credentials to see the status pages.
 
 **What agent forgot to execute**
--   The agent did not explicitly show the creation or updating of  in parallel with  calls, which is a required step in the system prompt. The next agent should ensure this file is created and kept up-to-date.</analysis>
+-   The agent did not implement the admin's final approval step for ID verification. After an applicant uploads their documents, there is currently no way for an admin to mark them as verified and grant them full dashboard access.
+-   The agent has not yet implemented the PDF download functionality on the  page, which was part of the user's last request.</analysis>
