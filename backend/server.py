@@ -70,6 +70,10 @@ async def get_status_checks():
 from routes.admin import router as admin_router
 app.include_router(admin_router)
 
+# Include application routes
+from routes.applications import router as applications_router
+app.include_router(applications_router)
+
 # Include the router in the main app
 app.include_router(api_router)
 
