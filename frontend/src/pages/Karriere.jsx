@@ -23,7 +23,12 @@ const Karriere = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
+    mobilnummer: '',
+    geburtsdatum: '',
+    staatsangehoerigkeit: '',
+    strasse: '',
+    postleitzahl: '',
+    stadt: '',
     position: '',
     message: '',
     cv: null,
