@@ -11,7 +11,10 @@ import {
   GraduationCap,
   Upload,
   Send,
-  CheckCircle
+  CheckCircle,
+  Eye,
+  EyeOff,
+  Lock
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
@@ -24,6 +27,8 @@ const Karriere = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    password: '',
+    passwordConfirm: '',
     mobilnummer: '',
     geburtsdatum: '',
     staatsangehoerigkeit: '',
@@ -35,6 +40,7 @@ const Karriere = () => {
     cv: null,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -56,6 +62,19 @@ const Karriere = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate passwords match
+    if (formData.password !== formData.passwordConfirm) {
+      toast.error('Die Passwörter stimmen nicht überein');
+      return;
+    }
+    
+    // Validate password strength
+    if (formData.password.length < 8) {
+      toast.error('Das Passwort muss mindestens 8 Zeichen lang sein');
+      return;
+    }
+    
     setIsSubmitting(true);
 
     try {
@@ -63,6 +82,7 @@ const Karriere = () => {
       const applicationData = {
         name: formData.name,
         email: formData.email,
+        password: formData.password,
         mobilnummer: formData.mobilnummer,
         geburtsdatum: formData.geburtsdatum,
         staatsangehoerigkeit: formData.staatsangehoerigkeit,
@@ -81,13 +101,16 @@ const Karriere = () => {
       );
 
       toast.success('Vielen Dank für Ihre Bewerbung!', {
-        description: 'Wir werden Ihre Unterlagen prüfen und uns in Kürze bei Ihnen melden.',
+        description: 'Sie können sich jetzt mit Ihrer E-Mail und Ihrem Passwort unter /mitarbeiter/login anmelden, um den Status Ihrer Bewerbung zu verfolgen.',
+        duration: 8000,
       });
 
       // Reset form
       setFormData({
         name: '',
         email: '',
+        password: '',
+        passwordConfirm: '',
         mobilnummer: '',
         geburtsdatum: '',
         staatsangehoerigkeit: '',
@@ -104,8 +127,9 @@ const Karriere = () => {
       if (fileInput) fileInput.value = '';
     } catch (error) {
       console.error('Error submitting application:', error);
+      const errorMsg = error.response?.data?.detail || 'Bitte versuchen Sie es später erneut.';
       toast.error('Fehler beim Senden der Bewerbung', {
-        description: 'Bitte versuchen Sie es später erneut.',
+        description: errorMsg,
       });
     } finally {
       setIsSubmitting(false);
