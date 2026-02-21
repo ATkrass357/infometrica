@@ -217,3 +217,346 @@ async def initialize_employee(db: AsyncIOMotorDatabase = Depends(get_db)):
         "email": "mitarbeiter@infometrica.de",
         "password": "Mitarbeiter123!"
     }
+
+
+# ==================== PROFILE / SETTINGS ENDPOINTS ====================
+
+@router.get("/profile")
+async def get_profile(
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Get employee profile data"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    employee_id = payload.get("id")
+    employee = await db.employees.find_one({"id": employee_id}, {"_id": 0, "password_hash": 0})
+    
+    if not employee:
+        raise HTTPException(status_code=404, detail="Mitarbeiter nicht gefunden")
+    
+    # Get notification settings
+    settings = await db.employee_settings.find_one({"employee_id": employee_id}, {"_id": 0})
+    if not settings:
+        settings = {
+            "email_notifications": True,
+            "task_reminders": True,
+            "payout_notifications": True
+        }
+    
+    return {
+        **employee,
+        "notifications": settings
+    }
+
+
+@router.put("/profile")
+async def update_profile(
+    profile: ProfileUpdate,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Update employee profile"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    employee_id = payload.get("id")
+    
+    update_data = {k: v for k, v in profile.dict().items() if v is not None}
+    
+    if update_data:
+        await db.employees.update_one(
+            {"id": employee_id},
+            {"$set": update_data}
+        )
+    
+    return {"message": "Profil aktualisiert"}
+
+
+@router.post("/change-password")
+async def change_password(
+    passwords: PasswordChange,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Change employee password"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    employee_id = payload.get("id")
+    employee = await db.employees.find_one({"id": employee_id})
+    
+    if not employee:
+        raise HTTPException(status_code=404, detail="Mitarbeiter nicht gefunden")
+    
+    # Verify current password
+    if not verify_password(passwords.current_password, employee["password_hash"]):
+        raise HTTPException(status_code=400, detail="Aktuelles Passwort ist falsch")
+    
+    # Validate new password
+    if len(passwords.new_password) < 8:
+        raise HTTPException(status_code=400, detail="Passwort muss mindestens 8 Zeichen haben")
+    
+    # Update password
+    new_hash = get_password_hash(passwords.new_password)
+    await db.employees.update_one(
+        {"id": employee_id},
+        {"$set": {"password_hash": new_hash, "password_changed_at": datetime.utcnow()}}
+    )
+    
+    return {"message": "Passwort geändert"}
+
+
+@router.put("/notifications")
+async def update_notifications(
+    settings: NotificationSettings,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Update notification settings"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    employee_id = payload.get("id")
+    
+    await db.employee_settings.update_one(
+        {"employee_id": employee_id},
+        {"$set": {
+            "employee_id": employee_id,
+            **settings.dict()
+        }},
+        upsert=True
+    )
+    
+    return {"message": "Einstellungen gespeichert"}
+
+
+# ==================== DOCUMENTS ENDPOINTS ====================
+
+@router.get("/documents")
+async def get_documents(
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Get employee documents"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    employee_id = payload.get("id")
+    
+    # Get documents from database
+    documents = await db.employee_documents.find(
+        {"employee_id": employee_id},
+        {"_id": 0}
+    ).sort("uploaded_at", -1).to_list(100)
+    
+    # Also include signed contracts
+    contracts = await db.contracts.find(
+        {"employee_id": employee_id.replace("emp-", "EMP").upper(), "status": "signed"},
+        {"_id": 0}
+    ).to_list(100)
+    
+    # Add contracts as documents
+    for contract in contracts:
+        documents.append({
+            "id": contract["id"],
+            "name": f"Arbeitsvertrag - {contract.get('position', 'Minijob')}.pdf",
+            "type": "contract",
+            "category": "Verträge",
+            "size": "~50 KB",
+            "uploaded_at": contract.get("signed_at", contract.get("created_at", datetime.utcnow())).strftime("%Y-%m-%d") if isinstance(contract.get("signed_at", contract.get("created_at")), datetime) else str(contract.get("signed_at", ""))[:10],
+            "status": "approved",
+            "is_contract": True
+        })
+    
+    return documents
+
+
+@router.post("/documents/upload")
+async def upload_document(
+    file: UploadFile = File(...),
+    category: str = "Sonstige",
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Upload a document"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    employee_id = payload.get("id")
+    
+    # Validate file type
+    allowed_types = ["application/pdf", "image/jpeg", "image/png"]
+    if file.content_type not in allowed_types:
+        raise HTTPException(status_code=400, detail="Nur PDF, JPEG und PNG erlaubt")
+    
+    # Validate file size (10MB max)
+    content = await file.read()
+    if len(content) > 10 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="Datei zu groß (max. 10 MB)")
+    
+    # Save file
+    file_ext = file.filename.split(".")[-1] if "." in file.filename else "pdf"
+    doc_id = f"doc-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:6]}"
+    filename = f"{employee_id}_{doc_id}.{file_ext}"
+    filepath = os.path.join(DOCUMENTS_DIR, filename)
+    
+    with open(filepath, "wb") as f:
+        f.write(content)
+    
+    # Save to database
+    doc_data = {
+        "id": doc_id,
+        "employee_id": employee_id,
+        "name": file.filename,
+        "filename": filename,
+        "type": "other",
+        "category": category,
+        "size": f"{round(len(content) / 1024)} KB",
+        "uploaded_at": datetime.utcnow(),
+        "status": "pending"
+    }
+    
+    await db.employee_documents.insert_one(doc_data)
+    
+    return {
+        "message": "Dokument hochgeladen",
+        "document": {
+            "id": doc_id,
+            "name": file.filename,
+            "category": category,
+            "status": "pending"
+        }
+    }
+
+
+@router.get("/documents/{doc_id}/download")
+async def download_document(
+    doc_id: str,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Download a document"""
+    from fastapi.responses import FileResponse
+    
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    employee_id = payload.get("id")
+    
+    # Check if it's a contract
+    if doc_id.startswith("contract-"):
+        # Get contract and return the signed PDF
+        contract = await db.contracts.find_one({"id": doc_id, "status": "signed"})
+        if not contract:
+            raise HTTPException(status_code=404, detail="Vertrag nicht gefunden")
+        
+        pdf_filename = contract.get("signed_pdf")
+        if not pdf_filename:
+            raise HTTPException(status_code=404, detail="PDF nicht verfügbar")
+        
+        pdf_path = f"/app/backend/uploads/contracts/{pdf_filename}"
+        if not os.path.exists(pdf_path):
+            raise HTTPException(status_code=404, detail="Datei nicht gefunden")
+        
+        return FileResponse(
+            pdf_path,
+            media_type="application/pdf",
+            filename=f"Arbeitsvertrag_{contract.get('employee_name', 'Mitarbeiter').replace(' ', '_')}.pdf"
+        )
+    
+    # Regular document
+    document = await db.employee_documents.find_one({"id": doc_id, "employee_id": employee_id})
+    
+    if not document:
+        raise HTTPException(status_code=404, detail="Dokument nicht gefunden")
+    
+    filepath = os.path.join(DOCUMENTS_DIR, document["filename"])
+    if not os.path.exists(filepath):
+        raise HTTPException(status_code=404, detail="Datei nicht gefunden")
+    
+    return FileResponse(
+        filepath,
+        filename=document["name"]
+    )
+
+
+@router.delete("/documents/{doc_id}")
+async def delete_document(
+    doc_id: str,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Delete a document"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    employee_id = payload.get("id")
+    
+    document = await db.employee_documents.find_one({"id": doc_id, "employee_id": employee_id})
+    
+    if not document:
+        raise HTTPException(status_code=404, detail="Dokument nicht gefunden")
+    
+    # Don't allow deleting approved documents
+    if document.get("status") == "approved":
+        raise HTTPException(status_code=400, detail="Bestätigte Dokumente können nicht gelöscht werden")
+    
+    # Delete file
+    filepath = os.path.join(DOCUMENTS_DIR, document["filename"])
+    if os.path.exists(filepath):
+        os.remove(filepath)
+    
+    # Delete from database
+    await db.employee_documents.delete_one({"id": doc_id})
+    
+    return {"message": "Dokument gelöscht"}
