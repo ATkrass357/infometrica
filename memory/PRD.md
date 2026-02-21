@@ -37,7 +37,12 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 - [x] Tokyo Night theme
 - [x] Dashboard overview
 - [x] Applications management (view all job applications)
-- [x] **Task Management System** (NEW - Dec 2025)
+- [x] **Accept Application Feature** (NEW - Dec 2025)
+  - Accept button to create employee account from application
+  - Auto-generates secure password (12 chars)
+  - Shows credentials modal with copy functionality
+  - Status badge shows "Akzeptiert" vs "Neu"
+- [x] **Task Management System** (Dec 2025)
   - Create tasks with title, website URL, 4-part description
   - Assign tasks to employees
   - View all tasks with status/priority
@@ -85,8 +90,10 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 ### Application Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | /api/applications/ | Submit job application |
+| POST | /api/applications/submit | Submit job application |
 | GET | /api/applications/ | Get all applications (admin) |
+| POST | /api/applications/{id}/accept | Accept application & create employee |
+| DELETE | /api/applications/{id} | Delete application |
 
 ---
 
@@ -145,4 +152,4 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 ---
 
 ## Last Updated
-December 2025 - Task Management System implemented and tested (100% pass rate)
+December 2025 - Accept Application feature implemented (auto-creates employee accounts)
