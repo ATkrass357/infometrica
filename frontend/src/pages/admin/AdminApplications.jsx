@@ -212,14 +212,16 @@ const AdminApplications = () => {
               </tr>
             </thead>
             <tbody>
-              {applications.length === 0 ? (
+              {filteredApplications.length === 0 ? (
                 <tr>
                   <td colSpan="5" className="px-6 py-12 text-center text-[#565f89]">
-                    Noch keine Bewerbungen vorhanden
+                    {searchQuery || statusFilter !== 'all' 
+                      ? 'Keine Bewerbungen gefunden' 
+                      : 'Noch keine Bewerbungen vorhanden'}
                   </td>
                 </tr>
               ) : (
-                applications.map((app) => (
+                filteredApplications.map((app) => (
                   <tr
                     key={app.id}
                     className="border-b border-[#292e42] hover:bg-[#1a1b26] transition-colors"
