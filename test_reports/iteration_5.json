@@ -1,0 +1,82 @@
+{
+  "summary": "Tested removal of Auszahlung page and addition of IBAN to contract signing flow. All features working correctly. Auszahlung removed from sidebar and routes. IBAN field present in contract signing modal with validation. PDF download works for signed contracts.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [],
+    "console_warnings": [
+      {"component": "MitarbeiterLayout", "issue": "Console logs: 'No routes matched location /mitarbeiter/auszahlung' - This is expected behavior as route was removed"}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_contracts_iban.py",
+    "/app/test_reports/pytest/pytest_contracts_iban.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Auszahlung page successfully removed from sidebar menu items (line 69-75 MitarbeiterLayout.jsx)",
+    "Auszahlung route successfully removed from App.js - no route for /mitarbeiter/auszahlung",
+    "IBAN input field added to contract signing modal with data-testid='iban-input'",
+    "IBAN validation works correctly - rejects IBANs < 15 or > 34 characters",
+    "IBAN is stored in database upon contract signing",
+    "IBAN is included in generated PDF under §4 Bankverbindung",
+    "PDF download works correctly with proper content-type and filename"
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_contracts_iban.py"
+  ],
+  "success_rate": {
+    "backend": "100% (4 passed, 3 skipped - no pending contracts)",
+    "frontend": "100%"
+  },
+  "test_credentials": {
+    "employee": {
+      "email": "mitarbeiter@infometrica.de",
+      "password": "Mitarbeiter123!"
+    },
+    "admin": {
+      "email": "admin@infometrica.de",
+      "password": "Admin123!"
+    }
+  },
+  "seed_data_creation": "Used existing contracts. Both contracts now signed with IBAN DE89370400440532013000 and DE89370400440532013001",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Auszahlung page has been removed from employee panel. Contract signing now requires IBAN input. Two contracts exist for test employee (both now signed). Test new contract creation flow if needed.",
+  "features_tested": {
+    "auszahlung_removal": [
+      "Sidebar menu does NOT show 'Auszahlung' - PASS",
+      "Menu shows exactly: Main, Vertrag, Aufträge, Einstellungen, Dokumente - PASS",
+      "Navigating to /mitarbeiter/auszahlung shows blank page (route removed) - PASS"
+    ],
+    "iban_in_contract_signing": [
+      "IBAN input field exists with data-testid='iban-input' - PASS",
+      "IBAN placeholder shows 'DE00 0000 0000 0000 0000 00' - PASS",
+      "IBAN label shows 'Bankverbindung für Gehaltszahlung *' - PASS",
+      "IBAN is required - signing without IBAN fails with 422 - PASS",
+      "Invalid IBAN (too short) fails with 'Ungültige IBAN' - PASS",
+      "Valid IBAN accepted and contract signs successfully - PASS",
+      "IBAN stored in database after signing - PASS"
+    ],
+    "pdf_download": [
+      "Download button appears for signed contracts - PASS",
+      "PDF downloads successfully (3.8KB+ file) - PASS",
+      "PDF has correct filename: Arbeitsvertrag_Max_Mitarbeiter.pdf - PASS",
+      "Success toast 'PDF heruntergeladen' shown - PASS"
+    ]
+  },
+  "api_endpoints_tested": {
+    "contracts": [
+      "GET /api/contracts/my-contracts - 200 (returns list of employee contracts)",
+      "POST /api/contracts/{id}/sign - 422 (missing IBAN field)",
+      "POST /api/contracts/{id}/sign - 400 (invalid IBAN)",
+      "POST /api/contracts/{id}/sign - 200 (valid IBAN, contract signed)",
+      "GET /api/contracts/{id}/download - 200 (PDF download for signed)",
+      "GET /api/contracts/{id}/download - 400 (unsigned contract)"
+    ]
+  }
+}
