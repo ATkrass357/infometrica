@@ -119,6 +119,19 @@ const AdminApplications = () => {
     }
   };
 
+  // Filter applications based on search and status
+  const filteredApplications = applications.filter(app => {
+    const matchesSearch = searchQuery === '' || 
+      app.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app.position?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      app.stadt?.toLowerCase().includes(searchQuery.toLowerCase());
+    
+    const matchesStatus = statusFilter === 'all' || app.status === statusFilter;
+    
+    return matchesSearch && matchesStatus;
+  });
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
