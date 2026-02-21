@@ -25,7 +25,7 @@ import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Contract text component
+// Contract text component - Minijob Arbeitsvertrag
 const ContractDocument = ({ contract }) => {
   const today = new Date().toLocaleDateString('de-DE');
   
@@ -34,20 +34,22 @@ const ContractDocument = ({ contract }) => {
       {/* Header */}
       <div className="text-center mb-8 pb-4 border-b-2 border-gray-300">
         <h2 className="text-2xl font-bold text-gray-900 mb-1">ARBEITSVERTRAG</h2>
-        <p className="text-gray-600">Infometrica GmbH - App Testing Agency</p>
+        <p className="text-gray-600 font-medium">(Minijob – geringfügige Beschäftigung)</p>
       </div>
 
       {/* Parties */}
       <div className="mb-6">
-        <p className="font-semibold text-gray-900 mb-2">Zwischen</p>
-        <p className="text-gray-700 mb-1">Infometrica GmbH</p>
-        <p className="text-gray-700 mb-1">Teststraße 123, 10115 Berlin</p>
-        <p className="text-gray-600 italic mb-4">- nachfolgend "Arbeitgeber" genannt -</p>
+        <p className="font-semibold text-gray-900 mb-2">zwischen</p>
+        <p className="text-gray-700 mb-1 font-medium">Infometrica</p>
+        <p className="text-gray-700 mb-1">Tauentzienstraße 9–12</p>
+        <p className="text-gray-700 mb-1">10789 Berlin</p>
+        <p className="text-gray-700 mb-1">Deutschland</p>
+        <p className="text-gray-600 italic mb-4">– nachfolgend „Arbeitgeber" genannt –</p>
         
         <p className="font-semibold text-gray-900 mb-2">und</p>
-        <p className="text-gray-700 mb-1">{contract.employee_name}</p>
+        <p className="text-gray-700 mb-1 font-medium">{contract.employee_name}</p>
         <p className="text-gray-700 mb-1">E-Mail: {contract.employee_email}</p>
-        <p className="text-gray-600 italic mb-4">- nachfolgend "Arbeitnehmer" genannt -</p>
+        <p className="text-gray-600 italic mb-4">– nachfolgend „Arbeitnehmer" genannt –</p>
         
         <p className="text-gray-700">wird folgender Arbeitsvertrag geschlossen:</p>
       </div>
@@ -55,84 +57,117 @@ const ContractDocument = ({ contract }) => {
       {/* Contract Terms */}
       <div className="space-y-6">
         <section>
-          <h3 className="font-bold text-gray-900 mb-2">§1 Beginn und Tätigkeit</h3>
-          <ul className="list-disc list-inside text-gray-700 space-y-1">
-            <li>Das Arbeitsverhältnis beginnt am <strong>{contract.start_date}</strong>.</li>
-            <li>Der Arbeitnehmer wird als <strong>{contract.position}</strong> eingestellt.</li>
-            <li>Der Arbeitsort ist Berlin mit Möglichkeit zum Home-Office.</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3 className="font-bold text-gray-900 mb-2">§2 Arbeitszeit</h3>
-          <ul className="list-disc list-inside text-gray-700 space-y-1">
-            <li>Die regelmäßige wöchentliche Arbeitszeit beträgt <strong>{contract.working_hours} Stunden</strong>.</li>
-            <li>Die Verteilung der Arbeitszeit erfolgt nach betrieblichen Erfordernissen.</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3 className="font-bold text-gray-900 mb-2">§3 Vergütung</h3>
-          <ul className="list-disc list-inside text-gray-700 space-y-1">
-            <li>Der Arbeitnehmer erhält ein monatliches Bruttogehalt von <strong>{contract.salary} EUR</strong>.</li>
-            <li>Die Zahlung erfolgt jeweils zum Monatsende.</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3 className="font-bold text-gray-900 mb-2">§4 Bankverbindung</h3>
+          <h3 className="font-bold text-gray-900 mb-2">§1 Beginn des Arbeitsverhältnisses</h3>
           <p className="text-gray-700">
-            Die Vergütung wird auf das vom Arbeitnehmer angegebene Bankkonto überwiesen. 
-            Die IBAN wird bei der Vertragsunterzeichnung angegeben.
+            Dieses Arbeitsverhältnis beginnt am Tag der Unterzeichnung durch beide Parteien.
           </p>
         </section>
 
         <section>
-          <h3 className="font-bold text-gray-900 mb-2">§5 Urlaub</h3>
-          <p className="text-gray-700">
-            Der Arbeitnehmer hat Anspruch auf <strong>30 Arbeitstage</strong> bezahlten Urlaub pro Jahr.
+          <h3 className="font-bold text-gray-900 mb-2">§2 Tätigkeit</h3>
+          <p className="text-gray-700 mb-2">
+            Der Arbeitnehmer wird als <strong>Assistent für Evaluierungen im Homeoffice</strong> bei Infometrica eingestellt und insbesondere mit folgenden Aufgaben betraut:
           </p>
-        </section>
-
-        <section>
-          <h3 className="font-bold text-gray-900 mb-2">§6 Kündigung</h3>
-          <ul className="list-disc list-inside text-gray-700 space-y-1">
-            <li>Die Kündigungsfrist beträgt während der Probezeit 2 Wochen.</li>
-            <li>Nach der Probezeit gelten die gesetzlichen Kündigungsfristen.</li>
+          <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
+            <li>Überprüfung von Apps und Software auf Benutzerfreundlichkeit und Mängel</li>
+            <li>Durchführung von Video-Identifikationen im Rahmen von Evaluierungen</li>
+            <li>Erstellung und fristgerechte Einreichung der dazugehörigen Abschlussberichte</li>
           </ul>
         </section>
 
         <section>
-          <h3 className="font-bold text-gray-900 mb-2">§7 Probezeit</h3>
+          <h3 className="font-bold text-gray-900 mb-2">§3 Arbeitszeit</h3>
+          <p className="text-gray-700 mb-2">
+            Die regelmäßige Arbeitszeit beträgt etwa <strong>10 Wochenstunden</strong>, verteilt auf 2 bis 4 Tage pro Woche.
+          </p>
           <p className="text-gray-700">
-            Die ersten <strong>6 Monate</strong> gelten als Probezeit.
+            Die genauen Arbeitszeiten werden in Absprache zwischen Arbeitnehmer und Arbeitgeber unter Berücksichtigung der betrieblichen Erfordernisse sowie der terminlichen Möglichkeiten des Arbeitnehmers festgelegt.
           </p>
         </section>
 
         <section>
-          <h3 className="font-bold text-gray-900 mb-2">§8 Verschwiegenheitspflicht</h3>
+          <h3 className="font-bold text-gray-900 mb-2">§4 Vergütung</h3>
+          <p className="text-gray-700 mb-2">
+            Der Arbeitnehmer erhält eine Vergütung in Höhe von maximal <strong>603,00 EUR</strong> monatlich.
+          </p>
+          <p className="text-gray-700 mb-2">
+            Die Vergütung ist jeweils am Monatsende des Folgemonats fällig und wird per Überweisung auf das vom Arbeitnehmer benannte Konto gezahlt.
+          </p>
+          <p className="text-gray-700 mb-2">
+            Der Arbeitnehmer wurde darauf hingewiesen, dass er auf Antrag von der Rentenversicherungspflicht befreit werden kann. Der schriftliche Befreiungsantrag ist dem Arbeitgeber zu übergeben (§ 6 Abs. 1b Sozialgesetzbuch Sechstes Buch – SGB VI).
+          </p>
+          <p className="text-gray-700 mb-2">
+            Dem Arbeitnehmer ist bekannt, dass ein entsprechender Verzicht nur mit Wirkung für die Zukunft und bei Ausübung mehrerer geringfügiger Beschäftigungsverhältnisse nur einheitlich erklärt werden kann. Diese Erklärung bindet den Arbeitnehmer für die Dauer der jeweiligen Beschäftigungen.
+          </p>
           <p className="text-gray-700">
-            Der Arbeitnehmer verpflichtet sich, über alle betrieblichen Angelegenheiten, 
-            insbesondere Geschäfts- und Betriebsgeheimnisse, Stillschweigen zu bewahren. 
-            Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort.
+            Die Tätigkeit erfolgt bei Infometrica im Homeoffice.
           </p>
         </section>
 
         <section>
-          <h3 className="font-bold text-gray-900 mb-2">§9 Nebentätigkeit</h3>
+          <h3 className="font-bold text-gray-900 mb-2">§5 Sonderzuwendungen</h3>
           <p className="text-gray-700">
-            Jede Nebentätigkeit bedarf der vorherigen schriftlichen Zustimmung des Arbeitgebers. 
-            Die Zustimmung ist zu erteilen, wenn die Nebentätigkeit die Arbeitsleistung nicht beeinträchtigt.
+            Der Arbeitgeber zahlt Sonderzuwendungen (Urlaubsgeld und Weihnachtsgeld) in den Monaten Juni und Dezember in Höhe von jeweils <strong>603,00 EUR</strong>.
           </p>
         </section>
 
         <section>
-          <h3 className="font-bold text-gray-900 mb-2">§10 Schlussbestimmungen</h3>
-          <ul className="list-disc list-inside text-gray-700 space-y-1">
-            <li>Änderungen und Ergänzungen dieses Vertrages bedürfen der Schriftform.</li>
-            <li>Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein, so wird dadurch die Wirksamkeit der übrigen Bestimmungen nicht berührt.</li>
-            <li>Es gilt das Recht der Bundesrepublik Deutschland.</li>
-          </ul>
+          <h3 className="font-bold text-gray-900 mb-2">§6 Urlaubsanspruch</h3>
+          <p className="text-gray-700 mb-2">
+            Der Arbeitnehmer hat grundsätzlich Anspruch auf einen jährlichen Erholungsurlaub von <strong>28 Arbeitstagen</strong>. Zeitpunkt und Dauer des Urlaubs richten sich nach den betrieblichen Notwendigkeiten unter Berücksichtigung der Wünsche des Arbeitnehmers.
+          </p>
+          <p className="text-gray-700">
+            Im Übrigen gelten ergänzend die Bestimmungen des Bundesurlaubsgesetzes in der jeweils geltenden Fassung.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§7 Arbeitsverhinderung</h3>
+          <p className="text-gray-700 mb-2">
+            Der Arbeitnehmer verpflichtet sich, jede Arbeitsverhinderung unverzüglich – spätestens vor Arbeitsbeginn – dem Arbeitgeber unter Angabe der voraussichtlichen Dauer schriftlich mitzuteilen.
+          </p>
+          <p className="text-gray-700 mb-2">
+            Im Krankheitsfall hat der Arbeitnehmer unverzüglich, spätestens jedoch nach Ablauf des dritten Kalendertages, dem Arbeitgeber eine ärztliche Arbeitsunfähigkeitsbescheinigung vorzulegen, aus der sich die voraussichtliche Dauer der Erkrankung ergibt. Dauert die Krankheit länger als in der Bescheinigung angegeben, ist unverzüglich eine Folgebescheinigung vorzulegen.
+          </p>
+          <p className="text-gray-700 mb-2">
+            Der Arbeitgeber zahlt im Falle einer unverschuldeten Arbeitsunfähigkeit infolge Krankheit für die Dauer von sechs Wochen das regelmäßige Arbeitsentgelt weiter (Entgeltfortzahlung im Krankheitsfall).
+          </p>
+          <p className="text-gray-700">
+            Im Übrigen gelten die jeweils maßgeblichen gesetzlichen Bestimmungen.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§8 Einstellungsfragebogen</h3>
+          <p className="text-gray-700">
+            Der als Anlage beigefügte Einstellungsfragebogen ist Bestandteil dieses Vertrages. Der Arbeitnehmer versichert die Vollständigkeit und Richtigkeit seiner Angaben.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§9 Weitere Beschäftigungen</h3>
+          <p className="text-gray-700">
+            Der Arbeitnehmer verpflichtet sich, die Aufnahme jeder weiteren Beschäftigung dem Arbeitgeber unverzüglich schriftlich mitzuteilen. Dies gilt unabhängig von der Höhe des Verdienstes oder dem zeitlichen Umfang der Tätigkeit.
+          </p>
+        </section>
+
+        <section>
+          <h3 className="font-bold text-gray-900 mb-2">§10 Kündigungsfristen</h3>
+          <p className="text-gray-700 mb-2">
+            Das Arbeitsverhältnis wird auf unbestimmte Zeit geschlossen. Die ersten <strong>6 Wochen</strong> gelten als Probezeit. Während dieser Zeit kann das Arbeitsverhältnis von beiden Parteien mit einer Frist von zwei Wochen (§ 622 Abs. 3 BGB) gekündigt werden.
+          </p>
+          <p className="text-gray-700 mb-2">
+            Nach Ablauf der Probezeit gelten die gesetzlichen Kündigungsfristen. Verlängert sich die Kündigungsfrist für den Arbeitgeber aus tariflichen oder gesetzlichen Gründen, gilt diese Verlängerung entsprechend auch für den Arbeitnehmer.
+          </p>
+          <p className="text-gray-700 mb-2">
+            Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt unberührt.
+          </p>
+          <p className="text-gray-700 mb-2">
+            Jede Kündigung bedarf der Schriftform.
+          </p>
+          <p className="text-gray-700">
+            Der Arbeitgeber ist berechtigt, den Arbeitnehmer nach Ausspruch einer Kündigung unter Fortzahlung der Vergütung und unter Anrechnung auf etwaige Resturlaubsansprüche von der Arbeitsleistung freizustellen.
+          </p>
         </section>
       </div>
 
