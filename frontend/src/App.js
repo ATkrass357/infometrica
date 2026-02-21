@@ -12,6 +12,7 @@ import Datenschutz from "@/pages/Datenschutz";
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminApplications from "@/pages/admin/AdminApplications";
+import AdminTasks from "@/pages/admin/AdminTasks";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import MitarbeiterLogin from "@/pages/mitarbeiter/MitarbeiterLogin";
@@ -53,6 +54,16 @@ function App() {
               <ProtectedRoute>
                 <AdminLayout>
                   <AdminApplications />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/tasks"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminTasks />
                 </AdminLayout>
               </ProtectedRoute>
             }
