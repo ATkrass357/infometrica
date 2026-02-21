@@ -11,6 +11,7 @@ import Impressum from "@/pages/Impressum";
 import Datenschutz from "@/pages/Datenschutz";
 import AdminLogin from "@/pages/admin/AdminLogin";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
+import AdminApplications from "@/pages/admin/AdminApplications";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import { Toaster } from "@/components/ui/sonner";
@@ -39,6 +40,16 @@ function App() {
               <ProtectedRoute>
                 <AdminLayout>
                   <AdminDashboard />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/applications"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminApplications />
                 </AdminLayout>
               </ProtectedRoute>
             }
