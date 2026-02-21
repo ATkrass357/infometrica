@@ -8,6 +8,13 @@ import os
 import uuid
 import base64
 
+# Import email service
+from services.email_service import (
+    send_application_confirmation,
+    send_application_accepted,
+    send_account_unlocked
+)
+
 router = APIRouter(prefix="/api/applications", tags=["applications"])
 
 # Directory for storing verification images
