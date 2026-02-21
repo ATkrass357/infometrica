@@ -457,16 +457,3 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     c.drawCentredString(width/2, 1.5*cm, "Dieses Dokument wurde digital signiert und ist rechtsgültig.")
     
     c.save()
-    
-    # Employer signature area
-    c.drawString(11*cm, y_pos + 3.9*cm, "Unterschrift Arbeitgeber:")
-    y_pos_employer = y_pos + 0.5*cm
-    c.line(11*cm, y_pos_employer, 17*cm, y_pos_employer)
-    c.drawString(11*cm, y_pos, "Infometrica GmbH")
-    
-    # Footer
-    c.setFont("Helvetica", 8)
-    c.drawCentredString(width/2, 1.5*cm, f"Vertragsnummer: {contract['id']} | Erstellt am: {contract.get('created_at', datetime.utcnow()).strftime('%d.%m.%Y')}")
-    c.drawCentredString(width/2, 1*cm, "Dieses Dokument wurde digital signiert und ist rechtsgültig.")
-    
-    c.save()
