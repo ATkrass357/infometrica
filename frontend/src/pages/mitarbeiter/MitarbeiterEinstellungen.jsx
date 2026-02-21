@@ -119,8 +119,13 @@ const MitarbeiterEinstellungen = () => {
 
     setSaving(true);
     try {
-      // Simulate password change - in real app, call backend
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const token = localStorage.getItem('employee_token');
+      await axios.post(`${BACKEND_URL}/api/employee/change-password`, {
+        current_password: passwordData.currentPassword,
+        new_password: passwordData.newPassword
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       
       toast.success('Passwort geändert');
       setPasswordData({
@@ -129,7 +134,7 @@ const MitarbeiterEinstellungen = () => {
         confirmPassword: '',
       });
     } catch (error) {
-      toast.error('Fehler beim Ändern des Passworts');
+      toast.error(error.response?.data?.detail || 'Fehler beim Ändern des Passworts');
     } finally {
       setSaving(false);
     }
