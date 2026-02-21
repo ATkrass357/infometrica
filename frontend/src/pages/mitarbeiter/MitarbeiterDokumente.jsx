@@ -165,7 +165,8 @@ const MitarbeiterDokumente = () => {
     }
   };
 
-  const categories = ['all', 'Verträge', 'Gehaltsabrechnungen', 'Steuer', 'Versicherungen', 'Sonstige'];
+  const categoriesFromDocs = ['all', ...new Set(documents.map(d => d.category))];
+  const categories = categoriesFromDocs.length > 1 ? categoriesFromDocs : ['all', 'Verträge', 'Sonstige'];
   
   const filteredDocuments = selectedCategory === 'all' 
     ? documents 
