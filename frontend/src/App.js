@@ -22,7 +22,6 @@ import MitarbeiterDashboard from "@/pages/mitarbeiter/MitarbeiterDashboard";
 import MitarbeiterAuftrage from "@/pages/mitarbeiter/MitarbeiterAuftrage";
 import MitarbeiterEinstellungen from "@/pages/mitarbeiter/MitarbeiterEinstellungen";
 import MitarbeiterDokumente from "@/pages/mitarbeiter/MitarbeiterDokumente";
-import MitarbeiterAuszahlung from "@/pages/mitarbeiter/MitarbeiterAuszahlung";
 import MitarbeiterVertrag from "@/pages/mitarbeiter/MitarbeiterVertrag";
 import MitarbeiterLayout from "@/components/mitarbeiter/MitarbeiterLayout";
 import ProtectedEmployeeRoute from "@/components/mitarbeiter/ProtectedEmployeeRoute";
@@ -133,16 +132,6 @@ function App() {
               <ProtectedEmployeeRoute>
                 <MitarbeiterLayout>
                   <MitarbeiterDokumente />
-                </MitarbeiterLayout>
-              </ProtectedEmployeeRoute>
-            }
-          />
-          <Route
-            path="/mitarbeiter/auszahlung"
-            element={
-              <ProtectedEmployeeRoute>
-                <MitarbeiterLayout>
-                  <MitarbeiterAuszahlung />
                 </MitarbeiterLayout>
               </ProtectedEmployeeRoute>
             }
