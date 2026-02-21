@@ -143,11 +143,11 @@ const AdminApplications = () => {
   return (
     <div className="space-y-6" data-testid="admin-applications-page">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-[#c0caf5]">Bewerbungen</h1>
           <p className="text-[#9aa5ce] mt-1">
-            {applications.length} Bewerbung{applications.length !== 1 ? 'en' : ''} insgesamt
+            {filteredApplications.length} von {applications.length} Bewerbung{applications.length !== 1 ? 'en' : ''}
           </p>
         </div>
         <button
@@ -158,6 +158,44 @@ const AdminApplications = () => {
           <RefreshCw size={18} />
           <span>Aktualisieren</span>
         </button>
+      </div>
+
+      {/* Search and Filter */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        {/* Search Input */}
+        <div className="relative flex-1">
+          <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#565f89]" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Nach Name, E-Mail, Position oder Stadt suchen..."
+            className="w-full pl-10 pr-4 py-2.5 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] placeholder-[#565f89] focus:outline-none focus:border-[#7aa2f7]"
+            data-testid="search-applications-input"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#565f89] hover:text-[#c0caf5]"
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
+        
+        {/* Status Filter */}
+        <select
+          value={statusFilter}
+          onChange={(e) => setStatusFilter(e.target.value)}
+          className="px-4 py-2.5 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+          data-testid="status-filter-select"
+        >
+          <option value="all">Alle Status</option>
+          <option value="Neu">Neu</option>
+          <option value="Akzeptiert">Wartet auf ID</option>
+          <option value="Verifiziert">Verifiziert</option>
+          <option value="Freigeschaltet">Freigeschaltet</option>
+        </select>
       </div>
 
       {/* Table */}
