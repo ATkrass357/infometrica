@@ -5,7 +5,6 @@ import {
   ClipboardList,
   Settings,
   FileText,
-  DollarSign,
   LogOut,
   Menu,
   X,
@@ -73,7 +72,6 @@ const MitarbeiterLayout = ({ children }) => {
     { icon: ClipboardList, label: 'Aufträge', path: '/mitarbeiter/auftrage' },
     { icon: Settings, label: 'Einstellungen', path: '/mitarbeiter/einstellungen' },
     { icon: FileText, label: 'Dokumente', path: '/mitarbeiter/dokumente' },
-    { icon: DollarSign, label: 'Auszahlung', path: '/mitarbeiter/auszahlung' },
   ];
 
   const handleLogout = () => {
