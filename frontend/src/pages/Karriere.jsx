@@ -297,89 +297,184 @@ const Karriere = () => {
 
           <div className="bg-white p-10 rounded-2xl shadow-lg">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name *</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Ihr vollständiger Name"
-                    required
-                    className="h-12"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">E-Mail *</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="ihre@email.de"
-                    required
-                    className="h-12"
-                  />
+              {/* Persönliche Daten */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                  Persönliche Daten
+                </h3>
+                
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name">Vollständiger Name *</Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        placeholder="Max Mustermann"
+                        required
+                        className="h-12"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="email">E-Mail *</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="ihre@email.de"
+                        required
+                        className="h-12"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="mobilnummer">Mobilnummer *</Label>
+                      <Input
+                        id="mobilnummer"
+                        name="mobilnummer"
+                        type="tel"
+                        value={formData.mobilnummer}
+                        onChange={handleChange}
+                        placeholder="+49 170 1234567"
+                        required
+                        className="h-12"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="geburtsdatum">Geburtsdatum *</Label>
+                      <Input
+                        id="geburtsdatum"
+                        name="geburtsdatum"
+                        type="date"
+                        value={formData.geburtsdatum}
+                        onChange={handleChange}
+                        required
+                        className="h-12"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="staatsangehoerigkeit">Staatsangehörigkeit *</Label>
+                    <Input
+                      id="staatsangehoerigkeit"
+                      name="staatsangehoerigkeit"
+                      value={formData.staatsangehoerigkeit}
+                      onChange={handleChange}
+                      placeholder="z.B. Deutsch"
+                      required
+                      className="h-12"
+                    />
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Telefon</Label>
-                  <Input
-                    id="phone"
-                    name="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="+49 123 456789"
-                    className="h-12"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="position">Position *</Label>
-                  <Input
-                    id="position"
-                    name="position"
-                    value={formData.position}
-                    onChange={handleChange}
-                    placeholder="Für welche Position?"
-                    required
-                    className="h-12"
-                  />
+              {/* Anschrift */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                  Anschrift
+                </h3>
+                
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="strasse">Straße und Hausnummer *</Label>
+                    <Input
+                      id="strasse"
+                      name="strasse"
+                      value={formData.strasse}
+                      onChange={handleChange}
+                      placeholder="Musterstraße 123"
+                      required
+                      className="h-12"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="postleitzahl">Postleitzahl *</Label>
+                      <Input
+                        id="postleitzahl"
+                        name="postleitzahl"
+                        value={formData.postleitzahl}
+                        onChange={handleChange}
+                        placeholder="10115"
+                        required
+                        maxLength={5}
+                        className="h-12"
+                      />
+                    </div>
+                    <div className="space-y-2 sm:col-span-2">
+                      <Label htmlFor="stadt">Stadt / Ort *</Label>
+                      <Input
+                        id="stadt"
+                        name="stadt"
+                        value={formData.stadt}
+                        onChange={handleChange}
+                        placeholder="Berlin"
+                        required
+                        className="h-12"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="cv">Lebenslauf / CV *</Label>
-                <div className="relative">
-                  <Input
-                    id="cv"
-                    name="cv"
-                    type="file"
-                    onChange={handleFileChange}
-                    accept=".pdf,.doc,.docx"
-                    required
-                    className="h-12 cursor-pointer"
-                  />
-                  <Upload className="absolute right-3 top-3 text-gray-400 pointer-events-none" size={20} />
-                </div>
-                <p className="text-sm text-gray-500">PDF, DOC oder DOCX (max. 5 MB)</p>
-              </div>
+              {/* Bewerbung */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-200">
+                  Bewerbungsdetails
+                </h3>
+                
+                <div className="space-y-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="position">Gewünschte Position *</Label>
+                    <Input
+                      id="position"
+                      name="position"
+                      value={formData.position}
+                      onChange={handleChange}
+                      placeholder="z.B. Senior QA Engineer"
+                      required
+                      className="h-12"
+                    />
+                  </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="message">Anschreiben / Motivationsschreiben *</Label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Erzählen Sie uns, warum Sie zu Infometrica passen..."
-                  required
-                  className="min-h-[180px] resize-none"
-                />
+                  <div className="space-y-2">
+                    <Label htmlFor="cv">Lebenslauf / CV *</Label>
+                    <div className="relative">
+                      <Input
+                        id="cv"
+                        name="cv"
+                        type="file"
+                        onChange={handleFileChange}
+                        accept=".pdf,.doc,.docx"
+                        required
+                        className="h-12 cursor-pointer"
+                      />
+                      <Upload className="absolute right-3 top-3 text-gray-400 pointer-events-none" size={20} />
+                    </div>
+                    <p className="text-sm text-gray-500">PDF, DOC oder DOCX (max. 5 MB)</p>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Anschreiben / Motivationsschreiben *</Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      placeholder="Erzählen Sie uns, warum Sie zu Infometrica passen..."
+                      required
+                      className="min-h-[180px] resize-none"
+                    />
+                  </div>
+                </div>
               </div>
 
               <Button
