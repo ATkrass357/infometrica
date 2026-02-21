@@ -82,6 +82,13 @@ async def create_contract(
     
     await db.contracts.insert_one(contract)
     
+    # Send email notification
+    await send_contract_ready(
+        to_email=contract_data.employee_email,
+        employee_name=contract_data.employee_name,
+        position=contract_data.position
+    )
+    
     return {
         "message": "Vertrag erstellt",
         "contract_id": contract_id,
