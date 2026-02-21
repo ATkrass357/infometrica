@@ -96,17 +96,38 @@ const AdminContracts = () => {
     }
   };
 
-  const handleEmployeeSelect = (e) => {
-    const selectedId = e.target.value;
-    const employee = employees.find(emp => emp.id === selectedId);
+  // Filter employees based on search query
+  const filteredEmployees = employees.filter(emp => 
+    emp.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    emp.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleEmployeeSelect = (employee) => {
+    setSelectedEmployee(employee);
+    setSearchQuery(employee.name);
+    setShowDropdown(false);
+    setFormData({
+      ...formData,
+      employee_id: employee.id,
+      employee_name: employee.name,
+      employee_email: employee.email,
+      position: employee.position || ''
+    });
+  };
+
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearchQuery(value);
+    setShowDropdown(true);
     
-    if (employee) {
+    // Reset selection if user types something different
+    if (selectedEmployee && value !== selectedEmployee.name) {
+      setSelectedEmployee(null);
       setFormData({
         ...formData,
-        employee_id: employee.id,
-        employee_name: employee.name,
-        employee_email: employee.email,
-        position: employee.position || ''
+        employee_id: '',
+        employee_name: '',
+        employee_email: ''
       });
     }
   };
