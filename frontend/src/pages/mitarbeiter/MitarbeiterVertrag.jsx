@@ -12,9 +12,12 @@ import {
   Calendar,
   Euro,
   Briefcase,
-  X
+  X,
+  CreditCard
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
+import { Label } from '../../components/ui/label';
 import { toast } from 'sonner';
 import axios from 'axios';
 
@@ -26,6 +29,7 @@ const MitarbeiterVertrag = () => {
   const [selectedContract, setSelectedContract] = useState(null);
   const [signing, setSigning] = useState(false);
   const [showSignModal, setShowSignModal] = useState(false);
+  const [iban, setIban] = useState('');
   const sigCanvas = useRef(null);
 
   useEffect(() => {
