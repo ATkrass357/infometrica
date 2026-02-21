@@ -150,6 +150,8 @@ const AdminContracts = () => {
 
       toast.success('Vertrag erstellt und an Mitarbeiter gesendet');
       setShowCreateModal(false);
+      setSearchQuery('');
+      setSelectedEmployee(null);
       setFormData({
         employee_id: '',
         employee_name: '',
