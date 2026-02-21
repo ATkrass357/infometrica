@@ -19,6 +19,9 @@ import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import MitarbeiterLogin from "@/pages/mitarbeiter/MitarbeiterLogin";
 import MitarbeiterDashboard from "@/pages/mitarbeiter/MitarbeiterDashboard";
 import MitarbeiterAuftrage from "@/pages/mitarbeiter/MitarbeiterAuftrage";
+import MitarbeiterEinstellungen from "@/pages/mitarbeiter/MitarbeiterEinstellungen";
+import MitarbeiterDokumente from "@/pages/mitarbeiter/MitarbeiterDokumente";
+import MitarbeiterAuszahlung from "@/pages/mitarbeiter/MitarbeiterAuszahlung";
 import MitarbeiterLayout from "@/components/mitarbeiter/MitarbeiterLayout";
 import ProtectedEmployeeRoute from "@/components/mitarbeiter/ProtectedEmployeeRoute";
 import { Toaster } from "@/components/ui/sonner";
@@ -98,6 +101,36 @@ function App() {
               <ProtectedEmployeeRoute>
                 <MitarbeiterLayout>
                   <MitarbeiterAuftrage />
+                </MitarbeiterLayout>
+              </ProtectedEmployeeRoute>
+            }
+          />
+          <Route
+            path="/mitarbeiter/einstellungen"
+            element={
+              <ProtectedEmployeeRoute>
+                <MitarbeiterLayout>
+                  <MitarbeiterEinstellungen />
+                </MitarbeiterLayout>
+              </ProtectedEmployeeRoute>
+            }
+          />
+          <Route
+            path="/mitarbeiter/dokumente"
+            element={
+              <ProtectedEmployeeRoute>
+                <MitarbeiterLayout>
+                  <MitarbeiterDokumente />
+                </MitarbeiterLayout>
+              </ProtectedEmployeeRoute>
+            }
+          />
+          <Route
+            path="/mitarbeiter/auszahlung"
+            element={
+              <ProtectedEmployeeRoute>
+                <MitarbeiterLayout>
+                  <MitarbeiterAuszahlung />
                 </MitarbeiterLayout>
               </ProtectedEmployeeRoute>
             }
