@@ -99,8 +99,26 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-400">
-          <p>© {currentYear} Infometrica. Alle Rechte vorbehalten.</p>
+        <div className="border-t border-gray-800 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-center text-sm text-gray-400">
+              © {currentYear} Infometrica. Alle Rechte vorbehalten.
+            </p>
+            <div className="flex gap-6 text-sm">
+              <Link 
+                to="/impressum" 
+                className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
+              >
+                Impressum
+              </Link>
+              <Link 
+                to="/datenschutz" 
+                className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
+              >
+                Datenschutz
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
