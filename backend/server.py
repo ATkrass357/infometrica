@@ -78,6 +78,10 @@ app.include_router(applications_router)
 from routes.employee import router as employee_router
 app.include_router(employee_router)
 
+# Include contract routes
+from routes.contracts import router as contracts_router
+app.include_router(contracts_router)
+
 # Include the router in the main app
 app.include_router(api_router)
 
