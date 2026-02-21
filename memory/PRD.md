@@ -66,20 +66,53 @@ Design: Modernes white & orange Farbschema mit Office-Stock-Photos
    - Testing-Prozess (4 Schritte)
    - Vorteile-Section
 
-4. **Kontakt** (`/kontakt`)
+4. **Karriere** (`/karriere`)
+   - Karriere Hero Section
+   - Benefits Section (6 Vorteile)
+   - Offene Stellen (4 Positionen):
+     - Senior QA Engineer
+     - Mobile App Tester
+     - Junior Test Analyst
+     - Performance Test Engineer
+   - Bewerbungsformular mit CV-Upload
+   - CTA Section
+
+5. **Kontakt** (`/kontakt`)
    - Kontakt Hero
    - 3 Kontakt-Info Cards
    - Kontaktformular (mit Validierung)
    - FAQ/Helpdesk Section (4 FAQs)
    - "Warum uns kontaktieren?" Info-Box
 
+6. **Impressum** (`/impressum`)
+   - Firmeninformationen
+   - Kontaktdaten
+   - Vertretungsberechtigte
+   - Registereintrag
+   - USt-ID
+   - Berufshaftpflicht
+   - Streitschlichtung
+   - Haftung für Inhalte
+   - Urheberrecht
+
+7. **Datenschutz** (`/datenschutz`)
+   - DSGVO-konforme Datenschutzerklärung
+   - Verantwortliche Stelle
+   - Datenerfassung & Nutzung
+   - Benutzerrechte
+   - Hosting-Informationen
+   - Cookie-Policy
+   - Kontaktformular-Datenschutz
+
 #### Komponenten:
-- `Navbar.jsx` - Fixed navigation mit Mobile Menu
-- `Footer.jsx` - Company info, Links, Social Media
+- `Logo.jsx` - Custom SVG Logo mit "I" Lettermark und Checkmark
+- `Navbar.jsx` - Fixed navigation mit Mobile Menu (inkl. Karriere)
+- `Footer.jsx` - Company info, Links, Social Media, Impressum & Datenschutz
 - Alle shadcn/ui Components verwendet
 
 #### Design-Features:
 - White & Orange Farbschema perfekt umgesetzt
+- Custom SVG Logo (modern, simpel, professionell)
 - 8 professionelle Office-Stock-Photos integriert
 - Smooth Scrolling aktiviert
 - Hover-Animationen auf Buttons/Cards
