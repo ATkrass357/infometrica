@@ -269,12 +269,13 @@ const MitarbeiterDokumente = () => {
                   Ansehen
                 </button>
                 <button
+                  onClick={() => handleDownload(doc)}
                   className="flex-1 flex items-center justify-center gap-1 px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors text-sm"
                 >
                   <Download size={16} />
                   Download
                 </button>
-                {doc.status !== 'approved' && (
+                {doc.status !== 'approved' && !doc.is_contract && (
                   <button
                     onClick={() => handleDelete(doc.id)}
                     className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
