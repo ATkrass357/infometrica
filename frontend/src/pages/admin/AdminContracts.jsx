@@ -330,22 +330,83 @@ const AdminContracts = () => {
             </div>
 
             <form onSubmit={handleCreateContract} className="p-6 space-y-4">
-              {/* Employee Select */}
-              <div className="space-y-2">
-                <Label className="text-[#9aa5ce]">Mitarbeiter auswählen *</Label>
-                <select
-                  value={formData.employee_id}
-                  onChange={handleEmployeeSelect}
-                  className="w-full px-4 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                  required
-                >
-                  <option value="">Mitarbeiter wählen...</option>
-                  {employees.map((emp) => (
-                    <option key={emp.id} value={emp.id}>
-                      {emp.name} ({emp.email})
-                    </option>
-                  ))}
-                </select>
+              {/* Employee Search */}
+              <div className="space-y-2" ref={dropdownRef}>
+                <Label className="text-[#9aa5ce]">Mitarbeiter suchen *</Label>
+                <div className="relative">
+                  <div className="relative">
+                    <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-[#565f89]" />
+                    <Input
+                      value={searchQuery}
+                      onChange={handleSearchChange}
+                      onFocus={() => setShowDropdown(true)}
+                      className="bg-[#1a1b26] border-[#292e42] text-[#c0caf5] pl-10"
+                      placeholder="Name des Mitarbeiters eingeben..."
+                      data-testid="employee-search-input"
+                    />
+                  </div>
+                  
+                  {/* Dropdown with filtered results */}
+                  {showDropdown && searchQuery && (
+                    <div className="absolute z-50 w-full mt-1 bg-[#1a1b26] border border-[#292e42] rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                      {filteredEmployees.length === 0 ? (
+                        <div className="p-3 text-center text-[#565f89]">
+                          Keine Mitarbeiter gefunden
+                        </div>
+                      ) : (
+                        filteredEmployees.map((emp) => (
+                          <button
+                            key={emp.id}
+                            type="button"
+                            onClick={() => handleEmployeeSelect(emp)}
+                            className={`w-full px-4 py-3 text-left hover:bg-[#292e42] transition-colors flex items-center gap-3 ${
+                              selectedEmployee?.id === emp.id ? 'bg-[#7aa2f7]/20' : ''
+                            }`}
+                            data-testid={`employee-option-${emp.id}`}
+                          >
+                            <div className="w-8 h-8 bg-[#7aa2f7]/20 rounded-full flex items-center justify-center flex-shrink-0">
+                              <User size={16} className="text-[#7aa2f7]" />
+                            </div>
+                            <div>
+                              <p className="text-[#c0caf5] font-medium">{emp.name}</p>
+                              <p className="text-xs text-[#565f89]">{emp.email}</p>
+                            </div>
+                            {selectedEmployee?.id === emp.id && (
+                              <CheckCircle size={16} className="ml-auto text-[#9ece6a]" />
+                            )}
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Show selected employee */}
+                {selectedEmployee && (
+                  <div className="mt-2 p-3 bg-[#7aa2f7]/10 border border-[#7aa2f7]/30 rounded-lg flex items-center gap-3">
+                    <User size={18} className="text-[#7aa2f7]" />
+                    <div className="flex-1">
+                      <p className="text-[#c0caf5] font-medium">{selectedEmployee.name}</p>
+                      <p className="text-xs text-[#9aa5ce]">{selectedEmployee.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedEmployee(null);
+                        setSearchQuery('');
+                        setFormData({
+                          ...formData,
+                          employee_id: '',
+                          employee_name: '',
+                          employee_email: ''
+                        });
+                      }}
+                      className="p-1 text-[#565f89] hover:text-[#f7768e] transition-colors"
+                    >
+                      <X size={16} />
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Position */}
