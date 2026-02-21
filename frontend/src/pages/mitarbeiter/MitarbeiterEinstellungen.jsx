@@ -140,12 +140,28 @@ const MitarbeiterEinstellungen = () => {
     }
   };
 
-  const handleNotificationToggle = (key) => {
-    setNotifications(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-    toast.success('Benachrichtigungseinstellungen gespeichert');
+  const handleNotificationToggle = async (key) => {
+    const newSettings = {
+      ...notifications,
+      [key]: !notifications[key]
+    };
+    setNotifications(newSettings);
+    
+    try {
+      const token = localStorage.getItem('employee_token');
+      await axios.put(`${BACKEND_URL}/api/employee/notifications`, {
+        email_notifications: newSettings.emailNotifications,
+        task_reminders: newSettings.taskReminders,
+        payout_notifications: newSettings.payoutNotifications
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success('Benachrichtigungseinstellungen gespeichert');
+    } catch (error) {
+      // Revert on error
+      setNotifications(notifications);
+      toast.error('Fehler beim Speichern');
+    }
   };
 
   if (loading) {
