@@ -64,6 +64,11 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
+                <Link to="/karriere" className="hover:text-orange-500 transition-colors duration-200">
+                  Karriere
+                </Link>
+              </li>
+              <li>
                 <Link to="/kontakt" className="hover:text-orange-500 transition-colors duration-200">
                   Kontakt
                 </Link>
