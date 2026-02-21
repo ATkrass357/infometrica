@@ -7,6 +7,9 @@ from datetime import timedelta, datetime
 from typing import List
 import uuid
 
+# Import email service
+from services.email_service import send_new_task_notification
+
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
 # Get database instance - will be injected
