@@ -74,6 +74,10 @@ app.include_router(admin_router)
 from routes.applications import router as applications_router
 app.include_router(applications_router)
 
+# Include employee routes
+from routes.employee import router as employee_router
+app.include_router(employee_router)
+
 # Include the router in the main app
 app.include_router(api_router)
 
