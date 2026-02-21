@@ -35,10 +35,8 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center transform group-hover:scale-105 transition-transform duration-200">
-              <span className="text-white font-bold text-xl">I</span>
-            </div>
+          <Link to="/" className="flex items-center space-x-3 group">
+            <InfometricaLogo className="w-12 h-12 transform group-hover:scale-105 transition-transform duration-200" />
             <span className="text-2xl font-bold text-gray-900">
               Info<span className="text-orange-500">metrica</span>
             </span>
