@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { 
@@ -13,7 +13,8 @@ import {
   Calendar,
   Euro,
   Eye,
-  X
+  X,
+  Search
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -27,6 +28,10 @@ const AdminContracts = () => {
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [creating, setCreating] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const dropdownRef = useRef(null);
   const [formData, setFormData] = useState({
     employee_id: '',
     employee_name: '',
