@@ -14,6 +14,7 @@ import AdminDashboard from "@/pages/admin/AdminDashboard";
 import AdminApplications from "@/pages/admin/AdminApplications";
 import AdminTasks from "@/pages/admin/AdminTasks";
 import AdminVerifications from "@/pages/admin/AdminVerifications";
+import AdminContracts from "@/pages/admin/AdminContracts";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import MitarbeiterLogin from "@/pages/mitarbeiter/MitarbeiterLogin";
@@ -22,6 +23,7 @@ import MitarbeiterAuftrage from "@/pages/mitarbeiter/MitarbeiterAuftrage";
 import MitarbeiterEinstellungen from "@/pages/mitarbeiter/MitarbeiterEinstellungen";
 import MitarbeiterDokumente from "@/pages/mitarbeiter/MitarbeiterDokumente";
 import MitarbeiterAuszahlung from "@/pages/mitarbeiter/MitarbeiterAuszahlung";
+import MitarbeiterVertrag from "@/pages/mitarbeiter/MitarbeiterVertrag";
 import MitarbeiterLayout from "@/components/mitarbeiter/MitarbeiterLayout";
 import ProtectedEmployeeRoute from "@/components/mitarbeiter/ProtectedEmployeeRoute";
 import { Toaster } from "@/components/ui/sonner";
@@ -82,6 +84,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin/contracts"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminContracts />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
           
           {/* Mitarbeiter Routes */}
           <Route path="/mitarbeiter/login" element={<MitarbeiterLogin />} />
@@ -131,6 +143,16 @@ function App() {
               <ProtectedEmployeeRoute>
                 <MitarbeiterLayout>
                   <MitarbeiterAuszahlung />
+                </MitarbeiterLayout>
+              </ProtectedEmployeeRoute>
+            }
+          />
+          <Route
+            path="/mitarbeiter/vertrag"
+            element={
+              <ProtectedEmployeeRoute>
+                <MitarbeiterLayout>
+                  <MitarbeiterVertrag />
                 </MitarbeiterLayout>
               </ProtectedEmployeeRoute>
             }
