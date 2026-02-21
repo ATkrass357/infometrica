@@ -51,15 +51,35 @@ const MitarbeiterEinstellungen = () => {
   const loadEmployeeData = async () => {
     try {
       const token = localStorage.getItem('employee_token');
-      const storedData = JSON.parse(localStorage.getItem('employee_data') || '{}');
       
-      setEmployeeData(storedData);
-      setProfileData({
-        phone: storedData.mobilnummer || storedData.phone || '',
-        address: storedData.address || `${storedData.strasse || ''}, ${storedData.postleitzahl || ''} ${storedData.stadt || ''}`.trim(),
+      // Fetch profile from backend
+      const response = await axios.get(`${BACKEND_URL}/api/employee/profile`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
+      
+      const data = response.data;
+      setEmployeeData(data);
+      setProfileData({
+        phone: data.phone || '',
+        address: data.address || '',
+      });
+      
+      if (data.notifications) {
+        setNotifications({
+          emailNotifications: data.notifications.email_notifications ?? true,
+          taskReminders: data.notifications.task_reminders ?? true,
+          payoutNotifications: data.notifications.payout_notifications ?? true,
+        });
+      }
     } catch (error) {
       console.error('Error loading data:', error);
+      // Fallback to localStorage if API fails
+      const storedData = JSON.parse(localStorage.getItem('employee_data') || '{}');
+      setEmployeeData(storedData);
+      setProfileData({
+        phone: storedData.phone || '',
+        address: storedData.address || '',
+      });
     } finally {
       setLoading(false);
     }
