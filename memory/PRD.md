@@ -3,18 +3,19 @@
 ## Original Problem Statement
 Build a full-stack application for the app testing agency "Infometrica" with:
 1. **Public Website** - German language, white/orange theme
-2. **Admin Panel** - Tokyo Night theme for managing applications and tasks
-3. **Employee Dashboard** - Orange/white theme for viewing assigned tasks
+2. **Admin Panel** - Tokyo Night theme for managing applications, tasks, and contracts
+3. **Employee Dashboard** - Orange/white theme for viewing assigned tasks and signing contracts
 
 ## Core Requirements
 - German language throughout
 - Role-based authentication (Admin, Applicant, Employee)
 - Task management with 4-part descriptions
 - Application tracking with ID verification (Geldwäschegesetz compliance)
+- Digital contract signing with IBAN collection
 
 ## Tech Stack
-- **Frontend**: React, React Router, TailwindCSS, shadcn/ui
-- **Backend**: FastAPI, MongoDB (motor async), Pydantic
+- **Frontend**: React, React Router, TailwindCSS, shadcn/ui, react-signature-canvas
+- **Backend**: FastAPI, MongoDB (motor async), Pydantic, ReportLab (PDF generation)
 - **Authentication**: JWT with role-based access control
 
 ---
@@ -40,7 +41,7 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - View all job applications
   - Accept applications (changes status to allow ID upload)
   - Status badges: Neu, Wartet auf ID, Verifiziert, Freigeschaltet
-- [x] **Verifications page** (NEW - Dec 2025)
+- [x] **Verifications page**
   - View pending verifications
   - Display ID images (base64, no download - DSGVO compliant)
   - Unlock verified employees
@@ -49,8 +50,11 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - Create tasks with title, website URL, 4-part description
   - Assign tasks to employees
   - View/delete tasks
+- [x] **Contract Management**
+  - Create employment contracts for employees
+  - View contract status (pending/signed)
 
-### Applicant/Employee Flow (100% Complete - NEW)
+### Applicant/Employee Flow (100% Complete)
 - [x] **Self-Registration with Password**
   - Applicants choose own password during application
   - Can login immediately at `/mitarbeiter/login`
@@ -64,30 +68,49 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - File validation (JPEG, PNG, WebP, max 5MB)
   - Stored securely, displayed to admin as base64
 
-### Employee Dashboard (100% Complete - UPDATED)
+### Employee Dashboard (100% Complete - UPDATED Feb 2025)
 - [x] Secure login at `/mitarbeiter/login`
 - [x] Orange/white theme
-- [x] Sidebar navigation (all pages functional)
+- [x] Sidebar navigation: Main, Vertrag, Aufträge, Einstellungen, Dokumente
+- [x] ~~Auszahlung (Payout)~~ - **REMOVED per user request**
+- [x] **Vertrag (Contract) page** - View and sign employment contracts
+  - List of pending/signed contracts
+  - Digital signature with canvas
+  - **IBAN input field for salary payment**
+  - PDF download for signed contracts
 - [x] Aufträge (Tasks) page - View and manage assigned tasks
-- [x] **Einstellungen (Settings)** - Profile, password change, notifications
-- [x] **Dokumente (Documents)** - Upload, categorize, manage documents
-- [x] **Auszahlung (Payout)** - Bank details, payout request, history
-- [x] Main dashboard (placeholder)
+- [x] **Einstellungen (Settings)** - Profile, password change, notifications (UI only)
+- [x] **Dokumente (Documents)** - Upload, categorize, manage documents (UI only)
+- [x] Main dashboard with task overview
 
 ---
 
-## Status Flow
+## Contract Signing Flow
 
 ```
-┌─────────┐     Admin      ┌────────────┐    Uploads ID    ┌────────────┐    Admin     ┌───────────────┐
-│   Neu   │ ──────────────►│ Akzeptiert │ ────────────────►│ Verifiziert│ ────────────►│Freigeschaltet │
-│(Pending)│    accepts     │ (Needs ID) │   front+back     │(Waiting)   │   unlocks    │(Full Access)  │
-└─────────┘                └────────────┘                  └────────────┘              └───────────────┘
+┌──────────────┐    Admin creates    ┌─────────────┐    Employee    ┌─────────────┐
+│ New Employee │ ──────────────────► │   Pending   │ ─────────────► │   Signed    │
+│              │     contract        │  Contract   │  signs + IBAN  │  Contract   │
+└──────────────┘                     └─────────────┘                └─────────────┘
+                                                                          │
+                                                                          ▼
+                                                                    PDF Download
+                                                                    (includes IBAN)
 ```
 
 ---
 
 ## API Endpoints
+
+### Contract Endpoints (NEW)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/contracts/create | Create contract for employee (admin) |
+| GET | /api/contracts/ | Get all contracts (admin) |
+| GET | /api/contracts/my-contracts | Get employee's contracts |
+| GET | /api/contracts/{id} | Get contract details |
+| POST | /api/contracts/{id}/sign | Sign contract with signature + IBAN |
+| GET | /api/contracts/{id}/download | Download signed contract PDF |
 
 ### Application/Applicant Endpoints
 | Method | Endpoint | Description |
@@ -99,9 +122,6 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 | GET | /api/applications/ | Get all applications (admin) |
 | POST | /api/applications/{id}/accept | Accept application (admin) |
 | POST | /api/applications/{id}/unlock | Unlock verified employee (admin) |
-| GET | /api/applications/verification/{id}/{side} | Get ID image as base64 (admin) |
-| DELETE | /api/applications/verification/{id} | Delete ID documents (admin) |
-| DELETE | /api/applications/{id} | Delete application (admin) |
 
 ### Admin Endpoints
 | Method | Endpoint | Description |
@@ -120,13 +140,36 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 
 ---
 
+## Database Schema
+
+### contracts collection
+```javascript
+{
+  id: "contract-YYYYMMDDHHMMSS-xxxxxx",
+  employee_id: "EMP001",
+  employee_name: "Max Mitarbeiter",
+  employee_email: "mitarbeiter@infometrica.de",
+  position: "QA Tester",
+  start_date: "2025-03-01",
+  salary: "3500",
+  working_hours: "40",
+  status: "pending" | "signed",
+  created_at: ISODate(),
+  signed_at: ISODate() | null,
+  signature_file: "contract-xxx_signature.png" | null,
+  signed_pdf: "contract-xxx_signed.pdf" | null,
+  iban: "DE89370400440532013000" | null
+}
+```
+
+---
+
 ## Test Credentials
 
 | Role | Email | Password | Status |
 |------|-------|----------|--------|
 | Admin | admin@infometrica.de | Admin123! | - |
-| Applicant (Neu) | pending-test@example.com | PendingTest123! | Neu |
-| Applicant (Akzeptiert) | anna.schmidt@example.com | TestPass123! | Akzeptiert |
+| Employee | mitarbeiter@infometrica.de | Mitarbeiter123! | Freigeschaltet |
 
 ---
 
@@ -137,16 +180,16 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 - [x] Status-based access control
 - [x] ID verification upload
 - [x] Admin verification management
+- [x] Contract signing with IBAN
 
-### P1 - Completed
+### P1 - Completed (UI Only - needs backend connection)
 - [x] Employee Settings page (profile, password, notifications)
 - [x] Employee Documents page (upload/download with categories)
-- [x] Employee Payout page (bank details, request, history)
 
 ### P2 - Future
 - [ ] Email notifications (SMTP integration)
 - [ ] Admin Employee Management (CRUD)
-- [ ] Document signing integration (DocuSign)
+- [ ] Connect Settings/Documents pages to backend
 - [ ] Employee performance reports
 
 ---
@@ -156,38 +199,38 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 /app
 ├── backend/
 │   ├── routes/
-│   │   ├── admin.py
-│   │   ├── employee.py
-│   │   └── applications.py  # All applicant/verification endpoints
-│   ├── models/
-│   │   ├── admin.py
-│   │   ├── employee.py
-│   │   └── application.py   # Updated with password_hash, verification fields
+│   │   ├── contracts.py    # Contract management endpoints
+│   │   └── ...
 │   ├── uploads/
-│   │   └── verifications/   # ID images stored here
+│   │   ├── contracts/      # Signed PDF storage
+│   │   ├── signatures/     # Signature images
+│   │   └── verifications/  # ID images
 │   └── server.py
 └── frontend/
     ├── src/
     │   ├── pages/
     │   │   ├── admin/
-    │   │   │   ├── AdminApplications.jsx
-    │   │   │   ├── AdminVerifications.jsx  # NEW
-    │   │   │   └── AdminTasks.jsx
+    │   │   │   ├── AdminContracts.jsx    # Contract creation
+    │   │   │   └── ...
     │   │   ├── mitarbeiter/
-    │   │   │   ├── MitarbeiterLogin.jsx
-    │   │   │   ├── MitarbeiterPending.jsx      # NEW - Status Neu
-    │   │   │   ├── MitarbeiterVerification.jsx # NEW - Status Akzeptiert
-    │   │   │   ├── MitarbeiterAwaitingApproval.jsx # NEW - Status Verifiziert
-    │   │   │   └── MitarbeiterAuftrage.jsx
-    │   │   └── Karriere.jsx  # Updated with password fields
+    │   │   │   ├── MitarbeiterVertrag.jsx  # Contract signing + IBAN
+    │   │   │   ├── MitarbeiterDokumente.jsx
+    │   │   │   ├── MitarbeiterEinstellungen.jsx
+    │   │   │   └── ...
+    │   │   └── ...
     │   └── components/
     │       └── mitarbeiter/
-    │           ├── MitarbeiterLayout.jsx    # Updated for status routing
-    │           └── ProtectedEmployeeRoute.jsx # Updated for dual auth
+    │           └── MitarbeiterLayout.jsx  # Updated sidebar (no Auszahlung)
     └── App.js
 ```
 
 ---
 
+## Recent Changes (Feb 2025)
+- **REMOVED**: Auszahlung (Payout) page from employee panel
+- **ADDED**: IBAN field in contract signing process
+- **ADDED**: IBAN stored in database and included in PDF (§4 Bankverbindung)
+- **TESTED**: All contract signing flows working correctly
+
 ## Last Updated
-December 2025 - Employee dashboard pages (Einstellungen, Dokumente, Auszahlung) implemented (MOCK DATA for demonstration)
+February 2025 - Contract signing with IBAN implemented and tested
