@@ -263,130 +263,146 @@ async def download_contract(
 
 
 def generate_signed_contract_pdf(contract: dict, signature_path: str, output_path: str):
-    """Generate a professional employment contract PDF with signature"""
+    """Generate a professional Minijob employment contract PDF with signature"""
     
     c = canvas.Canvas(output_path, pagesize=A4)
     width, height = A4
     
-    # Header
-    c.setFont("Helvetica-Bold", 20)
-    c.drawCentredString(width/2, height - 2*cm, "ARBEITSVERTRAG")
+    def draw_wrapped_text(text, x, y, max_width, font="Helvetica", size=10):
+        """Helper to draw wrapped text and return new y position"""
+        c.setFont(font, size)
+        words = text.split()
+        line = ""
+        for word in words:
+            test_line = line + word + " "
+            if c.stringWidth(test_line, font, size) < max_width:
+                line = test_line
+            else:
+                c.drawString(x, y, line.strip())
+                y -= 0.4*cm
+                line = word + " "
+        if line:
+            c.drawString(x, y, line.strip())
+            y -= 0.4*cm
+        return y
     
-    c.setFont("Helvetica", 10)
-    c.drawCentredString(width/2, height - 2.7*cm, "Infometrica GmbH - App Testing Agency")
+    # Header
+    c.setFont("Helvetica-Bold", 18)
+    c.drawCentredString(width/2, height - 2*cm, "ARBEITSVERTRAG")
+    c.setFont("Helvetica", 11)
+    c.drawCentredString(width/2, height - 2.6*cm, "(Minijob – geringfügige Beschäftigung)")
     
     # Line
     c.setLineWidth(1)
-    c.line(2*cm, height - 3.2*cm, width - 2*cm, height - 3.2*cm)
+    c.line(2*cm, height - 3*cm, width - 2*cm, height - 3*cm)
     
-    # Contract details
-    y_pos = height - 4.5*cm
-    c.setFont("Helvetica", 11)
+    y_pos = height - 4*cm
     
     # Parties
-    c.setFont("Helvetica-Bold", 12)
-    c.drawString(2*cm, y_pos, "Zwischen")
-    y_pos -= 0.7*cm
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(2*cm, y_pos, "zwischen")
+    y_pos -= 0.6*cm
     
-    c.setFont("Helvetica", 11)
-    c.drawString(2*cm, y_pos, "Infometrica GmbH")
-    y_pos -= 0.5*cm
-    c.drawString(2*cm, y_pos, "Teststraße 123, 10115 Berlin")
-    y_pos -= 0.5*cm
-    c.drawString(2*cm, y_pos, "- nachfolgend 'Arbeitgeber' genannt -")
+    c.setFont("Helvetica", 10)
+    c.drawString(2*cm, y_pos, "Infometrica")
+    y_pos -= 0.4*cm
+    c.drawString(2*cm, y_pos, "Tauentzienstraße 9–12")
+    y_pos -= 0.4*cm
+    c.drawString(2*cm, y_pos, "10789 Berlin, Deutschland")
+    y_pos -= 0.4*cm
+    c.setFont("Helvetica-Oblique", 10)
+    c.drawString(2*cm, y_pos, "– nachfolgend „Arbeitgeber" genannt –")
+    y_pos -= 0.8*cm
+    
+    c.setFont("Helvetica-Bold", 11)
+    c.drawString(2*cm, y_pos, "und")
+    y_pos -= 0.6*cm
+    
+    c.setFont("Helvetica", 10)
+    c.drawString(2*cm, y_pos, contract["employee_name"])
+    y_pos -= 0.4*cm
+    c.drawString(2*cm, y_pos, f"E-Mail: {contract['employee_email']}")
+    y_pos -= 0.4*cm
+    c.setFont("Helvetica-Oblique", 10)
+    c.drawString(2*cm, y_pos, "– nachfolgend „Arbeitnehmer" genannt –")
+    y_pos -= 0.8*cm
+    
+    c.setFont("Helvetica", 10)
+    c.drawString(2*cm, y_pos, "wird folgender Arbeitsvertrag geschlossen:")
     y_pos -= 1*cm
     
-    c.setFont("Helvetica-Bold", 12)
-    c.drawString(2*cm, y_pos, "und")
-    y_pos -= 0.7*cm
-    
-    c.setFont("Helvetica", 11)
-    c.drawString(2*cm, y_pos, contract["employee_name"])
-    y_pos -= 0.5*cm
-    c.drawString(2*cm, y_pos, f"E-Mail: {contract['employee_email']}")
-    y_pos -= 0.5*cm
-    c.drawString(2*cm, y_pos, "- nachfolgend 'Arbeitnehmer' genannt -")
-    y_pos -= 1.2*cm
-    
-    c.drawString(2*cm, y_pos, "wird folgender Arbeitsvertrag geschlossen:")
-    y_pos -= 1.2*cm
-    
     # Contract terms
-    terms = [
-        ("§1 Beginn und Tätigkeit", [
-            f"Das Arbeitsverhältnis beginnt am {contract['start_date']}.",
-            f"Der Arbeitnehmer wird als {contract['position']} eingestellt.",
-            "Der Arbeitsort ist Berlin mit Möglichkeit zum Home-Office."
+    sections = [
+        ("§1 Beginn des Arbeitsverhältnisses", [
+            "Dieses Arbeitsverhältnis beginnt am Tag der Unterzeichnung durch beide Parteien."
         ]),
-        ("§2 Arbeitszeit", [
-            f"Die regelmäßige wöchentliche Arbeitszeit beträgt {contract['working_hours']} Stunden.",
-            "Die Verteilung der Arbeitszeit erfolgt nach betrieblichen Erfordernissen."
+        ("§2 Tätigkeit", [
+            "Der Arbeitnehmer wird als Assistent für Evaluierungen im Homeoffice bei Infometrica eingestellt und insbesondere mit folgenden Aufgaben betraut:",
+            "• Überprüfung von Apps und Software auf Benutzerfreundlichkeit und Mängel",
+            "• Durchführung von Video-Identifikationen im Rahmen von Evaluierungen",
+            "• Erstellung und fristgerechte Einreichung der dazugehörigen Abschlussberichte"
         ]),
-        ("§3 Vergütung", [
-            f"Der Arbeitnehmer erhält ein monatliches Bruttogehalt von {contract['salary']} EUR.",
-            "Die Zahlung erfolgt jeweils zum Monatsende."
+        ("§3 Arbeitszeit", [
+            "Die regelmäßige Arbeitszeit beträgt etwa 10 Wochenstunden, verteilt auf 2 bis 4 Tage pro Woche.",
+            "Die genauen Arbeitszeiten werden in Absprache zwischen Arbeitnehmer und Arbeitgeber festgelegt."
         ]),
-        ("§4 Bankverbindung", [
-            f"Die Vergütung wird auf folgendes Konto überwiesen:",
-            f"IBAN: {contract.get('iban', 'Nicht angegeben')}"
+        ("§4 Vergütung", [
+            "Der Arbeitnehmer erhält eine Vergütung in Höhe von maximal 603,00 EUR monatlich.",
+            "Die Vergütung ist jeweils am Monatsende des Folgemonats fällig.",
+            f"IBAN für Gehaltszahlung: {contract.get('iban', 'Nicht angegeben')}",
+            "Die Tätigkeit erfolgt bei Infometrica im Homeoffice."
         ]),
-        ("§5 Urlaub", [
-            "Der Arbeitnehmer hat Anspruch auf 30 Arbeitstage bezahlten Urlaub pro Jahr."
+        ("§5 Sonderzuwendungen", [
+            "Der Arbeitgeber zahlt Sonderzuwendungen (Urlaubsgeld und Weihnachtsgeld) in den Monaten Juni und Dezember in Höhe von jeweils 603,00 EUR."
         ]),
-        ("§6 Kündigung", [
-            "Die Kündigungsfrist beträgt während der Probezeit 2 Wochen.",
-            "Nach der Probezeit gelten die gesetzlichen Kündigungsfristen."
+        ("§6 Urlaubsanspruch", [
+            "Der Arbeitnehmer hat Anspruch auf 28 Arbeitstage Erholungsurlaub pro Jahr."
         ]),
-        ("§7 Probezeit", [
-            "Die ersten 6 Monate gelten als Probezeit."
+        ("§7 Arbeitsverhinderung", [
+            "Im Krankheitsfall ist unverzüglich eine ärztliche Arbeitsunfähigkeitsbescheinigung vorzulegen.",
+            "Entgeltfortzahlung im Krankheitsfall erfolgt für die Dauer von sechs Wochen."
+        ]),
+        ("§9 Weitere Beschäftigungen", [
+            "Der Arbeitnehmer verpflichtet sich, die Aufnahme jeder weiteren Beschäftigung dem Arbeitgeber unverzüglich schriftlich mitzuteilen."
+        ]),
+        ("§10 Kündigungsfristen", [
+            "Die ersten 6 Wochen gelten als Probezeit (Kündigungsfrist: 2 Wochen).",
+            "Nach der Probezeit gelten die gesetzlichen Kündigungsfristen.",
+            "Jede Kündigung bedarf der Schriftform."
         ])
     ]
     
-    c.setFont("Helvetica", 10)
+    c.setFont("Helvetica", 9)
     
-    for title, paragraphs in terms:
-        if y_pos < 6*cm:  # New page if needed
+    for title, paragraphs in sections:
+        if y_pos < 5*cm:
             c.showPage()
             y_pos = height - 2*cm
-            c.setFont("Helvetica", 10)
         
         c.setFont("Helvetica-Bold", 10)
         c.drawString(2*cm, y_pos, title)
         y_pos -= 0.5*cm
-        c.setFont("Helvetica", 10)
         
         for para in paragraphs:
-            # Simple text wrapping
-            words = para.split()
-            line = ""
-            for word in words:
-                test_line = line + word + " "
-                if c.stringWidth(test_line, "Helvetica", 10) < width - 4*cm:
-                    line = test_line
-                else:
-                    c.drawString(2*cm, y_pos, line.strip())
-                    y_pos -= 0.4*cm
-                    line = word + " "
-            if line:
-                c.drawString(2*cm, y_pos, line.strip())
-                y_pos -= 0.4*cm
-        y_pos -= 0.5*cm
+            if y_pos < 3*cm:
+                c.showPage()
+                y_pos = height - 2*cm
+            y_pos = draw_wrapped_text(para, 2*cm, y_pos, width - 4*cm, "Helvetica", 9)
+        y_pos -= 0.3*cm
     
-    # Signature section
-    if y_pos < 8*cm:
-        c.showPage()
-        y_pos = height - 2*cm
+    # Signature section - new page
+    c.showPage()
+    y_pos = height - 3*cm
     
-    y_pos -= 1*cm
     c.setLineWidth(0.5)
     c.line(2*cm, y_pos, width - 2*cm, y_pos)
     y_pos -= 1*cm
     
-    c.setFont("Helvetica-Bold", 11)
+    c.setFont("Helvetica-Bold", 12)
     c.drawString(2*cm, y_pos, "Unterschriften")
     y_pos -= 1.5*cm
     
-    # Date and place
+    # Date
     c.setFont("Helvetica", 10)
     sign_date = contract.get("signed_at", datetime.utcnow())
     if isinstance(sign_date, datetime):
@@ -395,17 +411,16 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
         sign_date_str = datetime.utcnow().strftime("%d.%m.%Y")
     
     c.drawString(2*cm, y_pos, f"Berlin, den {sign_date_str}")
-    y_pos -= 1.5*cm
+    y_pos -= 2*cm
     
     # Employee signature
-    c.drawString(2*cm, y_pos + 3*cm, "Unterschrift Arbeitnehmer:")
+    c.drawString(2*cm, y_pos + 3.5*cm, "Unterschrift Arbeitnehmer:")
     
     # Add signature image
     try:
         from PIL import Image as PILImage
         sig_img = PILImage.open(signature_path)
         
-        # Calculate dimensions
         max_width = 6*cm
         max_height = 2.5*cm
         
@@ -429,6 +444,19 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     y_pos -= 0.4*cm
     c.setFont("Helvetica", 9)
     c.drawString(2*cm, y_pos, contract["employee_name"])
+    
+    # Employer signature area
+    c.drawString(11*cm, y_pos + 4.4*cm, "Unterschrift Arbeitgeber:")
+    y_pos_employer = y_pos + 0.5*cm
+    c.line(11*cm, y_pos_employer, 17*cm, y_pos_employer)
+    c.drawString(11*cm, y_pos, "Infometrica")
+    
+    # Footer
+    c.setFont("Helvetica", 8)
+    c.drawCentredString(width/2, 2*cm, f"Vertragsnummer: {contract['id']}")
+    c.drawCentredString(width/2, 1.5*cm, "Dieses Dokument wurde digital signiert und ist rechtsgültig.")
+    
+    c.save()
     
     # Employer signature area
     c.drawString(11*cm, y_pos + 3.9*cm, "Unterschrift Arbeitgeber:")
