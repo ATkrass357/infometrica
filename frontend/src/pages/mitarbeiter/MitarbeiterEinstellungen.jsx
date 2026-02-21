@@ -88,8 +88,10 @@ const MitarbeiterEinstellungen = () => {
   const handleProfileSave = async () => {
     setSaving(true);
     try {
-      // Simulate save - in real app, call backend
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const token = localStorage.getItem('employee_token');
+      await axios.put(`${BACKEND_URL}/api/employee/profile`, profileData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       
       // Update local storage
       const updatedData = { ...employeeData, ...profileData };
@@ -98,7 +100,7 @@ const MitarbeiterEinstellungen = () => {
       
       toast.success('Profil aktualisiert');
     } catch (error) {
-      toast.error('Fehler beim Speichern');
+      toast.error(error.response?.data?.detail || 'Fehler beim Speichern');
     } finally {
       setSaving(false);
     }
