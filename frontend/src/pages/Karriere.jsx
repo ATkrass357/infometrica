@@ -57,11 +57,33 @@ const Karriere = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission (will be connected to backend later)
-    setTimeout(() => {
+    try {
+      // Prepare application data (without file for now)
+      const applicationData = {
+        name: formData.name,
+        email: formData.email,
+        mobilnummer: formData.mobilnummer,
+        geburtsdatum: formData.geburtsdatum,
+        staatsangehoerigkeit: formData.staatsangehoerigkeit,
+        strasse: formData.strasse,
+        postleitzahl: formData.postleitzahl,
+        stadt: formData.stadt,
+        position: formData.position,
+        message: formData.message,
+        cv_filename: formData.cv ? formData.cv.name : null,
+      };
+
+      // Submit to backend
+      const response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/applications/submit`,
+        applicationData
+      );
+
       toast.success('Vielen Dank für Ihre Bewerbung!', {
         description: 'Wir werden Ihre Unterlagen prüfen und uns in Kürze bei Ihnen melden.',
       });
+
+      // Reset form
       setFormData({
         name: '',
         email: '',
@@ -75,11 +97,18 @@ const Karriere = () => {
         message: '',
         cv: null,
       });
+      
       // Reset file input
       const fileInput = document.getElementById('cv');
       if (fileInput) fileInput.value = '';
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      toast.error('Fehler beim Senden der Bewerbung', {
+        description: 'Bitte versuchen Sie es später erneut.',
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   const openPositions = [
