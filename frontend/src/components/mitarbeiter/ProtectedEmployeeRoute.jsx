@@ -18,11 +18,11 @@ const ProtectedEmployeeRoute = ({ children }) => {
         return;
       }
 
-      // Check if 30 minutes have passed
+      // Check if 60 minutes have passed (increased from 30)
       const timeElapsed = Date.now() - parseInt(loginTime);
-      const thirtyMinutes = 30 * 60 * 1000;
+      const sixtyMinutes = 60 * 60 * 1000;
 
-      if (timeElapsed > thirtyMinutes) {
+      if (timeElapsed > sixtyMinutes) {
         localStorage.removeItem('employee_token');
         localStorage.removeItem('employee_data');
         localStorage.removeItem('employee_login_time');
@@ -30,18 +30,34 @@ const ProtectedEmployeeRoute = ({ children }) => {
         return;
       }
 
+      // Try applicant status endpoint first (new flow)
       try {
-        await axios.get(`${BACKEND_URL}/api/employee/verify`, {
+        const response = await axios.get(`${BACKEND_URL}/api/applications/status`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        // Update local storage with latest status
+        localStorage.setItem('employee_data', JSON.stringify(response.data));
         setIsValid(true);
+        return;
       } catch (error) {
-        localStorage.removeItem('employee_token');
-        localStorage.removeItem('employee_data');
-        localStorage.removeItem('employee_login_time');
-        setIsValid(false);
+        // If applicant endpoint fails, try old employee endpoint
+        try {
+          await axios.get(`${BACKEND_URL}/api/employee/verify`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          setIsValid(true);
+          return;
+        } catch (err2) {
+          // Both failed, token is invalid
+          localStorage.removeItem('employee_token');
+          localStorage.removeItem('employee_data');
+          localStorage.removeItem('employee_login_time');
+          setIsValid(false);
+        }
       }
     };
 
