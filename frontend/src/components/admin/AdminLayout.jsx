@@ -9,6 +9,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  ClipboardList,
 } from 'lucide-react';
 import { InfometricaLogo } from '../../components/Logo';
 
@@ -44,6 +45,7 @@ const AdminLayout = ({ children }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
     { icon: FileText, label: 'Bewerbungen', path: '/admin/applications', badge: appCount > 0 ? String(appCount) : null },
+    { icon: ClipboardList, label: 'Aufgaben', path: '/admin/tasks' },
     { icon: Users, label: 'Mitarbeiter', path: '/admin/employees' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
