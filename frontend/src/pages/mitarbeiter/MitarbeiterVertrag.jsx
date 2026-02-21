@@ -58,6 +58,13 @@ const MitarbeiterVertrag = () => {
       return;
     }
 
+    // Validate IBAN
+    const cleanIban = iban.replace(/\s/g, '');
+    if (!cleanIban || cleanIban.length < 15 || cleanIban.length > 34) {
+      toast.error('Bitte geben Sie eine gültige IBAN ein');
+      return;
+    }
+
     setSigning(true);
 
     try {
@@ -66,17 +73,21 @@ const MitarbeiterVertrag = () => {
 
       await axios.post(
         `${BACKEND_URL}/api/contracts/${selectedContract.id}/sign`,
-        { signature_data: signatureData },
+        { 
+          signature_data: signatureData,
+          iban: cleanIban
+        },
         { headers: { Authorization: `Bearer ${token}` } }
       );
 
       toast.success('Vertrag erfolgreich unterschrieben!');
       setShowSignModal(false);
       setSelectedContract(null);
+      setIban('');
       fetchContracts();
     } catch (error) {
       console.error('Error signing contract:', error);
-      toast.error('Fehler beim Unterschreiben des Vertrags');
+      toast.error(error.response?.data?.detail || 'Fehler beim Unterschreiben des Vertrags');
     } finally {
       setSigning(false);
     }
