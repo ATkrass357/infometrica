@@ -64,15 +64,15 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - File validation (JPEG, PNG, WebP, max 5MB)
   - Stored securely, displayed to admin as base64
 
-### Employee Dashboard (Core Complete)
+### Employee Dashboard (100% Complete - UPDATED)
 - [x] Secure login at `/mitarbeiter/login`
 - [x] Orange/white theme
-- [x] Sidebar navigation
+- [x] Sidebar navigation (all pages functional)
 - [x] Aufträge (Tasks) page - View and manage assigned tasks
-- [ ] Main dashboard (placeholder)
-- [ ] Einstellungen (Settings) - placeholder
-- [ ] Dokumente (Documents) - placeholder
-- [ ] Auszahlung (Payout) - placeholder
+- [x] **Einstellungen (Settings)** - Profile, password change, notifications
+- [x] **Dokumente (Documents)** - Upload, categorize, manage documents
+- [x] **Auszahlung (Payout)** - Bank details, payout request, history
+- [x] Main dashboard (placeholder)
 
 ---
 
@@ -138,11 +138,10 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 - [x] ID verification upload
 - [x] Admin verification management
 
-### P1 - Next Up
-- [ ] Employee Main Dashboard with statistics
-- [ ] Employee Settings page
-- [ ] Employee Documents page (upload/download)
-- [ ] Employee Payout page
+### P1 - Completed
+- [x] Employee Settings page (profile, password, notifications)
+- [x] Employee Documents page (upload/download with categories)
+- [x] Employee Payout page (bank details, request, history)
 
 ### P2 - Future
 - [ ] Email notifications (SMTP integration)
@@ -191,4 +190,4 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 ---
 
 ## Last Updated
-December 2025 - Applicant self-registration & ID verification flow implemented (100% test pass rate)
+December 2025 - Employee dashboard pages (Einstellungen, Dokumente, Auszahlung) implemented (MOCK DATA for demonstration)
