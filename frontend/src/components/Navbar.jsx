@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { InfometricaLogo } from './Logo';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,6 +20,7 @@ export const Navbar = () => {
     { name: 'Startseite', path: '/' },
     { name: 'Unternehmen', path: '/unternehmen' },
     { name: 'Dienstleistungen', path: '/dienstleistungen' },
+    { name: 'Karriere', path: '/karriere' },
     { name: 'Kontakt', path: '/kontakt' },
   ];
 
