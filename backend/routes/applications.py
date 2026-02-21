@@ -269,6 +269,12 @@ async def unlock_applicant(
         {"$set": {"status": "Freigeschaltet", "unlocked_at": datetime.utcnow()}}
     )
     
+    # Send welcome email
+    await send_account_unlocked(
+        to_email=application["email"],
+        employee_name=application["name"]
+    )
+    
     return {"message": "Mitarbeiter freigeschaltet", "status": "Freigeschaltet"}
 
 
