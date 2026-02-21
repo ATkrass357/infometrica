@@ -66,23 +66,23 @@ const MitarbeiterDokumente = () => {
     setUploading(true);
     
     try {
-      // Simulate upload
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      const token = localStorage.getItem('employee_token');
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('category', 'Sonstige');
       
-      const newDoc = {
-        id: Date.now().toString(),
-        name: file.name,
-        type: 'other',
-        category: 'Sonstige',
-        size: `${Math.round(file.size / 1024)} KB`,
-        uploadedAt: new Date().toISOString().split('T')[0],
-        status: 'pending'
-      };
+      const response = await axios.post(`${BACKEND_URL}/api/employee/documents/upload`, formData, {
+        headers: { 
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'multipart/form-data'
+        }
+      });
       
-      setDocuments(prev => [newDoc, ...prev]);
+      // Reload documents
+      await loadDocuments();
       toast.success('Dokument hochgeladen');
     } catch (error) {
-      toast.error('Fehler beim Hochladen');
+      toast.error(error.response?.data?.detail || 'Fehler beim Hochladen');
     } finally {
       setUploading(false);
       e.target.value = '';
