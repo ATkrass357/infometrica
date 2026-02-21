@@ -17,12 +17,33 @@ const AdminLayout = ({ children }) => {
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [appCount, setAppCount] = useState(0);
 
   const adminData = JSON.parse(localStorage.getItem('admin_data') || '{}');
 
+  // Fetch application count
+  useEffect(() => {
+    const fetchCount = async () => {
+      try {
+        const token = localStorage.getItem('admin_token');
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/applications/`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const data = await response.json();
+        setAppCount(data.length);
+      } catch (error) {
+        console.error('Error fetching count:', error);
+      }
+    };
+    fetchCount();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchCount, 30000);
+    return () => clearInterval(interval);
+  }, [location]);
+
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', path: '/admin/dashboard' },
-    { icon: FileText, label: 'Bewerbungen', path: '/admin/applications', badge: '0' },
+    { icon: FileText, label: 'Bewerbungen', path: '/admin/applications', badge: appCount > 0 ? String(appCount) : null },
     { icon: Users, label: 'Mitarbeiter', path: '/admin/employees' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
