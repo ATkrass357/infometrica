@@ -10,6 +10,7 @@ import {
   Menu,
   X,
   ChevronRight,
+  FileSignature,
 } from 'lucide-react';
 import { InfometricaLogo } from '../Logo';
 import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
@@ -68,6 +69,7 @@ const MitarbeiterLayout = ({ children }) => {
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Main', path: '/mitarbeiter/dashboard' },
+    { icon: FileSignature, label: 'Vertrag', path: '/mitarbeiter/vertrag' },
     { icon: ClipboardList, label: 'Aufträge', path: '/mitarbeiter/auftrage' },
     { icon: Settings, label: 'Einstellungen', path: '/mitarbeiter/einstellungen' },
     { icon: FileText, label: 'Dokumente', path: '/mitarbeiter/dokumente' },
