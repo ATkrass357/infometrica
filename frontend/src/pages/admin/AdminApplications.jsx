@@ -310,6 +310,22 @@ const AdminApplications = () => {
           <table className="w-full">
             <thead>
               <tr className="bg-[#1a1b26] border-b border-[#292e42]">
+                <th className="px-4 py-4 text-left">
+                  {filteredApplications.filter(app => app.status === 'Neu').length > 0 && (
+                    <button
+                      onClick={toggleSelectAll}
+                      className="text-[#7aa2f7] hover:text-[#7dcfff] transition-colors"
+                      title="Alle neuen auswählen"
+                      data-testid="select-all-checkbox"
+                    >
+                      {filteredApplications.filter(app => app.status === 'Neu').every(app => selectedIds.includes(app.id)) ? (
+                        <CheckSquare size={20} />
+                      ) : (
+                        <Square size={20} />
+                      )}
+                    </button>
+                  )}
+                </th>
                 <th className="px-6 py-4 text-left text-sm font-semibold text-[#c0caf5]">Name</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold text-[#c0caf5]">E-Mail</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold text-[#c0caf5]">Position</th>
@@ -320,7 +336,7 @@ const AdminApplications = () => {
             <tbody>
               {filteredApplications.length === 0 ? (
                 <tr>
-                  <td colSpan="5" className="px-6 py-12 text-center text-[#565f89]">
+                  <td colSpan="6" className="px-6 py-12 text-center text-[#565f89]">
                     {searchQuery || statusFilter !== 'all' 
                       ? 'Keine Bewerbungen gefunden' 
                       : 'Noch keine Bewerbungen vorhanden'}
@@ -330,9 +346,26 @@ const AdminApplications = () => {
                 filteredApplications.map((app) => (
                   <tr
                     key={app.id}
-                    className="border-b border-[#292e42] hover:bg-[#1a1b26] transition-colors"
+                    className={`border-b border-[#292e42] hover:bg-[#1a1b26] transition-colors ${
+                      selectedIds.includes(app.id) ? 'bg-[#7aa2f7]/10' : ''
+                    }`}
                     data-testid={`application-row-${app.id}`}
                   >
+                    <td className="px-4 py-4">
+                      {app.status === 'Neu' && (
+                        <button
+                          onClick={() => toggleSelection(app.id)}
+                          className="text-[#7aa2f7] hover:text-[#7dcfff] transition-colors"
+                          data-testid={`checkbox-${app.id}`}
+                        >
+                          {selectedIds.includes(app.id) ? (
+                            <CheckSquare size={20} />
+                          ) : (
+                            <Square size={20} />
+                          )}
+                        </button>
+                      )}
+                    </td>
                     <td className="px-6 py-4">
                       <div className="text-[#c0caf5] font-medium">{app.name}</div>
                       <div className="text-xs text-[#565f89] mt-1">
