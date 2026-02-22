@@ -14,7 +14,10 @@ import {
   CheckCircle,
   RefreshCw,
   Link,
-  KeyRound
+  KeyRound,
+  Edit3,
+  X,
+  Save
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
