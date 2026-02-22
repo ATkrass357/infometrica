@@ -2,66 +2,101 @@
 The user wants to build a full-stack application for their app testing agency, Infometrica.
 
 PRODUCT REQUIREMENTS:
-1.  **Public Website:** A modern, professional website in German with a white and orange color scheme. It needs several pages (Home, About, Services, Contact, Careers, Imprint, Privacy Policy). The Karriere page requires a detailed application form where applicants can set their own password to track their application status.
-2.  **Admin Panel:** A secure login () leading to a dashboard with a Tokyo Night theme. It must include:
-    *   A table to view and manage all job applications.
-    *   A system to create tasks (title, URL, 4-part description) and assign them to employees.
-    *   A page to view identity verification documents uploaded by employees.
-    *   A page to create and send employment contracts to employees for signing.
+1.  **Public Website:** A modern, professional website in German (white/orange theme) with pages for Home, About, Services, Contact, Careers, Imprint, and Privacy Policy. The Karriere page needs a detailed application form where applicants create an account to track their application status. A Web Application Tester job should be listed.
+2.  **Admin Panel:** A secure login () to a Tokyo Night themed dashboard. It must include:
+    *   A table to view and manage job applications, with search and bulk-acceptance functionality.
+    *   A system to create tasks and assign them to employees.
+    *   A page to view identity verification documents and approve them.
+    *   A page to create employment contracts with a searchable employee dropdown.
+    *   SMTP (Resend) integration for sending automated email notifications for key events (new application, acceptance, contract, task assignment). The emails should use professional HTML templates.
 3.  **Applicant/Employee Flow:**
-    *   Applicants register via the career page and can immediately log in to a status page.
-    *   Admins accept applications, which then prompts the applicant to upload ID documents for verification (front and back).
-    *   After verification, employees get access to the full dashboard.
-4.  **Employee Dashboard:** A secure login () leading to a dashboard with an orange and white theme. It must have a sidebar with pages for Main, Aufträge (Tasks), Einstellungen (Settings), Dokumente (Documents), and Auszahlung (Payout). Employees need to be able to sign their employment contract digitally within the app by drawing their signature.
+    *   Applicants register and can log in to a status page.
+    *   Admins accept applications, prompting ID upload.
+    *   Admins approve IDs, granting full dashboard access.
+4.  **Employee Dashboard:** A secure login () to an orange/white themed dashboard. It must have pages for Main, Aufträge (Tasks), Einstellungen (Settings), and Dokumente (Documents). The Auszahlung (Payout) page should be removed.
+    *   Employees must be able to view their employment contract before signing.
+    *   The contract signing process must include a field for the employee's IBAN.
+    *   The contract itself should be a specific Minijob template.
+    *   Employees must be able to download their signed contracts as PDFs.
 
 **User's preferred language**: German. The user communicates in German, and the agent MUST continue to respond in German.
 
 **what currently exists?**
-A full-stack application using React, FastAPI, and MongoDB.
--   **Public Website:** All pages are implemented. The career page has been updated to include password fields, allowing applicants to create an account directly.
--   **Admin Panel:** A functional admin portal at  with the Tokyo Night theme. It includes features for viewing applications, a complete task management system (create, assign, view), a page to review uploaded ID documents, and a new page to create employment contracts.
--   **Applicant/Employee Flow:** The entire multi-stage application process is implemented. Applicants can register, log in to see their status, get prompted to upload documents upon acceptance, and then wait for final verification.
--   **Employee Dashboard:** The main dashboard layout is complete with the orange/white theme. The Aufträge (Tasks) page is fully functional. The Einstellungen, Dokumente, and Auszahlung pages have been created with complete UI and placeholder data. A contract signing page with a signature pad has been implemented.
--   **Authentication:** JWT-based authentication is in place for both  and / roles, with logic that directs users to different pages based on their application status (, , , ).
+A mature full-stack application (React, FastAPI, MongoDB) that meets most of the user's requirements.
+-   **Public Website:** All pages are implemented, including the new Web Application Tester job on the career page.
+-   **Admin Panel:** A functional admin portal with the Tokyo Night theme. It includes a complete task management system, ID verification review, and contract creation. A search function has been added for both applications and for selecting employees during contract creation. The Mitarbeiter tab has been removed as requested.
+-   **Email Integration:** Resend is fully integrated for sending professional, HTML-formatted email notifications for new applications, accepted applications, new contracts, and new tasks. The user has provided an API key and confirmed their domain  is verified.
+-   **Employee/Applicant Flow:** The full multi-stage application process is implemented and functional, from initial application to final account activation by an admin.
+-   **Employee Dashboard:** The dashboard is functional with an orange/white theme. The  (Settings) and  (Documents) pages are now connected to the backend and display real data. The  (Payout) page has been removed.
+-   **Contract System:** The contract creation and signing process is complete. It includes a preview of the full Minijob contract text, an IBAN input field, and a signature pad. The downloaded PDF correctly uses the new Minijob template for all newly signed contracts.
 
 **Last working item**:
--   Last item agent was working: Implementing a custom, in-app document signing solution for the employment contract. The agent built the backend endpoints to manage contracts, the admin UI to create contracts, and the employee UI with a signature pad for drawing a signature.
+-   Last item agent was working: Starting the implementation of a feature to allow admins to select multiple applicants on the Bewerbungen (Applications) page and accept their applications with a single bulk action.
 -   Status: IN PROGRESS
--   Agent Testing Done: Y (Manual testing with  and screenshots was performed, but a full end-to-end test with the testing agent has not been run on this specific feature).
+-   Agent Testing Done: N
 -   Which testing method agent to use? both
 -   User Testing Done: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: The admin verification approval step is missing. Admins can view uploaded ID documents, but there is no functionality (e.g., an Approve button) to finalize the verification and change the employee's status to  to grant them full dashboard access. (Priority: P1)
--   Issue 2: The  page is missing PDF download functionality. This was requested by the user along with the signing feature but was not implemented. (Priority: P1)
+-   Issue 1: (P0) Complete the bulk-acceptance feature for applications.
+-   Issue 2: (P1) The document upload functionality is still missing. The Dokument hochladen button on the  page is not connected to any backend logic.
+
+Issues Detail:
+-   Issue 1:
+    -   Attempted fixes: The agent has started by viewing the  file but has not yet written any code.
+    -   Next debug checklist:
+        1.  **Frontend ():** Add checkboxes to each row of the applications table. Add a state to track selected application IDs. Add a Bulk Accept button that is enabled only when at least one application is selected.
+        2.  **Backend ():** Create a new endpoint (e.g., ) that accepts a list of application IDs.
+        3.  **Logic:** The endpoint should iterate through the IDs, update the status of each user to 'Akzeptiert', and trigger the application accepted email for each.
+    -   Why fix this issue and what will be achieved with the fix? This is a direct user request to improve the admin's workflow efficiency, saving time by not having to accept each application individually.
+    -   Status: IN PROGRESS
+    -   Is recurring issue? N
+    -   Should Test frontend/backend/both after fix? both
+    -   Blocked on other issue: No.
+-   Issue 2:
+    -   Attempted fixes: None. This was an upcoming task from a previous session that has not been prioritized yet.
+    -   Next debug checklist:
+        1.  **Backend ():** Create a file upload endpoint (e.g., ) that handles . It should store the file and create a new document record in the database linked to the employee.
+        2.  **Frontend ():** Connect the Dokument hochladen button to a file input and a function that calls the new backend endpoint.
+    -   Why fix this issue and what will be achieved with the fix? This will complete the document management feature, allowing employees to upload other required documents besides their contract.
+    -   Status: NOT STARTED
+    -   Is recurring issue? N
+    -   Should Test frontend/backend/both after fix? both
+    -   Blocked on other issue: No.
 
 **In progress Task List**:
--   Task 1: Complete and Test the Document Signing Feature
-    -   **Where to resume**: The core components have been created and manually tested. The next step is to run a comprehensive end-to-end test, preferably using the testing agent, to validate the entire flow: admin creates a contract, employee receives and signs it, and the signature is saved correctly in the backend.
-    -   **What will be achieved with this?**: A fully functional, legally compliant (as per user request) way for new hires to sign their employment contracts directly within the application.
-    -   **Status**: IN PROGRESS
-    -   **Should Test frontend/backend/both after fix?**: both
-    -   **Blocked on something**: No.
+-   Task 1: Implement bulk acceptance of applications.
+    -   Where to resume: In , add UI elements (checkboxes, button) for the bulk action.
+    -   What will be achieved with this?: Admins will be able to select multiple new applications and approve them simultaneously.
+    -   Status: IN PROGRESS
+    -   Should Test frontend/backend/both after fix?: both
+    -   Blocked on something: No.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P0) Implement Admin Approval for Verifications:** Add a button and corresponding backend endpoint on the  page for an admin to approve a user's uploaded documents, which should change their status to .
-    *   **(P1) Implement PDF Download for Documents:** Add backend and frontend logic to allow employees to download their documents from the  page.
-    *   **(P1) Connect Employee Dashboard Pages to Backend:** Replace the placeholder data on the , , and  pages with real data by connecting them to backend API endpoints.
     *   **(P1) Implement Document Upload Functionality:** Connect the Dokument hochladen button on the  page to a file upload endpoint.
-
 *   **Future Tasks:**
-    *   (P2) Develop a full employee management module in the admin panel (CRUD operations).
-    -   (P2) Integrate an email service (like Resend or SendGrid) to send automated alerts for events like new applications, accepted applications, and new task assignments.
+    *   (P2) Develop a more comprehensive employee management module in the admin panel (CRUD operations).
 
 **Completed work in this session**
--   **Task Management System:** A complete system for admins to create, assign, and manage tasks, and for employees to view them, was implemented and tested.
--   **Revamped Applicant-to-Employee Workflow:** The entire application process was rebuilt to allow applicants to create an account, log in to check their status, and go through a multi-stage verification process including ID document upload.
--   **Employee Dashboard Page Implementation:** The UI for the  (Settings),  (Documents), and  (Payout) pages was fully built out.
--   **Bug Fix:** Addressed a user-reported issue where the Accept Application button was seemingly missing, clarifying that it correctly appears only for new applications.
+-   **UI & Feature Updates:**
+    -   Removed the Auszahlung (Payout) page from the employee dashboard.
+    -   Removed the Mitarbeiter (Employees) tab from the admin panel.
+-   **Contract System Enhancement:**
+    -   Added an IBAN input field to the contract signing process; the IBAN is saved to the database and included in the final PDF.
+    -   Implemented a contract preview, allowing employees to read the full contract text before signing.
+    -   Updated the contract with a new, specific Minijob template as requested by the user.
+    -   Fixed the PDF download to ensure newly signed contracts use the correct Minijob template.
+-   **Admin Workflow Improvements:**
+    -   Added a search/autocomplete feature for selecting employees when creating a contract.
+    -   Added a search and filter function to the main Bewerbungen (Applications) page.
+-   **Backend & Integration:**
+    -   Connected the employee  (Settings) and  (Documents) pages to new backend endpoints, replacing mock data.
+    -   Fully integrated **Resend** for sending professional HTML email notifications for key application and contract events.
+-   **Testing:** Successfully used the testing agent to verify the connected  and  pages.
 
 **Earlier issues found/mentioned but not fixed**
--   None.
+-   The Dokument hochladen functionality on the employee dashboard was part of the original product requirements but has been consistently deprioritized in favor of new user requests.
 
 **Known issue recurrence from previous fork**
 -   N/A
@@ -72,66 +107,63 @@ A full-stack application using React, FastAPI, and MongoDB.
 **Key Technical Concepts**
 -   **Frontend:** React, React Router, TailwindCSS, shadcn/ui.
 -   **Backend:** FastAPI, MongoDB (using ), Pydantic.
--   **Authentication:** JWT with a role and status-based system.
--   **New:**  for drawing signatures,  for file uploads.
+-   **Authentication:** JWT with role and status-based system.
+-   **Integrations:** , , .
 
 **key DB schema**
 -   **users:** 
--   **tasks:** 
--   **contracts (new):** 
+-   **contracts:**  (iban added)
 
 **changes in tech stack**
--   **Frontend:**  was added for the signature pad.
--   **Backend:**  was added to handle file uploads for ID verification.
+-   **Backend:** Added  for email integration.
 
 **All files of reference**
--   : Core backend file containing routes for applications, authentication, tasks, and verifications.
--   : New file containing all contract-related API endpoints.
--   : Main router file, heavily modified with new routes for the applicant/employee status flow.
--   : Component for the contract signing interface.
--   : Admin page for creating contracts.
--   : Page for applicants to upload their ID documents.
--   : Page for admins to review uploaded ID documents.
+-   : File to be modified for the current bulk-accept task.
+-   : Core backend file, recently updated with new endpoints for settings/documents and email triggers.
+-   : New file containing all Resend integration logic and HTML templates.
+-   : Recently connected to the backend, but still needs upload functionality.
+-   : Recently updated with contract preview and IBAN field.
 
 **Areas that need refactoring**:
--   The main  file in the backend is still too large. Although a  router was created, the logic for applications, users, tasks, and verifications should also be broken out into separate router files to improve maintainability.
+-   The main  file has grown even larger. The logic for applications, users, tasks, and verifications should be broken out into separate router files for better maintainability.
 
 **key api endpoints**
--   : Logs in an applicant/employee.
--   : Gets the status of the logged-in applicant to determine which page to show.
--   : Admin accepts an application, changing the applicant's status.
--   : Applicant uploads ID documents.
--   : Admin creates a new employment contract.
--   : Employee submits their drawn signature.
+-   : **(To be created)** for the new bulk-accept feature.
+-   : **(To be created)** for the document upload feature.
+-   , : Get and update employee profile information.
+-   : Get a list of an employee's documents.
+-   : Endpoint that will be used by the new bulk-accept function.
 
 **Critical Info for New Agent**
--   The applicant/employee authentication flow is now complex and status-driven. The  field in the  collection is critical as it controls what UI the user sees upon logging in (, , or full ).
--   The user flow from application to full dashboard access is: Apply -> Login to see Pending -> Admin accepts -> Login to see Upload ID page -> User uploads ID -> Admin reviews ID -> **(MISSING STEP: Admin approves verification)** -> User gets full dashboard access. The missing step is a high-priority upcoming task.
+-   The immediate task is to implement the bulk-acceptance feature for applications in the admin panel. This requires frontend (checkboxes, button) and backend (new endpoint) changes.
+-   The Resend integration is live and uses the  address . The user's API key is in . All email templates are in .
+-   The contract PDF generation logic is important: the PDF with the correct template (e.g., Minijob) is created *only when a contract is signed*. Old contracts retain their old PDF versions.
 
 **documents and test reports created in this job**
--   : This file was created and consistently updated after each major feature implementation.
--   Test reports from the testing agent, such as , were generated and acted upon.
+-    (updated)
+-   
+-   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  ** (Actioned):** User confirmed requirements for the signature solution: a custom draw signature implementation for the employment contract, plus a request for PDF download functionality on the documents page.
-2.  ** (Actioned):** Agent asked clarifying questions before starting the document signing feature.
-3.  ** (Actioned):** User requested the implementation of an online document signing feature for the employment contract.
-4.  ** (Done):** Agent finished the implementation of the employee dashboard pages (, , ).
-5.  ** (Done):** Agent showed a screenshot confirming the Auszahlung (Payout) page was working.
-6.  ** (Done):** Agent showed a screenshot confirming the Dokumente (Documents) page was working.
-7.  ** (Done):** Agent showed a screenshot confirming the Einstellungen (Settings) page was working.
-8.  ** (Actioned):** User requested the agent to build out the remaining employee dashboard pages.
-9.  ** (Done):** Agent completed the rework of the applicant-to-employee workflow.
-10. ** (Done):** Agent showed a screenshot confirming the new password fields on the career application form.
+1.  ** (Pending):** User requests a bulk-selection and bulk-acceptance feature for applications on the admin page. (Current task)
+2.  ** (Acknowledged):** Agent confirms the platform is fully functional and asks for next steps.
+3.  ** (Acknowledged):** User says ok gut (ok good).
+4.  ** (Actioned):** Agent confirms that emails will now be sent from .
+5.  ** (Actioned):** User confirms they added  as a verified domain to Resend.
+6.  ** (Actioned):** Agent answers Ja (Yes) to the user's question about needing to add a domain.
+7.  ** (Actioned):** User provides the Resend API key and asks for good-looking HTML email designs.
+8.  ** (Actioned):** Agent proposes creating an admin settings page for the API key.
+9.  ** (Actioned):** Agent asks to continue after a  message.
+10. ** (Actioned):** User requests to remove the admin Mitarbeiter tab, add search to applications, and add SMTP.
 
 **Project Health Check:**
--   **Broken:** None.
--   **Mocked:**
-    -   The , , and  pages in the employee dashboard are UI-only and not connected to backend data.
-    -   The admin's final approval step in the verification workflow is missing. Admins can view IDs but cannot approve them to grant full dashboard access.
+-   **Broken:**
+    -   The Dokument hochladen button on the employee dashboard is not functional.
+-   **Mocked:** None. All previously mocked pages (, ) are now connected to the backend.
 
 **3rd Party Integrations**
--   ****: A frontend library used to create the signature drawing pad.
+-   : Used for the signature drawing pad.
+-   : Used for sending transactional emails. Requires user API key.
 
 **Testing status**
 -   **Testing agent used after significant changes:** YES
@@ -144,15 +176,14 @@ A full-stack application using React, FastAPI, and MongoDB.
     -   URL: 
     -   Email: 
     -   Password: 
--   **Employee Login (pre-existing, full access):**
+-   **Employee Login (full access):**
     -   URL: 
     -   Email: 
     -   Password: 
 -   **To test the new applicant flow:**
-    1.  Go to the  page on the public website.
-    2.  Fill out the form and create a new account with a password.
+    1.  Go to the  page.
+    2.  Apply for a job and create a new account.
     3.  Log in at  with the new credentials to see the status pages.
 
 **What agent forgot to execute**
--   The agent did not implement the admin's final approval step for ID verification. After an applicant uploads their documents, there is currently no way for an admin to mark them as verified and grant them full dashboard access.
--   The agent has not yet implemented the PDF download functionality on the  page, which was part of the user's last request.</analysis>
+-   The agent has not implemented the document upload functionality on the employee's  page, which was an upcoming task from the initial handoff summary. User requests have repeatedly taken priority over this pending item.</analysis>

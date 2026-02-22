@@ -12,7 +12,7 @@
 
 ## Login-URL
 
-https://agency-testing-app.preview.emergentagent.com/admin/login
+https://infometrica-app.preview.emergentagent.com/admin/login
 
 ## Schritte:
 
