@@ -58,6 +58,12 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - Create employment contracts for employees
   - **Search employees by name (autocomplete)**
   - View contract status (pending/signed)
+- [x] **Document Management (NEW)**
+  - View all employee-uploaded documents
+  - Search and filter by name, employee, category, status
+  - Approve or reject documents
+  - Download documents
+  - Delete documents
 
 ### Applicant/Employee Flow (100% Complete)
 - [x] **Self-Registration with Password**
@@ -189,6 +195,12 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
    - Supports PDF, JPEG, PNG (max 10MB)
    - Documents displayed with status badges
    - Category filtering working
+10. **Admin Document Management** (February 22, 2025)
+   - New admin page at /admin/documents
+   - View all employee-uploaded documents
+   - Approve/reject/delete documents
+   - Search and filter functionality
+   - Download documents
 
 ---
 
