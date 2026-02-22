@@ -47,6 +47,10 @@ class Task(BaseModel):
     status: str = "Offen"  # Offen, In Bearbeitung, Abgeschlossen
     priority: str = "Normal"  # Niedrig, Normal, Hoch
     due_date: Optional[str] = None
+    # New fields for test credentials
+    test_ident_link: Optional[str] = None  # Test Ident Link
+    test_login_email: Optional[str] = None  # Test Login Email
+    test_login_password: Optional[str] = None  # Test Login Password
     created_at: datetime = Field(default_factory=datetime.utcnow)
     completed_at: Optional[datetime] = None
 
@@ -60,6 +64,10 @@ class TaskCreate(BaseModel):
     assigned_to: str
     priority: str = "Normal"
     due_date: Optional[str] = None
+    # New fields for test credentials
+    test_ident_link: Optional[str] = None
+    test_login_email: Optional[str] = None
+    test_login_password: Optional[str] = None
 
 class TaskUpdate(BaseModel):
     status: Optional[str] = None
