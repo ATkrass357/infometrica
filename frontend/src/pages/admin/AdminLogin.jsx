@@ -146,13 +146,6 @@ const AdminLogin = () => {
               )}
             </button>
           </form>
-
-          {/* Test Credentials Info */}
-          <div className="mt-6 pt-6 border-t border-[#292e42]">
-            <p className="text-xs text-[#565f89] text-center">
-              Test-Zugang: admin@infometrica.de / Admin123!
-            </p>
-          </div>
         </div>
 
         {/* Footer */}
