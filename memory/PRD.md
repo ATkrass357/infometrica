@@ -215,6 +215,15 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
    - Approve/reject/delete documents
    - Search and filter functionality
    - Download documents
+11. **Multi-Person Task Assignment** (February 22, 2025)
+   - Backend endpoint PUT /api/admin/tasks/{id}/assign-multiple
+   - Task model extended with 'assignments' array (employee_id, name, credentials, status)
+   - Frontend 2-step modal: Step 1 = Employee search + multi-select, Step 2 = Credentials per person
+   - Search filters employees by name, email, position
+   - Each selected employee has separate credential fields (Test Ident Link, E-Mail, Passwort)
+   - Expanded task view shows all assignments with individual credentials
+   - Employee view shows only their own credentials
+   - Backward compatibility maintained with legacy single-assignment fields
 
 ---
 
