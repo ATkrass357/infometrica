@@ -132,13 +132,17 @@ async def create_task(
     authorization: str = Header(None),
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
-    """Create a new task and assign to employee"""
+    """Create a new task (optionally assign to employee)"""
     admin_payload = verify_admin_token(authorization)
     
-    # Get employee info
-    employee = await db.employees.find_one({"id": task_data.assigned_to})
-    if not employee:
-        raise HTTPException(status_code=404, detail="Mitarbeiter nicht gefunden")
+    assigned_to_name = None
+    employee = None
+    
+    # Get employee info if assigned
+    if task_data.assigned_to:
+        employee = await db.employees.find_one({"id": task_data.assigned_to})
+        if employee:
+            assigned_to_name = employee["name"]
     
     # Create task
     task = Task(
@@ -149,8 +153,8 @@ async def create_task(
         schritt1=task_data.schritt1,
         schritt2=task_data.schritt2,
         schritt3=task_data.schritt3,
-        assigned_to=task_data.assigned_to,
-        assigned_to_name=employee["name"],
+        assigned_to=task_data.assigned_to or "",
+        assigned_to_name=assigned_to_name or "",
         assigned_by=admin_payload.get("id"),
         priority=task_data.priority,
         due_date=task_data.due_date,
@@ -166,13 +170,14 @@ async def create_task(
     
     await db.tasks.insert_one(task_dict)
     
-    # Send email notification to employee
-    await send_new_task_notification(
-        to_email=employee["email"],
-        employee_name=employee["name"],
-        task_title=task_data.title,
-        due_date=task_data.due_date
-    )
+    # Send email notification to employee if assigned
+    if employee:
+        await send_new_task_notification(
+            to_email=employee["email"],
+            employee_name=employee["name"],
+            task_title=task_data.title,
+            due_date=task_data.due_date
+        )
     
     return task
 
