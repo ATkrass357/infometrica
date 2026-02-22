@@ -1,97 +1,96 @@
 import React from 'react';
-import { Target, Eye, Award, Users, TrendingUp, Shield } from 'lucide-react';
+import { Target, Eye, Award, Users, TrendingUp, Shield, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Unternehmen = () => {
   const values = [
-    {
-      icon: Target,
-      title: 'Präzision',
-      description: 'Wir arbeiten mit höchster Genauigkeit, um selbst kleinste Fehler zu identifizieren.',
-    },
-    {
-      icon: Shield,
-      title: 'Zuverlässigkeit',
-      description: 'Verlassen Sie sich auf unsere bewährten Prozesse und konsistente Qualität.',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Innovation',
-      description: 'Wir nutzen modernste Technologien und bleiben stets am Puls der Zeit.',
-    },
-    {
-      icon: Users,
-      title: 'Partnerschaft',
-      description: 'Wir verstehen uns als Ihr langfristiger Partner auf dem Weg zum Erfolg.',
-    },
+    { icon: Target, title: 'Präzision', desc: 'Höchste Genauigkeit in jedem Test' },
+    { icon: Shield, title: 'Zuverlässigkeit', desc: 'Konsistente Qualität garantiert' },
+    { icon: TrendingUp, title: 'Innovation', desc: 'Modernste Technologien' },
+    { icon: Users, title: 'Partnerschaft', desc: 'Langfristiger Erfolg' },
   ];
 
   const milestones = [
-    { year: '2008', event: 'Gründung von Infometrica in Berlin' },
-    { year: '2012', event: 'Expansion mit 20+ Testing-Experten' },
-    { year: '2016', event: 'Zertifizierung ISO 9001:2015' },
-    { year: '2020', event: 'Über 500 erfolgreich getestete Apps' },
-    { year: '2024', event: 'Marktführer im App-Testing Bereich' },
+    { year: '2008', event: 'Gründung in Berlin' },
+    { year: '2012', event: '20+ Testing-Experten' },
+    { year: '2016', event: 'ISO 9001 Zertifizierung' },
+    { year: '2020', event: '500+ Apps getestet' },
+    { year: '2024', event: 'Marktführer DACH' },
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-orange-50">
+    <div className="min-h-screen bg-white">
+      {/* Hero */}
+      <section className="pt-32 pb-20 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-block px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-medium mb-6">
-              Über Infometrica
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div>
+              <div className="text-orange-500 font-semibold tracking-wide mb-4">ÜBER UNS</div>
+              <h1 className="text-5xl lg:text-7xl font-black text-slate-900 leading-[0.9] tracking-tight mb-6">
+                Deutsche<br />
+                Präzision.
+              </h1>
+              <p className="text-xl text-slate-600 leading-relaxed mb-8">
+                Seit 2008 setzen wir Standards im Application Testing. 
+                Über 50 zertifizierte Experten. Mehr als 500 erfolgreiche Projekte. 
+                Ein Ziel: Ihre Software perfekt machen.
+              </p>
+              <div className="flex flex-wrap gap-8">
+                <div>
+                  <div className="text-4xl font-black text-orange-500">15+</div>
+                  <div className="text-slate-600">Jahre Erfahrung</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-black text-orange-500">500+</div>
+                  <div className="text-slate-600">Projekte</div>
+                </div>
+                <div>
+                  <div className="text-4xl font-black text-orange-500">50+</div>
+                  <div className="text-slate-600">Experten</div>
+                </div>
+              </div>
             </div>
-            <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Ihr Partner für{' '}
-              <span className="text-orange-500">exzellente Qualität</span>
-            </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Seit über 15 Jahren setzen wir Standards im Application Testing und 
-              helfen Unternehmen dabei, Software von höchster Qualität zu entwickeln.
-            </p>
-          </div>
-
-          <div className="mt-16 rounded-2xl overflow-hidden shadow-2xl">
-            <img
-              src="https://images.unsplash.com/photo-1606857521015-7f9fcf423740"
-              alt="Infometrica Office"
-              className="w-full h-[500px] object-cover"
-            />
+            <div className="relative">
+              <div className="aspect-[4/5] bg-slate-200 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"
+                  alt="Team"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-6 -left-6 bg-orange-500 p-6 hidden lg:block">
+                <div className="text-white font-bold text-lg">Berlin HQ</div>
+                <div className="text-orange-100 text-sm">Tauentzienstraße 9-12</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      <section className="py-24 px-6 lg:px-8 bg-slate-900">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Mission */}
-            <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
-              <div className="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
-                <Target className="text-orange-500" size={32} />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Unsere Mission</h2>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Wir machen qualitativ hochwertige Software für alle zugänglich. 
-                Durch umfassende Testing-Services stellen wir sicher, dass jede 
-                Anwendung perfekt funktioniert, sicher ist und Benutzer begeistert. 
-                Unser Ziel ist es, technische Exzellenz mit höchster Kundenzufriedenheit 
-                zu verbinden.
+            <div className="border-l-4 border-orange-500 pl-8">
+              <div className="text-orange-500 font-semibold mb-4">MISSION</div>
+              <h2 className="text-3xl font-bold text-white mb-6">
+                Qualität für alle zugänglich machen
+              </h2>
+              <p className="text-slate-400 text-lg leading-relaxed">
+                Wir glauben, dass jede Software die beste Version ihrer selbst sein sollte. 
+                Durch umfassende Testing-Services stellen wir sicher, dass Anwendungen 
+                perfekt funktionieren, sicher sind und Benutzer begeistern.
               </p>
             </div>
-
-            {/* Vision */}
-            <div className="bg-white p-10 rounded-2xl shadow-lg border border-gray-100">
-              <div className="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
-                <Eye className="text-orange-500" size={32} />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Unsere Vision</h2>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                Wir streben danach, die führende App-Testing-Agentur in Europa zu werden. 
-                Mit Innovation, Expertise und Leidenschaft wollen wir die Standards der 
-                Softwarequalität neu definieren und unseren Kunden helfen, digitale 
-                Produkte zu schaffen, die Leben verändern und Märkte revolutionieren.
+            <div className="border-l-4 border-white pl-8">
+              <div className="text-white font-semibold mb-4">VISION</div>
+              <h2 className="text-3xl font-bold text-white mb-6">
+                Europas führende Testing-Agentur
+              </h2>
+              <p className="text-slate-400 text-lg leading-relaxed">
+                Mit Innovation, Expertise und Leidenschaft wollen wir die Standards 
+                der Softwarequalität neu definieren. Unser Ziel: digitale Produkte 
+                schaffen helfen, die Märkte verändern.
               </p>
             </div>
           </div>
@@ -99,34 +98,28 @@ const Unternehmen = () => {
       </section>
 
       {/* Values */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
+      <section className="py-24 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Unsere <span className="text-orange-500">Werte</span>
+            <div className="text-orange-500 font-semibold tracking-wide mb-4">WERTE</div>
+            <h2 className="text-4xl lg:text-5xl font-black text-slate-900">
+              Was uns antreibt
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Diese Prinzipien leiten uns bei allem, was wir tun.
-            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => {
               const Icon = value.icon;
               return (
                 <div
                   key={index}
-                  className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 text-center"
+                  className="border border-slate-200 p-8 hover:border-orange-500 transition-colors duration-300 text-center"
                 >
-                  <div className="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center mb-6 mx-auto">
-                    <Icon className="text-orange-500" size={32} />
+                  <div className="w-16 h-16 bg-slate-900 flex items-center justify-center mx-auto mb-6">
+                    <Icon className="text-orange-500" size={28} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {value.title}
-                  </h3>
-                  <p className="text-gray-600">
-                    {value.description}
-                  </p>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{value.title}</h3>
+                  <p className="text-slate-600">{value.desc}</p>
                 </div>
               );
             })}
@@ -134,98 +127,67 @@ const Unternehmen = () => {
         </div>
       </section>
 
-      {/* Company Journey */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      {/* Timeline */}
+      <section className="py-24 px-6 lg:px-8 bg-slate-50">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                Unsere <span className="text-orange-500">Geschichte</span>
-              </h2>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Von einem kleinen Startup zu einem der führenden App-Testing-Unternehmen – 
-                unsere Reise ist geprägt von Innovation, Hingabe und dem Streben nach Perfektion.
-              </p>
+          <div className="text-center mb-16">
+            <div className="text-orange-500 font-semibold tracking-wide mb-4">GESCHICHTE</div>
+            <h2 className="text-4xl lg:text-5xl font-black text-slate-900">
+              Unsere Meilensteine
+            </h2>
+          </div>
 
-              <div className="space-y-6">
-                {milestones.map((milestone, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-20 text-2xl font-bold text-orange-500">
-                      {milestone.year}
-                    </div>
-                    <div className="flex-1">
-                      <div className="h-px bg-orange-200 w-full mt-4 mb-2"></div>
-                      <p className="text-gray-700 font-medium">{milestone.event}</p>
-                    </div>
-                  </div>
-                ))}
+          <div className="flex flex-wrap justify-center gap-8">
+            {milestones.map((item, index) => (
+              <div key={index} className="text-center w-40">
+                <div className="text-5xl font-black text-orange-500 mb-2">{item.year}</div>
+                <div className="h-px w-full bg-slate-300 mb-4"></div>
+                <p className="text-slate-600 text-sm">{item.event}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Team Stats */}
+      <section className="py-24 px-6 lg:px-8 bg-orange-500">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <Award className="text-white mx-auto mb-4" size={48} />
+              <h3 className="text-2xl font-bold text-white mb-2">ISTQB Zertifiziert</h3>
+              <p className="text-orange-100">Alle Tester mit international anerkannten Zertifizierungen</p>
             </div>
-
-            <div className="space-y-6">
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="https://images.pexels.com/photos/4623110/pexels-photo-4623110.jpeg"
-                  alt="Team Working"
-                  className="w-full h-[400px] object-cover"
-                />
-              </div>
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1713947506934-c0b6519e069d"
-                  alt="Collaboration"
-                  className="w-full h-[300px] object-cover"
-                />
-              </div>
+            <div className="text-center">
+              <Users className="text-white mx-auto mb-4" size={48} />
+              <h3 className="text-2xl font-bold text-white mb-2">8+ Jahre</h3>
+              <p className="text-orange-100">Durchschnittliche Erfahrung pro Teammitglied</p>
+            </div>
+            <div className="text-center">
+              <TrendingUp className="text-white mx-auto mb-4" size={48} />
+              <h3 className="text-2xl font-bold text-white mb-2">Kontinuierlich</h3>
+              <p className="text-orange-100">Weiterbildung zu neuesten Testing-Methoden</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Unser <span className="text-orange-500">Team</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Über 50 erfahrene Testing-Experten arbeiten täglich daran, 
-              Ihre Apps zur Perfektion zu bringen.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-8 rounded-2xl shadow-sm text-center">
-              <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="text-orange-500" size={36} />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Zertifiziert</h3>
-              <p className="text-gray-600">
-                Alle unsere Tester verfügen über international anerkannte Zertifizierungen
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-2xl shadow-sm text-center">
-              <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="text-orange-500" size={36} />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Erfahren</h3>
-              <p className="text-gray-600">
-                Durchschnittlich 8+ Jahre Erfahrung im Application Testing
-              </p>
-            </div>
-
-            <div className="bg-white p-8 rounded-2xl shadow-sm text-center">
-              <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <TrendingUp className="text-orange-500" size={36} />
-              </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">Weiterbildung</h3>
-              <p className="text-gray-600">
-                Kontinuierliche Schulungen zu neuesten Testing-Methoden und Tools
-              </p>
-            </div>
-          </div>
+      {/* CTA */}
+      <section className="py-24 px-6 lg:px-8 bg-slate-900">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">
+            Teil des Teams werden?
+          </h2>
+          <p className="text-xl text-slate-400 mb-10">
+            Wir suchen talentierte Testing-Experten, die mit uns die Zukunft gestalten.
+          </p>
+          <Link
+            to="/karriere"
+            className="group inline-flex items-center gap-3 px-10 py-5 bg-orange-500 text-white font-bold text-lg hover:bg-orange-400 transition-all duration-300"
+          >
+            Offene Stellen
+            <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
       </section>
     </div>
