@@ -167,6 +167,14 @@ async def create_task(
     
     await db.tasks.insert_one(task_dict)
     
+    # Send email notification to employee
+    await send_new_task_notification(
+        to_email=employee["email"],
+        employee_name=employee["name"],
+        task_title=task_data.title,
+        due_date=task_data.due_date
+    )
+    
     return task
 
 @router.get("/tasks", response_model=List[Task])
