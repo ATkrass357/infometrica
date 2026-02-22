@@ -1,201 +1,217 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, Users, Target, Award, TrendingUp } from 'lucide-react';
+import { ArrowRight, Shield, Zap, BarChart3, Code2, ChevronRight } from 'lucide-react';
 
 const Home = () => {
-  const services = [
-    {
-      icon: CheckCircle2,
-      title: 'Funktionales Testing',
-      description: 'Umfassende Tests aller Funktionen Ihrer Anwendung für optimale Leistung und Zuverlässigkeit.',
-    },
-    {
-      icon: Users,
-      title: 'Usability Testing',
-      description: 'Bewertung der Benutzerfreundlichkeit und Optimierung der User Experience für maximale Zufriedenheit.',
-    },
-    {
-      icon: Target,
-      title: 'Performance Testing',
-      description: 'Analyse und Optimierung der Ladezeiten, Skalierbarkeit und Systemstabilität Ihrer Apps.',
-    },
-    {
-      icon: Award,
-      title: 'Qualitätssicherung',
-      description: 'Kontinuierliche QA-Prozesse für höchste Qualitätsstandards in allen Entwicklungsphasen.',
-    },
-  ];
-
-  const stats = [
-    { number: '500+', label: 'Getestete Apps' },
-    { number: '98%', label: 'Kundenzufriedenheit' },
-    { number: '15+', label: 'Jahre Erfahrung' },
-    { number: '50+', label: 'Experten Team' },
-  ];
-
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-50 via-white to-orange-50 opacity-60"></div>
-        
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8 animate-fade-in">
-              <div className="inline-block px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-medium">
-                Professionelle App-Testing Lösungen
+    <div className="min-h-screen bg-slate-50">
+      {/* Hero Section - Asymmetric Layout */}
+      <section className="relative pt-28 pb-24 lg:pt-36 lg:pb-32 overflow-hidden">
+        {/* Geometric Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-orange-500 transform skew-x-[-6deg] translate-x-20 hidden lg:block" />
+          <div className="absolute top-20 left-10 w-72 h-72 bg-orange-100 rounded-full blur-3xl opacity-60" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 text-white text-sm font-medium tracking-wide">
+                <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
+                QUALITÄTSSICHERUNG FÜR APPS
               </div>
-              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                Qualität, die Ihre Apps
-                <span className="text-orange-500"> perfekt macht</span>
+              
+              <h1 className="text-5xl lg:text-7xl font-black text-slate-900 leading-[0.9] tracking-tight">
+                Wir testen.
+                <br />
+                <span className="text-orange-500">Sie profitieren.</span>
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                Wir sind Ihre Experten für Application Testing. Mit modernsten Methoden 
-                und jahrelanger Erfahrung sorgen wir dafür, dass Ihre Anwendungen fehlerfrei, 
-                sicher und benutzerfreundlich sind.
+              
+              <p className="text-lg text-slate-600 max-w-lg leading-relaxed">
+                Infometrica ist Ihr Spezialist für professionelles Application Testing. 
+                Wir finden die Fehler, bevor Ihre Nutzer es tun.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
                   to="/kontakt"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+                  className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white font-semibold hover:bg-slate-800 transition-all duration-300"
                 >
-                  Kostenlose Beratung
-                  <ArrowRight className="ml-2" size={20} />
+                  Projekt starten
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
                   to="/dienstleistungen"
-                  className="inline-flex items-center justify-center px-8 py-4 bg-white text-gray-900 rounded-xl font-semibold border-2 border-gray-200 hover:border-orange-500 hover:text-orange-500 transition-all duration-200"
+                  className="inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-slate-900 text-slate-900 font-semibold hover:bg-slate-900 hover:text-white transition-all duration-300"
                 >
-                  Mehr erfahren
+                  Leistungen ansehen
                 </Link>
               </div>
             </div>
 
-            <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500">
-                <img
-                  src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481"
-                  alt="Professional Testing Team"
-                  className="w-full h-full object-cover"
-                />
+            {/* Right - Stats Cards */}
+            <div className="relative lg:pl-12">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white p-8 border-l-4 border-orange-500 shadow-xl">
+                  <div className="text-5xl font-black text-slate-900 mb-2">500+</div>
+                  <div className="text-slate-600 font-medium">Getestete Apps</div>
+                </div>
+                <div className="bg-slate-900 p-8 text-white mt-8">
+                  <div className="text-5xl font-black mb-2">98%</div>
+                  <div className="text-slate-400 font-medium">Kundenzufriedenheit</div>
+                </div>
+                <div className="bg-orange-500 p-8 text-white">
+                  <div className="text-5xl font-black mb-2">15+</div>
+                  <div className="text-orange-100 font-medium">Jahre Erfahrung</div>
+                </div>
+                <div className="bg-white p-8 border border-slate-200 shadow-xl">
+                  <div className="text-5xl font-black text-slate-900 mb-2">50+</div>
+                  <div className="text-slate-600 font-medium">Test-Experten</div>
+                </div>
               </div>
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-orange-500 rounded-2xl opacity-20 blur-2xl"></div>
-              <div className="absolute -top-6 -right-6 w-40 h-40 bg-orange-300 rounded-full opacity-20 blur-3xl"></div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      {/* Services - Bento Grid */}
+      <section className="py-24 px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div
-                key={index}
-                className="text-center transform hover:scale-105 transition-transform duration-200"
-              >
-                <div className="text-4xl lg:text-5xl font-bold text-orange-500 mb-2">
-                  {stat.number}
-                </div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Unsere <span className="text-orange-500">Dienstleistungen</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Umfassende Testing-Lösungen für Ihre Anwendungen – von der Funktionalität 
-              bis zur Performance.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <div
-                  key={index}
-                  className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
-                >
-                  <div className="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
-                    <Icon className="text-orange-500" size={28} />
-                  </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="text-center mt-12">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-16">
+            <div>
+              <div className="text-orange-500 font-semibold tracking-wide mb-4">DIENSTLEISTUNGEN</div>
+              <h2 className="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
+                Testing auf<br />höchstem Niveau
+              </h2>
+            </div>
             <Link
               to="/dienstleistungen"
-              className="inline-flex items-center justify-center px-8 py-4 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
+              className="group inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-orange-500 transition-colors"
             >
-              Alle Dienstleistungen ansehen
-              <ArrowRight className="ml-2" size={20} />
+              Alle Leistungen
+              <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
             </Link>
+          </div>
+
+          {/* Bento Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Large Card */}
+            <div className="lg:col-span-2 bg-slate-900 p-10 group hover:bg-slate-800 transition-colors duration-300">
+              <Shield className="text-orange-500 mb-6" size={48} />
+              <h3 className="text-2xl font-bold text-white mb-4">Funktionales Testing</h3>
+              <p className="text-slate-400 text-lg leading-relaxed mb-6">
+                Umfassende Prüfung aller Funktionen Ihrer Anwendung. Wir stellen sicher, 
+                dass jedes Feature einwandfrei funktioniert – auf allen Plattformen und Geräten.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                {['Regression Tests', 'Integration Tests', 'End-to-End'].map((tag) => (
+                  <span key={tag} className="px-4 py-2 bg-slate-800 text-slate-300 text-sm font-medium">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Small Card */}
+            <div className="bg-orange-500 p-10 group">
+              <Zap className="text-white mb-6" size={48} />
+              <h3 className="text-2xl font-bold text-white mb-4">Performance Testing</h3>
+              <p className="text-orange-100 leading-relaxed">
+                Analyse von Ladezeiten, Speicherverbrauch und Systemstabilität unter Last.
+              </p>
+            </div>
+
+            {/* Small Card */}
+            <div className="bg-slate-100 p-10 group hover:bg-slate-200 transition-colors duration-300">
+              <BarChart3 className="text-slate-900 mb-6" size={48} />
+              <h3 className="text-2xl font-bold text-slate-900 mb-4">Usability Testing</h3>
+              <p className="text-slate-600 leading-relaxed">
+                Bewertung der Benutzerfreundlichkeit durch echte Nutzer-Tests und Expertenbewertungen.
+              </p>
+            </div>
+
+            {/* Large Card */}
+            <div className="lg:col-span-2 bg-gradient-to-br from-slate-900 to-slate-800 p-10 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl" />
+              <div className="relative z-10">
+                <Code2 className="text-orange-500 mb-6" size={48} />
+                <h3 className="text-2xl font-bold text-white mb-4">Automatisiertes Testing</h3>
+                <p className="text-slate-400 text-lg leading-relaxed mb-6">
+                  CI/CD-Integration mit automatisierten Test-Suites. Kontinuierliche Qualitätssicherung 
+                  bei jedem Deployment – schnell, zuverlässig und kosteneffizient.
+                </p>
+                <Link
+                  to="/dienstleistungen"
+                  className="inline-flex items-center gap-2 text-orange-500 font-semibold hover:text-orange-400 transition-colors"
+                >
+                  Mehr erfahren <ArrowRight size={18} />
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Why Us - Split Section */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Image Side */}
             <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl">
+              <div className="aspect-[4/5] bg-slate-200 overflow-hidden">
                 <img
-                  src="https://images.pexels.com/photos/5324970/pexels-photo-5324970.jpeg"
-                  alt="Team Collaboration"
-                  className="w-full h-full object-cover"
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"
+                  alt="Team bei der Arbeit"
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
                 />
+              </div>
+              {/* Floating Card */}
+              <div className="absolute -bottom-8 -right-8 bg-orange-500 p-8 max-w-xs hidden lg:block">
+                <div className="text-white">
+                  <div className="text-4xl font-black mb-2">Berlin</div>
+                  <div className="text-orange-100">Tauentzienstraße 9-12</div>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900">
-                Warum <span className="text-orange-500">Infometrica?</span>
+            {/* Content Side */}
+            <div className="space-y-8">
+              <div className="text-orange-500 font-semibold tracking-wide">ÜBER UNS</div>
+              <h2 className="text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
+                Deutsche Präzision.<br />
+                Globale Standards.
               </h2>
-              <p className="text-xl text-gray-600 leading-relaxed">
-                Mit über 15 Jahren Erfahrung im Application Testing sind wir Ihr 
-                verlässlicher Partner für Qualitätssicherung.
+              <p className="text-lg text-slate-600 leading-relaxed">
+                Seit über 15 Jahren setzen wir Maßstäbe im Application Testing. 
+                Unser Team aus zertifizierten Experten verbindet deutsche Gründlichkeit 
+                mit modernsten Testing-Methoden.
               </p>
-              
-              <div className="space-y-4">
+
+              <div className="space-y-6 pt-4">
                 {[
-                  'Erfahrenes Team mit zertifizierten Test-Experten',
-                  'Modernste Testing-Tools und Methoden',
-                  'Individuelle Lösungen für Ihre Anforderungen',
-                  'Transparente Kommunikation und Reporting',
-                  'Schnelle Reaktionszeiten und flexibler Support',
-                ].map((item, index) => (
-                  <div key={index} className="flex items-start space-x-3">
-                    <CheckCircle2 className="text-orange-500 flex-shrink-0 mt-1" size={24} />
-                    <span className="text-gray-700 text-lg">{item}</span>
+                  { title: 'ISTQB-zertifizierte Tester', desc: 'Höchste Qualifikationsstandards' },
+                  { title: 'Agile Methoden', desc: 'Nahtlose Integration in Ihren Workflow' },
+                  { title: 'Dedizierter Support', desc: 'Persönlicher Ansprechpartner für Ihr Projekt' },
+                ].map((item, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-orange-500 flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold">{String(i + 1).padStart(2, '0')}</span>
+                    </div>
+                    <div>
+                      <div className="font-bold text-slate-900">{item.title}</div>
+                      <div className="text-slate-600">{item.desc}</div>
+                    </div>
                   </div>
                 ))}
               </div>
 
               <Link
                 to="/unternehmen"
-                className="inline-flex items-center justify-center px-8 py-4 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transform hover:scale-105 transition-all duration-200 shadow-lg mt-6"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-slate-900 text-white font-semibold hover:bg-slate-800 transition-all duration-300 mt-4"
               >
-                Mehr über uns
-                <ArrowRight className="ml-2" size={20} />
+                Unternehmen entdecken
+                <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
@@ -203,22 +219,33 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-500 to-orange-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-            Bereit für fehlerfreie Apps?
+      <section className="py-24 bg-slate-900 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAzMHYySDI0di0yaDEyek0zNiAyNnYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-50" />
+        
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10">
+          <h2 className="text-4xl lg:text-6xl font-black text-white mb-6 leading-tight">
+            Bereit für<br />
+            <span className="text-orange-500">fehlerfreie Apps?</span>
           </h2>
-          <p className="text-xl text-orange-100 mb-8">
-            Kontaktieren Sie uns noch heute für eine kostenlose Erstberatung 
-            und erfahren Sie, wie wir Ihre Anwendungen auf das nächste Level bringen.
+          <p className="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
+            Kontaktieren Sie uns für eine unverbindliche Erstberatung. 
+            Wir analysieren Ihre Anforderungen und erstellen ein maßgeschneidertes Angebot.
           </p>
-          <Link
-            to="/kontakt"
-            className="inline-flex items-center justify-center px-10 py-5 bg-white text-orange-600 rounded-xl font-bold text-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200 shadow-2xl"
-          >
-            Jetzt Kontakt aufnehmen
-            <ArrowRight className="ml-2" size={24} />
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              to="/kontakt"
+              className="group inline-flex items-center justify-center gap-3 px-10 py-5 bg-orange-500 text-white font-bold text-lg hover:bg-orange-400 transition-all duration-300"
+            >
+              Jetzt Kontakt aufnehmen
+              <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              to="/karriere"
+              className="inline-flex items-center justify-center gap-3 px-10 py-5 border-2 border-slate-700 text-white font-bold text-lg hover:border-orange-500 hover:text-orange-500 transition-all duration-300"
+            >
+              Karriere bei uns
+            </Link>
+          </div>
         </div>
       </section>
     </div>
