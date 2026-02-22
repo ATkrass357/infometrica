@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, Header, UploadFile, File
+from fastapi import APIRouter, HTTPException, Depends, Header, UploadFile, File, Form
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from models.employee import EmployeeLogin, TokenResponse, EmployeeResponse, Task, TaskCreate, TaskUpdate
 from utils.auth import verify_password, create_access_token, decode_token, get_password_hash
@@ -406,7 +406,7 @@ async def get_documents(
 @router.post("/documents/upload")
 async def upload_document(
     file: UploadFile = File(...),
-    category: str = "Sonstige",
+    category: str = Form("Sonstige"),
     authorization: str = Header(None),
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
