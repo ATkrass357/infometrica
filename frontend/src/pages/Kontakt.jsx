@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
-import { Button } from '../components/ui/button';
-import { Input } from '../components/ui/input';
-import { Textarea } from '../components/ui/textarea';
-import { Label } from '../components/ui/label';
+import { Mail, Phone, MapPin, Send, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Kontakt = () => {
@@ -19,307 +15,210 @@ const Kontakt = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission (will be connected to Telegram webhook later)
     setTimeout(() => {
-      toast.success('Vielen Dank! Ihre Nachricht wurde erfolgreich gesendet.', {
-        description: 'Wir werden uns in Kürze bei Ihnen melden.',
+      toast.success('Nachricht gesendet!', {
+        description: 'Wir melden uns in Kürze bei Ihnen.',
       });
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        phone: '',
-        subject: '',
-        message: '',
-      });
+      setFormData({ name: '', email: '', company: '', phone: '', subject: '', message: '' });
       setIsSubmitting(false);
     }, 1500);
   };
 
-  const contactInfo = [
-    {
-      icon: Mail,
-      title: 'E-Mail',
-      content: 'info@infometrica.de',
-      link: 'mailto:info@infometrica.de',
-    },
-    {
-      icon: Phone,
-      title: 'Telefon',
-      content: '+49 (0) 123 456789',
-      link: 'tel:+49123456789',
-    },
-    {
-      icon: MapPin,
-      title: 'Adresse',
-      content: 'Musterstraße 123, 10115 Berlin, Deutschland',
-      link: 'https://maps.google.com',
-    },
-  ];
-
-  const faqs = [
-    {
-      question: 'Wie schnell können Sie mit dem Testing beginnen?',
-      answer: 'In der Regel können wir innerhalb von 48 Stunden nach der Erstberatung mit dem Testing starten.',
-    },
-    {
-      question: 'Welche Arten von Apps testen Sie?',
-      answer: 'Wir testen alle Arten von Anwendungen: Mobile Apps (iOS/Android), Web-Apps, Desktop-Software und Cloud-Anwendungen.',
-    },
-    {
-      question: 'Wie werden die Testergebnisse kommuniziert?',
-      answer: 'Sie erhalten detaillierte Reports per E-Mail und können jederzeit über unser Helpdesk-System den Status einsehen.',
-    },
-    {
-      question: 'Bieten Sie auch langfristige Testing-Partnerships an?',
-      answer: 'Ja, wir bieten flexible Vertragsmodelle – von einzelnen Projekten bis zu langfristigen Testing-Partnerschaften.',
-    },
-  ];
-
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-orange-50">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="inline-block px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-medium mb-6">
-            Kontakt & Helpdesk
-          </div>
-          <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Lassen Sie uns{' '}
-            <span className="text-orange-500">sprechen</span>
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Haben Sie Fragen zu unseren Dienstleistungen? Möchten Sie ein Projekt besprechen? 
-            Unser Team steht Ihnen gerne zur Verfügung.
-          </p>
-        </div>
-      </section>
-
-      {/* Contact Info Cards */}
-      <section className="py-12 px-4 sm:px-6 lg:px-8 -mt-8">
+    <div className="min-h-screen bg-white">
+      {/* Hero */}
+      <section className="pt-32 pb-16 px-6 lg:px-8 bg-slate-900">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {contactInfo.map((info, index) => {
-              const Icon = info.icon;
-              return (
-                <a
-                  key={index}
-                  href={info.link}
-                  target={info.link.startsWith('http') ? '_blank' : '_self'}
-                  rel="noopener noreferrer"
-                  className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 text-center"
-                >
-                  <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Icon className="text-orange-500" size={28} />
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">
-                    {info.title}
-                  </h3>
-                  <p className="text-gray-600">{info.content}</p>
-                </a>
-              );
-            })}
+          <div className="max-w-2xl">
+            <div className="text-orange-500 font-semibold tracking-wide mb-4">KONTAKT</div>
+            <h1 className="text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+              Lassen Sie uns<br />
+              <span className="text-orange-500">sprechen.</span>
+            </h1>
+            <p className="text-xl text-slate-400">
+              Haben Sie ein Projekt? Wir freuen uns auf Ihre Nachricht.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Contact Form & Image */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
+      {/* Contact Grid */}
+      <section className="py-24 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Form */}
-            <div className="bg-white p-10 rounded-2xl shadow-lg">
-              <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                Senden Sie uns eine Nachricht
-              </h2>
-              <p className="text-gray-600 mb-8">
-                Füllen Sie das Formular aus und wir melden uns innerhalb von 24 Stunden bei Ihnen.
-              </p>
-
+            <div>
+              <h2 className="text-2xl font-bold text-slate-900 mb-8">Nachricht senden</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Name *</Label>
-                    <Input
-                      id="name"
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Name *</label>
+                    <input
+                      type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      placeholder="Ihr Name"
                       required
-                      className="h-12"
+                      className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
+                      placeholder="Ihr Name"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="email">E-Mail *</Label>
-                    <Input
-                      id="email"
-                      name="email"
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">E-Mail *</label>
+                    <input
                       type="email"
+                      name="email"
                       value={formData.email}
                       onChange={handleChange}
-                      placeholder="ihre@email.de"
                       required
-                      className="h-12"
+                      className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
+                      placeholder="ihre@email.de"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="company">Unternehmen</Label>
-                    <Input
-                      id="company"
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Unternehmen</label>
+                    <input
+                      type="text"
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
+                      className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
                       placeholder="Ihr Unternehmen"
-                      className="h-12"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Telefon</Label>
-                    <Input
-                      id="phone"
-                      name="phone"
+                  <div>
+                    <label className="block text-sm font-semibold text-slate-700 mb-2">Telefon</label>
+                    <input
                       type="tel"
+                      name="phone"
                       value={formData.phone}
                       onChange={handleChange}
+                      className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
                       placeholder="+49 123 456789"
-                      className="h-12"
                     />
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Betreff *</Label>
-                  <Input
-                    id="subject"
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Betreff *</label>
+                  <input
+                    type="text"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
-                    placeholder="Worum geht es?"
                     required
-                    className="h-12"
+                    className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
+                    placeholder="Worum geht es?"
                   />
                 </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="message">Nachricht *</Label>
-                  <Textarea
-                    id="message"
+                <div>
+                  <label className="block text-sm font-semibold text-slate-700 mb-2">Nachricht *</label>
+                  <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
-                    placeholder="Beschreiben Sie Ihr Anliegen..."
                     required
-                    className="min-h-[160px] resize-none"
+                    rows={6}
+                    className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors resize-none"
+                    placeholder="Beschreiben Sie Ihr Projekt oder Ihre Anfrage..."
                   />
                 </div>
 
-                <Button
+                <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full h-14 bg-orange-500 hover:bg-orange-600 text-white text-lg font-semibold rounded-xl transition-all duration-200 transform hover:scale-105"
+                  className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white font-semibold hover:bg-slate-800 disabled:opacity-50 transition-all duration-300"
                 >
                   {isSubmitting ? (
-                    <span className="flex items-center justify-center">
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
                       Wird gesendet...
-                    </span>
+                    </>
                   ) : (
-                    <span className="flex items-center justify-center">
+                    <>
                       Nachricht senden
-                      <Send className="ml-2" size={20} />
-                    </span>
+                      <Send size={18} className="group-hover:translate-x-1 transition-transform" />
+                    </>
                   )}
-                </Button>
+                </button>
               </form>
             </div>
 
-            {/* Image & Info */}
-            <div className="space-y-6">
-              <div className="rounded-2xl overflow-hidden shadow-2xl">
-                <img
-                  src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481"
-                  alt="Customer Support"
-                  className="w-full h-[400px] object-cover"
-                />
+            {/* Contact Info */}
+            <div className="lg:pl-12">
+              <h2 className="text-2xl font-bold text-slate-900 mb-8">Kontaktdaten</h2>
+              
+              <div className="space-y-8 mb-12">
+                <a href="mailto:info@infometrica.de" className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 bg-slate-900 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors">
+                    <Mail className="text-white" size={20} />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-900">E-Mail</div>
+                    <div className="text-slate-600 group-hover:text-orange-500 transition-colors">info@infometrica.de</div>
+                  </div>
+                </a>
+
+                <a href="tel:+4930123456789" className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 bg-slate-900 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors">
+                    <Phone className="text-white" size={20} />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-900">Telefon</div>
+                    <div className="text-slate-600 group-hover:text-orange-500 transition-colors">+49 (0) 30 123 456 789</div>
+                  </div>
+                </a>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-orange-500 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="text-white" size={20} />
+                  </div>
+                  <div>
+                    <div className="font-semibold text-slate-900">Adresse</div>
+                    <div className="text-slate-600">
+                      Tauentzienstraße 9-12<br />
+                      10789 Berlin, Deutschland
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="bg-orange-50 p-8 rounded-2xl">
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  Warum uns kontaktieren?
-                </h3>
-                <ul className="space-y-4">
-                  {[
-                    'Kostenlose Erstberatung',
-                    'Schnelle Reaktionszeiten',
-                    'Individuelle Lösungen',
-                    'Transparente Preise',
-                    'Erfahrene Experten',
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-center space-x-3">
-                      <CheckCircle className="text-orange-500 flex-shrink-0" size={20} />
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
+              {/* Office Hours */}
+              <div className="bg-slate-50 p-8">
+                <h3 className="font-bold text-slate-900 mb-4">Öffnungszeiten</h3>
+                <div className="space-y-2 text-slate-600">
+                  <div className="flex justify-between">
+                    <span>Montag – Freitag</span>
+                    <span className="font-semibold text-slate-900">09:00 – 18:00</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Samstag – Sonntag</span>
+                    <span className="text-slate-400">Geschlossen</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ / Helpdesk */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Häufig gestellte <span className="text-orange-500">Fragen</span>
-            </h2>
-            <p className="text-xl text-gray-600">
-              Hier finden Sie Antworten auf die wichtigsten Fragen
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            {faqs.map((faq, index) => (
-              <div
-                key={index}
-                className="bg-white p-8 rounded-2xl shadow-sm hover:shadow-md transition-shadow duration-200"
-              >
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {faq.question}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <p className="text-gray-600 mb-4">
-              Haben Sie weitere Fragen?
-            </p>
-            <a
-              href="mailto:info@infometrica.de"
-              className="inline-flex items-center justify-center px-8 py-4 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transform hover:scale-105 transition-all duration-200 shadow-lg"
-            >
-              <Mail className="mr-2" size={20} />
-              E-Mail senden
-            </a>
+      {/* Map Placeholder */}
+      <section className="h-96 bg-slate-200 relative">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="text-center">
+            <MapPin className="text-slate-400 mx-auto mb-4" size={48} />
+            <p className="text-slate-500 font-medium">Tauentzienstraße 9-12, Berlin</p>
           </div>
         </div>
       </section>
