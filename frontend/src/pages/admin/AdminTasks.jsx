@@ -413,7 +413,7 @@ const AdminTasks = () => {
                     </span>
                   </div>
                   <div className="flex flex-wrap items-center gap-4 text-sm text-[#9aa5ce]">
-                    <div className="flex items-center gap-1">
+                    <div className={`flex items-center gap-1 ${!task.assigned_to ? 'text-[#e0af68]' : ''}`}>
                       <User size={14} />
                       <span>{task.assigned_to_name || 'Nicht zugewiesen'}</span>
                     </div>
