@@ -96,12 +96,8 @@ const AdminTasks = () => {
         schritt1: '',
         schritt2: '',
         schritt3: '',
-        assigned_to: '',
         priority: 'Normal',
-        due_date: '',
-        test_ident_link: '',
-        test_login_email: '',
-        test_login_password: ''
+        due_date: ''
       });
       fetchData();
     } catch (error) {
