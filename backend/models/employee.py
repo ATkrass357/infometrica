@@ -1,5 +1,5 @@
 from pydantic import BaseModel, EmailStr, Field
-from typing import Optional
+from typing import Optional, List
 from datetime import datetime
 import uuid
 
@@ -33,6 +33,17 @@ class TokenResponse(BaseModel):
     token_type: str = "bearer"
     employee: EmployeeResponse
 
+class TaskAssignment(BaseModel):
+    """Individual assignment for a task - one per assigned employee"""
+    employee_id: str
+    employee_name: str
+    employee_email: Optional[str] = None
+    test_ident_link: Optional[str] = None
+    test_login_email: Optional[str] = None
+    test_login_password: Optional[str] = None
+    assigned_at: datetime = Field(default_factory=datetime.utcnow)
+    status: str = "Offen"  # Offen, In Bearbeitung, Abgeschlossen
+
 class Task(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
@@ -41,16 +52,19 @@ class Task(BaseModel):
     schritt1: Optional[str] = None
     schritt2: Optional[str] = None
     schritt3: Optional[str] = None
-    assigned_to: str  # employee_id
+    # Legacy single assignment fields (kept for backward compatibility)
+    assigned_to: str = ""  # employee_id
     assigned_to_name: Optional[str] = None  # employee name for display
-    assigned_by: str  # admin_id
+    assigned_by: str = ""  # admin_id
     status: str = "Offen"  # Offen, In Bearbeitung, Abgeschlossen
     priority: str = "Normal"  # Niedrig, Normal, Hoch
     due_date: Optional[str] = None
-    # New fields for test credentials
-    test_ident_link: Optional[str] = None  # Test Ident Link
-    test_login_email: Optional[str] = None  # Test Login Email
-    test_login_password: Optional[str] = None  # Test Login Password
+    # Legacy single credential fields
+    test_ident_link: Optional[str] = None
+    test_login_email: Optional[str] = None
+    test_login_password: Optional[str] = None
+    # NEW: Multiple assignments support
+    assignments: List[TaskAssignment] = []
     created_at: datetime = Field(default_factory=datetime.utcnow)
     completed_at: Optional[datetime] = None
 
