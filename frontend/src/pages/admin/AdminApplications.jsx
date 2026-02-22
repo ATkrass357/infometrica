@@ -232,16 +232,38 @@ const AdminApplications = () => {
           <h1 className="text-3xl font-bold text-[#c0caf5]">Bewerbungen</h1>
           <p className="text-[#9aa5ce] mt-1">
             {filteredApplications.length} von {applications.length} Bewerbung{applications.length !== 1 ? 'en' : ''}
+            {selectedIds.length > 0 && (
+              <span className="ml-2 text-[#7aa2f7]">
+                ({selectedIds.length} ausgewählt)
+              </span>
+            )}
           </p>
         </div>
-        <button
-          onClick={fetchApplications}
-          className="flex items-center space-x-2 px-4 py-2 bg-[#7aa2f7] text-white rounded-lg hover:bg-[#7aa2f7]/80 transition-colors"
-          data-testid="refresh-applications-btn"
-        >
-          <RefreshCw size={18} />
-          <span>Aktualisieren</span>
-        </button>
+        <div className="flex items-center gap-3">
+          {selectedNewCount > 0 && (
+            <button
+              onClick={handleBulkAccept}
+              disabled={bulkProcessing}
+              className="flex items-center space-x-2 px-4 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors disabled:opacity-50"
+              data-testid="bulk-accept-btn"
+            >
+              {bulkProcessing ? (
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              ) : (
+                <CheckSquare size={18} />
+              )}
+              <span>{selectedNewCount} akzeptieren</span>
+            </button>
+          )}
+          <button
+            onClick={fetchApplications}
+            className="flex items-center space-x-2 px-4 py-2 bg-[#7aa2f7] text-white rounded-lg hover:bg-[#7aa2f7]/80 transition-colors"
+            data-testid="refresh-applications-btn"
+          >
+            <RefreshCw size={18} />
+            <span>Aktualisieren</span>
+          </button>
+        </div>
       </div>
 
       {/* Search and Filter */}
