@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Eye, RefreshCw, MapPin, UserCheck, CheckCircle, X, Clock, Shield, Unlock, Search } from 'lucide-react';
+import { Trash2, Eye, RefreshCw, MapPin, UserCheck, CheckCircle, X, Clock, Shield, Unlock, Search, CheckSquare, Square } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
@@ -12,6 +12,8 @@ const AdminApplications = () => {
   const [processingId, setProcessingId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [bulkProcessing, setBulkProcessing] = useState(false);
 
   const fetchApplications = async () => {
     try {
@@ -81,6 +83,88 @@ const AdminApplications = () => {
       setProcessingId(null);
     }
   };
+
+  // Bulk accept selected applications
+  const handleBulkAccept = async () => {
+    const newApplicationIds = selectedIds.filter(id => {
+      const app = applications.find(a => a.id === id);
+      return app && app.status === 'Neu';
+    });
+
+    if (newApplicationIds.length === 0) {
+      toast.error('Keine neuen Bewerbungen ausgewählt');
+      return;
+    }
+
+    if (!window.confirm(`Möchten Sie ${newApplicationIds.length} Bewerbung(en) akzeptieren?`)) {
+      return;
+    }
+
+    setBulkProcessing(true);
+
+    try {
+      const token = localStorage.getItem('admin_token');
+      const response = await axios.post(
+        `${BACKEND_URL}/api/applications/bulk-accept`,
+        { application_ids: newApplicationIds },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+      
+      const { accepted, failed } = response.data;
+      
+      if (accepted > 0) {
+        toast.success(`${accepted} Bewerbung(en) erfolgreich akzeptiert!`);
+      }
+      if (failed > 0) {
+        toast.error(`${failed} Bewerbung(en) konnten nicht akzeptiert werden`);
+      }
+      
+      setSelectedIds([]);
+      fetchApplications();
+    } catch (error) {
+      const errorMsg = error.response?.data?.detail || 'Fehler bei der Bulk-Akzeptierung';
+      toast.error(errorMsg);
+    } finally {
+      setBulkProcessing(false);
+    }
+  };
+
+  // Toggle selection of a single application
+  const toggleSelection = (id) => {
+    setSelectedIds(prev => 
+      prev.includes(id) 
+        ? prev.filter(i => i !== id)
+        : [...prev, id]
+    );
+  };
+
+  // Toggle select all (only "Neu" applications from filtered list)
+  const toggleSelectAll = () => {
+    const newAppIds = filteredApplications
+      .filter(app => app.status === 'Neu')
+      .map(app => app.id);
+    
+    const allSelected = newAppIds.every(id => selectedIds.includes(id));
+    
+    if (allSelected) {
+      // Deselect all new applications
+      setSelectedIds(prev => prev.filter(id => !newAppIds.includes(id)));
+    } else {
+      // Select all new applications
+      setSelectedIds(prev => [...new Set([...prev, ...newAppIds])]);
+    }
+  };
+
+  // Count of selected "Neu" applications
+  const selectedNewCount = selectedIds.filter(id => {
+    const app = applications.find(a => a.id === id);
+    return app && app.status === 'Neu';
+  }).length;
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('de-DE');
