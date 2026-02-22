@@ -62,11 +62,11 @@ const Home = () => {
                   <div className="text-slate-400 font-medium">Kundenzufriedenheit</div>
                 </div>
                 <div className="bg-orange-500 p-8 text-white">
-                  <div className="text-5xl font-black mb-2">15+</div>
+                  <div className="text-5xl font-black mb-2">2+</div>
                   <div className="text-orange-100 font-medium">Jahre Erfahrung</div>
                 </div>
                 <div className="bg-white p-8 border border-slate-200 shadow-xl">
-                  <div className="text-5xl font-black text-slate-900 mb-2">50+</div>
+                  <div className="text-5xl font-black text-slate-900 mb-2">25+</div>
                   <div className="text-slate-600 font-medium">Test-Experten</div>
                 </div>
               </div>
