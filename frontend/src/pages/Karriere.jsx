@@ -40,7 +40,6 @@ const Karriere = () => {
     postleitzahl: '',
     stadt: '',
     position: '',
-    message: '',
     cv: null,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
