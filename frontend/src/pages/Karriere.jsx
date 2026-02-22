@@ -132,7 +132,6 @@ const Karriere = () => {
         postleitzahl: '',
         stadt: '',
         position: '',
-        message: '',
         cv: null,
       });
       
