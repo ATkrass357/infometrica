@@ -659,6 +659,98 @@ const Karriere = () => {
           </Link>
         </div>
       </section>
+
+      {/* Success Modal */}
+      {showSuccessModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-6 text-white text-center relative">
+              <button
+                onClick={() => setShowSuccessModal(false)}
+                className="absolute top-4 right-4 p-1 hover:bg-white/20 rounded-full transition-colors"
+              >
+                <X size={20} />
+              </button>
+              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <PartyPopper size={32} className="text-white" />
+              </div>
+              <h3 className="text-2xl font-bold">Bewerbung erfolgreich!</h3>
+              <p className="text-orange-100 mt-2">Vielen Dank für Ihr Interesse an Infometrica</p>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-6">
+              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+                <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
+                  <CheckCircle className="text-orange-500" size={20} />
+                  Nächster Schritt
+                </h4>
+                <p className="text-gray-600 text-sm">
+                  Sie können sich ab sofort in Ihrem persönlichen Bewerberportal einloggen, 
+                  um den Status Ihrer Bewerbung zu verfolgen.
+                </p>
+              </div>
+
+              {/* Login Info */}
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Ihre Login-Daten:</h4>
+                
+                <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                  <div>
+                    <span className="text-sm text-gray-500">E-Mail:</span>
+                    <p className="font-medium text-gray-900">{submittedEmail}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-500">Passwort:</span>
+                    <p className="font-medium text-gray-900">Das von Ihnen gewählte Passwort</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Login URL */}
+              <div className="space-y-3">
+                <h4 className="font-semibold text-gray-900">Login-Adresse:</h4>
+                <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-3">
+                  <code className="flex-1 text-sm text-orange-600 break-all">
+                    {getLoginUrl()}
+                  </code>
+                  <button
+                    onClick={() => copyToClipboard(getLoginUrl())}
+                    className="p-2 hover:bg-gray-200 rounded-lg transition-colors flex-shrink-0"
+                    title="Link kopieren"
+                  >
+                    <Copy size={18} className="text-gray-600" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 pt-2">
+                <a
+                  href={getLoginUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-orange-500 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors"
+                >
+                  <ExternalLink size={18} />
+                  Zum Login
+                </a>
+                <button
+                  onClick={() => setShowSuccessModal(false)}
+                  className="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+                >
+                  Schließen
+                </button>
+              </div>
+
+              <p className="text-xs text-gray-500 text-center">
+                Eine Bestätigungs-E-Mail mit allen Informationen wurde an {submittedEmail} gesendet.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
