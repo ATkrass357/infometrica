@@ -155,6 +155,14 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 | POST | /api/contracts/{id}/sign | Sign contract with signature + IBAN |
 | GET | /api/contracts/{id}/download | Download signed contract PDF |
 
+### Task Endpoints (NEW)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| PUT | /api/admin/tasks/{id}/assign-multiple | Assign task to multiple employees with unique credentials |
+| GET | /api/admin/tasks | Get all tasks (with assignments array) |
+| POST | /api/admin/tasks | Create new task |
+| DELETE | /api/admin/tasks/{id} | Delete task |
+
 ### Application/Admin Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
