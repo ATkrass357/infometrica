@@ -35,16 +35,13 @@ const AdminTasks = () => {
     schritt1: '',
     schritt2: '',
     schritt3: '',
-    assigned_to: '',
     priority: 'Normal',
-    due_date: '',
-    test_ident_link: '',
-    test_login_email: '',
-    test_login_password: ''
+    due_date: ''
   });
   const [submitting, setSubmitting] = useState(false);
-  const [editingCredentials, setEditingCredentials] = useState(null);
-  const [credentialsData, setCredentialsData] = useState({
+  const [assigningTask, setAssigningTask] = useState(null);
+  const [assignData, setAssignData] = useState({
+    assigned_to: '',
     test_ident_link: '',
     test_login_email: '',
     test_login_password: ''
