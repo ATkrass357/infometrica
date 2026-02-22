@@ -594,19 +594,6 @@ const Karriere = () => {
                     </div>
                     <p className="text-sm text-gray-500">PDF, DOC oder DOCX (max. 5 MB)</p>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Anschreiben / Motivationsschreiben *</Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Erzählen Sie uns, warum Sie zu Infometrica passen..."
-                      required
-                      className="min-h-[180px] resize-none"
-                    />
-                  </div>
                 </div>
               </div>
 
