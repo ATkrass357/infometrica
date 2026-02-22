@@ -61,7 +61,7 @@ class TaskCreate(BaseModel):
     schritt1: Optional[str] = None
     schritt2: Optional[str] = None
     schritt3: Optional[str] = None
-    assigned_to: str
+    assigned_to: Optional[str] = None
     priority: str = "Normal"
     due_date: Optional[str] = None
     # New fields for test credentials
