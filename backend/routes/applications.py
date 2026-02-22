@@ -257,6 +257,12 @@ async def bulk_accept_applications(
     if not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="Keine Autorisierung")
     
+    # Validate the JWT token
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
     application_ids = data.get("application_ids", [])
     
     if not application_ids:
