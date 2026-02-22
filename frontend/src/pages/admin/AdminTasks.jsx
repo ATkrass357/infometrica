@@ -547,17 +547,17 @@ const AdminTasks = () => {
         )}
       </div>
 
-      {/* Credentials Edit Modal */}
-      {editingCredentials && (
+      {/* Assign Task Modal */}
+      {assigningTask && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
           <div className="bg-[#1a1b26] border border-[#292e42] rounded-xl w-full max-w-lg">
             <div className="flex items-center justify-between p-6 border-b border-[#292e42]">
               <div className="flex items-center gap-3">
-                <KeyRound className="text-[#e0af68]" size={24} />
-                <h3 className="text-xl font-bold text-[#c0caf5]">Test-Zugangsdaten bearbeiten</h3>
+                <User className="text-[#7aa2f7]" size={24} />
+                <h3 className="text-xl font-bold text-[#c0caf5]">Aufgabe zuweisen</h3>
               </div>
               <button
-                onClick={() => setEditingCredentials(null)}
+                onClick={() => setAssigningTask(null)}
                 className="p-2 text-[#565f89] hover:text-[#c0caf5] hover:bg-[#292e42] rounded-lg transition-colors"
               >
                 <X size={20} />
@@ -565,71 +565,97 @@ const AdminTasks = () => {
             </div>
 
             <div className="p-6 space-y-6">
-              <p className="text-[#9aa5ce] text-sm">
-                Diese Daten sind nur für den zugewiesenen Mitarbeiter sichtbar.
-              </p>
+              <div className="bg-[#16161e] p-4 rounded-lg">
+                <p className="text-[#565f89] text-sm mb-1">Aufgabe:</p>
+                <p className="text-[#c0caf5] font-medium">{assigningTask.title}</p>
+              </div>
 
-              {/* Test Ident Link */}
+              {/* Employee Selection */}
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                  Test Ident Link
+                  Mitarbeiter auswählen *
                 </label>
-                <input
-                  type="url"
-                  value={credentialsData.test_ident_link}
-                  onChange={(e) => setCredentialsData({...credentialsData, test_ident_link: e.target.value})}
+                <select
+                  value={assignData.assigned_to}
+                  onChange={(e) => setAssignData({...assignData, assigned_to: e.target.value})}
                   className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                  placeholder="https://example.com/test-ident/..."
-                />
-                <p className="text-xs text-[#565f89] mt-1">Ein direkter Link für den Test-Zugang</p>
+                >
+                  <option value="">Mitarbeiter auswählen</option>
+                  {employees.map((emp) => (
+                    <option key={emp.id} value={emp.id}>
+                      {emp.name} ({emp.position})
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div className="border-t border-[#292e42] pt-4">
-                <p className="text-sm text-[#9aa5ce] mb-4">Oder Login-Daten:</p>
-                
-                {/* Test Login Email */}
+                <div className="flex items-center gap-2 mb-4">
+                  <KeyRound size={18} className="text-[#e0af68]" />
+                  <h4 className="text-[#c0caf5] font-medium">Test-Zugangsdaten (Optional)</h4>
+                </div>
+                <p className="text-[#565f89] text-sm mb-4">
+                  Diese Daten sind nur für den zugewiesenen Mitarbeiter sichtbar.
+                </p>
+
+                {/* Test Ident Link */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                    Test Login E-Mail
+                    Test Ident Link
                   </label>
                   <input
-                    type="email"
-                    value={credentialsData.test_login_email}
-                    onChange={(e) => setCredentialsData({...credentialsData, test_login_email: e.target.value})}
+                    type="url"
+                    value={assignData.test_ident_link}
+                    onChange={(e) => setAssignData({...assignData, test_ident_link: e.target.value})}
                     className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                    placeholder="test@example.com"
+                    placeholder="https://example.com/test-ident/..."
                   />
                 </div>
 
-                {/* Test Login Password */}
-                <div>
-                  <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                    Test Login Passwort
-                  </label>
-                  <input
-                    type="text"
-                    value={credentialsData.test_login_password}
-                    onChange={(e) => setCredentialsData({...credentialsData, test_login_password: e.target.value})}
-                    className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                    placeholder="Passwort"
-                  />
+                <p className="text-sm text-[#9aa5ce] mb-4">Oder Login-Daten:</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
+                      Test Login E-Mail
+                    </label>
+                    <input
+                      type="email"
+                      value={assignData.test_login_email}
+                      onChange={(e) => setAssignData({...assignData, test_login_email: e.target.value})}
+                      className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                      placeholder="test@example.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
+                      Test Login Passwort
+                    </label>
+                    <input
+                      type="text"
+                      value={assignData.test_login_password}
+                      onChange={(e) => setAssignData({...assignData, test_login_password: e.target.value})}
+                      className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                      placeholder="Passwort"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
 
             <div className="flex items-center justify-end gap-3 p-6 border-t border-[#292e42]">
               <button
-                onClick={() => setEditingCredentials(null)}
+                onClick={() => setAssigningTask(null)}
                 className="px-6 py-2 text-[#9aa5ce] hover:text-[#c0caf5] font-medium transition-colors"
               >
                 Abbrechen
               </button>
               <button
-                onClick={saveCredentials}
-                className="flex items-center gap-2 px-6 py-2 bg-[#e0af68] text-[#1a1b26] font-semibold rounded-lg hover:bg-[#e0af68]/80 transition-colors"
+                onClick={saveAssignment}
+                className="flex items-center gap-2 px-6 py-2 bg-[#7aa2f7] text-white font-semibold rounded-lg hover:bg-[#7aa2f7]/80 transition-colors"
               >
                 <Save size={18} />
-                Speichern
+                Zuweisen
               </button>
             </div>
           </div>
