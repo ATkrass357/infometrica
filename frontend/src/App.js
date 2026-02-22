@@ -15,6 +15,7 @@ import AdminApplications from "@/pages/admin/AdminApplications";
 import AdminTasks from "@/pages/admin/AdminTasks";
 import AdminVerifications from "@/pages/admin/AdminVerifications";
 import AdminContracts from "@/pages/admin/AdminContracts";
+import AdminDokumente from "@/pages/admin/AdminDokumente";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import MitarbeiterLogin from "@/pages/mitarbeiter/MitarbeiterLogin";
@@ -89,6 +90,16 @@ function App() {
               <ProtectedRoute>
                 <AdminLayout>
                   <AdminContracts />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/documents"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminDokumente />
                 </AdminLayout>
               </ProtectedRoute>
             }
