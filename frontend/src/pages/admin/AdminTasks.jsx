@@ -251,27 +251,6 @@ const AdminTasks = () => {
                 />
               </div>
 
-              {/* Assign To */}
-              <div>
-                <label className="block text-sm font-medium text-[#9aa5ce] mb-1">
-                  Zuweisen an *
-                </label>
-                <select
-                  value={formData.assigned_to}
-                  onChange={(e) => setFormData({...formData, assigned_to: e.target.value})}
-                  className="w-full px-4 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                  data-testid="task-assignee-select"
-                  required
-                >
-                  <option value="">Mitarbeiter auswählen</option>
-                  {employees.map((emp) => (
-                    <option key={emp.id} value={emp.id}>
-                      {emp.name} ({emp.position})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
               {/* Priority */}
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-1">
