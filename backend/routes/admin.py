@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, Header
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from models.admin import AdminLogin, TokenResponse, AdminResponse
-from models.employee import Task, TaskCreate
+from models.employee import Task, TaskCreate, TaskAssignment, MultiAssignmentRequest
 from utils.auth import verify_password, create_access_token, decode_token, get_password_hash
 from datetime import timedelta, datetime
 from typing import List
