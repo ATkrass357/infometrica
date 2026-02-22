@@ -14,7 +14,7 @@ class Application(BaseModel):
     postleitzahl: str
     stadt: str
     position: str
-    message: str
+    message: Optional[str] = None
     password_hash: str = ""  # Hashed password
     cv_filename: Optional[str] = None
     status: str = "Neu"  # Neu, Akzeptiert, Verifiziert, Freigeschaltet
@@ -33,7 +33,7 @@ class ApplicationCreate(BaseModel):
     postleitzahl: str
     stadt: str
     position: str
-    message: str
+    message: Optional[str] = None
     password: str  # User-chosen password
     cv_filename: Optional[str] = None
 
@@ -48,7 +48,7 @@ class ApplicationResponse(BaseModel):
     postleitzahl: str
     stadt: str
     position: str
-    message: str
+    message: Optional[str] = None
     cv_filename: Optional[str]
     status: str
     verification_front: Optional[str] = None
