@@ -87,3 +87,14 @@ class TaskUpdate(BaseModel):
     status: Optional[str] = None
     priority: Optional[str] = None
     due_date: Optional[str] = None
+
+class MultiAssignmentItem(BaseModel):
+    """Single item in multi-assignment request"""
+    employee_id: str
+    test_ident_link: Optional[str] = None
+    test_login_email: Optional[str] = None
+    test_login_password: Optional[str] = None
+
+class MultiAssignmentRequest(BaseModel):
+    """Request body for assigning task to multiple employees"""
+    assignments: List[MultiAssignmentItem]
