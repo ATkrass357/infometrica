@@ -1,127 +1,127 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MapPin, Linkedin, Twitter, Facebook } from 'lucide-react';
+import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
 import { InfometricaLogo } from './Logo';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
-              <InfometricaLogo className="w-12 h-12" />
-              <span className="text-2xl font-bold text-white">
-                Info<span className="text-orange-500">metrica</span>
+    <footer className="bg-slate-900 text-white">
+      {/* Main Footer */}
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-20">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
+          {/* Brand Column */}
+          <div className="lg:col-span-5">
+            <div className="flex items-center gap-3 mb-6">
+              <InfometricaLogo className="w-10 h-10" />
+              <span className="text-xl font-black tracking-tight">
+                INFO<span className="text-orange-500">METRICA</span>
               </span>
             </div>
-            <p className="text-gray-400 mb-4 max-w-md">
-              Ihr vertrauenswürdiger Partner für professionelle App-Testing-Lösungen. 
-              Wir sorgen dafür, dass Ihre Anwendungen fehlerfrei und benutzerfreundlich sind.
+            <p className="text-slate-400 leading-relaxed max-w-md mb-8">
+              Ihr Partner für professionelles Application Testing. 
+              Deutsche Präzision trifft auf modernste Testing-Methoden.
             </p>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-orange-500 transition-colors duration-200"
-              >
-                <Linkedin size={18} />
+            {/* Contact Info */}
+            <div className="space-y-4">
+              <a href="mailto:info@infometrica.de" className="flex items-center gap-3 text-slate-400 hover:text-orange-500 transition-colors group">
+                <div className="w-10 h-10 bg-slate-800 flex items-center justify-center group-hover:bg-orange-500 transition-colors">
+                  <Mail size={18} />
+                </div>
+                <span>info@infometrica.de</span>
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-orange-500 transition-colors duration-200"
-              >
-                <Twitter size={18} />
+              <a href="tel:+4930123456789" className="flex items-center gap-3 text-slate-400 hover:text-orange-500 transition-colors group">
+                <div className="w-10 h-10 bg-slate-800 flex items-center justify-center group-hover:bg-orange-500 transition-colors">
+                  <Phone size={18} />
+                </div>
+                <span>+49 (0) 30 123 456 789</span>
               </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-orange-500 transition-colors duration-200"
-              >
-                <Facebook size={18} />
-              </a>
+              <div className="flex items-center gap-3 text-slate-400">
+                <div className="w-10 h-10 bg-slate-800 flex items-center justify-center">
+                  <MapPin size={18} />
+                </div>
+                <span>Tauentzienstraße 9-12, 10789 Berlin</span>
+              </div>
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">Schnelllinks</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/" className="hover:text-orange-500 transition-colors duration-200">
-                  Startseite
-                </Link>
-              </li>
-              <li>
-                <Link to="/unternehmen" className="hover:text-orange-500 transition-colors duration-200">
-                  Unternehmen
-                </Link>
-              </li>
-              <li>
-                <Link to="/dienstleistungen" className="hover:text-orange-500 transition-colors duration-200">
-                  Dienstleistungen
-                </Link>
-              </li>
-              <li>
-                <Link to="/karriere" className="hover:text-orange-500 transition-colors duration-200">
-                  Karriere
-                </Link>
-              </li>
-              <li>
-                <Link to="/kontakt" className="hover:text-orange-500 transition-colors duration-200">
-                  Kontakt
-                </Link>
-              </li>
-              <li>
-                <Link to="/admin/login" className="hover:text-orange-500 transition-colors duration-200">
-                  Admin-Login
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Links Columns */}
+          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
+            {/* Navigation */}
+            <div>
+              <h4 className="text-sm font-bold tracking-wider text-white mb-6">NAVIGATION</h4>
+              <ul className="space-y-4">
+                {['Startseite', 'Unternehmen', 'Leistungen', 'Karriere', 'Kontakt'].map((item) => (
+                  <li key={item}>
+                    <Link 
+                      to={item === 'Startseite' ? '/' : item === 'Leistungen' ? '/dienstleistungen' : `/${item.toLowerCase()}`}
+                      className="text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1 group"
+                    >
+                      {item}
+                      <ArrowUpRight size={14} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          {/* Contact Info */}
-          <div>
-            <h3 className="text-white font-semibold text-lg mb-4">Kontakt</h3>
-            <ul className="space-y-3">
-              <li className="flex items-start space-x-3">
-                <Mail size={18} className="text-orange-500 mt-1 flex-shrink-0" />
-                <span className="text-sm">info@infometrica.de</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <Phone size={18} className="text-orange-500 mt-1 flex-shrink-0" />
-                <span className="text-sm">+49 (0) 123 456789</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <MapPin size={18} className="text-orange-500 mt-1 flex-shrink-0" />
-                <span className="text-sm">
-                  Musterstraße 123<br />
-                  10115 Berlin, Deutschland
-                </span>
-              </li>
-            </ul>
+            {/* Services */}
+            <div>
+              <h4 className="text-sm font-bold tracking-wider text-white mb-6">LEISTUNGEN</h4>
+              <ul className="space-y-4">
+                {['Funktionales Testing', 'Performance Testing', 'Usability Testing', 'Automatisierung', 'QA Beratung'].map((item) => (
+                  <li key={item}>
+                    <Link 
+                      to="/dienstleistungen"
+                      className="text-slate-400 hover:text-white transition-colors"
+                    >
+                      {item}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <h4 className="text-sm font-bold tracking-wider text-white mb-6">RECHTLICHES</h4>
+              <ul className="space-y-4">
+                <li>
+                  <Link to="/impressum" className="text-slate-400 hover:text-white transition-colors">
+                    Impressum
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/datenschutz" className="text-slate-400 hover:text-white transition-colors">
+                    Datenschutz
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/admin/login" className="text-slate-400 hover:text-white transition-colors">
+                    Admin-Login
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/mitarbeiter/login" className="text-slate-400 hover:text-white transition-colors">
+                    Mitarbeiter-Login
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8">
+      {/* Bottom Bar */}
+      <div className="border-t border-slate-800">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-center text-sm text-gray-400">
-              © {currentYear} Infometrica. Alle Rechte vorbehalten.
+            <p className="text-sm text-slate-500">
+              © {currentYear} Infometrica GmbH. Alle Rechte vorbehalten.
             </p>
-            <div className="flex gap-6 text-sm">
-              <Link 
-                to="/impressum" 
-                className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
-              >
-                Impressum
-              </Link>
-              <Link 
-                to="/datenschutz" 
-                className="text-gray-400 hover:text-orange-500 transition-colors duration-200"
-              >
-                Datenschutz
-              </Link>
+            <div className="flex items-center gap-6">
+              <span className="text-sm text-slate-500">Made with precision in Berlin</span>
             </div>
           </div>
         </div>
