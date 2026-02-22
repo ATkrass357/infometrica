@@ -211,3 +211,139 @@ async def delete_task(
         raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
     
     return {"message": "Aufgabe gelöscht"}
+
+
+# ========== DOCUMENT MANAGEMENT ==========
+
+@router.get("/documents")
+async def get_all_documents(
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Get all employee documents (admin view)"""
+    verify_admin_token(authorization)
+    
+    # Get all documents
+    documents = await db.employee_documents.find({}, {"_id": 0}).sort("uploaded_at", -1).to_list(500)
+    
+    # Get employee names for each document
+    for doc in documents:
+        employee = await db.employees.find_one(
+            {"id": doc.get("employee_id")},
+            {"_id": 0, "name": 1, "email": 1}
+        )
+        if employee:
+            doc["employee_name"] = employee.get("name", "Unbekannt")
+            doc["employee_email"] = employee.get("email", "")
+        else:
+            # Try to find in applications (for applicants)
+            app = await db.applications.find_one(
+                {"id": doc.get("employee_id")},
+                {"_id": 0, "name": 1, "email": 1}
+            )
+            if app:
+                doc["employee_name"] = app.get("name", "Unbekannt")
+                doc["employee_email"] = app.get("email", "")
+            else:
+                doc["employee_name"] = "Unbekannt"
+                doc["employee_email"] = ""
+        
+        # Format uploaded_at
+        if isinstance(doc.get("uploaded_at"), datetime):
+            doc["uploaded_at"] = doc["uploaded_at"].strftime("%Y-%m-%d %H:%M")
+    
+    return documents
+
+
+@router.put("/documents/{doc_id}/approve")
+async def approve_document(
+    doc_id: str,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Approve a document"""
+    verify_admin_token(authorization)
+    
+    result = await db.employee_documents.update_one(
+        {"id": doc_id},
+        {"$set": {"status": "approved", "approved_at": datetime.utcnow()}}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Dokument nicht gefunden")
+    
+    return {"message": "Dokument bestätigt", "status": "approved"}
+
+
+@router.put("/documents/{doc_id}/reject")
+async def reject_document(
+    doc_id: str,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Reject a document"""
+    verify_admin_token(authorization)
+    
+    result = await db.employee_documents.update_one(
+        {"id": doc_id},
+        {"$set": {"status": "rejected", "rejected_at": datetime.utcnow()}}
+    )
+    
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Dokument nicht gefunden")
+    
+    return {"message": "Dokument abgelehnt", "status": "rejected"}
+
+
+@router.get("/documents/{doc_id}/download")
+async def admin_download_document(
+    doc_id: str,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Download a document (admin)"""
+    from fastapi.responses import FileResponse
+    import os
+    
+    verify_admin_token(authorization)
+    
+    document = await db.employee_documents.find_one({"id": doc_id})
+    
+    if not document:
+        raise HTTPException(status_code=404, detail="Dokument nicht gefunden")
+    
+    filepath = f"/app/backend/uploads/documents/{document['filename']}"
+    if not os.path.exists(filepath):
+        raise HTTPException(status_code=404, detail="Datei nicht gefunden")
+    
+    return FileResponse(
+        filepath,
+        filename=document["name"]
+    )
+
+
+@router.delete("/documents/{doc_id}")
+async def admin_delete_document(
+    doc_id: str,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Delete a document (admin)"""
+    import os
+    
+    verify_admin_token(authorization)
+    
+    document = await db.employee_documents.find_one({"id": doc_id})
+    
+    if not document:
+        raise HTTPException(status_code=404, detail="Dokument nicht gefunden")
+    
+    # Delete file
+    filepath = f"/app/backend/uploads/documents/{document['filename']}"
+    if os.path.exists(filepath):
+        os.remove(filepath)
+    
+    # Delete from database
+    await db.employee_documents.delete_one({"id": doc_id})
+    
+    return {"message": "Dokument gelöscht"}
