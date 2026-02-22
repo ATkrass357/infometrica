@@ -134,6 +134,33 @@ const AdminTasks = () => {
     }
   };
 
+  const openCredentialsEditor = (task) => {
+    setEditingCredentials(task.id);
+    setCredentialsData({
+      test_ident_link: task.test_ident_link || '',
+      test_login_email: task.test_login_email || '',
+      test_login_password: task.test_login_password || ''
+    });
+  };
+
+  const saveCredentials = async () => {
+    try {
+      const token = localStorage.getItem('admin_token');
+      await axios.put(
+        `${BACKEND_URL}/api/admin/tasks/${editingCredentials}/credentials`,
+        credentialsData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      
+      toast.success('Test-Zugangsdaten gespeichert');
+      setEditingCredentials(null);
+      fetchData();
+    } catch (error) {
+      console.error('Error saving credentials:', error);
+      toast.error('Fehler beim Speichern');
+    }
+  };
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'Offen': return 'bg-orange-500/20 text-orange-400';
