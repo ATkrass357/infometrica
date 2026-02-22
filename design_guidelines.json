@@ -1,0 +1,138 @@
+{
+  "design_guidelines": {
+    "project_name": "Infometrica Public Website Redesign",
+    "theme_strategy": {
+      "mode": "light",
+      "vibe": "German Precision meets Modern Tech",
+      "core_philosophy": "Anti-AI Slop. Avoid generic centered layouts and standard 'SaaS gradients'. Use asymmetry, high contrast, and specific, meaningful imagery."
+    },
+    "typography": {
+      "font_family": {
+        "headings": "Space Grotesk, sans-serif",
+        "body": "Plus Jakarta Sans, sans-serif",
+        "code": "JetBrains Mono, monospace"
+      },
+      "font_urls": [
+        "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      ],
+      "scaling": {
+        "h1": "text-5xl md:text-7xl font-bold tracking-tight leading-[1.1]",
+        "h2": "text-4xl md:text-5xl font-semibold tracking-tight",
+        "h3": "text-2xl md:text-3xl font-medium",
+        "body_lg": "text-lg md:text-xl leading-relaxed text-slate-600",
+        "body_base": "text-base leading-relaxed text-slate-600",
+        "caption": "text-sm font-medium uppercase tracking-widest text-orange-600"
+      }
+    },
+    "colors": {
+      "palette": {
+        "primary": {
+          "DEFAULT": "#f97316",
+          "foreground": "#ffffff",
+          "hover": "#ea580c"
+        },
+        "secondary": {
+          "DEFAULT": "#f1f5f9",
+          "foreground": "#0f172a"
+        },
+        "background": {
+          "DEFAULT": "#ffffff",
+          "alt": "#f8fafc",
+          "dark": "#0f172a"
+        },
+        "foreground": {
+          "DEFAULT": "#0f172a",
+          "muted": "#64748b"
+        },
+        "border": "#e2e8f0"
+      },
+      "usage_rules": [
+        "Use Orange (#f97316) for primary actions and key highlights only. Do not overuse.",
+        "Use 'Slate' scale for neutrals (cool greys) to maintain a tech feel.",
+        "Ensure all text on orange backgrounds is white or very dark for contrast.",
+        "Avoid gradients on text unless it's a very subtle shift."
+      ]
+    },
+    "visual_enhancers": {
+      "radius": "rounded-sm",
+      "shadows": {
+        "card": "shadow-[0_2px_12px_-4px_rgba(0,0,0,0.1)]",
+        "hover": "shadow-[0_12px_24px_-8px_rgba(249,115,22,0.15)]",
+        "glow": "drop-shadow-[0_0_15px_rgba(249,115,22,0.3)]"
+      },
+      "gradients": {
+        "hero_overlay": "linear-gradient(to right, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 100%)",
+        "subtle_orange": "linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)"
+      }
+    },
+    "layout_strategies": {
+      "grid_system": "Bento Grid (Asymmetrical)",
+      "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+      "spacing": "Generous. Use py-24 or py-32 for section vertical padding.",
+      "alignment": "Left-aligned headings for strength. Asymmetrical compositions."
+    },
+    "components": {
+      "buttons": {
+        "primary": "bg-primary text-white rounded-sm px-8 py-3 font-medium hover:bg-orange-700 transition-all shadow-lg shadow-orange-500/20 hover:shadow-orange-500/40",
+        "secondary": "bg-white text-slate-900 border border-slate-200 rounded-sm px-8 py-3 font-medium hover:bg-slate-50 transition-all"
+      },
+      "cards": {
+        "style": "bg-white border border-slate-100 rounded-sm p-8 hover:border-orange-200 transition-colors duration-300 group"
+      },
+      "inputs": {
+        "style": "rounded-sm border-slate-200 focus:ring-orange-500 focus:border-orange-500 bg-slate-50"
+      }
+    },
+    "motion": {
+      "library": "framer-motion",
+      "strategies": [
+        "Staggered entrance for list items (0.1s delay)",
+        "Parallax scroll on hero images",
+        "Micro-interactions: Buttons scale 0.98 on click",
+        "Smooth scroll using Lenis (recommended)"
+      ]
+    },
+    "images": {
+      "strategy": "Professional, high-res, authentic. Avoid 3D abstract blobs unless they look engineered.",
+      "assets": {
+        "hero_bg": {
+          "url": "https://images.unsplash.com/photo-1770520215481-2e1839893ff5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NTY2Njl8MHwxfHNlYXJjaHwxfHxhYnN0cmFjdCUyMGRpZ2l0YWwlMjBuZXR3b3JrJTIwY29ubmVjdGlvbiUyMG9yYW5nZSUyMHdoaXRlfGVufDB8fHx8MTc3MTc2NTg4N3ww&ixlib=rb-4.1.0&q=85",
+          "alt": "Abstract digital network waves",
+          "desc": "Use as a subtle background element or texture overlay."
+        },
+        "team_collaboration": {
+          "url": "https://images.pexels.com/photos/6804068/pexels-photo-6804068.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+          "alt": "Team of developers working together",
+          "desc": "For About page or Home 'Trust' section."
+        },
+        "service_mobile_testing": {
+          "url": "https://images.unsplash.com/photo-1603899122361-e99b4f6fecf5?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHw0fHxtb2JpbGUlMjBhcHAlMjB0ZXN0aW5nJTIwcXVhbGl0eSUyMGFzc3VyYW5jZSUyMGNvZGUlMjBzY3JlZW58ZW58MHx8fHwxNzcxNzY1ODg1fDA&ixlib=rb-4.1.0&q=85",
+          "alt": "Mobile testing in action",
+          "desc": "For Services page - App Testing."
+        },
+        "berlin_office": {
+          "url": "https://images.unsplash.com/photo-1693329899797-815c6698b08f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzF8MHwxfHNlYXJjaHw0fHxiZXJsaW4lMjB0ZWNoJTIwc3RhcnR1cCUyMG9mZmljZSUyMGN1bHR1cmV8ZW58MHx8fHwxNzcxNzY1ODg2fDA&ixlib=rb-4.1.0&q=85",
+          "alt": "Berlin TV Tower view",
+          "desc": "For Contact/Locations or Careers page."
+        }
+      }
+    },
+    "universal_guidelines_for_main_agent": [
+      "Avoid 'AI Slop': Do not use generic gradients or centered layouts without reason.",
+      "Use 'Space Grotesk' for all headings to give a distinctive tech identity.",
+      "Maintain strict 'slate' grayscale. Do not mix cool and warm grays.",
+      "Buttons must have a 'tactile' feel - slightly sharp corners, subtle shadows.",
+      "Interactive elements must have clear :hover and :focus states (use orange ring for focus).",
+      "Use 'Bento Grid' layouts for feature lists instead of simple rows.",
+      "Ensure text contrast is AA compliant (4.5:1) - minimal grey text on white.",
+      "For icons, use Lucide-React but style them with stroke-width={1.5} for elegance."
+    ],
+    "instructions_to_main_agent": [
+      "Install 'framer-motion' and 'clsx' 'tailwind-merge' if not present.",
+      "Update tailwind.config.js to include the new fonts and colors.",
+      "Import the Google Fonts in index.css.",
+      "Create a reusable 'Section' component that handles the max-width and padding consistently.",
+      "Implement the 'Navbar' with a glassmorphism effect (backdrop-blur-md bg-white/80)."
+    ]
+  }
+}
