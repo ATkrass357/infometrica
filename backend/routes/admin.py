@@ -245,6 +245,46 @@ async def update_task_credentials(
     return {"message": "Test-Zugangsdaten aktualisiert"}
 
 
+@router.put("/tasks/{task_id}/assign")
+async def assign_task(
+    task_id: str,
+    data: dict,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Assign a task to an employee with optional test credentials"""
+    verify_admin_token(authorization)
+    
+    # Find the task
+    task = await db.tasks.find_one({"id": task_id})
+    if not task:
+        raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
+    
+    assigned_to = data.get("assigned_to")
+    if not assigned_to:
+        raise HTTPException(status_code=400, detail="Mitarbeiter muss ausgewählt werden")
+    
+    # Get employee name
+    employee = await db.employees.find_one({"id": assigned_to})
+    assigned_to_name = employee.get("name") if employee else "Unbekannt"
+    
+    # Prepare update data
+    update_data = {
+        "assigned_to": assigned_to,
+        "assigned_to_name": assigned_to_name,
+        "test_ident_link": data.get("test_ident_link", ""),
+        "test_login_email": data.get("test_login_email", ""),
+        "test_login_password": data.get("test_login_password", "")
+    }
+    
+    await db.tasks.update_one(
+        {"id": task_id},
+        {"$set": update_data}
+    )
+    
+    return {"message": "Aufgabe zugewiesen", "assigned_to_name": assigned_to_name}
+
+
 # ========== DOCUMENT MANAGEMENT ==========
 
 @router.get("/documents")
