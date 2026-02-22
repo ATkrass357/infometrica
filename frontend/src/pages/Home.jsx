@@ -183,7 +183,7 @@ const Home = () => {
                 Globale Standards.
               </h2>
               <p className="text-lg text-slate-600 leading-relaxed">
-                Seit über 15 Jahren setzen wir Maßstäbe im Application Testing. 
+                Seit über 2 Jahren setzen wir Maßstäbe im Application Testing. 
                 Unser Team aus zertifizierten Experten verbindet deutsche Gründlichkeit 
                 mit modernsten Testing-Methoden.
               </p>
