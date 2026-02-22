@@ -42,6 +42,8 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 - [x] Applications management
   - View all job applications
   - Accept applications (changes status to allow ID upload)
+  - **NEW: Bulk acceptance - select multiple applications and accept at once**
+  - Search and filter applications by name, email, position, city, or status
   - Status badges: Neu, Wartet auf ID, Verifiziert, Freigeschaltet
 - [x] **Verifications page (P1 COMPLETE)**
   - View pending verifications
@@ -144,6 +146,7 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | /api/applications/{id}/unlock | Unlock verified employee (admin) |
+| POST | /api/applications/bulk-accept | Accept multiple applications at once (admin) |
 
 ---
 
@@ -171,6 +174,13 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
    - Notification settings persist
    - Documents page shows signed contracts
    - Document download works
+8. **Bulk Acceptance Feature** (February 22, 2025)
+   - Checkboxes for selecting multiple "Neu" applications
+   - Select-all checkbox in table header
+   - Bulk accept button showing count of selected items
+   - Backend endpoint POST /api/applications/bulk-accept
+   - Email notifications sent to each accepted applicant
+   - Proper JWT token validation
 
 ---
 
@@ -218,4 +228,4 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 ---
 
 ## Last Updated
-February 2025 - P1 + P2 completed, all features tested (100% pass rate)
+February 22, 2025 - Bulk acceptance feature implemented and tested (91% backend, 100% frontend pass rate)
