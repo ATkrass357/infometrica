@@ -14,7 +14,11 @@ import {
   CheckCircle,
   Eye,
   EyeOff,
-  Lock
+  Lock,
+  X,
+  ExternalLink,
+  Copy,
+  PartyPopper
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
