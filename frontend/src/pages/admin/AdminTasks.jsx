@@ -522,6 +522,48 @@ const AdminTasks = () => {
                         <p className="text-[#c0caf5] text-sm bg-[#16161e] p-3 rounded-lg">{task.schritt3}</p>
                       </div>
                     )}
+                    
+                    {/* Test Credentials Display */}
+                    {(task.test_ident_link || task.test_login_email) && (
+                      <div className="md:col-span-2 border-t border-[#292e42] pt-4 mt-2">
+                        <h4 className="text-sm font-medium text-[#e0af68] mb-3 flex items-center gap-2">
+                          <KeyRound size={14} />
+                          Test-Zugangsdaten
+                        </h4>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {task.test_ident_link && (
+                            <div className="bg-[#16161e] p-3 rounded-lg">
+                              <div className="text-xs text-[#565f89] mb-1">Test Ident Link</div>
+                              <a 
+                                href={task.test_ident_link} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="text-[#7aa2f7] hover:underline text-sm flex items-center gap-1"
+                              >
+                                <Link size={12} />
+                                {task.test_ident_link.length > 40 
+                                  ? task.test_ident_link.substring(0, 40) + '...' 
+                                  : task.test_ident_link}
+                              </a>
+                            </div>
+                          )}
+                          {task.test_login_email && (
+                            <div className="bg-[#16161e] p-3 rounded-lg">
+                              <div className="text-xs text-[#565f89] mb-1">Test Login Daten</div>
+                              <div className="text-[#c0caf5] text-sm">
+                                <span className="text-[#9aa5ce]">E-Mail:</span> {task.test_login_email}
+                              </div>
+                              {task.test_login_password && (
+                                <div className="text-[#c0caf5] text-sm">
+                                  <span className="text-[#9aa5ce]">Passwort:</span> {task.test_login_password}
+                                </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                    
                     {!task.einleitung && !task.schritt1 && !task.schritt2 && !task.schritt3 && (
                       <p className="text-[#565f89] italic">Keine Beschreibung vorhanden</p>
                     )}
