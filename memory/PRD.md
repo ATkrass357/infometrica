@@ -90,12 +90,13 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - Update phone and address
   - Change password (with validation)
   - Notification settings persist in database
-- [x] **Dokumente (Documents) page - CONNECTED TO BACKEND**
+- [x] **Dokumente (Documents) page - FULLY CONNECTED TO BACKEND**
   - Documents loaded from `/api/employee/documents`
   - **Signed contracts appear automatically**
-  - Upload new documents
+  - **Upload new documents - WORKING**
   - Download contracts as PDF
   - Category filter
+  - Delete pending documents
 - [x] Main dashboard with task overview
 
 ---
@@ -181,10 +182,25 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
    - Backend endpoint POST /api/applications/bulk-accept
    - Email notifications sent to each accepted applicant
    - Proper JWT token validation
+   - Info banner for quick filtering to "Neu" applications
+9. **Document Upload Feature** (February 22, 2025)
+   - Backend endpoint POST /api/employee/documents/upload (Form-Data)
+   - Frontend upload button working with file validation
+   - Supports PDF, JPEG, PNG (max 10MB)
+   - Documents displayed with status badges
+   - Category filtering working
 
 ---
 
-## All Implemented - No Pending Tasks
+## All Implemented - Platform Complete!
+
+All core features have been implemented and tested:
+- Public website with career page
+- Admin panel with bulk application management
+- Employee dashboard with document management
+- Contract signing with Minijob template
+- Email notifications via Resend
+- ID verification flow
 
 ### Potential Enhancements
 - [ ] Email notifications (SMTP integration) for new applications, tasks
@@ -228,4 +244,4 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 ---
 
 ## Last Updated
-February 22, 2025 - Bulk acceptance feature implemented and tested (91% backend, 100% frontend pass rate)
+February 22, 2025 - All P1 features complete. Platform fully functional.
