@@ -175,7 +175,7 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 
 | Role | Email | Password | Status |
 |------|-------|----------|--------|
-| Admin | admin@infometrica.de | Admin123! | - |
+| Admin | admin@infometrica.de | R&2w&ccKXdhFs*M!qA | - |
 | Employee | mitarbeiter@infometrica.de | Mitarbeiter123! | Freigeschaltet |
 
 ---
