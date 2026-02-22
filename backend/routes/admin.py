@@ -290,6 +290,84 @@ async def assign_task(
     return {"message": "Aufgabe zugewiesen", "assigned_to_name": assigned_to_name}
 
 
+@router.put("/tasks/{task_id}/assign-multiple")
+async def assign_task_multiple(
+    task_id: str,
+    request: MultiAssignmentRequest,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Assign a task to multiple employees, each with their own test credentials"""
+    verify_admin_token(authorization)
+    
+    # Find the task
+    task = await db.tasks.find_one({"id": task_id})
+    if not task:
+        raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
+    
+    if not request.assignments or len(request.assignments) == 0:
+        raise HTTPException(status_code=400, detail="Mindestens ein Mitarbeiter muss ausgewählt werden")
+    
+    # Build assignments list
+    assignments = []
+    assigned_names = []
+    
+    for item in request.assignments:
+        # Get employee info
+        employee = await db.employees.find_one({"id": item.employee_id})
+        if not employee:
+            continue
+        
+        assignment = {
+            "employee_id": item.employee_id,
+            "employee_name": employee.get("name", "Unbekannt"),
+            "employee_email": employee.get("email", ""),
+            "test_ident_link": item.test_ident_link or "",
+            "test_login_email": item.test_login_email or "",
+            "test_login_password": item.test_login_password or "",
+            "assigned_at": datetime.utcnow().isoformat(),
+            "status": "Offen"
+        }
+        assignments.append(assignment)
+        assigned_names.append(employee.get("name", "Unbekannt"))
+    
+    if not assignments:
+        raise HTTPException(status_code=400, detail="Keine gültigen Mitarbeiter gefunden")
+    
+    # Update task with multiple assignments
+    # Also set legacy fields with first assignment for backward compatibility
+    first_assignment = assignments[0]
+    update_data = {
+        "assignments": assignments,
+        "assigned_to": first_assignment["employee_id"],
+        "assigned_to_name": ", ".join(assigned_names) if len(assigned_names) <= 3 else f"{len(assigned_names)} Mitarbeiter",
+        "test_ident_link": first_assignment["test_ident_link"],
+        "test_login_email": first_assignment["test_login_email"],
+        "test_login_password": first_assignment["test_login_password"]
+    }
+    
+    await db.tasks.update_one(
+        {"id": task_id},
+        {"$set": update_data}
+    )
+    
+    # Send email notifications to all assigned employees
+    for assignment in assignments:
+        if assignment["employee_email"]:
+            await send_new_task_notification(
+                to_email=assignment["employee_email"],
+                employee_name=assignment["employee_name"],
+                task_title=task.get("title", "Neue Aufgabe"),
+                due_date=task.get("due_date")
+            )
+    
+    return {
+        "message": f"Aufgabe an {len(assignments)} Mitarbeiter zugewiesen",
+        "assigned_count": len(assignments),
+        "assigned_names": assigned_names
+    }
+
+
 # ========== DOCUMENT MANAGEMENT ==========
 
 @router.get("/documents")
