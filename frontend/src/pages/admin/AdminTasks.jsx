@@ -283,60 +283,6 @@ const AdminTasks = () => {
               </div>
             </div>
 
-            {/* Test Credentials Section */}
-            <div className="border-t border-[#292e42] pt-4 mt-4">
-              <h3 className="text-[#c0caf5] font-medium mb-3">Test-Zugangsdaten (Optional)</h3>
-              
-              <div className="space-y-4">
-                {/* Test Ident Link */}
-                <div>
-                  <label className="block text-sm font-medium text-[#9aa5ce] mb-1">
-                    Test Ident Link
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.test_ident_link}
-                    onChange={(e) => setFormData({...formData, test_ident_link: e.target.value})}
-                    className="w-full px-4 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                    placeholder="https://example.com/test-ident/..."
-                    data-testid="task-test-ident-link-input"
-                  />
-                  <p className="text-xs text-[#565f89] mt-1">Ein direkter Link für den Test-Zugang</p>
-                </div>
-
-                {/* Test Login Daten */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[#9aa5ce] mb-1">
-                      Test Login E-Mail
-                    </label>
-                    <input
-                      type="email"
-                      value={formData.test_login_email}
-                      onChange={(e) => setFormData({...formData, test_login_email: e.target.value})}
-                      className="w-full px-4 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                      placeholder="test@example.com"
-                      data-testid="task-test-login-email-input"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#9aa5ce] mb-1">
-                      Test Login Passwort
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.test_login_password}
-                      onChange={(e) => setFormData({...formData, test_login_password: e.target.value})}
-                      className="w-full px-4 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                      placeholder="Passwort"
-                      data-testid="task-test-login-password-input"
-                    />
-                  </div>
-                </div>
-                <p className="text-xs text-[#565f89]">E-Mail und Passwort für den Test-Login des Mitarbeiters</p>
-              </div>
-            </div>
-
             {/* Description Section */}
             <div className="border-t border-[#292e42] pt-4 mt-4">
               <h3 className="text-[#c0caf5] font-medium mb-3">Aufgabenbeschreibung</h3>
