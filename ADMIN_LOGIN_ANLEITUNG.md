@@ -12,7 +12,7 @@
 
 ## Login-URL
 
-https://infometrica-app.preview.emergentagent.com/admin/login
+https://task-mgmt-preview.preview.emergentagent.com/admin/login
 
 ## Schritte:
 

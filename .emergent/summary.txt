@@ -6,97 +6,81 @@ PRODUCT REQUIREMENTS:
 2.  **Admin Panel:** A secure login () to a Tokyo Night themed dashboard. It must include:
     *   A table to view and manage job applications, with search and bulk-acceptance functionality.
     *   A system to create tasks and assign them to employees.
-    *   A page to view identity verification documents and approve them.
+    *   A page to view and approve employee-uploaded documents.
     *   A page to create employment contracts with a searchable employee dropdown.
-    *   SMTP (Resend) integration for sending automated email notifications for key events (new application, acceptance, contract, task assignment). The emails should use professional HTML templates.
+    *   SMTP (Resend) integration for sending automated email notifications.
 3.  **Applicant/Employee Flow:**
-    *   Applicants register and can log in to a status page.
+    *   Applicants register and can log in to a status page to see their application progress.
     *   Admins accept applications, prompting ID upload.
     *   Admins approve IDs, granting full dashboard access.
-4.  **Employee Dashboard:** A secure login () to an orange/white themed dashboard. It must have pages for Main, Aufträge (Tasks), Einstellungen (Settings), and Dokumente (Documents). The Auszahlung (Payout) page should be removed.
-    *   Employees must be able to view their employment contract before signing.
-    *   The contract signing process must include a field for the employee's IBAN.
-    *   The contract itself should be a specific Minijob template.
-    *   Employees must be able to download their signed contracts as PDFs.
+4.  **Employee Dashboard:** A secure login () to an orange/white themed dashboard. It must have pages for Main, Aufträge (Tasks), Einstellungen (Settings), and Dokumente (Documents). Employees need to be able to:
+    *   View and sign their employment contract (Minijob template), providing an IBAN.
+    *   Download signed contracts as PDFs.
+    *   Upload other required documents.
 
 **User's preferred language**: German. The user communicates in German, and the agent MUST continue to respond in German.
 
 **what currently exists?**
-A mature full-stack application (React, FastAPI, MongoDB) that meets most of the user's requirements.
--   **Public Website:** All pages are implemented, including the new Web Application Tester job on the career page.
--   **Admin Panel:** A functional admin portal with the Tokyo Night theme. It includes a complete task management system, ID verification review, and contract creation. A search function has been added for both applications and for selecting employees during contract creation. The Mitarbeiter tab has been removed as requested.
--   **Email Integration:** Resend is fully integrated for sending professional, HTML-formatted email notifications for new applications, accepted applications, new contracts, and new tasks. The user has provided an API key and confirmed their domain  is verified.
--   **Employee/Applicant Flow:** The full multi-stage application process is implemented and functional, from initial application to final account activation by an admin.
--   **Employee Dashboard:** The dashboard is functional with an orange/white theme. The  (Settings) and  (Documents) pages are now connected to the backend and display real data. The  (Payout) page has been removed.
--   **Contract System:** The contract creation and signing process is complete. It includes a preview of the full Minijob contract text, an IBAN input field, and a signature pad. The downloaded PDF correctly uses the new Minijob template for all newly signed contracts.
+A comprehensive full-stack application featuring a React frontend, FastAPI backend, and MongoDB database.
+-   **Public Website:** All pages have been completely redesigned with a modern, professional German Precision aesthetic, moving away from a generic AI look. The admin login link has been removed from the footer as requested.
+-   **Admin Panel:** A functional dashboard with modules for bulk application acceptance, task management, and contract creation. A new page for managing employee-uploaded documents (view, approve, reject) has been added. The admin password has been updated to a strong, randomized one.
+-   **Task Management:** The system has been refactored based on user feedback. The current workflow is: 1. Admin creates a task (without assignment). 2. Later, the admin assigns the task to a *single* employee and can optionally add test credentials (a link or email/password) specific to that assignment.
+-   **Employee/Applicant Flow:** The full application and onboarding process is functional.
+-   **Employee Dashboard:** The dashboard is functional. The document upload feature on the Dokumente page is now fully implemented and working.
 
 **Last working item**:
--   Last item agent was working: Starting the implementation of a feature to allow admins to select multiple applicants on the Bewerbungen (Applications) page and accept their applications with a single bulk action.
--   Status: IN PROGRESS
+-   Last item agent was working: The user requested a significant enhancement to the task assignment feature. The agent had just acknowledged the request and was about to start implementation.
+-   Status: NOT STARTED
 -   Agent Testing Done: N
 -   Which testing method agent to use? both
 -   User Testing Done: N
 
 **All Pending/In progress Issue list**:
--   Issue 1: (P0) Complete the bulk-acceptance feature for applications.
--   Issue 2: (P1) The document upload functionality is still missing. The Dokument hochladen button on the  page is not connected to any backend logic.
+-   Issue 1: (P0) Overhaul the task assignment functionality.
 
 Issues Detail:
 -   Issue 1:
-    -   Attempted fixes: The agent has started by viewing the  file but has not yet written any code.
+    -   Attempted fixes: None. This is a new feature request from the user's last message.
     -   Next debug checklist:
-        1.  **Frontend ():** Add checkboxes to each row of the applications table. Add a state to track selected application IDs. Add a Bulk Accept button that is enabled only when at least one application is selected.
-        2.  **Backend ():** Create a new endpoint (e.g., ) that accepts a list of application IDs.
-        3.  **Logic:** The endpoint should iterate through the IDs, update the status of each user to 'Akzeptiert', and trigger the application accepted email for each.
-    -   Why fix this issue and what will be achieved with the fix? This is a direct user request to improve the admin's workflow efficiency, saving time by not having to accept each application individually.
-    -   Status: IN PROGRESS
-    -   Is recurring issue? N
-    -   Should Test frontend/backend/both after fix? both
-    -   Blocked on other issue: No.
--   Issue 2:
-    -   Attempted fixes: None. This was an upcoming task from a previous session that has not been prioritized yet.
-    -   Next debug checklist:
-        1.  **Backend ():** Create a file upload endpoint (e.g., ) that handles . It should store the file and create a new document record in the database linked to the employee.
-        2.  **Frontend ():** Connect the Dokument hochladen button to a file input and a function that calls the new backend endpoint.
-    -   Why fix this issue and what will be achieved with the fix? This will complete the document management feature, allowing employees to upload other required documents besides their contract.
+        1.  **Backend ():** Modify the  model. Instead of a single  field, it will need a list of assignment objects, where each object contains a  and its own .
+        2.  **Backend ():** Create a new endpoint (e.g., ) that accepts a list of assignments (user IDs and their credentials). Update the logic to handle multiple assignees.
+        3.  **Frontend ():**
+            *   In the Assign Task modal, replace the single-select employee dropdown with a multi-select component that includes a search/filter functionality.
+            *   Implement a new UI flow after employees are selected. The user specified that several of the test credentials popups come up where the name of the person is next to it, which implies a dynamic form or a series of modals to input credentials for each selected employee.
+    -   Why fix this issue and what will be achieved with the fix? This is a direct user request to make the task management system more flexible, allowing a single task to be assigned to multiple testers simultaneously, each with their own unique test data.
     -   Status: NOT STARTED
     -   Is recurring issue? N
     -   Should Test frontend/backend/both after fix? both
     -   Blocked on other issue: No.
 
 **In progress Task List**:
--   Task 1: Implement bulk acceptance of applications.
-    -   Where to resume: In , add UI elements (checkboxes, button) for the bulk action.
-    -   What will be achieved with this?: Admins will be able to select multiple new applications and approve them simultaneously.
-    -   Status: IN PROGRESS
+-   Task 1: Implement multi-person task assignment with search and per-user credentials.
+    -   Where to resume: Start by analyzing  to plan the new multi-select and dynamic credential forms UI.
+    -   What will be achieved with this?: Admins will be able to search for employees, assign a single task to multiple people at once, and provide unique test credentials for each person.
+    -   Status: NOT STARTED
     -   Should Test frontend/backend/both after fix?: both
     -   Blocked on something: No.
 
 **Upcoming and Future Tasks**
-*   **Upcoming Tasks:**
-    *   **(P1) Implement Document Upload Functionality:** Connect the Dokument hochladen button on the  page to a file upload endpoint.
 *   **Future Tasks:**
     *   (P2) Develop a more comprehensive employee management module in the admin panel (CRUD operations).
 
 **Completed work in this session**
--   **UI & Feature Updates:**
-    -   Removed the Auszahlung (Payout) page from the employee dashboard.
-    -   Removed the Mitarbeiter (Employees) tab from the admin panel.
--   **Contract System Enhancement:**
-    -   Added an IBAN input field to the contract signing process; the IBAN is saved to the database and included in the final PDF.
-    -   Implemented a contract preview, allowing employees to read the full contract text before signing.
-    -   Updated the contract with a new, specific Minijob template as requested by the user.
-    -   Fixed the PDF download to ensure newly signed contracts use the correct Minijob template.
--   **Admin Workflow Improvements:**
-    -   Added a search/autocomplete feature for selecting employees when creating a contract.
-    -   Added a search and filter function to the main Bewerbungen (Applications) page.
--   **Backend & Integration:**
-    -   Connected the employee  (Settings) and  (Documents) pages to new backend endpoints, replacing mock data.
-    -   Fully integrated **Resend** for sending professional HTML email notifications for key application and contract events.
--   **Testing:** Successfully used the testing agent to verify the connected  and  pages.
+-   **Task Management Overhaul:** Refactored the task creation and assignment workflow multiple times based on user feedback, resulting in a two-step process: create task, then assign to a single user with optional credentials.
+-   **Bulk Application Acceptance:** Implemented and refined the UI for selecting and accepting multiple applications at once, including adding an informational banner and a quick filter button for better UX.
+-   **Document Management (Full Cycle):**
+    -   Fixed the non-functional Dokument hochladen button on the employee dashboard, enabling file uploads.
+    -   Created a new Dokumente page in the admin panel for admins to view, approve, reject, and download all documents uploaded by employees.
+-   **Public Website Redesign:** Executed a complete visual overhaul of the public-facing website (Home, Services, About, Contact, etc.) using guidelines from the design agent to create a modern, professional German Precision theme.
+-   **Security & Housekeeping:**
+    -   Updated the admin user's password to a strong, 18-character random password.
+    -   Removed the Admin Login link from the public website's footer.
+-   **Bug Fixes:**
+    -   Resolved a minor token validation issue in the backend that was identified by the testing agent.
+    -   Addressed a user-reported UX issue where checkboxes for bulk acceptance were not clearly explained.
 
 **Earlier issues found/mentioned but not fixed**
--   The Dokument hochladen functionality on the employee dashboard was part of the original product requirements but has been consistently deprioritized in favor of new user requests.
+-   None. The previously pending document upload feature has been implemented.
 
 **Known issue recurrence from previous fork**
 -   N/A
@@ -107,37 +91,39 @@ Issues Detail:
 **Key Technical Concepts**
 -   **Frontend:** React, React Router, TailwindCSS, shadcn/ui.
 -   **Backend:** FastAPI, MongoDB (using ), Pydantic.
--   **Authentication:** JWT with role and status-based system.
--   **Integrations:** , , .
+-   **Authentication:** JWT with role-based access control.
+-   **Design:** Used  to generate UI/UX guidelines which were then implemented.
 
 **key DB schema**
 -   **users:** 
--   **contracts:**  (iban added)
+-   **tasks:**  **Note:** This schema will need a major overhaul for the next task.
+-   **documents:** 
 
 **changes in tech stack**
--   **Backend:** Added  for email integration.
+-   None.
 
 **All files of reference**
--   : File to be modified for the current bulk-accept task.
--   : Core backend file, recently updated with new endpoints for settings/documents and email triggers.
--   : New file containing all Resend integration logic and HTML templates.
--   : Recently connected to the backend, but still needs upload functionality.
--   : Recently updated with contract preview and IBAN field.
+-   : The primary file to be modified for the new multi-assignment feature.
+-   : Will require a new/modified endpoint for task assignment.
+-   : The  Pydantic model will need to be restructured.
+-   : The recently created page for admin document review.
+-   All files under : These were rewritten for the redesign.
 
 **Areas that need refactoring**:
--   The main  file has grown even larger. The logic for applications, users, tasks, and verifications should be broken out into separate router files for better maintainability.
+-    is now very large. The logic for tasks, applications, and documents should be split into dedicated FastAPI router files (e.g., , ) to improve maintainability.
 
 **key api endpoints**
--   : **(To be created)** for the new bulk-accept feature.
--   : **(To be created)** for the document upload feature.
--   , : Get and update employee profile information.
--   : Get a list of an employee's documents.
--   : Endpoint that will be used by the new bulk-accept function.
+-   : Current endpoint for single-user assignment. **Will be replaced/modified.**
+-   : Fetches all documents for the admin view.
+-   : Approves a document.
+-   : Accepts multiple applications at once.
+-   : For employees to upload documents.
 
 **Critical Info for New Agent**
--   The immediate task is to implement the bulk-acceptance feature for applications in the admin panel. This requires frontend (checkboxes, button) and backend (new endpoint) changes.
--   The Resend integration is live and uses the  address . The user's API key is in . All email templates are in .
--   The contract PDF generation logic is important: the PDF with the correct template (e.g., Minijob) is created *only when a contract is signed*. Old contracts retain their old PDF versions.
+-   The immediate task is a significant feature request: allow a task to be assigned to **multiple** employees, with the ability to **search** for employees and provide **separate test credentials for each one**. This will require substantial changes to the data model, backend API, and frontend UI.
+-   The current task assignment UI () is built for a single assignment. The user's request for several popups for credentials needs careful UI/UX planning.
+-   The admin password has been changed. Use the new credentials provided below.
+-   Do not touch the public-facing pages, as they have just been redesigned to the user's satisfaction.
 
 **documents and test reports created in this job**
 -    (updated)
@@ -145,28 +131,27 @@ Issues Detail:
 -   
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  ** (Pending):** User requests a bulk-selection and bulk-acceptance feature for applications on the admin page. (Current task)
-2.  ** (Acknowledged):** Agent confirms the platform is fully functional and asks for next steps.
-3.  ** (Acknowledged):** User says ok gut (ok good).
-4.  ** (Actioned):** Agent confirms that emails will now be sent from .
-5.  ** (Actioned):** User confirms they added  as a verified domain to Resend.
-6.  ** (Actioned):** Agent answers Ja (Yes) to the user's question about needing to add a domain.
-7.  ** (Actioned):** User provides the Resend API key and asks for good-looking HTML email designs.
-8.  ** (Actioned):** Agent proposes creating an admin settings page for the API key.
-9.  ** (Actioned):** Agent asks to continue after a  message.
-10. ** (Actioned):** User requests to remove the admin Mitarbeiter tab, add search to applications, and add SMTP.
+1.  ** (Pending):** Requested a new feature: allow searching for employees and assigning a task to multiple employees, with unique test credentials for each person.
+2.  ** (Acknowledged):** Agent confirms the employee selection dropdown is working.
+3.  ** (Resolved):** User reported that they could not select a person in the task assignment dropdown.
+4.  ** (Acknowledged):** Agent confirms the final single-assignment workflow is implemented.
+5.  ** (Actioned):** User clarified the task assignment workflow for the third time, leading to the current implementation (create first, then assign).
+6.  ** (Actioned):** User provides another clarification on the task assignment workflow.
+7.  ** (Actioned):** User clarified they want to add test credentials *after* a task is created, not during creation.
+8.  ** (Acknowledged):** Agent confirms the implementation of adding credential fields to the task creation form.
+9.  ** (Actioned):** User requested the ability to add a test link or test login data when assigning a task.
+10. ** (Acknowledged):** Agent confirms the new random admin password has been set.
 
 **Project Health Check:**
--   **Broken:**
-    -   The Dokument hochladen button on the employee dashboard is not functional.
--   **Mocked:** None. All previously mocked pages (, ) are now connected to the backend.
+-   **Broken:** None
+-   **Mocked:** None
 
 **3rd Party Integrations**
--   : Used for the signature drawing pad.
--   : Used for sending transactional emails. Requires user API key.
+-   : Used for contract signing.
+-   : Used for sending transactional emails (requires user API key).
 
 **Testing status**
--   **Testing agent used after significant changes:** YES
+-   **Testing agent used after significant changes:** YES (for bulk application acceptance)
 -   **Troubleshoot agent used after agent stuck in loop:** NO
 -   **Test files created:** None
 -   **Known regressions:** None
@@ -180,10 +165,6 @@ Issues Detail:
     -   URL: 
     -   Email: 
     -   Password: 
--   **To test the new applicant flow:**
-    1.  Go to the  page.
-    2.  Apply for a job and create a new account.
-    3.  Log in at  with the new credentials to see the status pages.
 
 **What agent forgot to execute**
--   The agent has not implemented the document upload functionality on the employee's  page, which was an upcoming task from the initial handoff summary. User requests have repeatedly taken priority over this pending item.</analysis>
+-   Nothing. The agent successfully completed all user requests from the session, including the long-pending document upload feature, and is now poised to start the user's newest request.</analysis>
