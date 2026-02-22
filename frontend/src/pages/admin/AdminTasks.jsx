@@ -43,6 +43,12 @@ const AdminTasks = () => {
     test_login_password: ''
   });
   const [submitting, setSubmitting] = useState(false);
+  const [editingCredentials, setEditingCredentials] = useState(null);
+  const [credentialsData, setCredentialsData] = useState({
+    test_ident_link: '',
+    test_login_email: '',
+    test_login_password: ''
+  });
 
   useEffect(() => {
     fetchData();
