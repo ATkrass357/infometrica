@@ -117,10 +117,9 @@ const Karriere = () => {
         applicationData
       );
 
-      toast.success('Vielen Dank für Ihre Bewerbung!', {
-        description: 'Sie können sich jetzt mit Ihrer E-Mail und Ihrem Passwort unter /mitarbeiter/login anmelden, um den Status Ihrer Bewerbung zu verfolgen.',
-        duration: 8000,
-      });
+      // Save email for modal and show success popup
+      setSubmittedEmail(formData.email);
+      setShowSuccessModal(true);
 
       // Reset form
       setFormData({
