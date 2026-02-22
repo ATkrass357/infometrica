@@ -304,6 +304,24 @@ const AdminApplications = () => {
         </select>
       </div>
 
+      {/* Info Banner for bulk selection */}
+      {statusFilter === 'all' && applications.filter(a => a.status === 'Neu').length > 0 && (
+        <div className="bg-[#7aa2f7]/10 border border-[#7aa2f7]/30 rounded-lg p-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <CheckSquare size={20} className="text-[#7aa2f7]" />
+            <span className="text-[#c0caf5]">
+              <strong>{applications.filter(a => a.status === 'Neu').length}</strong> neue Bewerbung(en) können ausgewählt und akzeptiert werden.
+            </span>
+          </div>
+          <button
+            onClick={() => setStatusFilter('Neu')}
+            className="px-4 py-2 bg-[#7aa2f7] text-white rounded-lg hover:bg-[#7aa2f7]/80 transition-colors text-sm"
+          >
+            Nur Neue anzeigen
+          </button>
+        </div>
+      )}
+
       {/* Table */}
       <div className="bg-[#16161e] border border-[#292e42] rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
