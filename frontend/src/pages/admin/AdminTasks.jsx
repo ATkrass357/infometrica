@@ -32,7 +32,10 @@ const AdminTasks = () => {
     schritt3: '',
     assigned_to: '',
     priority: 'Normal',
-    due_date: ''
+    due_date: '',
+    test_ident_link: '',
+    test_login_email: '',
+    test_login_password: ''
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -87,7 +90,10 @@ const AdminTasks = () => {
         schritt3: '',
         assigned_to: '',
         priority: 'Normal',
-        due_date: ''
+        due_date: '',
+        test_ident_link: '',
+        test_login_email: '',
+        test_login_password: ''
       });
       fetchData();
     } catch (error) {
