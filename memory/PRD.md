@@ -52,7 +52,13 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - Delete verification documents
 - [x] Task Management System
   - Create tasks with title, website URL, 4-part description
-  - Assign tasks to employees
+  - **Multi-Person Task Assignment (NEW - February 22, 2025)**
+    - Search employees by name, email, or position
+    - Select multiple employees via checkboxes
+    - Enter unique test credentials per employee (Test Ident Link, E-Mail, Passwort)
+    - 2-step modal: Step 1 = select employees, Step 2 = enter credentials
+  - View tasks with assignment count ("X Mitarbeiter")
+  - Expanded view shows all assignments with individual credentials
   - View/delete tasks
 - [x] **Contract Management**
   - Create employment contracts for employees
