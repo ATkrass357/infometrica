@@ -12,7 +12,9 @@ import {
   ChevronUp,
   AlertCircle,
   CheckCircle,
-  RefreshCw
+  RefreshCw,
+  Link,
+  KeyRound
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
