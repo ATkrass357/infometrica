@@ -246,6 +246,61 @@ async def accept_application(
     return {"message": "Bewerbung akzeptiert", "status": "Akzeptiert"}
 
 
+# Bulk accept applications (Admin only)
+@router.post("/bulk-accept")
+async def bulk_accept_applications(
+    data: dict,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Accept multiple applications at once"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    application_ids = data.get("application_ids", [])
+    
+    if not application_ids:
+        raise HTTPException(status_code=400, detail="Keine Bewerbungs-IDs angegeben")
+    
+    accepted = 0
+    failed = 0
+    
+    for app_id in application_ids:
+        application = await db.applications.find_one({"id": app_id})
+        
+        if not application:
+            failed += 1
+            continue
+        
+        if application.get("status") != "Neu":
+            failed += 1
+            continue
+        
+        # Update status
+        await db.applications.update_one(
+            {"id": app_id},
+            {"$set": {"status": "Akzeptiert", "accepted_at": datetime.utcnow()}}
+        )
+        
+        # Send acceptance email
+        try:
+            await send_application_accepted(
+                to_email=application["email"],
+                applicant_name=application["name"]
+            )
+        except Exception as e:
+            # Log error but don't fail the whole operation
+            print(f"Email error for {application['email']}: {e}")
+        
+        accepted += 1
+    
+    return {
+        "message": f"{accepted} Bewerbung(en) akzeptiert",
+        "accepted": accepted,
+        "failed": failed
+    }
+
+
 # Verify/Unlock applicant (Admin only) - final step
 @router.post("/{application_id}/unlock")
 async def unlock_applicant(
