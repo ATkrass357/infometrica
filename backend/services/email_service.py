@@ -129,6 +129,10 @@ async def send_application_confirmation(
         print("Resend not configured - skipping email")
         return False
     
+    # Get the frontend URL from environment or use default
+    frontend_url = os.environ.get("FRONTEND_URL", "https://infometrica.de")
+    login_url = f"{frontend_url}/mitarbeiter/login"
+    
     content = f"""
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333;">
             <strong>Betreff: Eingangsbestätigung Ihrer Bewerbung</strong>
@@ -159,10 +163,29 @@ async def send_application_confirmation(
             </ol>
         </div>
         
-        <p style="margin: 0 0 20px 0; font-size: 15px; color: #333; line-height: 1.8;">
-            Sie können den aktuellen Status Ihrer Bewerbung jederzeit in Ihrem 
-            persönlichen Bewerberportal einsehen.
-        </p>
+        <div style="margin: 30px 0; padding: 25px; background-color: #f0fdf4; border: 1px solid #86efac; border-radius: 4px;">
+            <p style="margin: 0 0 15px 0; font-size: 14px; color: #166534; font-weight: bold;">
+                Ihr persönliches Bewerberportal
+            </p>
+            <p style="margin: 0 0 15px 0; font-size: 14px; color: #15803d; line-height: 1.6;">
+                Sie können den aktuellen Status Ihrer Bewerbung jederzeit online einsehen. 
+                Loggen Sie sich dazu mit Ihrer E-Mail-Adresse und dem von Ihnen gewählten Passwort ein:
+            </p>
+            <table cellpadding="0" cellspacing="0" style="margin: 0;">
+                <tr>
+                    <td style="background-color: #f97316; border-radius: 4px;">
+                        <a href="{login_url}" 
+                           style="display: inline-block; padding: 14px 28px; color: #ffffff; 
+                                  text-decoration: none; font-size: 14px; font-weight: bold;">
+                            Zum Bewerberportal →
+                        </a>
+                    </td>
+                </tr>
+            </table>
+            <p style="margin: 15px 0 0 0; font-size: 12px; color: #666;">
+                Login-Adresse: <a href="{login_url}" style="color: #f97316;">{login_url}</a>
+            </p>
+        </div>
         
         <p style="margin: 0; font-size: 15px; color: #333; line-height: 1.8;">
             Für Rückfragen stehen wir Ihnen gerne zur Verfügung.
