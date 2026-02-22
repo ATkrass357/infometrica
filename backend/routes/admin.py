@@ -212,6 +212,39 @@ async def delete_task(
     return {"message": "Aufgabe gelöscht"}
 
 
+@router.put("/tasks/{task_id}/credentials")
+async def update_task_credentials(
+    task_id: str,
+    data: dict,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Update task test credentials"""
+    verify_admin_token(authorization)
+    
+    # Find the task
+    task = await db.tasks.find_one({"id": task_id})
+    if not task:
+        raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
+    
+    # Update only credential fields
+    update_data = {}
+    if "test_ident_link" in data:
+        update_data["test_ident_link"] = data["test_ident_link"]
+    if "test_login_email" in data:
+        update_data["test_login_email"] = data["test_login_email"]
+    if "test_login_password" in data:
+        update_data["test_login_password"] = data["test_login_password"]
+    
+    if update_data:
+        await db.tasks.update_one(
+            {"id": task_id},
+            {"$set": update_data}
+        )
+    
+    return {"message": "Test-Zugangsdaten aktualisiert"}
+
+
 # ========== DOCUMENT MANAGEMENT ==========
 
 @router.get("/documents")
