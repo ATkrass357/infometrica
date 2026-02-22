@@ -106,7 +106,6 @@ const Karriere = () => {
         postleitzahl: formData.postleitzahl,
         stadt: formData.stadt,
         position: formData.position,
-        message: formData.message,
         cv_filename: formData.cv ? formData.cv.name : null,
       };
 
