@@ -74,8 +74,8 @@ const AdminTasks = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!formData.title || !formData.assigned_to) {
-      toast.error('Bitte füllen Sie alle Pflichtfelder aus');
+    if (!formData.title) {
+      toast.error('Bitte geben Sie einen Titel ein');
       return;
     }
     
