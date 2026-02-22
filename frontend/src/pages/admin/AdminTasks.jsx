@@ -514,6 +514,14 @@ const AdminTasks = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <button
+                    onClick={() => openCredentialsEditor(task)}
+                    className="p-2 text-[#e0af68] hover:bg-[#e0af68]/10 rounded-lg transition-colors"
+                    title="Test-Zugangsdaten bearbeiten"
+                    data-testid={`edit-credentials-${task.id}`}
+                  >
+                    <KeyRound size={18} />
+                  </button>
+                  <button
                     onClick={() => setExpandedTask(expandedTask === task.id ? null : task.id)}
                     className="p-2 text-[#9aa5ce] hover:text-[#c0caf5] hover:bg-[#292e42] rounded-lg transition-colors"
                     data-testid={`expand-task-${task.id}`}
