@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { 
@@ -11,13 +11,15 @@ import {
   ChevronDown,
   ChevronUp,
   AlertCircle,
-  CheckCircle,
   RefreshCw,
   Link,
   KeyRound,
-  Edit3,
   X,
-  Save
+  Save,
+  Search,
+  Users,
+  Check,
+  ChevronRight
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -39,13 +41,13 @@ const AdminTasks = () => {
     due_date: ''
   });
   const [submitting, setSubmitting] = useState(false);
+  
+  // Multi-assignment state
   const [assigningTask, setAssigningTask] = useState(null);
-  const [assignData, setAssignData] = useState({
-    assigned_to: '',
-    test_ident_link: '',
-    test_login_email: '',
-    test_login_password: ''
-  });
+  const [assignmentStep, setAssignmentStep] = useState(1); // 1 = select employees, 2 = enter credentials
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedEmployees, setSelectedEmployees] = useState([]);
+  const [employeeCredentials, setEmployeeCredentials] = useState({});
 
   useEffect(() => {
     fetchData();
@@ -127,37 +129,132 @@ const AdminTasks = () => {
     }
   };
 
+  // Multi-assignment functions
   const openAssignModal = (task) => {
     setAssigningTask(task);
-    setAssignData({
-      assigned_to: task.assigned_to || '',
-      test_ident_link: task.test_ident_link || '',
-      test_login_email: task.test_login_email || '',
-      test_login_password: task.test_login_password || ''
+    setAssignmentStep(1);
+    setSearchTerm('');
+    // Pre-select currently assigned employees if any
+    if (task.assignments && task.assignments.length > 0) {
+      const currentIds = task.assignments.map(a => a.employee_id);
+      setSelectedEmployees(currentIds);
+      // Pre-fill credentials
+      const creds = {};
+      task.assignments.forEach(a => {
+        creds[a.employee_id] = {
+          test_ident_link: a.test_ident_link || '',
+          test_login_email: a.test_login_email || '',
+          test_login_password: a.test_login_password || ''
+        };
+      });
+      setEmployeeCredentials(creds);
+    } else if (task.assigned_to) {
+      // Legacy single assignment
+      setSelectedEmployees([task.assigned_to]);
+      setEmployeeCredentials({
+        [task.assigned_to]: {
+          test_ident_link: task.test_ident_link || '',
+          test_login_email: task.test_login_email || '',
+          test_login_password: task.test_login_password || ''
+        }
+      });
+    } else {
+      setSelectedEmployees([]);
+      setEmployeeCredentials({});
+    }
+  };
+
+  const closeAssignModal = () => {
+    setAssigningTask(null);
+    setAssignmentStep(1);
+    setSearchTerm('');
+    setSelectedEmployees([]);
+    setEmployeeCredentials({});
+  };
+
+  const toggleEmployeeSelection = (empId) => {
+    setSelectedEmployees(prev => {
+      if (prev.includes(empId)) {
+        // Remove employee and their credentials
+        const newCreds = { ...employeeCredentials };
+        delete newCreds[empId];
+        setEmployeeCredentials(newCreds);
+        return prev.filter(id => id !== empId);
+      } else {
+        // Add employee with empty credentials
+        setEmployeeCredentials(prev => ({
+          ...prev,
+          [empId]: { test_ident_link: '', test_login_email: '', test_login_password: '' }
+        }));
+        return [...prev, empId];
+      }
     });
   };
 
-  const saveAssignment = async () => {
-    if (!assignData.assigned_to) {
-      toast.error('Bitte wählen Sie einen Mitarbeiter aus');
+  const updateEmployeeCredentials = (empId, field, value) => {
+    setEmployeeCredentials(prev => ({
+      ...prev,
+      [empId]: {
+        ...prev[empId],
+        [field]: value
+      }
+    }));
+  };
+
+  const goToCredentialsStep = () => {
+    if (selectedEmployees.length === 0) {
+      toast.error('Bitte wählen Sie mindestens einen Mitarbeiter aus');
       return;
     }
-    
+    setAssignmentStep(2);
+  };
+
+  const saveMultiAssignment = async () => {
+    if (selectedEmployees.length === 0) {
+      toast.error('Bitte wählen Sie mindestens einen Mitarbeiter aus');
+      return;
+    }
+
     try {
       const token = localStorage.getItem('admin_token');
+      
+      // Build assignments array
+      const assignments = selectedEmployees.map(empId => ({
+        employee_id: empId,
+        test_ident_link: employeeCredentials[empId]?.test_ident_link || '',
+        test_login_email: employeeCredentials[empId]?.test_login_email || '',
+        test_login_password: employeeCredentials[empId]?.test_login_password || ''
+      }));
+
       await axios.put(
-        `${BACKEND_URL}/api/admin/tasks/${assigningTask.id}/assign`,
-        assignData,
+        `${BACKEND_URL}/api/admin/tasks/${assigningTask.id}/assign-multiple`,
+        { assignments },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
-      toast.success('Aufgabe zugewiesen');
-      setAssigningTask(null);
+      toast.success(`Aufgabe an ${selectedEmployees.length} Mitarbeiter zugewiesen`);
+      closeAssignModal();
       fetchData();
     } catch (error) {
       console.error('Error assigning task:', error);
-      toast.error('Fehler beim Zuweisen');
+      toast.error('Fehler beim Zuweisen der Aufgabe');
     }
+  };
+
+  // Filtered employees based on search
+  const filteredEmployees = useMemo(() => {
+    if (!searchTerm.trim()) return employees;
+    const term = searchTerm.toLowerCase();
+    return employees.filter(emp => 
+      emp.name?.toLowerCase().includes(term) ||
+      emp.email?.toLowerCase().includes(term) ||
+      emp.position?.toLowerCase().includes(term)
+    );
+  }, [employees, searchTerm]);
+
+  // Get employee by ID helper
+  const getEmployeeById = (empId) => {
+    return employees.find(e => e.id === empId);
   };
 
   const getStatusColor = (status) => {
@@ -176,6 +273,17 @@ const AdminTasks = () => {
       case 'Niedrig': return 'bg-gray-500/20 text-gray-400';
       default: return 'bg-gray-500/20 text-gray-400';
     }
+  };
+
+  // Get assignment display text
+  const getAssignmentDisplay = (task) => {
+    if (task.assignments && task.assignments.length > 0) {
+      if (task.assignments.length === 1) {
+        return task.assignments[0].employee_name;
+      }
+      return `${task.assignments.length} Mitarbeiter`;
+    }
+    return task.assigned_to_name || 'Nicht zugewiesen';
   };
 
   if (loading) {
@@ -413,9 +521,13 @@ const AdminTasks = () => {
                     </span>
                   </div>
                   <div className="flex flex-wrap items-center gap-4 text-sm text-[#9aa5ce]">
-                    <div className={`flex items-center gap-1 ${!task.assigned_to ? 'text-[#e0af68]' : ''}`}>
-                      <User size={14} />
-                      <span>{task.assigned_to_name || 'Nicht zugewiesen'}</span>
+                    <div className={`flex items-center gap-1 ${!task.assigned_to && (!task.assignments || task.assignments.length === 0) ? 'text-[#e0af68]' : ''}`}>
+                      {task.assignments && task.assignments.length > 1 ? (
+                        <Users size={14} />
+                      ) : (
+                        <User size={14} />
+                      )}
+                      <span>{getAssignmentDisplay(task)}</span>
                     </div>
                     {task.website && (
                       <a 
@@ -440,14 +552,14 @@ const AdminTasks = () => {
                   <button
                     onClick={() => openAssignModal(task)}
                     className={`p-2 rounded-lg transition-colors ${
-                      task.assigned_to 
+                      task.assigned_to || (task.assignments && task.assignments.length > 0)
                         ? 'text-[#9ece6a] hover:bg-[#9ece6a]/10' 
                         : 'text-[#e0af68] hover:bg-[#e0af68]/10'
                     }`}
                     title={task.assigned_to ? "Zuweisung bearbeiten" : "Aufgabe zuweisen"}
                     data-testid={`assign-task-${task.id}`}
                   >
-                    <User size={18} />
+                    <Users size={18} />
                   </button>
                   <button
                     onClick={() => setExpandedTask(expandedTask === task.id ? null : task.id)}
@@ -495,8 +607,57 @@ const AdminTasks = () => {
                       </div>
                     )}
                     
-                    {/* Test Credentials Display */}
-                    {(task.test_ident_link || task.test_login_email) && (
+                    {/* Multi-Assignment Display */}
+                    {task.assignments && task.assignments.length > 0 && (
+                      <div className="md:col-span-2 border-t border-[#292e42] pt-4 mt-2">
+                        <h4 className="text-sm font-medium text-[#e0af68] mb-3 flex items-center gap-2">
+                          <Users size={14} />
+                          Zugewiesene Mitarbeiter ({task.assignments.length})
+                        </h4>
+                        <div className="space-y-3">
+                          {task.assignments.map((assignment, idx) => (
+                            <div key={idx} className="bg-[#16161e] p-3 rounded-lg">
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-[#c0caf5] font-medium">{assignment.employee_name}</span>
+                                <span className={`px-2 py-0.5 rounded text-xs font-medium ${getStatusColor(assignment.status)}`}>
+                                  {assignment.status}
+                                </span>
+                              </div>
+                              {(assignment.test_ident_link || assignment.test_login_email) && (
+                                <div className="mt-2 pt-2 border-t border-[#292e42]">
+                                  <div className="text-xs text-[#565f89] mb-1 flex items-center gap-1">
+                                    <KeyRound size={10} />
+                                    Test-Zugangsdaten
+                                  </div>
+                                  {assignment.test_ident_link && (
+                                    <a 
+                                      href={assignment.test_ident_link} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer"
+                                      className="text-[#7aa2f7] hover:underline text-xs flex items-center gap-1"
+                                    >
+                                      <Link size={10} />
+                                      {assignment.test_ident_link.length > 50 
+                                        ? assignment.test_ident_link.substring(0, 50) + '...' 
+                                        : assignment.test_ident_link}
+                                    </a>
+                                  )}
+                                  {assignment.test_login_email && (
+                                    <div className="text-[#9aa5ce] text-xs mt-1">
+                                      E-Mail: {assignment.test_login_email}
+                                      {assignment.test_login_password && ` | Passwort: ${assignment.test_login_password}`}
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                    
+                    {/* Legacy Test Credentials Display (for tasks without assignments array) */}
+                    {(!task.assignments || task.assignments.length === 0) && (task.test_ident_link || task.test_login_email) && (
                       <div className="md:col-span-2 border-t border-[#292e42] pt-4 mt-2">
                         <h4 className="text-sm font-medium text-[#e0af68] mb-3 flex items-center gap-2">
                           <KeyRound size={14} />
@@ -547,116 +708,218 @@ const AdminTasks = () => {
         )}
       </div>
 
-      {/* Assign Task Modal */}
+      {/* Multi-Assignment Modal */}
       {assigningTask && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4">
-          <div className="bg-[#1a1b26] border border-[#292e42] rounded-xl w-full max-w-lg">
-            <div className="flex items-center justify-between p-6 border-b border-[#292e42]">
+          <div className="bg-[#1a1b26] border border-[#292e42] rounded-xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-6 border-b border-[#292e42] flex-shrink-0">
               <div className="flex items-center gap-3">
-                <User className="text-[#7aa2f7]" size={24} />
-                <h3 className="text-xl font-bold text-[#c0caf5]">Aufgabe zuweisen</h3>
+                <Users className="text-[#7aa2f7]" size={24} />
+                <div>
+                  <h3 className="text-xl font-bold text-[#c0caf5]">Aufgabe zuweisen</h3>
+                  <p className="text-sm text-[#565f89]">
+                    {assignmentStep === 1 ? 'Schritt 1: Mitarbeiter auswählen' : 'Schritt 2: Test-Zugangsdaten eingeben'}
+                  </p>
+                </div>
               </div>
               <button
-                onClick={() => setAssigningTask(null)}
+                onClick={closeAssignModal}
                 className="p-2 text-[#565f89] hover:text-[#c0caf5] hover:bg-[#292e42] rounded-lg transition-colors"
               >
                 <X size={20} />
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            {/* Task Info */}
+            <div className="px-6 pt-4 flex-shrink-0">
               <div className="bg-[#16161e] p-4 rounded-lg">
                 <p className="text-[#565f89] text-sm mb-1">Aufgabe:</p>
                 <p className="text-[#c0caf5] font-medium">{assigningTask.title}</p>
               </div>
-
-              {/* Employee Selection */}
-              <div>
-                <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                  Mitarbeiter auswählen *
-                </label>
-                <select
-                  value={assignData.assigned_to}
-                  onChange={(e) => setAssignData({...assignData, assigned_to: e.target.value})}
-                  className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                >
-                  <option value="">Mitarbeiter auswählen</option>
-                  {employees.map((emp) => (
-                    <option key={emp.id} value={emp.id}>
-                      {emp.name} ({emp.position})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="border-t border-[#292e42] pt-4">
-                <div className="flex items-center gap-2 mb-4">
-                  <KeyRound size={18} className="text-[#e0af68]" />
-                  <h4 className="text-[#c0caf5] font-medium">Test-Zugangsdaten (Optional)</h4>
-                </div>
-                <p className="text-[#565f89] text-sm mb-4">
-                  Diese Daten sind nur für den zugewiesenen Mitarbeiter sichtbar.
-                </p>
-
-                {/* Test Ident Link */}
-                <div className="mb-4">
-                  <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                    Test Ident Link
-                  </label>
-                  <input
-                    type="url"
-                    value={assignData.test_ident_link}
-                    onChange={(e) => setAssignData({...assignData, test_ident_link: e.target.value})}
-                    className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                    placeholder="https://example.com/test-ident/..."
-                  />
-                </div>
-
-                <p className="text-sm text-[#9aa5ce] mb-4">Oder Login-Daten:</p>
-                
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                      Test Login E-Mail
-                    </label>
-                    <input
-                      type="email"
-                      value={assignData.test_login_email}
-                      onChange={(e) => setAssignData({...assignData, test_login_email: e.target.value})}
-                      className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                      placeholder="test@example.com"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                      Test Login Passwort
-                    </label>
-                    <input
-                      type="text"
-                      value={assignData.test_login_password}
-                      onChange={(e) => setAssignData({...assignData, test_login_password: e.target.value})}
-                      className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                      placeholder="Passwort"
-                    />
-                  </div>
-                </div>
-              </div>
             </div>
 
-            <div className="flex items-center justify-end gap-3 p-6 border-t border-[#292e42]">
-              <button
-                onClick={() => setAssigningTask(null)}
-                className="px-6 py-2 text-[#9aa5ce] hover:text-[#c0caf5] font-medium transition-colors"
-              >
-                Abbrechen
-              </button>
-              <button
-                onClick={saveAssignment}
-                className="flex items-center gap-2 px-6 py-2 bg-[#7aa2f7] text-white font-semibold rounded-lg hover:bg-[#7aa2f7]/80 transition-colors"
-              >
-                <Save size={18} />
-                Zuweisen
-              </button>
+            {/* Modal Content */}
+            <div className="p-6 overflow-y-auto flex-1">
+              {assignmentStep === 1 ? (
+                /* Step 1: Employee Selection */
+                <div className="space-y-4">
+                  {/* Search */}
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#565f89]" size={18} />
+                    <input
+                      type="text"
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      placeholder="Mitarbeiter suchen..."
+                      className="w-full pl-10 pr-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                      data-testid="employee-search-input"
+                    />
+                  </div>
+
+                  {/* Selected count */}
+                  {selectedEmployees.length > 0 && (
+                    <div className="flex items-center gap-2 text-[#9ece6a]">
+                      <Check size={16} />
+                      <span className="text-sm">{selectedEmployees.length} Mitarbeiter ausgewählt</span>
+                    </div>
+                  )}
+
+                  {/* Employee List */}
+                  <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                    {filteredEmployees.length === 0 ? (
+                      <p className="text-center text-[#565f89] py-8">
+                        {searchTerm ? 'Keine Mitarbeiter gefunden' : 'Keine Mitarbeiter vorhanden'}
+                      </p>
+                    ) : (
+                      filteredEmployees.map((emp) => {
+                        const isSelected = selectedEmployees.includes(emp.id);
+                        return (
+                          <div
+                            key={emp.id}
+                            onClick={() => toggleEmployeeSelection(emp.id)}
+                            className={`p-4 rounded-lg cursor-pointer transition-all border ${
+                              isSelected 
+                                ? 'bg-[#7aa2f7]/10 border-[#7aa2f7]' 
+                                : 'bg-[#16161e] border-[#292e42] hover:border-[#565f89]'
+                            }`}
+                            data-testid={`employee-option-${emp.id}`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className={`w-5 h-5 rounded border flex items-center justify-center ${
+                                  isSelected 
+                                    ? 'bg-[#7aa2f7] border-[#7aa2f7]' 
+                                    : 'border-[#565f89]'
+                                }`}>
+                                  {isSelected && <Check size={14} className="text-white" />}
+                                </div>
+                                <div>
+                                  <p className="text-[#c0caf5] font-medium">{emp.name}</p>
+                                  <p className="text-[#565f89] text-sm">{emp.email}</p>
+                                </div>
+                              </div>
+                              <span className="text-[#9aa5ce] text-sm">{emp.position}</span>
+                            </div>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </div>
+              ) : (
+                /* Step 2: Credentials Entry */
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-4">
+                    <KeyRound size={18} className="text-[#e0af68]" />
+                    <h4 className="text-[#c0caf5] font-medium">Test-Zugangsdaten pro Mitarbeiter (Optional)</h4>
+                  </div>
+                  <p className="text-[#565f89] text-sm mb-4">
+                    Diese Daten sind nur für den jeweiligen Mitarbeiter sichtbar.
+                  </p>
+
+                  <div className="space-y-6 max-h-[400px] overflow-y-auto">
+                    {selectedEmployees.map((empId) => {
+                      const emp = getEmployeeById(empId);
+                      if (!emp) return null;
+                      const creds = employeeCredentials[empId] || {};
+                      
+                      return (
+                        <div key={empId} className="bg-[#16161e] p-4 rounded-lg border border-[#292e42]">
+                          <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#292e42]">
+                            <User size={16} className="text-[#7aa2f7]" />
+                            <span className="text-[#c0caf5] font-medium">{emp.name}</span>
+                            <span className="text-[#565f89] text-sm">({emp.position})</span>
+                          </div>
+
+                          {/* Test Ident Link */}
+                          <div className="mb-3">
+                            <label className="block text-xs font-medium text-[#9aa5ce] mb-1">
+                              Test Ident Link
+                            </label>
+                            <input
+                              type="url"
+                              value={creds.test_ident_link || ''}
+                              onChange={(e) => updateEmployeeCredentials(empId, 'test_ident_link', e.target.value)}
+                              className="w-full px-3 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] text-sm focus:outline-none focus:border-[#7aa2f7]"
+                              placeholder="https://example.com/test-ident/..."
+                            />
+                          </div>
+
+                          <p className="text-xs text-[#565f89] mb-2">Oder Login-Daten:</p>
+                          
+                          <div className="grid grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-xs font-medium text-[#9aa5ce] mb-1">
+                                Test E-Mail
+                              </label>
+                              <input
+                                type="email"
+                                value={creds.test_login_email || ''}
+                                onChange={(e) => updateEmployeeCredentials(empId, 'test_login_email', e.target.value)}
+                                className="w-full px-3 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] text-sm focus:outline-none focus:border-[#7aa2f7]"
+                                placeholder="test@example.com"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-xs font-medium text-[#9aa5ce] mb-1">
+                                Test Passwort
+                              </label>
+                              <input
+                                type="text"
+                                value={creds.test_login_password || ''}
+                                onChange={(e) => updateEmployeeCredentials(empId, 'test_login_password', e.target.value)}
+                                className="w-full px-3 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] text-sm focus:outline-none focus:border-[#7aa2f7]"
+                                placeholder="Passwort"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="flex items-center justify-between gap-3 p-6 border-t border-[#292e42] flex-shrink-0">
+              {assignmentStep === 1 ? (
+                <>
+                  <button
+                    onClick={closeAssignModal}
+                    className="px-6 py-2 text-[#9aa5ce] hover:text-[#c0caf5] font-medium transition-colors"
+                  >
+                    Abbrechen
+                  </button>
+                  <button
+                    onClick={goToCredentialsStep}
+                    disabled={selectedEmployees.length === 0}
+                    className="flex items-center gap-2 px-6 py-2 bg-[#7aa2f7] text-white font-semibold rounded-lg hover:bg-[#7aa2f7]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    data-testid="next-step-btn"
+                  >
+                    <span>Weiter</span>
+                    <ChevronRight size={18} />
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setAssignmentStep(1)}
+                    className="px-6 py-2 text-[#9aa5ce] hover:text-[#c0caf5] font-medium transition-colors"
+                  >
+                    Zurück
+                  </button>
+                  <button
+                    onClick={saveMultiAssignment}
+                    className="flex items-center gap-2 px-6 py-2 bg-[#9ece6a] text-[#1a1b26] font-semibold rounded-lg hover:bg-[#9ece6a]/80 transition-colors"
+                    data-testid="save-assignment-btn"
+                  >
+                    <Save size={18} />
+                    <span>Zuweisen ({selectedEmployees.length})</span>
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
