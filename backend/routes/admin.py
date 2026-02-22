@@ -82,7 +82,7 @@ async def initialize_admin(db: AsyncIOMotorDatabase = Depends(get_db)):
     admin_data = {
         "id": "admin-001",
         "email": "admin@infometrica.de",
-        "password_hash": get_password_hash("Admin123!"),
+        "password_hash": get_password_hash("Inf0m3tr!ca#2025Sec"),
         "name": "Administrator",
         "role": "admin",
         "created_at": datetime.utcnow(),
@@ -93,8 +93,7 @@ async def initialize_admin(db: AsyncIOMotorDatabase = Depends(get_db)):
     
     return {
         "message": "Test-Admin erstellt",
-        "email": "admin@infometrica.de",
-        "password": "Admin123!"
+        "email": "admin@infometrica.de"
     }
 
 # ========== TASK MANAGEMENT ==========
