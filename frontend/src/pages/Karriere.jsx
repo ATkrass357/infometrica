@@ -45,6 +45,19 @@ const Karriere = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState('');
+
+  // Get the login URL dynamically
+  const getLoginUrl = () => {
+    const baseUrl = window.location.origin;
+    return `${baseUrl}/mitarbeiter/login`;
+  };
+
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+    toast.success('Link kopiert!');
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
