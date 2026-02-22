@@ -11,6 +11,7 @@ import {
   ClipboardList,
   Shield,
   FileSignature,
+  FolderOpen,
 } from 'lucide-react';
 import { InfometricaLogo } from '../../components/Logo';
 
@@ -48,6 +49,7 @@ const AdminLayout = ({ children }) => {
     { icon: FileText, label: 'Bewerbungen', path: '/admin/applications', badge: appCount > 0 ? String(appCount) : null },
     { icon: Shield, label: 'Verifikationen', path: '/admin/verifications' },
     { icon: FileSignature, label: 'Arbeitsverträge', path: '/admin/contracts' },
+    { icon: FolderOpen, label: 'Dokumente', path: '/admin/documents' },
     { icon: ClipboardList, label: 'Aufgaben', path: '/admin/tasks' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
