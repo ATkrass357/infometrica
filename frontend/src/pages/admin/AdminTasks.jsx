@@ -127,30 +127,36 @@ const AdminTasks = () => {
     }
   };
 
-  const openCredentialsEditor = (task) => {
-    setEditingCredentials(task.id);
-    setCredentialsData({
+  const openAssignModal = (task) => {
+    setAssigningTask(task);
+    setAssignData({
+      assigned_to: task.assigned_to || '',
       test_ident_link: task.test_ident_link || '',
       test_login_email: task.test_login_email || '',
       test_login_password: task.test_login_password || ''
     });
   };
 
-  const saveCredentials = async () => {
+  const saveAssignment = async () => {
+    if (!assignData.assigned_to) {
+      toast.error('Bitte wählen Sie einen Mitarbeiter aus');
+      return;
+    }
+    
     try {
       const token = localStorage.getItem('admin_token');
       await axios.put(
-        `${BACKEND_URL}/api/admin/tasks/${editingCredentials}/credentials`,
-        credentialsData,
+        `${BACKEND_URL}/api/admin/tasks/${assigningTask.id}/assign`,
+        assignData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       
-      toast.success('Test-Zugangsdaten gespeichert');
-      setEditingCredentials(null);
+      toast.success('Aufgabe zugewiesen');
+      setAssigningTask(null);
       fetchData();
     } catch (error) {
-      console.error('Error saving credentials:', error);
-      toast.error('Fehler beim Speichern');
+      console.error('Error assigning task:', error);
+      toast.error('Fehler beim Zuweisen');
     }
   };
 
