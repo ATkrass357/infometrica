@@ -376,14 +376,14 @@ cd benkeit
 Auf deinem lokalen Computer (nicht Server!):
 
 ```bash
-scp -r /pfad/zum/code/* infometrica@DEINE_SERVER_IP:/home/infometrica/infometrica/
+scp -r /pfad/zum/code/* benkeit@DEINE_SERVER_IP:/home/benkeit/benkeit/
 ```
 
 ### Überprüfen ob Code vorhanden ist:
 
 Auf dem Server:
 ```bash
-cd ~/infometrica
+cd ~/benkeit
 ls -la
 ```
 
@@ -396,7 +396,7 @@ Du solltest `backend` und `frontend` Ordner sehen.
 ### 10.1 In den Backend-Ordner wechseln:
 
 ```bash
-cd ~/infometrica/backend
+cd ~/benkeit/backend
 ```
 
 ### 10.2 Python Virtual Environment erstellen:
@@ -476,7 +476,7 @@ deactivate
 ### 11.1 In den Frontend-Ordner wechseln:
 
 ```bash
-cd ~/infometrica/frontend
+cd ~/benkeit/frontend
 ```
 
 ### 11.2 Environment-Datei erstellen:
@@ -781,7 +781,7 @@ sudo systemctl restart infometrica-backend
 ### Code aktualisieren:
 
 ```bash
-cd ~/infometrica
+cd ~/benkeit
 
 # Wenn du Git benutzt:
 git pull
