@@ -645,24 +645,24 @@ Damit Backend und MongoDB automatisch starten, wenn der Server neu startet.
 ### 14.1 Systemd-Service für Backend erstellen:
 
 ```bash
-sudo nano /etc/systemd/system/infometrica-backend.service
+sudo nano /etc/systemd/system/benkeit-backend.service
 ```
 
 Füge ein:
 
 ```ini
 [Unit]
-Description=Infometrica Backend API
+Description=Benke IT Solutions Backend API
 After=network.target mongod.service
 Wants=mongod.service
 
 [Service]
 Type=simple
-User=infometrica
-Group=infometrica
-WorkingDirectory=/home/infometrica/infometrica/backend
-Environment="PATH=/home/infometrica/infometrica/backend/venv/bin"
-ExecStart=/home/infometrica/infometrica/backend/venv/bin/uvicorn server:app --host 127.0.0.1 --port 8001
+User=benkeit
+Group=benkeit
+WorkingDirectory=/home/benkeit/benkeit/backend
+Environment="PATH=/home/benkeit/benkeit/backend/venv/bin"
+ExecStart=/home/benkeit/benkeit/backend/venv/bin/uvicorn server:app --host 127.0.0.1 --port 8001
 Restart=always
 RestartSec=5
 
