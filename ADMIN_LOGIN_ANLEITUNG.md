@@ -12,7 +12,7 @@
 
 ## Login-URL
 
-https://task-mgmt-preview.preview.emergentagent.com/admin/login
+https://agency-portal-54.preview.emergentagent.com/admin/login
 
 ## Schritte:
 
