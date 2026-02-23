@@ -432,7 +432,7 @@ Füge folgenden Inhalt ein (passe die Werte an!):
 
 ```env
 MONGO_URL=mongodb://localhost:27017
-DB_NAME=infometrica_production
+DB_NAME=benkeit_production
 CORS_ORIGINS=https://deine-domain.de,https://www.deine-domain.de
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxx
 FROM_EMAIL=noreply@deine-domain.de
@@ -532,7 +532,7 @@ sudo apt install -y nginx
 ### 12.2 Nginx-Konfiguration erstellen:
 
 ```bash
-sudo nano /etc/nginx/sites-available/infometrica
+sudo nano /etc/nginx/sites-available/benkeit
 ```
 
 Füge folgenden Inhalt ein (ersetze `deine-domain.de`!):
@@ -544,7 +544,7 @@ server {
 
     # Frontend (React Build)
     location / {
-        root /home/infometrica/infometrica/frontend/build;
+        root /home/benkeit/benkeit/frontend/build;
         index index.html;
         try_files $uri $uri/ /index.html;
     }
@@ -573,7 +573,7 @@ Speichern: `Ctrl + X`, dann `Y`, dann `Enter`
 ### 12.3 Konfiguration aktivieren:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/infometrica /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/benkeit /etc/nginx/sites-enabled/
 ```
 
 ### 12.4 Standard-Konfiguration deaktivieren:
