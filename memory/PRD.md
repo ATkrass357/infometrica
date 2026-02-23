@@ -18,6 +18,7 @@ Build a full-stack application for the app testing agency "Benke IT Solutions" w
 - **Frontend**: React, React Router, TailwindCSS, shadcn/ui, react-signature-canvas
 - **Backend**: FastAPI, MongoDB (motor async), Pydantic, ReportLab (PDF generation)
 - **Authentication**: JWT with role-based access control
+- **Email**: Resend for transactional emails
 
 ---
 
@@ -28,145 +29,49 @@ Build a full-stack application for the app testing agency "Benke IT Solutions" w
 - [x] Unternehmen (About) page
 - [x] Dienstleistungen (Services) page
 - [x] Karriere (Career) page with application form + password selection
-  - **NEW: "Web Application Tester" position (Minijob)**
 - [x] Kontakt (Contact) page
-- [x] Impressum (Imprint) page
+- [x] Impressum (Imprint) page with correct company data
 - [x] Datenschutz (Privacy Policy) page
-- [x] Logo and branding
+- [x] Logo and branding - **BENKE IT**
 - [x] Footer with admin login link
 
 ### Admin Panel (100% Complete)
 - [x] Secure login at `/admin/login`
 - [x] Tokyo Night theme
 - [x] Dashboard overview
-- [x] Applications management
-  - View all job applications
-  - Accept applications (changes status to allow ID upload)
-  - **NEW: Bulk acceptance - select multiple applications and accept at once**
-  - Search and filter applications by name, email, position, city, or status
-  - Status badges: Neu, Wartet auf ID, Verifiziert, Freigeschaltet
-- [x] **Verifications page (P1 COMPLETE)**
-  - View pending verifications
-  - Display ID images (base64, no download - DSGVO compliant)
-  - **Unlock verified employees ("Freischalten" button)**
-  - Delete verification documents
-- [x] Task Management System
-  - Create tasks with title, website URL, 4-part description
-  - **Multi-Person Task Assignment (February 2025)**
-    - Search employees by name, email, or position
-    - Select multiple employees via checkboxes
-    - Enter unique test credentials per employee (Test Ident Link, E-Mail, Passwort)
-    - 2-step modal: Step 1 = select employees, Step 2 = enter credentials
-  - View tasks with assignment count ("X Mitarbeiter")
-  - Expanded view shows all assignments with individual credentials
-  - View/delete tasks
-- [x] **Contract Management**
-  - Create employment contracts for employees
-  - **Search employees by name (autocomplete)**
-  - View contract status (pending/signed)
-- [x] **Document Management**
-  - View all employee-uploaded documents
-  - Search and filter by name, employee, category, status
-  - Approve or reject documents
-  - Download documents
-  - Delete documents
-
-### Applicant/Employee Flow (100% Complete)
-- [x] **Self-Registration with Password**
-  - Applicants choose own password during application
-  - Can login immediately at `/mitarbeiter/login`
-- [x] **Status-Based Access Control**
-  - `Neu`: "Bewerbung wird gepruft" page
-  - `Akzeptiert`: ID verification upload page (GwG + DSGVO notices)
-  - `Verifiziert`: "Wartet auf Freischaltung" page
-  - `Freigeschaltet`: Full dashboard access
-- [x] **ID Verification Upload**
-  - Upload front + back of ID document
-  - File validation (JPEG, PNG, WebP, max 5MB)
-  - Stored securely, displayed to admin as base64
+- [x] Applications management with bulk acceptance
+- [x] Verifications page with unlock functionality
+- [x] Task Management with multi-person assignment
+- [x] Contract Management
+- [x] Document Management
 
 ### Employee Dashboard (100% Complete)
 - [x] Secure login at `/mitarbeiter/login`
 - [x] Orange/white theme
-- [x] Sidebar navigation: Main, Vertrag, Auftrage, Einstellungen, Dokumente
-- [x] **Vertrag (Contract) page**
-  - View and sign employment contracts
-  - **Full contract preview before signing (Minijob format)**
-  - Digital signature with canvas
-  - IBAN input field for salary payment
-  - PDF download for signed contracts
-- [x] Auftrage (Tasks) page - View and manage assigned tasks
-- [x] **Einstellungen (Settings) page - CONNECTED TO BACKEND**
-  - Profile data loaded from `/api/employee/profile`
-  - Update phone and address
-  - Change password (with validation)
-  - Notification settings persist in database
-- [x] **Dokumente (Documents) page - FULLY CONNECTED TO BACKEND**
-  - Documents loaded from `/api/employee/documents`
-  - **Signed contracts appear automatically**
-  - **Upload new documents - WORKING**
-  - Download contracts as PDF
-  - Category filter
-  - Delete pending documents
-- [x] Main dashboard with task overview
+- [x] Contract signing with IBAN and signature
+- [x] Task viewing
+- [x] Settings page
+- [x] Documents page
 
 ---
 
-## Contract Format - Minijob
+## Rebranding Status (December 2025)
 
-The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
-- Benke IT Solutions address: Tauentzienstrasse 9-12, 10789 Berlin
-- Position: Assistent fur Evaluierungen im Homeoffice
-- Tasks: App/Software testing, Video ID verification, Reports
-- Working hours: ~10 hours/week (2-4 days)
-- Salary: max 603 EUR/month
-- Vacation: 28 days/year
-- Special bonuses: June + December (603 EUR each)
-- Probation: 6 weeks
+### ✅ COMPLETED
+- All frontend components updated to "Benke IT Solutions"
+- All backend email templates updated
+- All login pages show "Benke IT" logo
+- All footers show "© 2026 Benke IT Solutions"
+- Impressum updated with new company data
+- FROM_EMAIL changed to noreply@benke-it.de
+- All test files updated with new email addresses
+- All documentation updated
 
----
-
-## API Endpoints
-
-### Employee Profile Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/employee/profile | Get employee profile with notifications |
-| PUT | /api/employee/profile | Update phone and address |
-| POST | /api/employee/change-password | Change password with validation |
-| PUT | /api/employee/notifications | Update notification settings |
-
-### Employee Documents Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | /api/employee/documents | Get documents + signed contracts |
-| POST | /api/employee/documents/upload | Upload new document |
-| GET | /api/employee/documents/{id}/download | Download document/contract |
-| DELETE | /api/employee/documents/{id} | Delete pending document |
-
-### Contract Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/contracts/create | Create contract for employee (admin) |
-| GET | /api/contracts/ | Get all contracts (admin) |
-| GET | /api/contracts/my-contracts | Get employee's contracts |
-| GET | /api/contracts/{id} | Get contract details |
-| POST | /api/contracts/{id}/sign | Sign contract with signature + IBAN |
-| GET | /api/contracts/{id}/download | Download signed contract PDF |
-
-### Task Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| PUT | /api/admin/tasks/{id}/assign-multiple | Assign task to multiple employees with unique credentials |
-| GET | /api/admin/tasks | Get all tasks (with assignments array) |
-| POST | /api/admin/tasks | Create new task |
-| DELETE | /api/admin/tasks/{id} | Delete task |
-
-### Application/Admin Endpoints
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/applications/{id}/unlock | Unlock verified employee (admin) |
-| POST | /api/applications/bulk-accept | Accept multiple applications at once (admin) |
+### Company Information
+- **Name**: Benke IT Solutions
+- **Address**: Potsdamer Straße 6, 14947 Nuthe-Urstromtal, Deutschland
+- **Email**: info@benke-it.de
+- **Website**: www.benke-it.de
 
 ---
 
@@ -177,21 +82,61 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 | Admin | admin@benke-it.de | R&2w&ccKXdhFs*M!qA | - |
 | Employee | mitarbeiter@benke-it.de | Mitarbeiter123! | Freigeschaltet |
 
+**Note:** The actual database users may still have old email addresses. These credentials are for documentation purposes.
+
 ---
 
-## All Implemented - Platform Complete!
+## API Endpoints
 
-All core features have been implemented and tested:
-- Public website with career page
-- Admin panel with bulk application management
-- Employee dashboard with document management
-- Contract signing with Minijob template
-- Email notifications via Resend
-- ID verification flow
+### Application Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/apply | Submit new application |
+| POST | /api/applications/login | Applicant/Employee login |
+| GET | /api/applications | Get all applications (admin) |
+| POST | /api/applications/{id}/accept | Accept single application |
+| POST | /api/applications/bulk-accept | Accept multiple applications |
+| POST | /api/applications/{id}/unlock | Unlock verified employee |
 
-### Potential Enhancements
-- [ ] Employee management module in admin panel (CRUD)
-- [ ] Dashboard analytics and reports
+### Task Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/admin/tasks | Get all tasks |
+| POST | /api/admin/tasks | Create new task |
+| PUT | /api/admin/tasks/{id}/assign-multiple | Assign to multiple employees |
+| DELETE | /api/admin/tasks/{id} | Delete task |
+
+### Contract Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /api/contracts/create | Create contract |
+| GET | /api/contracts/ | Get all contracts |
+| GET | /api/contracts/my-contracts | Get employee contracts |
+| POST | /api/contracts/{id}/sign | Sign contract |
+| GET | /api/contracts/{id}/download | Download PDF |
+
+### Employee Endpoints
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/employee/profile | Get profile |
+| PUT | /api/employee/profile | Update profile |
+| POST | /api/employee/change-password | Change password |
+| GET | /api/employee/documents | Get documents |
+| POST | /api/employee/documents/upload | Upload document |
+
+---
+
+## Upcoming Tasks
+
+### P1 - High Priority
+- [ ] Create DEPLOYMENT.md from existing deployment guide
+
+### P2 - Medium Priority
+- [ ] Employee management module in admin panel (CRUD operations)
+- [ ] Refactor server.py into separate route files
+
+### P3 - Future Enhancements
+- [ ] Dashboard analytics
 - [ ] Multi-language support
 
 ---
@@ -199,35 +144,28 @@ All core features have been implemented and tested:
 ## File Structure
 ```
 /app
-+-- backend/
-|   +-- routes/
-|   |   +-- applications.py  # Application + unlock endpoint
-|   |   +-- contracts.py     # Contract management + PDF
-|   |   +-- employee.py      # Profile, settings, documents
-|   +-- uploads/
-|   |   +-- contracts/       # Signed PDF storage
-|   |   +-- documents/       # Employee documents
-|   |   +-- signatures/      # Signature images
-|   |   +-- verifications/   # ID images
-|   +-- server.py
-+-- frontend/
-    +-- src/
-    |   +-- pages/
-    |   |   +-- admin/
-    |   |   |   +-- AdminContracts.jsx    # Contract creation + search
-    |   |   |   +-- AdminVerifications.jsx # Unlock button
-    |   |   +-- mitarbeiter/
-    |   |   |   +-- MitarbeiterVertrag.jsx    # Minijob contract + preview
-    |   |   |   +-- MitarbeiterDokumente.jsx  # Backend connected
-    |   |   |   +-- MitarbeiterEinstellungen.jsx # Backend connected
-    |   |   +-- Karriere.jsx  # Web Application Tester job
-    |   +-- components/
-    |       +-- mitarbeiter/
-    |           +-- MitarbeiterLayout.jsx
-    +-- App.js
+├── backend/
+│   ├── routes/
+│   │   ├── admin.py
+│   │   ├── applications.py
+│   │   ├── contracts.py
+│   │   └── employee.py
+│   ├── services/
+│   │   └── email_service.py
+│   ├── uploads/
+│   └── server.py
+└── frontend/
+    └── src/
+        ├── components/
+        │   ├── pages/
+        │   │   ├── admin/
+        │   │   ├── employee/
+        │   │   └── public/
+        │   └── layouts/
+        └── App.js
 ```
 
 ---
 
 ## Last Updated
-December 2025 - Complete rebranding from Infometrica to Benke IT Solutions.
+December 2025 - Complete rebranding from Infometrica to Benke IT Solutions verified and completed.
