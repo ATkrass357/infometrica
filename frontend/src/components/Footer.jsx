@@ -25,11 +25,11 @@ export const Footer = () => {
             </p>
             {/* Contact Info */}
             <div className="space-y-4">
-              <a href="mailto:info@infometrica.de" className="flex items-center gap-3 text-slate-400 hover:text-orange-500 transition-colors group">
+              <a href="mailto:info@benke-it.de" className="flex items-center gap-3 text-slate-400 hover:text-orange-500 transition-colors group">
                 <div className="w-10 h-10 bg-slate-800 flex items-center justify-center group-hover:bg-orange-500 transition-colors">
                   <Mail size={18} />
                 </div>
-                <span>info@infometrica.de</span>
+                <span>info@benke-it.de</span>
               </a>
               <a href="tel:+4930123456789" className="flex items-center gap-3 text-slate-400 hover:text-orange-500 transition-colors group">
                 <div className="w-10 h-10 bg-slate-800 flex items-center justify-center group-hover:bg-orange-500 transition-colors">

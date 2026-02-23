@@ -103,7 +103,7 @@ const AdminLogin = () => {
                   required
                   data-testid="admin-login-email"
                   className="w-full pl-11 pr-4 py-3 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] placeholder-[#565f89] focus:outline-none focus:border-[#7aa2f7] focus:ring-2 focus:ring-[#7aa2f7]/20 transition-all"
-                  placeholder="admin@infometrica.de"
+                  placeholder="admin@benke-it.de"
                 />
               </div>
             </div>

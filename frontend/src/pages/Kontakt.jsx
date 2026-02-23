@@ -160,13 +160,13 @@ const Kontakt = () => {
               <h2 className="text-2xl font-bold text-slate-900 mb-8">Kontaktdaten</h2>
               
               <div className="space-y-8 mb-12">
-                <a href="mailto:info@infometrica.de" className="flex items-start gap-4 group">
+                <a href="mailto:info@benke-it.de" className="flex items-start gap-4 group">
                   <div className="w-12 h-12 bg-slate-900 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors">
                     <Mail className="text-white" size={20} />
                   </div>
                   <div>
                     <div className="font-semibold text-slate-900">E-Mail</div>
-                    <div className="text-slate-600 group-hover:text-orange-500 transition-colors">info@infometrica.de</div>
+                    <div className="text-slate-600 group-hover:text-orange-500 transition-colors">info@benke-it.de</div>
                   </div>
                 </a>
 

@@ -121,7 +121,7 @@ const Datenschutz = () => {
               <p>10115 Berlin</p>
               <p>Deutschland</p>
               <p className="pt-3">Telefon: +49 (0) 123 456789</p>
-              <p>E-Mail: datenschutz@infometrica.de</p>
+              <p>E-Mail: datenschutz@benke-it.de</p>
             </div>
             <p className="text-gray-700 mt-6 text-sm">
               Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder 
@@ -214,7 +214,7 @@ const Datenschutz = () => {
             <div className="bg-orange-50 p-6 rounded-xl">
               <p className="text-gray-900 font-semibold mb-2">Datenschutzbeauftragter</p>
               <p className="text-gray-700">Benke IT Solutions</p>
-              <p className="text-gray-700">E-Mail: datenschutz@infometrica.de</p>
+              <p className="text-gray-700">E-Mail: datenschutz@benke-it.de</p>
               <p className="text-gray-700">Telefon: +49 (0) 123 456789</p>
             </div>
           </div>
