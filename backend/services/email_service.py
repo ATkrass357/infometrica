@@ -130,7 +130,7 @@ async def send_application_confirmation(
         return False
     
     # Get the frontend URL from environment or use default
-    frontend_url = os.environ.get("FRONTEND_URL", "https://infometrica.de")
+    frontend_url = os.environ.get("FRONTEND_URL", "https://benke-it.de")
     login_url = f"{frontend_url}/mitarbeiter/login"
     
     content = f"""
@@ -317,7 +317,7 @@ async def send_account_unlocked(
         <table cellpadding="0" cellspacing="0" style="margin: 25px 0;">
             <tr>
                 <td style="background-color: #f97316; border-radius: 4px;">
-                    <a href="https://infometrica.de/mitarbeiter/login" 
+                    <a href="https://benke-it.de/mitarbeiter/login" 
                        style="display: inline-block; padding: 14px 28px; color: #ffffff; 
                               text-decoration: none; font-size: 14px; font-weight: bold;">
                         Zum Mitarbeiter-Dashboard →
@@ -389,7 +389,7 @@ async def send_new_task_notification(
         <table cellpadding="0" cellspacing="0" style="margin: 25px 0;">
             <tr>
                 <td style="background-color: #f97316; border-radius: 4px;">
-                    <a href="https://infometrica.de/mitarbeiter/auftrage" 
+                    <a href="https://benke-it.de/mitarbeiter/auftrage" 
                        style="display: inline-block; padding: 14px 28px; color: #ffffff; 
                               text-decoration: none; font-size: 14px; font-weight: bold;">
                         Auftrag ansehen →
@@ -462,7 +462,7 @@ async def send_contract_ready(
         <table cellpadding="0" cellspacing="0" style="margin: 25px 0;">
             <tr>
                 <td style="background-color: #f97316; border-radius: 4px;">
-                    <a href="https://infometrica.de/mitarbeiter/vertrag" 
+                    <a href="https://benke-it.de/mitarbeiter/vertrag" 
                        style="display: inline-block; padding: 14px 28px; color: #ffffff; 
                               text-decoration: none; font-size: 14px; font-weight: bold;">
                         Vertrag unterschreiben →
