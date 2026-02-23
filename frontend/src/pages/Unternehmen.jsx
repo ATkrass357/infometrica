@@ -11,11 +11,9 @@ const Unternehmen = () => {
   ];
 
   const milestones = [
-    { year: '2008', event: 'Gründung in Berlin' },
-    { year: '2012', event: '20+ Testing-Experten' },
-    { year: '2016', event: 'ISO 9001 Zertifizierung' },
-    { year: '2020', event: '500+ Apps getestet' },
-    { year: '2024', event: 'Marktführer DACH' },
+    { year: '2024', event: 'Gründung in Nuthe-Urstromtal' },
+    { year: '2025', event: '10+ Testing-Experten' },
+    { year: '2026', event: '25+ Test-Experten' },
   ];
 
   return (
