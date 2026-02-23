@@ -420,7 +420,7 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     else:
         sign_date_str = datetime.utcnow().strftime("%d.%m.%Y")
     
-    c.drawString(2*cm, y_pos, f"Berlin, den {sign_date_str}")
+    c.drawString(2*cm, y_pos, f"Nuthe-Urstromtal, den {sign_date_str}")
     y_pos -= 2*cm
     
     # Employee signature
