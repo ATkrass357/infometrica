@@ -29,9 +29,9 @@ const Impressum = () => {
                 Firmeninformationen
               </h2>
               <div className="space-y-2 text-gray-700 ml-11">
-                <p className="font-semibold text-lg">Infometrica GmbH</p>
-                <p>Musterstraße 123</p>
-                <p>10115 Berlin</p>
+                <p className="font-semibold text-lg">Benke IT Solutions</p>
+                <p>Potsdamer Straße 6</p>
+                <p>14947 Nuthe-Urstromtal</p>
                 <p>Deutschland</p>
               </div>
             </div>
@@ -45,16 +45,12 @@ const Impressum = () => {
               </h2>
               <div className="space-y-3">
                 <div className="flex items-center text-gray-700">
-                  <Phone className="mr-3 text-orange-500 flex-shrink-0" size={20} />
-                  <span>Telefon: +49 (0) 123 456789</span>
-                </div>
-                <div className="flex items-center text-gray-700">
                   <Mail className="mr-3 text-orange-500 flex-shrink-0" size={20} />
-                  <span>E-Mail: info@infometrica.de</span>
+                  <span>E-Mail: info@benke-it.de</span>
                 </div>
                 <div className="flex items-start text-gray-700">
                   <MapPin className="mr-3 text-orange-500 flex-shrink-0 mt-1" size={20} />
-                  <span>Internet: www.infometrica.de</span>
+                  <span>Internet: www.benke-it.de</span>
                 </div>
               </div>
             </div>
@@ -67,8 +63,7 @@ const Impressum = () => {
                 Vertretungsberechtigte
               </h2>
               <div className="space-y-2 text-gray-700">
-                <p>Geschäftsführer: Max Mustermann</p>
-                <p>Geschäftsführerin: Maria Musterfrau</p>
+                <p>Geschäftsführer: Thomas Benke</p>
               </div>
             </div>
 
@@ -81,8 +76,7 @@ const Impressum = () => {
               </h2>
               <div className="space-y-2 text-gray-700">
                 <p>Eintragung im Handelsregister</p>
-                <p>Registergericht: Amtsgericht Berlin-Charlottenburg</p>
-                <p>Registernummer: HRB 123456 B</p>
+                <p>Registernummer: HRB 41059 P</p>
               </div>
             </div>
 
@@ -91,28 +85,23 @@ const Impressum = () => {
             {/* Tax Information */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Umsatzsteuer-Identifikationsnummer
+                Steuernummer
               </h2>
               <div className="text-gray-700">
-                <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
-                <p className="font-semibold mt-2">DE123456789</p>
+                <p>Steuernummer: 050/121/01599</p>
               </div>
             </div>
 
             <div className="border-t border-gray-200"></div>
 
-            {/* Professional Liability Insurance */}
+            {/* VAT ID */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Berufshaftpflichtversicherung
+                Umsatzsteuer-Identifikationsnummer
               </h2>
-              <div className="space-y-2 text-gray-700">
-                <p><strong>Name und Sitz des Versicherers:</strong></p>
-                <p>Muster Versicherung AG</p>
-                <p>Versicherungsplatz 1</p>
-                <p>10000 Berlin</p>
-                <p className="mt-3"><strong>Geltungsraum der Versicherung:</strong></p>
-                <p>Deutschland</p>
+              <div className="text-gray-700">
+                <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
+                <p className="font-semibold mt-2">DE4568262609</p>
               </div>
             </div>
 
