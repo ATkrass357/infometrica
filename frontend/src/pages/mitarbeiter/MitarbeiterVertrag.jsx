@@ -174,7 +174,7 @@ const ContractDocument = ({ contract }) => {
       {/* Footer */}
       <div className="mt-8 pt-4 border-t border-gray-200">
         <p className="text-gray-600 text-center">
-          Berlin, den {today}
+          Nuthe-Urstromtal, den {today}
         </p>
       </div>
     </div>
