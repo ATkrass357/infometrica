@@ -17,7 +17,7 @@ class TestContractSigningWithIBAN:
         response = requests.post(
             f"{BASE_URL}/api/employee/login",
             json={
-                "email": "mitarbeiter@infometrica.de",
+                "email": "mitarbeiter@benke-it.de",
                 "password": "Mitarbeiter123!"
             }
         )

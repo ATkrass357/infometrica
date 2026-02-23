@@ -14,9 +14,9 @@ from datetime import datetime
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 
 # Test credentials
-ADMIN_EMAIL = "admin@infometrica.de"
+ADMIN_EMAIL = "admin@benke-it.de"
 ADMIN_PASSWORD = "Admin123!"
-EMPLOYEE_EMAIL = "mitarbeiter@infometrica.de"
+EMPLOYEE_EMAIL = "mitarbeiter@benke-it.de"
 EMPLOYEE_PASSWORD = "Mitarbeiter123!"
 
 
