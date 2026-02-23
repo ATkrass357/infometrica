@@ -82,7 +82,7 @@ const MitarbeiterLogin = () => {
             <BenkeLogo className="w-16 h-16" />
             <div className="text-left">
               <h1 className="text-2xl font-bold text-gray-900">
-                Info<span className="text-orange-500">metrica</span>
+                Benke <span className="text-orange-500">IT</span>
               </h1>
               <p className="text-sm text-gray-600">Mitarbeiter Portal</p>
             </div>

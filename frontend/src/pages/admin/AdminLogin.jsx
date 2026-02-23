@@ -64,7 +64,7 @@ const AdminLogin = () => {
             <BenkeLogo className="w-16 h-16" />
             <div className="text-left">
               <h1 className="text-2xl font-bold text-[#c0caf5]">
-                Info<span className="text-[#ff9e64]">metrica</span>
+                Benke <span className="text-[#ff9e64]">IT</span>
               </h1>
               <p className="text-sm text-[#565f89]">Admin Portal</p>
             </div>
