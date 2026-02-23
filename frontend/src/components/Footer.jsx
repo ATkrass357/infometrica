@@ -41,7 +41,7 @@ export const Footer = () => {
                 <div className="w-10 h-10 bg-slate-800 flex items-center justify-center">
                   <MapPin size={18} />
                 </div>
-                <span>Tauentzienstraße 9-12, 10789 Berlin</span>
+                <span>Potsdamer Straße 6, 14947 Nuthe-Urstromtal</span>
               </div>
             </div>
           </div>
@@ -116,7 +116,7 @@ export const Footer = () => {
               © {currentYear} Benke IT Solutions. Alle Rechte vorbehalten.
             </p>
             <div className="flex items-center gap-6">
-              <span className="text-sm text-slate-500">Made with precision in Berlin</span>
+              <span className="text-sm text-slate-500">Made with precision in Germany</span>
             </div>
           </div>
         </div>
