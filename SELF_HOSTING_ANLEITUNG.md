@@ -1,6 +1,6 @@
-# Infometrica Self-Hosting Anleitung
+# Benke IT Solutions Self-Hosting Anleitung
 
-Diese Anleitung erklärt Schritt für Schritt, wie du die Infometrica-Anwendung auf deinem eigenen Server hostest.
+Diese Anleitung erklärt Schritt für Schritt, wie du die Benke IT Solutions-Anwendung auf deinem eigenen Server hostest.
 
 ---
 
@@ -35,7 +35,7 @@ Diese Anleitung erklärt Schritt für Schritt, wie du die Infometrica-Anwendung 
   - 20 GB Speicherplatz
   - Ubuntu 22.04 LTS (empfohlen)
   
-- **Eine Domain** (z.B. infometrica.de)
+- **Eine Domain** (z.B. benke-it.de)
 
 - **Ein Terminal-Programm:**
   - Windows: [PuTTY](https://www.putty.org/) oder Windows Terminal
@@ -212,7 +212,7 @@ apt install -y curl wget git build-essential software-properties-common
 ### 5.3 Neuen Benutzer erstellen (Sicherheit):
 
 ```bash
-adduser infometrica
+adduser benkeit
 ```
 
 - Gib ein Passwort ein (wird nicht angezeigt beim Tippen!)
@@ -222,7 +222,7 @@ adduser infometrica
 ### 5.4 Benutzer Admin-Rechte geben:
 
 ```bash
-usermod -aG sudo infometrica
+usermod -aG sudo benkeit
 ```
 
 ### 5.5 Zum neuen Benutzer wechseln:
