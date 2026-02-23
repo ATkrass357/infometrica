@@ -1,7 +1,7 @@
-# Infometrica - App Testing Agency Platform
+# Benke IT Solutions - App Testing Agency Platform
 
 ## Original Problem Statement
-Build a full-stack application for the app testing agency "Infometrica" with:
+Build a full-stack application for the app testing agency "Benke IT Solutions" with:
 1. **Public Website** - German language, white/orange theme
 2. **Admin Panel** - Tokyo Night theme for managing applications, tasks, and contracts
 3. **Employee Dashboard** - Orange/white theme for viewing assigned tasks and signing contracts
@@ -52,7 +52,7 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - Delete verification documents
 - [x] Task Management System
   - Create tasks with title, website URL, 4-part description
-  - **Multi-Person Task Assignment (NEW - February 22, 2025)**
+  - **Multi-Person Task Assignment (February 2025)**
     - Search employees by name, email, or position
     - Select multiple employees via checkboxes
     - Enter unique test credentials per employee (Test Ident Link, E-Mail, Passwort)
@@ -64,7 +64,7 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - Create employment contracts for employees
   - **Search employees by name (autocomplete)**
   - View contract status (pending/signed)
-- [x] **Document Management (NEW)**
+- [x] **Document Management**
   - View all employee-uploaded documents
   - Search and filter by name, employee, category, status
   - Approve or reject documents
@@ -85,11 +85,10 @@ Build a full-stack application for the app testing agency "Infometrica" with:
   - File validation (JPEG, PNG, WebP, max 5MB)
   - Stored securely, displayed to admin as base64
 
-### Employee Dashboard (100% Complete - P2 COMPLETE)
+### Employee Dashboard (100% Complete)
 - [x] Secure login at `/mitarbeiter/login`
 - [x] Orange/white theme
 - [x] Sidebar navigation: Main, Vertrag, Auftrage, Einstellungen, Dokumente
-- [x] ~~Auszahlung (Payout)~~ - REMOVED per user request
 - [x] **Vertrag (Contract) page**
   - View and sign employment contracts
   - **Full contract preview before signing (Minijob format)**
@@ -116,7 +115,7 @@ Build a full-stack application for the app testing agency "Infometrica" with:
 ## Contract Format - Minijob
 
 The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
-- Infometrica address: Tauentzienstrasse 9-12, 10789 Berlin
+- Benke IT Solutions address: Tauentzienstrasse 9-12, 10789 Berlin
 - Position: Assistent fur Evaluierungen im Homeoffice
 - Tasks: App/Software testing, Video ID verification, Reports
 - Working hours: ~10 hours/week (2-4 days)
@@ -129,7 +128,7 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 
 ## API Endpoints
 
-### Employee Profile Endpoints (NEW)
+### Employee Profile Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | /api/employee/profile | Get employee profile with notifications |
@@ -137,7 +136,7 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 | POST | /api/employee/change-password | Change password with validation |
 | PUT | /api/employee/notifications | Update notification settings |
 
-### Employee Documents Endpoints (NEW)
+### Employee Documents Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | /api/employee/documents | Get documents + signed contracts |
@@ -155,7 +154,7 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 | POST | /api/contracts/{id}/sign | Sign contract with signature + IBAN |
 | GET | /api/contracts/{id}/download | Download signed contract PDF |
 
-### Task Endpoints (NEW)
+### Task Endpoints
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | PUT | /api/admin/tasks/{id}/assign-multiple | Assign task to multiple employees with unique credentials |
@@ -175,55 +174,8 @@ The employment contract is now a **Minijob (geringfugige Beschaftigung)** with:
 
 | Role | Email | Password | Status |
 |------|-------|----------|--------|
-| Admin | admin@infometrica.de | R&2w&ccKXdhFs*M!qA | - |
-| Employee | mitarbeiter@infometrica.de | Mitarbeiter123! | Freigeschaltet |
-
----
-
-## Completed Tasks (This Session)
-
-### February 2025 - Session Updates
-1. **Removed Auszahlung (Payout) page** from employee dashboard
-2. **Added IBAN field** to contract signing process
-3. **Added "Web Application Tester"** job position (Minijob)
-4. **Updated contract to Minijob format** with full legal text (10 paragraphs)
-5. **Added contract preview** before signing
-6. **P1 COMPLETE: Admin verification unlock** - "Freischalten" button works
-7. **P2 COMPLETE: Backend connection for Settings/Documents**
-   - Settings page loads from /api/employee/profile
-   - Password change with validation
-   - Notification settings persist
-   - Documents page shows signed contracts
-   - Document download works
-8. **Bulk Acceptance Feature** (February 22, 2025)
-   - Checkboxes for selecting multiple "Neu" applications
-   - Select-all checkbox in table header
-   - Bulk accept button showing count of selected items
-   - Backend endpoint POST /api/applications/bulk-accept
-   - Email notifications sent to each accepted applicant
-   - Proper JWT token validation
-   - Info banner for quick filtering to "Neu" applications
-9. **Document Upload Feature** (February 22, 2025)
-   - Backend endpoint POST /api/employee/documents/upload (Form-Data)
-   - Frontend upload button working with file validation
-   - Supports PDF, JPEG, PNG (max 10MB)
-   - Documents displayed with status badges
-   - Category filtering working
-10. **Admin Document Management** (February 22, 2025)
-   - New admin page at /admin/documents
-   - View all employee-uploaded documents
-   - Approve/reject/delete documents
-   - Search and filter functionality
-   - Download documents
-11. **Multi-Person Task Assignment** (February 22, 2025)
-   - Backend endpoint PUT /api/admin/tasks/{id}/assign-multiple
-   - Task model extended with 'assignments' array (employee_id, name, credentials, status)
-   - Frontend 2-step modal: Step 1 = Employee search + multi-select, Step 2 = Credentials per person
-   - Search filters employees by name, email, position
-   - Each selected employee has separate credential fields (Test Ident Link, E-Mail, Passwort)
-   - Expanded task view shows all assignments with individual credentials
-   - Employee view shows only their own credentials
-   - Backward compatibility maintained with legacy single-assignment fields
+| Admin | admin@benke-it.de | R&2w&ccKXdhFs*M!qA | - |
+| Employee | mitarbeiter@benke-it.de | Mitarbeiter123! | Freigeschaltet |
 
 ---
 
@@ -238,7 +190,6 @@ All core features have been implemented and tested:
 - ID verification flow
 
 ### Potential Enhancements
-- [ ] Email notifications (SMTP integration) for new applications, tasks
 - [ ] Employee management module in admin panel (CRUD)
 - [ ] Dashboard analytics and reports
 - [ ] Multi-language support
@@ -248,35 +199,35 @@ All core features have been implemented and tested:
 ## File Structure
 ```
 /app
-├── backend/
-│   ├── routes/
-│   │   ├── applications.py  # Application + unlock endpoint
-│   │   ├── contracts.py     # Contract management + PDF
-│   │   └── employee.py      # Profile, settings, documents
-│   ├── uploads/
-│   │   ├── contracts/       # Signed PDF storage
-│   │   ├── documents/       # Employee documents
-│   │   ├── signatures/      # Signature images
-│   │   └── verifications/   # ID images
-│   └── server.py
-└── frontend/
-    ├── src/
-    │   ├── pages/
-    │   │   ├── admin/
-    │   │   │   ├── AdminContracts.jsx    # Contract creation + search
-    │   │   │   └── AdminVerifications.jsx # Unlock button
-    │   │   ├── mitarbeiter/
-    │   │   │   ├── MitarbeiterVertrag.jsx    # Minijob contract + preview
-    │   │   │   ├── MitarbeiterDokumente.jsx  # Backend connected
-    │   │   │   └── MitarbeiterEinstellungen.jsx # Backend connected
-    │   │   └── Karriere.jsx  # Web Application Tester job
-    │   └── components/
-    │       └── mitarbeiter/
-    │           └── MitarbeiterLayout.jsx  # No Auszahlung
-    └── App.js
++-- backend/
+|   +-- routes/
+|   |   +-- applications.py  # Application + unlock endpoint
+|   |   +-- contracts.py     # Contract management + PDF
+|   |   +-- employee.py      # Profile, settings, documents
+|   +-- uploads/
+|   |   +-- contracts/       # Signed PDF storage
+|   |   +-- documents/       # Employee documents
+|   |   +-- signatures/      # Signature images
+|   |   +-- verifications/   # ID images
+|   +-- server.py
++-- frontend/
+    +-- src/
+    |   +-- pages/
+    |   |   +-- admin/
+    |   |   |   +-- AdminContracts.jsx    # Contract creation + search
+    |   |   |   +-- AdminVerifications.jsx # Unlock button
+    |   |   +-- mitarbeiter/
+    |   |   |   +-- MitarbeiterVertrag.jsx    # Minijob contract + preview
+    |   |   |   +-- MitarbeiterDokumente.jsx  # Backend connected
+    |   |   |   +-- MitarbeiterEinstellungen.jsx # Backend connected
+    |   |   +-- Karriere.jsx  # Web Application Tester job
+    |   +-- components/
+    |       +-- mitarbeiter/
+    |           +-- MitarbeiterLayout.jsx
+    +-- App.js
 ```
 
 ---
 
 ## Last Updated
-February 22, 2025 - Multi-Person Task Assignment feature complete. Platform fully functional.
+December 2025 - Complete rebranding from Infometrica to Benke IT Solutions.
