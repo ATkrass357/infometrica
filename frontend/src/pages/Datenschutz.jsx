@@ -117,11 +117,10 @@ const Datenschutz = () => {
             </p>
             <div className="bg-gray-50 p-6 rounded-xl space-y-2 text-gray-700">
               <p className="font-semibold text-lg">Benke IT Solutions</p>
-              <p>Musterstraße 123</p>
-              <p>10115 Berlin</p>
+              <p>Potsdamer Straße 6</p>
+              <p>14947 Nuthe-Urstromtal</p>
               <p>Deutschland</p>
-              <p className="pt-3">Telefon: +49 (0) 123 456789</p>
-              <p>E-Mail: datenschutz@benke-it.de</p>
+              <p className="pt-3">E-Mail: datenschutz@benke-it.de</p>
             </div>
             <p className="text-gray-700 mt-6 text-sm">
               Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder 
