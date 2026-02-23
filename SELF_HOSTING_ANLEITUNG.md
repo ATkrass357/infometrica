@@ -803,13 +803,13 @@ sudo systemctl restart nginx
 ### Datenbank sichern:
 
 ```bash
-mongodump --db infometrica_production --out ~/backups/$(date +%Y%m%d)
+mongodump --db benkeit_production --out ~/backups/$(date +%Y%m%d)
 ```
 
 ### Datenbank wiederherstellen:
 
 ```bash
-mongorestore --db infometrica_production ~/backups/DATUM/infometrica_production
+mongorestore --db benkeit_production ~/backups/DATUM/benkeit_production
 ```
 
 ---
@@ -821,7 +821,7 @@ mongorestore --db infometrica_production ~/backups/DATUM/infometrica_production
 Backend läuft nicht. Überprüfe:
 ```bash
 sudo systemctl status benkeit-backend
-sudo journalctl -u infometrica-backend --no-pager | tail -50
+sudo journalctl -u benkeit-backend --no-pager | tail -50
 ```
 
 ### Website zeigt "403 Forbidden":
@@ -837,7 +837,7 @@ sudo systemctl restart nginx
 
 CORS-Problem. Überprüfe die `.env` Datei im Backend:
 ```bash
-nano ~/infometrica/backend/.env
+nano ~/benkeit/backend/.env
 ```
 
 Stelle sicher, dass `CORS_ORIGINS` deine Domain enthält.
