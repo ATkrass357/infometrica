@@ -228,10 +228,10 @@ usermod -aG sudo benkeit
 ### 5.5 Zum neuen Benutzer wechseln:
 
 ```bash
-su - infometrica
+su - benkeit
 ```
 
-Dein Prompt sollte jetzt `infometrica@server:~$` zeigen.
+Dein Prompt sollte jetzt `benkeit@server:~$` zeigen.
 
 ---
 
@@ -353,8 +353,8 @@ Falls du den Code auf GitHub hast:
 
 ```bash
 cd ~
-git clone https://github.com/DEIN_USERNAME/DEIN_REPO.git infometrica
-cd infometrica
+git clone https://github.com/DEIN_USERNAME/DEIN_REPO.git benkeit
+cd benkeit
 ```
 
 ### Option B: Mit FileZilla (SFTP)
@@ -362,14 +362,14 @@ cd infometrica
 1. Öffne FileZilla
 2. Verbindung herstellen:
    - Host: `sftp://DEINE_SERVER_IP`
-   - Benutzername: `infometrica`
+   - Benutzername: `benkeit`
    - Passwort: Dein Passwort
    - Port: `22`
 3. Klicke auf "Verbinden"
 4. Links: Navigiere zu deinem heruntergeladenen Code-Ordner
-5. Rechts: Navigiere zu `/home/infometrica/`
-6. Erstelle einen Ordner `infometrica` (Rechtsklick → Verzeichnis erstellen)
-7. Ziehe den Inhalt (backend, frontend Ordner) in den `infometrica` Ordner
+5. Rechts: Navigiere zu `/home/benkeit/`
+6. Erstelle einen Ordner `benkeit` (Rechtsklick → Verzeichnis erstellen)
+7. Ziehe den Inhalt (backend, frontend Ordner) in den `benkeit` Ordner
 
 ### Option C: Mit SCP (Kommandozeile)
 
