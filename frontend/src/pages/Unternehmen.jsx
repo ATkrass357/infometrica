@@ -29,21 +29,21 @@ const Unternehmen = () => {
                 Präzision.
               </h1>
               <p className="text-xl text-slate-600 leading-relaxed mb-8">
-                Seit 2008 setzen wir Standards im Application Testing. 
-                Über 50 zertifizierte Experten. Mehr als 500 erfolgreiche Projekte. 
+                Seit 2024 setzen wir Standards im Application Testing. 
+                Über 25 zertifizierte Experten. Mehr als 100 erfolgreiche Projekte. 
                 Ein Ziel: Ihre Software perfekt machen.
               </p>
               <div className="flex flex-wrap gap-8">
                 <div>
-                  <div className="text-4xl font-black text-orange-500">15+</div>
+                  <div className="text-4xl font-black text-orange-500">2+</div>
                   <div className="text-slate-600">Jahre Erfahrung</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-black text-orange-500">500+</div>
+                  <div className="text-4xl font-black text-orange-500">100+</div>
                   <div className="text-slate-600">Projekte</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-black text-orange-500">50+</div>
+                  <div className="text-4xl font-black text-orange-500">25+</div>
                   <div className="text-slate-600">Experten</div>
                 </div>
               </div>
