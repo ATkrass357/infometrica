@@ -1,13 +1,13 @@
 import React from 'react';
 import { Clock, Mail, FileText, CheckCircle } from 'lucide-react';
-import { Benke IT SolutionsLogo } from '../../components/Logo';
+import { BenkeLogo } from '../../components/Logo';
 
 const MitarbeiterPending = ({ applicant }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex items-center justify-center p-4">
       <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 text-center">
         <div className="flex justify-center mb-6">
-          <Benke IT SolutionsLogo className="w-16 h-16" />
+          <BenkeLogo className="w-16 h-16" />
         </div>
         
         <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">

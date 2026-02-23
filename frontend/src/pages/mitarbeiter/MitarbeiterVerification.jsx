@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Upload, Shield, AlertTriangle, CheckCircle, FileImage, Loader2 } from 'lucide-react';
-import { Benke IT SolutionsLogo } from '../../components/Logo';
+import { BenkeLogo } from '../../components/Logo';
 import { Button } from '../../components/ui/button';
 import { toast } from 'sonner';
 import axios from 'axios';
@@ -81,7 +81,7 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
     <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="text-center mb-8">
-          <Benke IT SolutionsLogo className="w-12 h-12 mx-auto mb-4" />
+          <BenkeLogo className="w-12 h-12 mx-auto mb-4" />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Identitätsverifizierung erforderlich
           </h1>

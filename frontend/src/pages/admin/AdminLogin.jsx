@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, AlertCircle } from 'lucide-react';
-import { Benke IT SolutionsLogo } from '../../components/Logo';
+import { BenkeLogo } from '../../components/Logo';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -61,7 +61,7 @@ const AdminLogin = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <Benke IT SolutionsLogo className="w-16 h-16" />
+            <BenkeLogo className="w-16 h-16" />
             <div className="text-left">
               <h1 className="text-2xl font-bold text-[#c0caf5]">
                 Info<span className="text-[#ff9e64]">metrica</span>

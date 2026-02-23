@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
-import { Benke IT SolutionsLogo } from './Logo';
+import { BenkeLogo } from './Logo';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,9 +14,9 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3 mb-6">
-              <Benke IT SolutionsLogo className="w-10 h-10" />
+              <BenkeLogo className="w-10 h-10" />
               <span className="text-xl font-black tracking-tight">
-                INFO<span className="text-orange-500">METRICA</span>
+                BENKE <span className="text-orange-500">IT</span>
               </span>
             </div>
             <p className="text-slate-400 leading-relaxed max-w-md mb-8">
