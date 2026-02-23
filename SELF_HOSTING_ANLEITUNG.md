@@ -869,7 +869,7 @@ sudo reboot
 
 | Aktion | Befehl |
 |--------|--------|
-| Mit Server verbinden | `ssh infometrica@DEINE_IP` |
+| Mit Server verbinden | `ssh benkeit@DEINE_IP` |
 | Backend Status | `sudo systemctl status benkeit-backend` |
 | Backend neu starten | `sudo systemctl restart benkeit-backend` |
 | Backend Logs | `sudo journalctl -u benkeit-backend -f` |
