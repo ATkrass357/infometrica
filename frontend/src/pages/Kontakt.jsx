@@ -187,8 +187,8 @@ const Kontakt = () => {
                   <div>
                     <div className="font-semibold text-slate-900">Adresse</div>
                     <div className="text-slate-600">
-                      Tauentzienstraße 9-12<br />
-                      10789 Berlin, Deutschland
+                      Potsdamer Straße 6<br />
+                      14947 Nuthe-Urstromtal, Deutschland
                     </div>
                   </div>
                 </div>
@@ -218,7 +218,7 @@ const Kontakt = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
             <MapPin className="text-slate-400 mx-auto mb-4" size={48} />
-            <p className="text-slate-500 font-medium">Tauentzienstraße 9-12, Berlin</p>
+            <p className="text-slate-500 font-medium">Potsdamer Straße 6, Nuthe-Urstromtal</p>
           </div>
         </div>
       </section>
