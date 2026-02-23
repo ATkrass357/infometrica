@@ -68,7 +68,7 @@ def get_letter_template(content: str, footer_note: str = "") -> str:
                         <tr>
                             <td style="padding: 30px 50px 0 50px;">
                                 <p style="margin: 0; font-size: 13px; color: #666; text-align: right;">
-                                    Berlin, {current_date}
+                                    Nuthe-Urstromtal, {current_date}
                                 </p>
                             </td>
                         </tr>
