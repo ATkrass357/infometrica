@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Benke IT SolutionsLogo = ({ className = "", size = "default" }) => {
+export const BenkeLogo = ({ className = "", size = "default" }) => {
   const sizes = {
     small: { container: "w-8 h-8", text: "text-base" },
     default: { container: "w-10 h-10", text: "text-xl" },
@@ -38,18 +38,18 @@ export const Benke IT SolutionsLogo = ({ className = "", size = "default" }) => 
         filter="url(#shadow)"
       />
       
-      {/* Letter "I" */}
+      {/* Letter "B" for Benke */}
       <path
-        d="M 100 60 L 100 140 M 85 60 L 115 60 M 85 140 L 115 140"
+        d="M 70 60 L 70 140 M 70 60 L 110 60 C 130 60 130 100 110 100 L 70 100 M 70 100 L 115 100 C 140 100 140 140 115 140 L 70 140"
         stroke="white"
-        strokeWidth="16"
+        strokeWidth="14"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       
       {/* Checkmark accent (testing symbol) */}
       <path
-        d="M 130 75 L 140 85 L 155 65"
+        d="M 135 75 L 145 85 L 160 65"
         stroke="white"
         strokeWidth="8"
         strokeLinecap="round"
