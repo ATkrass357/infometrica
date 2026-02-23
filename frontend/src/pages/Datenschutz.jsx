@@ -103,7 +103,7 @@ const Datenschutz = () => {
               Ihren Daten.
             </p>
             <p className="text-gray-700 leading-relaxed">
-              <strong>Stand:</strong> Dezember 2024
+              <strong>Stand:</strong> Februar 2026
             </p>
           </div>
 

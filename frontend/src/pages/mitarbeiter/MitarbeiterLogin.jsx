@@ -182,7 +182,7 @@ const MitarbeiterLogin = () => {
 
         {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
-          © 2024 Benke IT Solutions. Alle Rechte vorbehalten.
+          © 2026 Benke IT Solutions. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

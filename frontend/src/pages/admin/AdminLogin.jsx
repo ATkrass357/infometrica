@@ -150,7 +150,7 @@ const AdminLogin = () => {
 
         {/* Footer */}
         <p className="text-center text-sm text-[#565f89] mt-6">
-          © 2024 Benke IT Solutions. Alle Rechte vorbehalten.
+          © 2026 Benke IT Solutions. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>
