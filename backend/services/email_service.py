@@ -100,8 +100,8 @@ def get_letter_template(content: str, footer_note: str = "") -> str:
                                     <tr>
                                         <td style="font-size: 11px; color: #999; line-height: 1.6;">
                                             <strong style="color: #666;">Benke IT Solutions</strong><br>
-                                            Tauentzienstraße 9-12 · 10789 Berlin<br>
-                                            E-Mail: info@infometrica.de
+                                            Potsdamer Straße 6 · 14947 Nuthe-Urstromtal<br>
+                                            E-Mail: info@benke-it.de
                                         </td>
                                         <td align="right" style="font-size: 11px; color: #999;">
                                             {footer_note}
