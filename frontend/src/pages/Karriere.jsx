@@ -163,7 +163,7 @@ const Karriere = () => {
     },
     {
       title: 'QA Engineer',
-      location: 'Berlin / Remote',
+      location: 'Remote / Deutschland',
       type: 'Vollzeit',
       description: 'QA Engineer für spannende Testing-Projekte gesucht.',
       requirements: [
@@ -175,7 +175,7 @@ const Karriere = () => {
     },
     {
       title: 'Mobile App Tester',
-      location: 'Berlin / Remote',
+      location: 'Remote / Deutschland',
       type: 'Vollzeit / Teilzeit',
       description: 'Tester für iOS und Android Apps.',
       requirements: [
@@ -187,7 +187,7 @@ const Karriere = () => {
     },
     {
       title: 'Junior Test Analyst',
-      location: 'Berlin / Remote',
+      location: 'Remote / Deutschland',
       type: 'Vollzeit',
       description: 'Einstiegsposition für motivierte Testing-Einsteiger.',
       requirements: [
@@ -199,7 +199,7 @@ const Karriere = () => {
     },
     {
       title: 'Werkstudent Testing',
-      location: 'Berlin / Remote',
+      location: 'Remote / Deutschland',
       type: 'Teilzeit',
       description: 'Idealer Nebenjob für Studierende.',
       requirements: [
