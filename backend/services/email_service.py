@@ -87,7 +87,7 @@ def get_letter_template(content: str, footer_note: str = "") -> str:
                                     Mit freundlichen Grüßen
                                 </p>
                                 <p style="margin: 0; font-size: 15px; color: #333; font-style: italic;">
-                                    Das Infometrica Team
+                                    Das Benke IT Solutions Team
                                 </p>
                                 <div style="margin-top: 15px; width: 150px; height: 2px; background: linear-gradient(to right, #f97316, transparent);"></div>
                             </td>
@@ -99,7 +99,7 @@ def get_letter_template(content: str, footer_note: str = "") -> str:
                                 <table width="100%" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td style="font-size: 11px; color: #999; line-height: 1.6;">
-                                            <strong style="color: #666;">Infometrica GmbH</strong><br>
+                                            <strong style="color: #666;">Benke IT Solutions</strong><br>
                                             Tauentzienstraße 9-12 · 10789 Berlin<br>
                                             E-Mail: info@infometrica.de
                                         </td>
@@ -144,7 +144,7 @@ async def send_application_confirmation(
         
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333; line-height: 1.8;">
             wir freuen uns, Ihnen den Eingang Ihrer Bewerbung als <strong>{position}</strong> 
-            bei der Infometrica GmbH bestätigen zu können.
+            bei der Benke IT Solutions bestätigen zu können.
         </p>
         
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333; line-height: 1.8;">
@@ -194,9 +194,9 @@ async def send_application_confirmation(
     
     try:
         params = {
-            "from": f"Infometrica <{FROM_EMAIL}>",
+            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
             "to": [to_email],
-            "subject": "Eingangsbestätigung Ihrer Bewerbung - Infometrica",
+            "subject": "Eingangsbestätigung Ihrer Bewerbung - Benke IT Solutions",
             "html": get_letter_template(content, "Ref: Bewerbung")
         }
         
@@ -259,7 +259,7 @@ async def send_application_accepted(
     
     try:
         params = {
-            "from": f"Infometrica <{FROM_EMAIL}>",
+            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
             "to": [to_email],
             "subject": "Ihre Bewerbung wurde angenommen - Nächster Schritt erforderlich",
             "html": get_letter_template(content, "Ref: ID-Verifizierung")
@@ -284,7 +284,7 @@ async def send_account_unlocked(
     
     content = f"""
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333;">
-            <strong>Betreff: Herzlich Willkommen bei Infometrica</strong>
+            <strong>Betreff: Herzlich Willkommen bei Benke IT Solutions</strong>
         </p>
         
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333; line-height: 1.8;">
@@ -333,7 +333,7 @@ async def send_account_unlocked(
     
     try:
         params = {
-            "from": f"Infometrica <{FROM_EMAIL}>",
+            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
             "to": [to_email],
             "subject": "Willkommen im Team - Ihr Konto ist freigeschaltet",
             "html": get_letter_template(content, "Ref: Onboarding")
@@ -405,7 +405,7 @@ async def send_new_task_notification(
     
     try:
         params = {
-            "from": f"Infometrica <{FROM_EMAIL}>",
+            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
             "to": [to_email],
             "subject": f"Neuer Auftrag: {task_title}",
             "html": get_letter_template(content, "Ref: Auftrag")
@@ -478,7 +478,7 @@ async def send_contract_ready(
     
     try:
         params = {
-            "from": f"Infometrica <{FROM_EMAIL}>",
+            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
             "to": [to_email],
             "subject": "Ihr Arbeitsvertrag ist bereit zur Unterschrift",
             "html": get_letter_template(content, "Ref: Arbeitsvertrag")
