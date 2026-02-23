@@ -48,15 +48,15 @@ def get_letter_template(content: str, footer_note: str = "") -> str:
                                     <tr>
                                         <td>
                                             <h1 style="margin: 0; font-size: 28px; font-weight: normal; color: #1a1a1a; letter-spacing: 2px;">
-                                                <span style="color: #1a1a1a;">Info</span><span style="color: #f97316;">metrica</span>
+                                                <span style="color: #1a1a1a;">Benke</span> <span style="color: #f97316;">IT Solutions</span>
                                             </h1>
                                             <p style="margin: 5px 0 0 0; font-size: 11px; color: #666; letter-spacing: 1px; text-transform: uppercase;">
                                                 App Testing Agency
                                             </p>
                                         </td>
                                         <td align="right" style="font-size: 12px; color: #666; line-height: 1.6;">
-                                            Tauentzienstraße 9-12<br>
-                                            10789 Berlin<br>
+                                            Potsdamer Straße 6<br>
+                                            14947 Nuthe-Urstromtal<br>
                                             Deutschland
                                         </td>
                                     </tr>
