@@ -316,9 +316,9 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     c.setFont("Helvetica", 10)
     c.drawString(2*cm, y_pos, "Benke IT Solutions")
     y_pos -= 0.4*cm
-    c.drawString(2*cm, y_pos, "Tauentzienstrasse 9-12")
+    c.drawString(2*cm, y_pos, "Potsdamer Strasse 6")
     y_pos -= 0.4*cm
-    c.drawString(2*cm, y_pos, "10789 Berlin, Deutschland")
+    c.drawString(2*cm, y_pos, "14947 Nuthe-Urstromtal, Deutschland")
     y_pos -= 0.4*cm
     c.setFont("Helvetica-Oblique", 10)
     c.drawString(2*cm, y_pos, "- nachfolgend Arbeitgeber genannt -")
