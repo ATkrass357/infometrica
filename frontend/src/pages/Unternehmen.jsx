@@ -57,8 +57,8 @@ const Unternehmen = () => {
                 />
               </div>
               <div className="absolute -bottom-6 -left-6 bg-orange-500 p-6 hidden lg:block">
-                <div className="text-white font-bold text-lg">Berlin HQ</div>
-                <div className="text-orange-100 text-sm">Tauentzienstraße 9-12</div>
+                <div className="text-white font-bold text-lg">Deutschland HQ</div>
+                <div className="text-orange-100 text-sm">Nuthe-Urstromtal</div>
               </div>
             </div>
           </div>
