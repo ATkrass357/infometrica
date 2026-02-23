@@ -169,8 +169,8 @@ const Home = () => {
               {/* Floating Card */}
               <div className="absolute -bottom-8 -right-8 bg-orange-500 p-8 max-w-xs hidden lg:block">
                 <div className="text-white">
-                  <div className="text-4xl font-black mb-2">Berlin</div>
-                  <div className="text-orange-100">Tauentzienstraße 9-12</div>
+                  <div className="text-4xl font-black mb-2">Deutschland</div>
+                  <div className="text-orange-100">Nuthe-Urstromtal</div>
                 </div>
               </div>
             </div>
