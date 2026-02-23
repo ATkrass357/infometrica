@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const InfometricaLogo = ({ className = "", size = "default" }) => {
+export const Benke IT SolutionsLogo = ({ className = "", size = "default" }) => {
   const sizes = {
     small: { container: "w-8 h-8", text: "text-base" },
     default: { container: "w-10 h-10", text: "text-xl" },

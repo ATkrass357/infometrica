@@ -29,7 +29,7 @@ const Home = () => {
               </h1>
               
               <p className="text-lg text-slate-600 max-w-lg leading-relaxed">
-                Infometrica ist Ihr Spezialist für professionelles Application Testing. 
+                Benke IT Solutions ist Ihr Spezialist für professionelles Application Testing. 
                 Wir finden die Fehler, bevor Ihre Nutzer es tun.
               </p>
               

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, AlertCircle, Briefcase } from 'lucide-react';
-import { InfometricaLogo } from '../../components/Logo';
+import { Benke IT SolutionsLogo } from '../../components/Logo';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -79,7 +79,7 @@ const MitarbeiterLogin = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <InfometricaLogo className="w-16 h-16" />
+            <Benke IT SolutionsLogo className="w-16 h-16" />
             <div className="text-left">
               <h1 className="text-2xl font-bold text-gray-900">
                 Info<span className="text-orange-500">metrica</span>
@@ -182,7 +182,7 @@ const MitarbeiterLogin = () => {
 
         {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
-          © 2024 Infometrica. Alle Rechte vorbehalten.
+          © 2024 Benke IT Solutions. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

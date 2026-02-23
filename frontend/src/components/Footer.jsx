@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, Phone, MapPin, ArrowUpRight } from 'lucide-react';
-import { InfometricaLogo } from './Logo';
+import { Benke IT SolutionsLogo } from './Logo';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -14,7 +14,7 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3 mb-6">
-              <InfometricaLogo className="w-10 h-10" />
+              <Benke IT SolutionsLogo className="w-10 h-10" />
               <span className="text-xl font-black tracking-tight">
                 INFO<span className="text-orange-500">METRICA</span>
               </span>
@@ -113,7 +113,7 @@ export const Footer = () => {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-slate-500">
-              © {currentYear} Infometrica GmbH. Alle Rechte vorbehalten.
+              © {currentYear} Benke IT Solutions. Alle Rechte vorbehalten.
             </p>
             <div className="flex items-center gap-6">
               <span className="text-sm text-slate-500">Made with precision in Berlin</span>

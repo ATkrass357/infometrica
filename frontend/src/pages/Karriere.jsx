@@ -250,7 +250,7 @@ const Karriere = () => {
       <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-orange-50">
         <div className="max-w-7xl mx-auto text-center">
           <div className="inline-block px-4 py-2 bg-orange-100 text-orange-600 rounded-full text-sm font-medium mb-6">
-            Karriere bei Infometrica
+            Karriere bei Benke IT Solutions
           </div>
           <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
             Werde Teil unseres{' '}
@@ -258,7 +258,7 @@ const Karriere = () => {
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Arbeite mit den besten Testing-Experten und gestalte die Zukunft der 
-            Softwarequalität. Bei Infometrica erwarten dich spannende Projekte und 
+            Softwarequalität. Bei Benke IT Solutions erwarten dich spannende Projekte und 
             hervorragende Entwicklungsmöglichkeiten.
           </p>
         </div>
@@ -269,7 +269,7 @@ const Karriere = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Warum <span className="text-orange-500">Infometrica?</span>
+              Warum <span className="text-orange-500">Benke IT Solutions?</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Entdecke die Vorteile, die dich bei uns erwarten
@@ -659,7 +659,7 @@ const Karriere = () => {
                 <PartyPopper size={32} className="text-white" />
               </div>
               <h3 className="text-2xl font-bold">Bewerbung erfolgreich!</h3>
-              <p className="text-orange-100 mt-2">Vielen Dank für Ihr Interesse an Infometrica</p>
+              <p className="text-orange-100 mt-2">Vielen Dank für Ihr Interesse an Benke IT Solutions</p>
             </div>
 
             {/* Content */}

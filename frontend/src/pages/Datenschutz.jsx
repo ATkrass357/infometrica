@@ -116,7 +116,7 @@ const Datenschutz = () => {
               Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
             </p>
             <div className="bg-gray-50 p-6 rounded-xl space-y-2 text-gray-700">
-              <p className="font-semibold text-lg">Infometrica GmbH</p>
+              <p className="font-semibold text-lg">Benke IT Solutions</p>
               <p>Musterstraße 123</p>
               <p>10115 Berlin</p>
               <p>Deutschland</p>
@@ -213,7 +213,7 @@ const Datenschutz = () => {
             </p>
             <div className="bg-orange-50 p-6 rounded-xl">
               <p className="text-gray-900 font-semibold mb-2">Datenschutzbeauftragter</p>
-              <p className="text-gray-700">Infometrica GmbH</p>
+              <p className="text-gray-700">Benke IT Solutions</p>
               <p className="text-gray-700">E-Mail: datenschutz@infometrica.de</p>
               <p className="text-gray-700">Telefon: +49 (0) 123 456789</p>
             </div>

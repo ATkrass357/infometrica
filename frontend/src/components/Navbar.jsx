@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
-import { InfometricaLogo } from './Logo';
+import { Benke IT SolutionsLogo } from './Logo';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,7 +38,7 @@ export const Navbar = () => {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <InfometricaLogo className="w-10 h-10" />
+            <Benke IT SolutionsLogo className="w-10 h-10" />
             <span className={`text-xl font-black tracking-tight transition-colors duration-300 ${
               isScrolled ? 'text-slate-900' : 'text-slate-900'
             }`}>
