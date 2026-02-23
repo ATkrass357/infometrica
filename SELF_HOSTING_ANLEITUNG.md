@@ -600,8 +600,8 @@ sudo systemctl enable nginx
 ### 12.7 Berechtigungen setzen:
 
 ```bash
-sudo chmod 755 /home/infometrica
-sudo chmod -R 755 /home/infometrica/infometrica/frontend/build
+sudo chmod 755 /home/benkeit
+sudo chmod -R 755 /home/benkeit/benkeit/frontend/build
 ```
 
 ---
@@ -676,14 +676,14 @@ Speichern: `Ctrl + X`, dann `Y`, dann `Enter`
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable infometrica-backend
-sudo systemctl start infometrica-backend
+sudo systemctl enable benkeit-backend
+sudo systemctl start benkeit-backend
 ```
 
 ### 14.3 Status überprüfen:
 
 ```bash
-sudo systemctl status infometrica-backend
+sudo systemctl status benkeit-backend
 ```
 
 Du solltest "active (running)" sehen. Drücke `q` zum Beenden.
@@ -723,7 +723,7 @@ Du solltest sehen:
 sudo systemctl status mongod
 
 # Backend
-sudo systemctl status infometrica-backend
+sudo systemctl status benkeit-backend
 
 # Nginx
 sudo systemctl status nginx
@@ -820,7 +820,7 @@ mongorestore --db infometrica_production ~/backups/DATUM/infometrica_production
 
 Backend läuft nicht. Überprüfe:
 ```bash
-sudo systemctl status infometrica-backend
+sudo systemctl status benkeit-backend
 sudo journalctl -u infometrica-backend --no-pager | tail -50
 ```
 
@@ -828,8 +828,8 @@ sudo journalctl -u infometrica-backend --no-pager | tail -50
 
 Berechtigungsproblem:
 ```bash
-sudo chmod 755 /home/infometrica
-sudo chmod -R 755 /home/infometrica/infometrica/frontend/build
+sudo chmod 755 /home/benkeit
+sudo chmod -R 755 /home/benkeit/benkeit/frontend/build
 sudo systemctl restart nginx
 ```
 
@@ -870,7 +870,7 @@ sudo reboot
 | Aktion | Befehl |
 |--------|--------|
 | Mit Server verbinden | `ssh infometrica@DEINE_IP` |
-| Backend Status | `sudo systemctl status infometrica-backend` |
+| Backend Status | `sudo systemctl status benkeit-backend` |
 | Backend neu starten | `sudo systemctl restart infometrica-backend` |
 | Backend Logs | `sudo journalctl -u infometrica-backend -f` |
 | Nginx Status | `sudo systemctl status nginx` |
