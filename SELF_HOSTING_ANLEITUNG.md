@@ -736,7 +736,7 @@ Alle sollten "active (running)" zeigen.
 Öffne deinen Browser und gehe zu:
 - `https://deine-domain.de`
 
-Du solltest die Infometrica-Startseite sehen!
+Du solltest die Benke IT Solutions-Startseite sehen!
 
 ### 16.3 Backend-API testen:
 
@@ -758,7 +758,7 @@ Gehe zu `https://deine-domain.de/admin/login` und logge dich ein.
 
 **Backend-Logs:**
 ```bash
-sudo journalctl -u infometrica-backend -f
+sudo journalctl -u benkeit-backend -f
 ```
 (Drücke `Ctrl + C` zum Beenden)
 
@@ -775,7 +775,7 @@ sudo tail -f /var/log/mongodb/mongod.log
 ### Backend neu starten:
 
 ```bash
-sudo systemctl restart infometrica-backend
+sudo systemctl restart benkeit-backend
 ```
 
 ### Code aktualisieren:
@@ -791,7 +791,7 @@ cd backend
 source venv/bin/activate
 pip install -r requirements.txt
 deactivate
-sudo systemctl restart infometrica-backend
+sudo systemctl restart benkeit-backend
 
 # Frontend aktualisieren:
 cd ../frontend
@@ -871,8 +871,8 @@ sudo reboot
 |--------|--------|
 | Mit Server verbinden | `ssh infometrica@DEINE_IP` |
 | Backend Status | `sudo systemctl status benkeit-backend` |
-| Backend neu starten | `sudo systemctl restart infometrica-backend` |
-| Backend Logs | `sudo journalctl -u infometrica-backend -f` |
+| Backend neu starten | `sudo systemctl restart benkeit-backend` |
+| Backend Logs | `sudo journalctl -u benkeit-backend -f` |
 | Nginx Status | `sudo systemctl status nginx` |
 | Nginx neu starten | `sudo systemctl restart nginx` |
 | MongoDB Status | `sudo systemctl status mongod` |
