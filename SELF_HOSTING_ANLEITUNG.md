@@ -1,6 +1,6 @@
-# Benke IT Solutions Self-Hosting Anleitung
+# Infometrica Self-Hosting Anleitung
 
-Diese Anleitung erklärt Schritt für Schritt, wie du die Benke IT Solutions-Anwendung auf deinem eigenen Server hostest.
+Diese Anleitung erklärt Schritt für Schritt, wie du die Infometrica-Anwendung auf deinem eigenen Server hostest.
 
 ---
 
@@ -35,7 +35,7 @@ Diese Anleitung erklärt Schritt für Schritt, wie du die Benke IT Solutions-Anw
   - 20 GB Speicherplatz
   - Ubuntu 22.04 LTS (empfohlen)
   
-- **Eine Domain** (z.B. benke-it.de)
+- **Eine Domain** (z.B. infometrica.de)
 
 - **Ein Terminal-Programm:**
   - Windows: [PuTTY](https://www.putty.org/) oder Windows Terminal
@@ -212,7 +212,7 @@ apt install -y curl wget git build-essential software-properties-common
 ### 5.3 Neuen Benutzer erstellen (Sicherheit):
 
 ```bash
-adduser benkeit
+adduser infometrica
 ```
 
 - Gib ein Passwort ein (wird nicht angezeigt beim Tippen!)
@@ -222,16 +222,16 @@ adduser benkeit
 ### 5.4 Benutzer Admin-Rechte geben:
 
 ```bash
-usermod -aG sudo benkeit
+usermod -aG sudo infometrica
 ```
 
 ### 5.5 Zum neuen Benutzer wechseln:
 
 ```bash
-su - benkeit
+su - infometrica
 ```
 
-Dein Prompt sollte jetzt `benkeit@server:~$` zeigen.
+Dein Prompt sollte jetzt `infometrica@server:~$` zeigen.
 
 ---
 
@@ -353,8 +353,8 @@ Falls du den Code auf GitHub hast:
 
 ```bash
 cd ~
-git clone https://github.com/DEIN_USERNAME/DEIN_REPO.git benkeit
-cd benkeit
+git clone https://github.com/DEIN_USERNAME/DEIN_REPO.git infometrica
+cd infometrica
 ```
 
 ### Option B: Mit FileZilla (SFTP)
@@ -362,28 +362,28 @@ cd benkeit
 1. Öffne FileZilla
 2. Verbindung herstellen:
    - Host: `sftp://DEINE_SERVER_IP`
-   - Benutzername: `benkeit`
+   - Benutzername: `infometrica`
    - Passwort: Dein Passwort
    - Port: `22`
 3. Klicke auf "Verbinden"
 4. Links: Navigiere zu deinem heruntergeladenen Code-Ordner
-5. Rechts: Navigiere zu `/home/benkeit/`
-6. Erstelle einen Ordner `benkeit` (Rechtsklick → Verzeichnis erstellen)
-7. Ziehe den Inhalt (backend, frontend Ordner) in den `benkeit` Ordner
+5. Rechts: Navigiere zu `/home/infometrica/`
+6. Erstelle einen Ordner `infometrica` (Rechtsklick → Verzeichnis erstellen)
+7. Ziehe den Inhalt (backend, frontend Ordner) in den `infometrica` Ordner
 
 ### Option C: Mit SCP (Kommandozeile)
 
 Auf deinem lokalen Computer (nicht Server!):
 
 ```bash
-scp -r /pfad/zum/code/* benkeit@DEINE_SERVER_IP:/home/benkeit/benkeit/
+scp -r /pfad/zum/code/* infometrica@DEINE_SERVER_IP:/home/infometrica/infometrica/
 ```
 
 ### Überprüfen ob Code vorhanden ist:
 
 Auf dem Server:
 ```bash
-cd ~/benkeit
+cd ~/infometrica
 ls -la
 ```
 
@@ -396,7 +396,7 @@ Du solltest `backend` und `frontend` Ordner sehen.
 ### 10.1 In den Backend-Ordner wechseln:
 
 ```bash
-cd ~/benkeit/backend
+cd ~/infometrica/backend
 ```
 
 ### 10.2 Python Virtual Environment erstellen:
@@ -432,7 +432,7 @@ Füge folgenden Inhalt ein (passe die Werte an!):
 
 ```env
 MONGO_URL=mongodb://localhost:27017
-DB_NAME=benkeit_production
+DB_NAME=infometrica_production
 CORS_ORIGINS=https://deine-domain.de,https://www.deine-domain.de
 RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxx
 FROM_EMAIL=noreply@deine-domain.de
@@ -476,7 +476,7 @@ deactivate
 ### 11.1 In den Frontend-Ordner wechseln:
 
 ```bash
-cd ~/benkeit/frontend
+cd ~/infometrica/frontend
 ```
 
 ### 11.2 Environment-Datei erstellen:
@@ -532,7 +532,7 @@ sudo apt install -y nginx
 ### 12.2 Nginx-Konfiguration erstellen:
 
 ```bash
-sudo nano /etc/nginx/sites-available/benkeit
+sudo nano /etc/nginx/sites-available/infometrica
 ```
 
 Füge folgenden Inhalt ein (ersetze `deine-domain.de`!):
@@ -544,7 +544,7 @@ server {
 
     # Frontend (React Build)
     location / {
-        root /home/benkeit/benkeit/frontend/build;
+        root /home/infometrica/infometrica/frontend/build;
         index index.html;
         try_files $uri $uri/ /index.html;
     }
@@ -573,7 +573,7 @@ Speichern: `Ctrl + X`, dann `Y`, dann `Enter`
 ### 12.3 Konfiguration aktivieren:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/benkeit /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/infometrica /etc/nginx/sites-enabled/
 ```
 
 ### 12.4 Standard-Konfiguration deaktivieren:
@@ -600,8 +600,8 @@ sudo systemctl enable nginx
 ### 12.7 Berechtigungen setzen:
 
 ```bash
-sudo chmod 755 /home/benkeit
-sudo chmod -R 755 /home/benkeit/benkeit/frontend/build
+sudo chmod 755 /home/infometrica
+sudo chmod -R 755 /home/infometrica/infometrica/frontend/build
 ```
 
 ---
@@ -645,24 +645,24 @@ Damit Backend und MongoDB automatisch starten, wenn der Server neu startet.
 ### 14.1 Systemd-Service für Backend erstellen:
 
 ```bash
-sudo nano /etc/systemd/system/benkeit-backend.service
+sudo nano /etc/systemd/system/infometrica-backend.service
 ```
 
 Füge ein:
 
 ```ini
 [Unit]
-Description=Benke IT Solutions Backend API
+Description=Infometrica Backend API
 After=network.target mongod.service
 Wants=mongod.service
 
 [Service]
 Type=simple
-User=benkeit
-Group=benkeit
-WorkingDirectory=/home/benkeit/benkeit/backend
-Environment="PATH=/home/benkeit/benkeit/backend/venv/bin"
-ExecStart=/home/benkeit/benkeit/backend/venv/bin/uvicorn server:app --host 127.0.0.1 --port 8001
+User=infometrica
+Group=infometrica
+WorkingDirectory=/home/infometrica/infometrica/backend
+Environment="PATH=/home/infometrica/infometrica/backend/venv/bin"
+ExecStart=/home/infometrica/infometrica/backend/venv/bin/uvicorn server:app --host 127.0.0.1 --port 8001
 Restart=always
 RestartSec=5
 
@@ -676,14 +676,14 @@ Speichern: `Ctrl + X`, dann `Y`, dann `Enter`
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable benkeit-backend
-sudo systemctl start benkeit-backend
+sudo systemctl enable infometrica-backend
+sudo systemctl start infometrica-backend
 ```
 
 ### 14.3 Status überprüfen:
 
 ```bash
-sudo systemctl status benkeit-backend
+sudo systemctl status infometrica-backend
 ```
 
 Du solltest "active (running)" sehen. Drücke `q` zum Beenden.
@@ -723,7 +723,7 @@ Du solltest sehen:
 sudo systemctl status mongod
 
 # Backend
-sudo systemctl status benkeit-backend
+sudo systemctl status infometrica-backend
 
 # Nginx
 sudo systemctl status nginx
@@ -736,7 +736,7 @@ Alle sollten "active (running)" zeigen.
 Öffne deinen Browser und gehe zu:
 - `https://deine-domain.de`
 
-Du solltest die Benke IT Solutions-Startseite sehen!
+Du solltest die Infometrica-Startseite sehen!
 
 ### 16.3 Backend-API testen:
 
@@ -758,7 +758,7 @@ Gehe zu `https://deine-domain.de/admin/login` und logge dich ein.
 
 **Backend-Logs:**
 ```bash
-sudo journalctl -u benkeit-backend -f
+sudo journalctl -u infometrica-backend -f
 ```
 (Drücke `Ctrl + C` zum Beenden)
 
@@ -775,13 +775,13 @@ sudo tail -f /var/log/mongodb/mongod.log
 ### Backend neu starten:
 
 ```bash
-sudo systemctl restart benkeit-backend
+sudo systemctl restart infometrica-backend
 ```
 
 ### Code aktualisieren:
 
 ```bash
-cd ~/benkeit
+cd ~/infometrica
 
 # Wenn du Git benutzt:
 git pull
@@ -791,7 +791,7 @@ cd backend
 source venv/bin/activate
 pip install -r requirements.txt
 deactivate
-sudo systemctl restart benkeit-backend
+sudo systemctl restart infometrica-backend
 
 # Frontend aktualisieren:
 cd ../frontend
@@ -803,13 +803,13 @@ sudo systemctl restart nginx
 ### Datenbank sichern:
 
 ```bash
-mongodump --db benkeit_production --out ~/backups/$(date +%Y%m%d)
+mongodump --db infometrica_production --out ~/backups/$(date +%Y%m%d)
 ```
 
 ### Datenbank wiederherstellen:
 
 ```bash
-mongorestore --db benkeit_production ~/backups/DATUM/benkeit_production
+mongorestore --db infometrica_production ~/backups/DATUM/infometrica_production
 ```
 
 ---
@@ -820,16 +820,16 @@ mongorestore --db benkeit_production ~/backups/DATUM/benkeit_production
 
 Backend läuft nicht. Überprüfe:
 ```bash
-sudo systemctl status benkeit-backend
-sudo journalctl -u benkeit-backend --no-pager | tail -50
+sudo systemctl status infometrica-backend
+sudo journalctl -u infometrica-backend --no-pager | tail -50
 ```
 
 ### Website zeigt "403 Forbidden":
 
 Berechtigungsproblem:
 ```bash
-sudo chmod 755 /home/benkeit
-sudo chmod -R 755 /home/benkeit/benkeit/frontend/build
+sudo chmod 755 /home/infometrica
+sudo chmod -R 755 /home/infometrica/infometrica/frontend/build
 sudo systemctl restart nginx
 ```
 
@@ -837,7 +837,7 @@ sudo systemctl restart nginx
 
 CORS-Problem. Überprüfe die `.env` Datei im Backend:
 ```bash
-nano ~/benkeit/backend/.env
+nano ~/infometrica/backend/.env
 ```
 
 Stelle sicher, dass `CORS_ORIGINS` deine Domain enthält.
@@ -869,10 +869,10 @@ sudo reboot
 
 | Aktion | Befehl |
 |--------|--------|
-| Mit Server verbinden | `ssh benkeit@DEINE_IP` |
-| Backend Status | `sudo systemctl status benkeit-backend` |
-| Backend neu starten | `sudo systemctl restart benkeit-backend` |
-| Backend Logs | `sudo journalctl -u benkeit-backend -f` |
+| Mit Server verbinden | `ssh infometrica@DEINE_IP` |
+| Backend Status | `sudo systemctl status infometrica-backend` |
+| Backend neu starten | `sudo systemctl restart infometrica-backend` |
+| Backend Logs | `sudo journalctl -u infometrica-backend -f` |
 | Nginx Status | `sudo systemctl status nginx` |
 | Nginx neu starten | `sudo systemctl restart nginx` |
 | MongoDB Status | `sudo systemctl status mongod` |
