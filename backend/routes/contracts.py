@@ -460,11 +460,11 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     y_pos_employer = y_pos + 0.5*cm
     c.line(11*cm, y_pos_employer, 17*cm, y_pos_employer)
     # Thomas Benke signature with date
-    sign_date = datetime.now().strftime("%d.%m.%Y")
+    employer_sign_date = sign_date_str
     c.setFont("Helvetica-Oblique", 14)
     c.drawString(11*cm, y_pos + 2*cm, "Thomas Benke")
     c.setFont("Helvetica", 9)
-    c.drawString(11*cm, y_pos + 1.2*cm, sign_date)
+    c.drawString(11*cm, y_pos + 1.2*cm, employer_sign_date)
     c.drawString(11*cm, y_pos, "Benke IT Solutions")
     
     # Footer
