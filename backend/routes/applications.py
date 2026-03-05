@@ -159,7 +159,7 @@ async def upload_verification(
     if not application:
         raise HTTPException(status_code=404, detail="Bewerbung nicht gefunden")
     
-    if application["status"] != "Akzeptiert":
+    if application["status"] not in ["Akzeptiert", "Vertrag unterschrieben"]:
         raise HTTPException(status_code=400, detail="Verifizierung nicht möglich in diesem Status")
     
     # Validate file types
@@ -337,6 +337,65 @@ async def unlock_applicant(
     )
     
     return {"message": "Mitarbeiter freigeschaltet", "status": "Freigeschaltet"}
+
+
+# Sign contract (Applicant - after acceptance)
+@router.post("/sign-contract")
+async def sign_contract(
+    data: dict,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Sign employment contract - changes status to 'Vertrag unterschrieben'"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    email = payload.get("sub")
+    application = await db.applications.find_one({"email": email})
+    
+    if not application:
+        raise HTTPException(status_code=404, detail="Bewerbung nicht gefunden")
+    
+    if application.get("status") != "Akzeptiert":
+        raise HTTPException(status_code=400, detail="Vertrag kann nur nach Akzeptanz unterschrieben werden")
+    
+    signature_data = data.get("signature_data")
+    iban = data.get("iban")
+    
+    if not signature_data:
+        raise HTTPException(status_code=400, detail="Unterschrift fehlt")
+    if not iban or len(iban) < 15:
+        raise HTTPException(status_code=400, detail="Gültige IBAN erforderlich")
+    
+    # Save signature (optional - store as file or base64 in DB)
+    signature_filename = f"sig_{application['id']}_{uuid.uuid4().hex[:6]}.png"
+    signature_path = os.path.join(UPLOAD_DIR.replace("verifications", "signatures"), signature_filename)
+    os.makedirs(os.path.dirname(signature_path), exist_ok=True)
+    
+    # Decode and save signature
+    if signature_data.startswith("data:image"):
+        signature_data = signature_data.split(",")[1]
+    
+    with open(signature_path, "wb") as f:
+        f.write(base64.b64decode(signature_data))
+    
+    await db.applications.update_one(
+        {"id": application["id"]},
+        {"$set": {
+            "status": "Vertrag unterschrieben",
+            "contract_signed_at": datetime.utcnow(),
+            "iban": iban,
+            "signature_file": signature_filename
+        }}
+    )
+    
+    return {"message": "Vertrag erfolgreich unterschrieben", "status": "Vertrag unterschrieben"}
+
 
 
 # Get verification image (Admin only) - returns base64 for display

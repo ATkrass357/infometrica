@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { BenkeLogo } from '../Logo';
 import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
+import MitarbeiterContractSign from '../../pages/mitarbeiter/MitarbeiterContractSign';
 import MitarbeiterVerification from '../../pages/mitarbeiter/MitarbeiterVerification';
 import MitarbeiterAwaitingApproval from '../../pages/mitarbeiter/MitarbeiterAwaitingApproval';
 import axios from 'axios';
@@ -98,6 +99,15 @@ const MitarbeiterLayout = ({ children }) => {
   }
 
   if (applicantStatus === 'Akzeptiert') {
+    return (
+      <MitarbeiterContractSign 
+        applicant={applicantData} 
+        onContractSigned={checkApplicantStatus}
+      />
+    );
+  }
+
+  if (applicantStatus === 'Vertrag unterschrieben') {
     return (
       <MitarbeiterVerification 
         applicant={applicantData} 
