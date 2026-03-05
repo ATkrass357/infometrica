@@ -140,7 +140,7 @@ const MitarbeiterDokumente = () => {
         );
       case 'pending':
         return (
-          <span className="flex items-center gap-1 px-2 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
+          <span className="flex items-center gap-1 px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">
             <Clock size={12} />
             In Prüfung
           </span>
@@ -175,7 +175,7 @@ const MitarbeiterDokumente = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -196,7 +196,7 @@ const MitarbeiterDokumente = () => {
             className="hidden"
             disabled={uploading}
           />
-          <div className={`flex items-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors ${uploading ? 'opacity-50' : ''}`}>
+          <div className={`flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors ${uploading ? 'opacity-50' : ''}`}>
             {uploading ? (
               <>
                 <Loader2 size={18} className="animate-spin" />
@@ -220,7 +220,7 @@ const MitarbeiterDokumente = () => {
             onClick={() => setSelectedCategory(cat)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               selectedCategory === cat
-                ? 'bg-orange-500 text-white'
+                ? 'bg-emerald-500 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -307,7 +307,7 @@ const MitarbeiterDokumente = () => {
                 <CheckCircle size={14} className="text-green-500" /> Krankenkassen-Nachweis
               </li>
               <li className="flex items-center gap-2">
-                <Clock size={14} className="text-orange-500" /> Bankverbindung (optional)
+                <Clock size={14} className="text-emerald-500" /> Bankverbindung (optional)
               </li>
             </ul>
           </div>

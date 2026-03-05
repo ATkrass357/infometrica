@@ -294,7 +294,7 @@ const MitarbeiterVertrag = () => {
       );
     }
     return (
-      <span className="flex items-center gap-1 px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">
+      <span className="flex items-center gap-1 px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-medium">
         <Clock size={14} />
         Ausstehend
       </span>
@@ -304,7 +304,7 @@ const MitarbeiterVertrag = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -336,8 +336,8 @@ const MitarbeiterVertrag = () => {
             >
               <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <FileText className="text-orange-500" size={28} />
+                  <div className="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <FileText className="text-emerald-500" size={28} />
                   </div>
                   <div>
                     <div className="flex items-center gap-3 mb-1">
@@ -372,7 +372,7 @@ const MitarbeiterVertrag = () => {
                         setSelectedContract(contract);
                         setShowSignModal(true);
                       }}
-                      className="bg-orange-500 hover:bg-orange-600"
+                      className="bg-emerald-500 hover:bg-emerald-600"
                     >
                       <PenTool size={18} className="mr-2" />
                       Jetzt unterschreiben
@@ -424,7 +424,7 @@ const MitarbeiterVertrag = () => {
             <div className="p-6 border-b border-gray-200 flex items-center justify-between flex-shrink-0">
               <div>
                 <h2 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-                  <ScrollText size={24} className="text-orange-500" />
+                  <ScrollText size={24} className="text-emerald-500" />
                   Arbeitsvertrag lesen & unterschreiben
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">Bitte lesen Sie den Vertrag sorgfältig durch</p>
@@ -442,7 +442,7 @@ const MitarbeiterVertrag = () => {
               {/* Contract Preview */}
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <FileText size={20} className="text-orange-500" />
+                  <FileText size={20} className="text-emerald-500" />
                   <h3 className="font-semibold text-gray-900 text-lg">Vertragsinhalt</h3>
                 </div>
                 <ContractDocument contract={selectedContract} />
@@ -456,7 +456,7 @@ const MitarbeiterVertrag = () => {
               {/* Signature Section */}
               <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
                 <h3 className="font-semibold text-gray-900 text-lg mb-6 flex items-center gap-2">
-                  <PenTool size={20} className="text-orange-500" />
+                  <PenTool size={20} className="text-emerald-500" />
                   Vertrag unterschreiben
                 </h3>
 
@@ -534,7 +534,7 @@ const MitarbeiterVertrag = () => {
               <Button
                 onClick={handleSign}
                 disabled={signing}
-                className="bg-orange-500 hover:bg-orange-600"
+                className="bg-emerald-500 hover:bg-emerald-600"
               >
                 {signing ? (
                   <>

@@ -88,7 +88,7 @@ const MitarbeiterLayout = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -157,7 +157,7 @@ const MitarbeiterLayout = ({ children }) => {
                 to={item.path}
                 className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-all group ${
                   active
-                    ? 'bg-orange-50 text-orange-600'
+                    ? 'bg-emerald-50 text-emerald-600'
                     : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                 }`}
               >
@@ -179,7 +179,7 @@ const MitarbeiterLayout = ({ children }) => {
           ) : null}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 transition-all"
+            className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-emerald-600 hover:bg-emerald-50 transition-all"
           >
             <LogOut size={20} />
             {isSidebarOpen && <span className="font-medium">Abmelden</span>}
@@ -220,7 +220,7 @@ const MitarbeiterLayout = ({ children }) => {
                     onClick={() => setIsMobileSidebarOpen(false)}
                     className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-all ${
                       active
-                        ? 'bg-orange-50 text-orange-600'
+                        ? 'bg-emerald-50 text-emerald-600'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >
@@ -238,7 +238,7 @@ const MitarbeiterLayout = ({ children }) => {
               </div>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-red-600 hover:bg-red-50 transition-all"
+                className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-emerald-600 hover:bg-emerald-50 transition-all"
               >
                 <LogOut size={20} />
                 <span className="font-medium">Abmelden</span>

@@ -65,8 +65,8 @@ const MitarbeiterAuftrage = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Offen': return 'bg-orange-100 text-orange-700 border-orange-200';
-      case 'In Bearbeitung': return 'bg-blue-100 text-blue-700 border-blue-200';
+      case 'Offen': return 'bg-amber-100 text-amber-700 border-amber-200';
+      case 'In Bearbeitung': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
       case 'Abgeschlossen': return 'bg-green-100 text-green-700 border-green-200';
       default: return 'bg-gray-100 text-gray-600 border-gray-200';
     }
@@ -75,7 +75,7 @@ const MitarbeiterAuftrage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64" data-testid="loading-spinner">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -90,7 +90,7 @@ const MitarbeiterAuftrage = () => {
         </div>
         <button
           onClick={fetchTasks}
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors"
           data-testid="refresh-btn"
         >
           <RefreshCw size={18} />
@@ -111,7 +111,7 @@ const MitarbeiterAuftrage = () => {
             onClick={() => setFilter(tab.key)}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               filter === tab.key
-                ? 'bg-orange-500 text-white'
+                ? 'bg-emerald-500 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
             data-testid={`filter-${tab.key}`}
@@ -156,7 +156,7 @@ const MitarbeiterAuftrage = () => {
                           href={task.website} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-orange-600 hover:text-orange-700 hover:underline"
+                          className="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 hover:underline"
                         >
                           <Globe size={14} />
                           <span>Website öffnen</span>
@@ -176,7 +176,7 @@ const MitarbeiterAuftrage = () => {
                     {task.status === 'Offen' && (
                       <button
                         onClick={() => updateTaskStatus(task.id, 'In Bearbeitung')}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                        className="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors text-sm"
                         data-testid={`start-task-${task.id}`}
                       >
                         <Play size={16} />
@@ -186,7 +186,7 @@ const MitarbeiterAuftrage = () => {
                     {task.status === 'In Bearbeitung' && (
                       <button
                         onClick={() => updateTaskStatus(task.id, 'Abgeschlossen')}
-                        className="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm"
+                        className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors text-sm"
                         data-testid={`complete-task-${task.id}`}
                       >
                         <Check size={16} />
@@ -194,7 +194,7 @@ const MitarbeiterAuftrage = () => {
                       </button>
                     )}
                     {task.status === 'Abgeschlossen' && (
-                      <div className="flex items-center gap-1 text-green-600">
+                      <div className="flex items-center gap-1 text-emerald-600">
                         <CheckCircle size={20} />
                         <span className="text-sm font-medium">Erledigt</span>
                       </div>
@@ -281,19 +281,19 @@ const MitarbeiterAuftrage = () => {
                     {(task.test_ident_link || task.test_login_email) && (
                       <div className="mt-6 pt-4 border-t border-gray-200">
                         <div className="flex items-center gap-2 mb-4">
-                          <KeyRound size={18} className="text-orange-500" />
-                          <h5 className="font-medium text-orange-700">Test-Zugangsdaten</h5>
+                          <KeyRound size={18} className="text-emerald-500" />
+                          <h5 className="font-medium text-emerald-700">Test-Zugangsdaten</h5>
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {task.test_ident_link && (
-                            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                              <div className="text-xs text-orange-600 font-medium mb-1">Test Ident Link</div>
+                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+                              <div className="text-xs text-emerald-600 font-medium mb-1">Test Ident Link</div>
                               <a 
                                 href={task.test_ident_link} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="text-orange-700 hover:text-orange-800 hover:underline text-sm flex items-center gap-1 break-all"
+                                className="text-emerald-700 hover:text-emerald-800 hover:underline text-sm flex items-center gap-1 break-all"
                               >
                                 <Link size={14} />
                                 {task.test_ident_link}
@@ -302,8 +302,8 @@ const MitarbeiterAuftrage = () => {
                           )}
                           
                           {task.test_login_email && (
-                            <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
-                              <div className="text-xs text-orange-600 font-medium mb-1">Test Login Daten</div>
+                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+                              <div className="text-xs text-emerald-600 font-medium mb-1">Test Login Daten</div>
                               <div className="space-y-1">
                                 <div className="text-sm">
                                   <span className="text-gray-600">E-Mail:</span>{' '}

@@ -167,7 +167,7 @@ const MitarbeiterEinstellungen = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -183,8 +183,8 @@ const MitarbeiterEinstellungen = () => {
       {/* Profile Section */}
       <div className="bg-white rounded-xl border border-gray-200 p-6">
         <div className="flex items-center gap-3 mb-6">
-          <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
-            <User className="text-orange-500" size={20} />
+          <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+            <User className="text-emerald-500" size={20} />
           </div>
           <div>
             <h2 className="text-lg font-semibold text-gray-900">Persönliche Daten</h2>
@@ -250,7 +250,7 @@ const MitarbeiterEinstellungen = () => {
           <Button 
             onClick={handleProfileSave}
             disabled={saving}
-            className="bg-orange-500 hover:bg-orange-600"
+            className="bg-emerald-500 hover:bg-emerald-600"
           >
             <Save size={18} className="mr-2" />
             {saving ? 'Speichern...' : 'Änderungen speichern'}
@@ -357,7 +357,7 @@ const MitarbeiterEinstellungen = () => {
               <button
                 onClick={() => handleNotificationToggle(item.key)}
                 className={`relative w-12 h-6 rounded-full transition-colors ${
-                  notifications[item.key] ? 'bg-orange-500' : 'bg-gray-300'
+                  notifications[item.key] ? 'bg-emerald-500' : 'bg-gray-300'
                 }`}
               >
                 <span 

@@ -48,9 +48,9 @@ const MitarbeiterDashboard = () => {
       title: 'Offene Aufgaben',
       value: stats.open_tasks,
       icon: AlertCircle,
-      color: 'orange',
-      bgColor: 'bg-orange-100',
-      textColor: 'text-orange-600',
+      color: 'emerald',
+      bgColor: 'bg-emerald-100',
+      textColor: 'text-emerald-600',
     },
     {
       title: 'In Bearbeitung',
@@ -81,7 +81,7 @@ const MitarbeiterDashboard = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
       </div>
     );
   }
@@ -89,11 +89,11 @@ const MitarbeiterDashboard = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-orange-500 to-orange-600 rounded-2xl p-8 text-white shadow-lg">
+      <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl p-8 text-white shadow-lg">
         <h1 className="text-3xl font-bold mb-2">
           Willkommen zurück, {employeeData.name}!
         </h1>
-        <p className="text-orange-100">
+        <p className="text-emerald-100">
           {employeeData.position} • {employeeData.department}
         </p>
       </div>
@@ -141,7 +141,7 @@ const MitarbeiterDashboard = () => {
                     <p className="text-sm text-gray-600 mb-2">{task.description}</p>
                     <div className="flex items-center space-x-4 text-xs text-gray-500">
                       <span className={`px-2 py-1 rounded-full ${
-                        task.status === 'Offen' ? 'bg-orange-100 text-orange-600' :
+                        task.status === 'Offen' ? 'bg-emerald-100 text-emerald-600' :
                         task.status === 'In Bearbeitung' ? 'bg-blue-100 text-blue-600' :
                         'bg-green-100 text-green-600'
                       }`}>
@@ -167,7 +167,7 @@ const MitarbeiterDashboard = () => {
           <div className="px-6 py-4 border-t border-gray-200 bg-gray-50">
             <a
               href="/mitarbeiter/auftrage"
-              className="text-orange-600 hover:text-orange-700 font-medium text-sm"
+              className="text-emerald-600 hover:text-emerald-700 font-medium text-sm"
             >
               Alle Aufträge ansehen →
             </a>
