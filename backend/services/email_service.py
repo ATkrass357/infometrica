@@ -48,7 +48,7 @@ def get_letter_template(content: str, footer_note: str = "") -> str:
                                     <tr>
                                         <td>
                                             <h1 style="margin: 0; font-size: 28px; font-weight: normal; color: #1a1a1a; letter-spacing: 2px;">
-                                                <span style="color: #1a1a1a;">Benke</span> <span style="color: #f97316;">IT Solutions</span>
+                                                <span style="color: #1a1a1a;">Precision</span> <span style="color: #10b981;">Labs</span>
                                             </h1>
                                             <p style="margin: 5px 0 0 0; font-size: 11px; color: #666; letter-spacing: 1px; text-transform: uppercase;">
                                                 App Testing Agency
@@ -87,7 +87,7 @@ def get_letter_template(content: str, footer_note: str = "") -> str:
                                     Mit freundlichen Grüßen
                                 </p>
                                 <p style="margin: 0; font-size: 15px; color: #333; font-style: italic;">
-                                    Das Benke IT Solutions Team
+                                    Das Precision Labs Team
                                 </p>
                                 <div style="margin-top: 15px; width: 150px; height: 2px; background: linear-gradient(to right, #f97316, transparent);"></div>
                             </td>
@@ -99,9 +99,9 @@ def get_letter_template(content: str, footer_note: str = "") -> str:
                                 <table width="100%" cellpadding="0" cellspacing="0">
                                     <tr>
                                         <td style="font-size: 11px; color: #999; line-height: 1.6;">
-                                            <strong style="color: #666;">Benke IT Solutions</strong><br>
+                                            <strong style="color: #666;">Precision Labs</strong><br>
                                             Potsdamer Straße 6 · 14947 Nuthe-Urstromtal<br>
-                                            E-Mail: info@benke-it.de
+                                            E-Mail: info@precision-labs.de
                                         </td>
                                         <td align="right" style="font-size: 11px; color: #999;">
                                             {footer_note}
@@ -130,7 +130,7 @@ async def send_application_confirmation(
         return False
     
     # Get the frontend URL from environment or use default
-    frontend_url = os.environ.get("FRONTEND_URL", "https://benke-it.de")
+    frontend_url = os.environ.get("FRONTEND_URL", "https://precision-labs.de")
     login_url = f"{frontend_url}/mitarbeiter/login"
     
     content = f"""
@@ -144,7 +144,7 @@ async def send_application_confirmation(
         
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333; line-height: 1.8;">
             wir freuen uns, Ihnen den Eingang Ihrer Bewerbung als <strong>{position}</strong> 
-            bei der Benke IT Solutions bestätigen zu können.
+            bei der Precision Labs bestätigen zu können.
         </p>
         
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333; line-height: 1.8;">
@@ -194,9 +194,9 @@ async def send_application_confirmation(
     
     try:
         params = {
-            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
+            "from": f"Precision Labs <{FROM_EMAIL}>",
             "to": [to_email],
-            "subject": "Eingangsbestätigung Ihrer Bewerbung - Benke IT Solutions",
+            "subject": "Eingangsbestätigung Ihrer Bewerbung - Precision Labs",
             "html": get_letter_template(content, "Ref: Bewerbung")
         }
         
@@ -259,7 +259,7 @@ async def send_application_accepted(
     
     try:
         params = {
-            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
+            "from": f"Precision Labs <{FROM_EMAIL}>",
             "to": [to_email],
             "subject": "Ihre Bewerbung wurde angenommen - Nächster Schritt erforderlich",
             "html": get_letter_template(content, "Ref: ID-Verifizierung")
@@ -284,7 +284,7 @@ async def send_account_unlocked(
     
     content = f"""
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333;">
-            <strong>Betreff: Herzlich Willkommen bei Benke IT Solutions</strong>
+            <strong>Betreff: Herzlich Willkommen bei Precision Labs</strong>
         </p>
         
         <p style="margin: 0 0 20px 0; font-size: 15px; color: #333; line-height: 1.8;">
@@ -317,7 +317,7 @@ async def send_account_unlocked(
         <table cellpadding="0" cellspacing="0" style="margin: 25px 0;">
             <tr>
                 <td style="background-color: #f97316; border-radius: 4px;">
-                    <a href="https://benke-it.de/mitarbeiter/login" 
+                    <a href="https://precision-labs.de/mitarbeiter/login" 
                        style="display: inline-block; padding: 14px 28px; color: #ffffff; 
                               text-decoration: none; font-size: 14px; font-weight: bold;">
                         Zum Mitarbeiter-Dashboard →
@@ -333,7 +333,7 @@ async def send_account_unlocked(
     
     try:
         params = {
-            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
+            "from": f"Precision Labs <{FROM_EMAIL}>",
             "to": [to_email],
             "subject": "Willkommen im Team - Ihr Konto ist freigeschaltet",
             "html": get_letter_template(content, "Ref: Onboarding")
@@ -389,7 +389,7 @@ async def send_new_task_notification(
         <table cellpadding="0" cellspacing="0" style="margin: 25px 0;">
             <tr>
                 <td style="background-color: #f97316; border-radius: 4px;">
-                    <a href="https://benke-it.de/mitarbeiter/auftrage" 
+                    <a href="https://precision-labs.de/mitarbeiter/auftrage" 
                        style="display: inline-block; padding: 14px 28px; color: #ffffff; 
                               text-decoration: none; font-size: 14px; font-weight: bold;">
                         Auftrag ansehen →
@@ -405,7 +405,7 @@ async def send_new_task_notification(
     
     try:
         params = {
-            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
+            "from": f"Precision Labs <{FROM_EMAIL}>",
             "to": [to_email],
             "subject": f"Neuer Auftrag: {task_title}",
             "html": get_letter_template(content, "Ref: Auftrag")
@@ -462,7 +462,7 @@ async def send_contract_ready(
         <table cellpadding="0" cellspacing="0" style="margin: 25px 0;">
             <tr>
                 <td style="background-color: #f97316; border-radius: 4px;">
-                    <a href="https://benke-it.de/mitarbeiter/vertrag" 
+                    <a href="https://precision-labs.de/mitarbeiter/vertrag" 
                        style="display: inline-block; padding: 14px 28px; color: #ffffff; 
                               text-decoration: none; font-size: 14px; font-weight: bold;">
                         Vertrag unterschreiben →
@@ -478,7 +478,7 @@ async def send_contract_ready(
     
     try:
         params = {
-            "from": f"Benke IT Solutions <{FROM_EMAIL}>",
+            "from": f"Precision Labs <{FROM_EMAIL}>",
             "to": [to_email],
             "subject": "Ihr Arbeitsvertrag ist bereit zur Unterschrift",
             "html": get_letter_template(content, "Ref: Arbeitsvertrag")

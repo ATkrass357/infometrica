@@ -2,7 +2,7 @@
 
 ## Test-Zugangsdaten
 
-**Email:** admin@benke-it.de  
+**Email:** admin@precision-labs.de  
 **Passwort:** R&2w&ccKXdhFs*M!qA
 
 **WICHTIG:** Achten Sie auf Gross- und Kleinschreibung!
@@ -14,7 +14,7 @@ https://qa-precision-labs.preview.emergentagent.com/admin/login
 ## Schritte:
 
 1. Offnen Sie die Login-Seite
-2. Geben Sie die Email ein: admin@benke-it.de
+2. Geben Sie die Email ein: admin@precision-labs.de
 3. Geben Sie das Passwort ein: R&2w&ccKXdhFs*M!qA
 4. Klicken Sie auf "Anmelden"
 5. Sie werden automatisch zum Dashboard weitergeleitet

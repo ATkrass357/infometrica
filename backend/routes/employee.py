@@ -191,14 +191,14 @@ async def get_employee_stats(
 @router.post("/init-employee")
 async def initialize_employee(db: AsyncIOMotorDatabase = Depends(get_db)):
     """Initialize test employee - REMOVE IN PRODUCTION"""
-    existing = await db.employees.find_one({"email": "mitarbeiter@benke-it.de"})
+    existing = await db.employees.find_one({"email": "mitarbeiter@precision-labs.de"})
     
     if existing:
         return {"message": "Mitarbeiter bereits vorhanden"}
     
     employee_data = {
         "id": "emp-001",
-        "email": "mitarbeiter@benke-it.de",
+        "email": "mitarbeiter@precision-labs.de",
         "password_hash": get_password_hash("Mitarbeiter123!"),
         "name": "Max Mitarbeiter",
         "position": "QA Tester",
@@ -214,7 +214,7 @@ async def initialize_employee(db: AsyncIOMotorDatabase = Depends(get_db)):
     
     return {
         "message": "Test-Mitarbeiter erstellt",
-        "email": "mitarbeiter@benke-it.de",
+        "email": "mitarbeiter@precision-labs.de",
         "password": "Mitarbeiter123!"
     }
 

@@ -91,8 +91,10 @@ Build a full-stack application for the app testing agency "Precision Labs" (form
 
 | Role | Email | Password | Status |
 |------|-------|----------|--------|
-| Admin | admin@benke-it.de | Inf0m3tr!ca#2025Sec | Active |
-| Employee | mitarbeiter@infometrica.de | Mitarbeiter123! | Freigeschaltet |
+| Admin | admin@precision-labs.de | Inf0m3tr!ca#2025Sec | Active |
+| Employee | mitarbeiter@precision-labs.de | Mitarbeiter123! | Freigeschaltet |
+
+**Note:** Existing database users may still have old email addresses (e.g., admin@benke-it.de, mitarbeiter@infometrica.de). The init endpoints create users with the new @precision-labs.de emails.
 
 ---
 

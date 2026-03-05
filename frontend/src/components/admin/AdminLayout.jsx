@@ -14,7 +14,7 @@ import {
   FolderOpen,
   Phone,
 } from 'lucide-react';
-import { BenkeLogo } from '../../components/Logo';
+import { PrecisionLogo } from '../../components/Logo';
 
 const AdminLayout = ({ children }) => {
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ const AdminLayout = ({ children }) => {
         <div className="h-16 flex items-center justify-between px-4 border-b border-[#292e42]">
           {isSidebarOpen && (
             <div className="flex items-center space-x-2">
-              <BenkeLogo className="w-8 h-8" />
+              <PrecisionLogo className="w-8 h-8" />
               <span className="text-lg font-bold text-[#c0caf5]">
                 Admin
               </span>
@@ -152,7 +152,7 @@ const AdminLayout = ({ children }) => {
             {/* Same content as desktop sidebar */}
             <div className="h-16 flex items-center justify-between px-4 border-b border-[#292e42]">
               <div className="flex items-center space-x-2">
-                <BenkeLogo className="w-8 h-8" />
+                <PrecisionLogo className="w-8 h-8" />
                 <span className="text-lg font-bold text-[#c0caf5]">Admin</span>
               </div>
               <button

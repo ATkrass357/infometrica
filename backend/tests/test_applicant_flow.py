@@ -14,7 +14,7 @@ from datetime import datetime
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', '').rstrip('/')
 
 # Test credentials
-ADMIN_EMAIL = "admin@benke-it.de"
+ADMIN_EMAIL = "admin@precision-labs.de"
 ADMIN_PASSWORD = "Admin123!"
 TEST_APPLICANT_EMAIL = "anna.schmidt@example.com"
 TEST_APPLICANT_PASSWORD = "TestPass123!"

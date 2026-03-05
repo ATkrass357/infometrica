@@ -76,7 +76,7 @@ async def verify_token(authorization: str = Header(None)):
 async def initialize_admin(db: AsyncIOMotorDatabase = Depends(get_db)):
     """Initialize test admin user - REMOVE IN PRODUCTION"""
     # Check if admin already exists
-    existing_admin = await db.admins.find_one({"email": "admin@benke-it.de"})
+    existing_admin = await db.admins.find_one({"email": "admin@precision-labs.de"})
     
     if existing_admin:
         return {"message": "Admin bereits vorhanden"}
@@ -84,7 +84,7 @@ async def initialize_admin(db: AsyncIOMotorDatabase = Depends(get_db)):
     # Create test admin
     admin_data = {
         "id": "admin-001",
-        "email": "admin@benke-it.de",
+        "email": "admin@precision-labs.de",
         "password_hash": get_password_hash("Inf0m3tr!ca#2025Sec"),
         "name": "Administrator",
         "role": "admin",
@@ -96,7 +96,7 @@ async def initialize_admin(db: AsyncIOMotorDatabase = Depends(get_db)):
     
     return {
         "message": "Test-Admin erstellt",
-        "email": "admin@benke-it.de"
+        "email": "admin@precision-labs.de"
     }
 
 # ========== TASK MANAGEMENT ==========

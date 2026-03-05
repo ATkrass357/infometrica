@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, AlertCircle } from 'lucide-react';
-import { BenkeLogo } from '../../components/Logo';
+import { PrecisionLogo } from '../../components/Logo';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -61,10 +61,10 @@ const AdminLogin = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <BenkeLogo className="w-16 h-16" />
+            <PrecisionLogo className="w-16 h-16" />
             <div className="text-left">
               <h1 className="text-2xl font-bold text-[#c0caf5]">
-                Benke <span className="text-[#ff9e64]">IT</span>
+                Precision <span className="text-[#10b981]">Labs</span>
               </h1>
               <p className="text-sm text-[#565f89]">Admin Portal</p>
             </div>
@@ -103,7 +103,7 @@ const AdminLogin = () => {
                   required
                   data-testid="admin-login-email"
                   className="w-full pl-11 pr-4 py-3 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] placeholder-[#565f89] focus:outline-none focus:border-[#7aa2f7] focus:ring-2 focus:ring-[#7aa2f7]/20 transition-all"
-                  placeholder="admin@benke-it.de"
+                  placeholder="admin@precision-labs.de"
                 />
               </div>
             </div>
@@ -150,7 +150,7 @@ const AdminLogin = () => {
 
         {/* Footer */}
         <p className="text-center text-sm text-[#565f89] mt-6">
-          © 2026 Benke IT Solutions. Alle Rechte vorbehalten.
+          © 2026 Precision Labs. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

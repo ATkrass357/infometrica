@@ -40,7 +40,7 @@ const ContractDocument = ({ contract }) => {
       {/* Parties */}
       <div className="mb-6">
         <p className="font-semibold text-gray-900 mb-2">zwischen</p>
-        <p className="text-gray-700 mb-1 font-medium">Benke IT Solutions</p>
+        <p className="text-gray-700 mb-1 font-medium">Precision Labs</p>
         <p className="text-gray-700 mb-1">Potsdamer Straße 6</p>
         <p className="text-gray-700 mb-1">14947 Nuthe-Urstromtal</p>
         <p className="text-gray-700 mb-1">Deutschland</p>
@@ -66,7 +66,7 @@ const ContractDocument = ({ contract }) => {
         <section>
           <h3 className="font-bold text-gray-900 mb-2">§2 Tätigkeit</h3>
           <p className="text-gray-700 mb-2">
-            Der Arbeitnehmer wird als <strong>Assistent für Evaluierungen im Homeoffice</strong> bei Benke IT Solutions eingestellt und insbesondere mit folgenden Aufgaben betraut:
+            Der Arbeitnehmer wird als <strong>Assistent für Evaluierungen im Homeoffice</strong> bei Precision Labs eingestellt und insbesondere mit folgenden Aufgaben betraut:
           </p>
           <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
             <li>Überprüfung von Apps und Software auf Benutzerfreundlichkeit und Mängel</li>
@@ -100,7 +100,7 @@ const ContractDocument = ({ contract }) => {
             Dem Arbeitnehmer ist bekannt, dass ein entsprechender Verzicht nur mit Wirkung für die Zukunft und bei Ausübung mehrerer geringfügiger Beschäftigungsverhältnisse nur einheitlich erklärt werden kann. Diese Erklärung bindet den Arbeitnehmer für die Dauer der jeweiligen Beschäftigungen.
           </p>
           <p className="text-gray-700">
-            Die Tätigkeit erfolgt bei Benke IT Solutions im Homeoffice.
+            Die Tätigkeit erfolgt bei Precision Labs im Homeoffice.
           </p>
         </section>
 
@@ -404,7 +404,7 @@ const MitarbeiterVertrag = () => {
               <li>• Lesen Sie den Vertrag sorgfältig durch bevor Sie unterschreiben</li>
               <li>• Ihre digitale Unterschrift ist rechtlich bindend</li>
               <li>• Nach der Unterschrift können Sie den Vertrag als PDF herunterladen</li>
-              <li>• Bei Fragen wenden Sie sich an hr@benke-it.de</li>
+              <li>• Bei Fragen wenden Sie sich an hr@precision-labs.de</li>
             </ul>
           </div>
         </div>

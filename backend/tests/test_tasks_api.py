@@ -10,9 +10,9 @@ import uuid
 BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://qa-precision-labs.preview.emergentagent.com')
 
 # Test credentials
-ADMIN_EMAIL = "admin@benke-it.de"
+ADMIN_EMAIL = "admin@precision-labs.de"
 ADMIN_PASSWORD = "Admin123!"
-EMPLOYEE_EMAIL = "mitarbeiter@benke-it.de"
+EMPLOYEE_EMAIL = "mitarbeiter@precision-labs.de"
 EMPLOYEE_PASSWORD = "Mitarbeiter123!"
 
 

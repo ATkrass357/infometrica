@@ -21,7 +21,7 @@ def admin_token():
     response = requests.post(
         f"{BASE_URL}/api/admin/login",
         json={
-            "email": "admin@benke-it.de",
+            "email": "admin@precision-labs.de",
             "password": "Inf0m3tr!ca#2025Sec"
         }
     )

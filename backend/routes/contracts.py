@@ -314,7 +314,7 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     y_pos -= 0.6*cm
     
     c.setFont("Helvetica", 10)
-    c.drawString(2*cm, y_pos, "Benke IT Solutions")
+    c.drawString(2*cm, y_pos, "Precision Labs")
     y_pos -= 0.4*cm
     c.drawString(2*cm, y_pos, "Potsdamer Strasse 6")
     y_pos -= 0.4*cm
@@ -347,7 +347,7 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
             "Dieses Arbeitsverhältnis beginnt am Tag der Unterzeichnung durch beide Parteien."
         ]),
         ("§2 Tätigkeit", [
-            "Der Arbeitnehmer wird als Assistent für Evaluierungen im Homeoffice bei Benke IT Solutions eingestellt und insbesondere mit folgenden Aufgaben betraut:",
+            "Der Arbeitnehmer wird als Assistent für Evaluierungen im Homeoffice bei Precision Labs eingestellt und insbesondere mit folgenden Aufgaben betraut:",
             "• Überprüfung von Apps und Software auf Benutzerfreundlichkeit und Mängel",
             "• Durchführung von Video-Identifikationen im Rahmen von Evaluierungen",
             "• Erstellung und fristgerechte Einreichung der dazugehörigen Abschlussberichte"
@@ -360,7 +360,7 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
             "Der Arbeitnehmer erhält eine Vergütung in Höhe von maximal 603,00 EUR monatlich.",
             "Die Vergütung ist jeweils am Monatsende des Folgemonats fällig.",
             f"IBAN für Gehaltszahlung: {contract.get('iban', 'Nicht angegeben')}",
-            "Die Tätigkeit erfolgt bei Benke IT Solutions im Homeoffice."
+            "Die Tätigkeit erfolgt bei Precision Labs im Homeoffice."
         ]),
         ("§5 Sonderzuwendungen", [
             "Der Arbeitgeber zahlt Sonderzuwendungen (Urlaubsgeld und Weihnachtsgeld) in den Monaten Juni und Dezember in Höhe von jeweils 603,00 EUR."
@@ -465,7 +465,7 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     c.drawString(11*cm, y_pos + 2*cm, "Thomas Benke")
     c.setFont("Helvetica", 9)
     c.drawString(11*cm, y_pos + 1.2*cm, employer_sign_date)
-    c.drawString(11*cm, y_pos, "Benke IT Solutions")
+    c.drawString(11*cm, y_pos, "Precision Labs")
     
     # Footer
     c.setFont("Helvetica", 8)

@@ -11,7 +11,7 @@ import {
   ChevronRight,
   FileSignature,
 } from 'lucide-react';
-import { BenkeLogo } from '../Logo';
+import { PrecisionLogo } from '../Logo';
 import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
 import MitarbeiterContractSign from '../../pages/mitarbeiter/MitarbeiterContractSign';
 import MitarbeiterVerification from '../../pages/mitarbeiter/MitarbeiterVerification';
@@ -132,7 +132,7 @@ const MitarbeiterLayout = ({ children }) => {
         <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
           {isSidebarOpen && (
             <div className="flex items-center space-x-2">
-              <BenkeLogo className="w-8 h-8" />
+              <PrecisionLogo className="w-8 h-8" />
               <span className="text-lg font-bold text-gray-900">
                 Mitarbeiter
               </span>
@@ -197,7 +197,7 @@ const MitarbeiterLayout = ({ children }) => {
           <aside className="lg:hidden fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-gray-200 z-50 flex flex-col">
             <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
               <div className="flex items-center space-x-2">
-                <BenkeLogo className="w-8 h-8" />
+                <PrecisionLogo className="w-8 h-8" />
                 <span className="text-lg font-bold text-gray-900">Mitarbeiter</span>
               </div>
               <button
