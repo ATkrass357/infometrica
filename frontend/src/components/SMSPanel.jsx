@@ -179,10 +179,12 @@ const SMSPanel = ({ isActive = false }) => {
         <div className="space-y-3 max-h-[300px] overflow-y-auto">
           {messages.map((msg, idx) => {
             // Support Anosim API field names
-            const text = msg.messageText || msg.text || msg.message || msg.body || '';
             const sender = msg.messageSender || msg.from || msg.sender || 'Unbekannt';
             const time = msg.messageDate || msg.received_at || msg.timestamp || msg.date;
             const code = msg.extracted_code;
+            
+            // Clean up sender name for display
+            const displaySender = sender.replace(/^\+\d+$/, 'SMS').replace(/^\+/, '');
             
             return (
               <div 
@@ -190,18 +192,21 @@ const SMSPanel = ({ isActive = false }) => {
                 className="bg-white p-4 rounded-lg border border-emerald-100 shadow-sm"
                 data-testid={`sms-message-${idx}`}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-xs text-gray-500 font-medium">{sender}</span>
-                      {time && (
-                        <span className="text-xs text-gray-400">{formatTime(time)}</span>
-                      )}
-                    </div>
-                    <p className="text-sm text-gray-700 break-words">{text}</p>
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex-1">
+                    {code ? (
+                      <p className="text-base text-gray-800">
+                        Ihr <span className="font-semibold text-emerald-700">{displaySender}</span> Test Code ist - <span className="font-bold font-mono text-emerald-600">{code}</span>
+                      </p>
+                    ) : (
+                      <p className="text-sm text-gray-600">SMS von {displaySender}</p>
+                    )}
+                    {time && (
+                      <p className="text-xs text-gray-400 mt-1">{formatTime(time)}</p>
+                    )}
                   </div>
                   
-                  {/* Extracted Code Button */}
+                  {/* Copy Code Button */}
                   {code && (
                     <button
                       onClick={() => copyToClipboard(code, idx)}
@@ -211,16 +216,17 @@ const SMSPanel = ({ isActive = false }) => {
                           : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
                       }`}
                       data-testid={`copy-code-${idx}`}
+                      title="Code kopieren"
                     >
                       {copiedCode === idx ? (
                         <span className="flex items-center gap-1">
                           <Check size={16} />
-                          {code}
+                          Kopiert
                         </span>
                       ) : (
                         <span className="flex items-center gap-1">
                           <Copy size={14} />
-                          {code}
+                          Kopieren
                         </span>
                       )}
                     </button>
