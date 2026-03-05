@@ -15,6 +15,15 @@ from services.email_service import (
     send_account_unlocked
 )
 
+# Import SMS service
+from services.sms_service import (
+    send_application_accepted_sms,
+    send_contract_signed_sms,
+    send_verification_complete_sms,
+    send_account_unlocked_sms,
+    send_task_assigned_sms
+)
+
 router = APIRouter(prefix="/api/applications", tags=["applications"])
 
 # Directory for storing verification images
@@ -195,6 +204,11 @@ async def upload_verification(
         }}
     )
     
+    # Send SMS notification
+    phone = application.get("mobilnummer", "")
+    if phone:
+        await send_verification_complete_sms(phone, application["name"])
+    
     return {"message": "Dokumente erfolgreich hochgeladen", "status": "Verifiziert"}
 
 
@@ -242,6 +256,11 @@ async def accept_application(
         to_email=application["email"],
         applicant_name=application["name"]
     )
+    
+    # Send SMS notification
+    phone = application.get("mobilnummer", "")
+    if phone:
+        await send_application_accepted_sms(phone, application["name"])
     
     return {"message": "Bewerbung akzeptiert", "status": "Akzeptiert"}
 
@@ -336,6 +355,11 @@ async def unlock_applicant(
         employee_name=application["name"]
     )
     
+    # Send SMS notification
+    phone = application.get("mobilnummer", "")
+    if phone:
+        await send_account_unlocked_sms(phone, application["name"])
+    
     return {"message": "Mitarbeiter freigeschaltet", "status": "Freigeschaltet"}
 
 
@@ -393,6 +417,11 @@ async def sign_contract(
             "signature_file": signature_filename
         }}
     )
+    
+    # Send SMS notification
+    phone = application.get("mobilnummer", "")
+    if phone:
+        await send_contract_signed_sms(phone, application["name"])
     
     return {"message": "Vertrag erfolgreich unterschrieben", "status": "Vertrag unterschrieben"}
 

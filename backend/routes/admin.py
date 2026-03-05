@@ -10,6 +10,9 @@ import uuid
 # Import email service
 from services.email_service import send_new_task_notification
 
+# Import SMS service
+from services.sms_service import send_task_assigned_sms
+
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
 # Get database instance - will be injected
@@ -360,6 +363,14 @@ async def assign_task_multiple(
                 task_title=task.get("title", "Neue Aufgabe"),
                 due_date=task.get("due_date")
             )
+    
+    # Send SMS notifications to all assigned employees
+    for assignment in assignments:
+        employee = await db.employees.find_one({"id": assignment["employee_id"]})
+        if employee:
+            phone = employee.get("phone", "") or employee.get("mobilnummer", "")
+            if phone:
+                await send_task_assigned_sms(phone, assignment["employee_name"], task.get("title", "Neue Aufgabe"))
     
     return {
         "message": f"Aufgabe an {len(assignments)} Mitarbeiter zugewiesen",
