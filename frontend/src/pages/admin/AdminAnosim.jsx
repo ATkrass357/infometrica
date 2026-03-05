@@ -72,7 +72,8 @@ const AdminAnosim = () => {
         `${BACKEND_URL}/api/anosim/assign`,
         {
           employee_id: selectedEmployee.id,
-          anosim_number: selectedNumber.phone
+          anosim_number: selectedNumber.phone,
+          anosim_booking_id: selectedNumber.id ? String(selectedNumber.id) : null
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );

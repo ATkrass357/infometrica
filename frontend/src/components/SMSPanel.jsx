@@ -178,9 +178,10 @@ const SMSPanel = ({ isActive = false }) => {
       ) : (
         <div className="space-y-3 max-h-[300px] overflow-y-auto">
           {messages.map((msg, idx) => {
-            const text = msg.text || msg.message || msg.body || '';
-            const sender = msg.from || msg.sender || 'Unbekannt';
-            const time = msg.received_at || msg.timestamp || msg.date;
+            // Support Anosim API field names
+            const text = msg.messageText || msg.text || msg.message || msg.body || '';
+            const sender = msg.messageSender || msg.from || msg.sender || 'Unbekannt';
+            const time = msg.messageDate || msg.received_at || msg.timestamp || msg.date;
             const code = msg.extracted_code;
             
             return (

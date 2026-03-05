@@ -12,6 +12,7 @@ import logging
 from services.anosim_service import (
     get_purchased_numbers, 
     get_sms_for_number, 
+    get_sms_for_booking,
     get_latest_sms,
     extract_verification_code
 )
@@ -57,6 +58,7 @@ def verify_employee_token(authorization: str = Header(None)):
 class AssignNumberRequest(BaseModel):
     employee_id: str
     anosim_number: str
+    anosim_booking_id: Optional[str] = None
 
 
 class RemoveNumberRequest(BaseModel):
@@ -135,10 +137,14 @@ async def admin_assign_number(
             detail=f"Diese Nummer ist bereits {existing_assignment.get('name', 'einem anderen Mitarbeiter')} zugewiesen"
         )
     
-    # Assign the number to the employee
+    # Assign the number to the employee (with booking_id if provided)
+    update_data = {"anosim_number": request.anosim_number}
+    if request.anosim_booking_id:
+        update_data["anosim_booking_id"] = request.anosim_booking_id
+    
     await db.employees.update_one(
         {"id": request.employee_id},
-        {"$set": {"anosim_number": request.anosim_number}}
+        {"$set": update_data}
     )
     
     logger.info(f"Anosim number {request.anosim_number[:8]}*** assigned to employee {request.employee_id}")
@@ -240,10 +246,10 @@ async def employee_get_my_sms(
     payload = verify_employee_token(authorization)
     employee_id = payload.get("id")
     
-    # Get employee's assigned number
+    # Get employee's assigned number and booking_id
     employee = await db.employees.find_one(
         {"id": employee_id},
-        {"_id": 0, "anosim_number": 1}
+        {"_id": 0, "anosim_number": 1, "anosim_booking_id": 1}
     )
     
     if not employee or not employee.get("anosim_number"):
@@ -253,9 +259,14 @@ async def employee_get_my_sms(
         )
     
     phone_number = employee.get("anosim_number")
+    booking_id = employee.get("anosim_booking_id")
     
-    # Fetch SMS from Anosim API
-    result = await get_sms_for_number(phone_number, limit=limit)
+    # Fetch SMS - use booking_id if available (faster, avoids rate limits)
+    if booking_id:
+        result = await get_sms_for_booking(booking_id)
+        result["phone_number"] = phone_number
+    else:
+        result = await get_sms_for_number(phone_number, limit=limit)
     
     if result["status"] != "success":
         raise HTTPException(status_code=500, detail=result.get("message", "Fehler beim Abrufen der SMS"))
@@ -263,7 +274,7 @@ async def employee_get_my_sms(
     # Add extracted verification codes to messages
     messages = result.get("messages", [])
     for msg in messages:
-        text = msg.get("text", msg.get("message", msg.get("body", "")))
+        text = msg.get("messageText", msg.get("text", msg.get("message", msg.get("body", ""))))
         if text:
             code = extract_verification_code(text)
             if code:
