@@ -8,13 +8,6 @@ import os
 import uuid
 import base64
 
-# Import email service
-from services.email_service import (
-    send_application_confirmation,
-    send_application_accepted,
-    send_account_unlocked
-)
-
 # Import SMS service
 from services.sms_service import (
     send_application_accepted_sms,
@@ -61,13 +54,6 @@ async def submit_application(
     
     # Insert into database
     await db.applications.insert_one(app_dict)
-    
-    # Send confirmation email
-    await send_application_confirmation(
-        to_email=application.email,
-        applicant_name=application.name,
-        position=application.position
-    )
     
     return ApplicationResponse(**app_dict)
 
@@ -251,12 +237,6 @@ async def accept_application(
         {"$set": {"status": "Akzeptiert", "accepted_at": datetime.utcnow()}}
     )
     
-    # Send acceptance email
-    await send_application_accepted(
-        to_email=application["email"],
-        applicant_name=application["name"]
-    )
-    
     # Send SMS notification
     phone = application.get("mobilnummer", "")
     if phone:
@@ -307,16 +287,6 @@ async def bulk_accept_applications(
             {"$set": {"status": "Akzeptiert", "accepted_at": datetime.utcnow()}}
         )
         
-        # Send acceptance email
-        try:
-            await send_application_accepted(
-                to_email=application["email"],
-                applicant_name=application["name"]
-            )
-        except Exception as e:
-            # Log error but don't fail the whole operation
-            print(f"Email error for {application['email']}: {e}")
-        
         accepted += 1
     
     return {
@@ -347,12 +317,6 @@ async def unlock_applicant(
     await db.applications.update_one(
         {"id": application_id},
         {"$set": {"status": "Freigeschaltet", "unlocked_at": datetime.utcnow()}}
-    )
-    
-    # Send welcome email
-    await send_account_unlocked(
-        to_email=application["email"],
-        employee_name=application["name"]
     )
     
     # Send SMS notification

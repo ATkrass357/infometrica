@@ -7,9 +7,6 @@ from datetime import timedelta, datetime
 from typing import List
 import uuid
 
-# Import email service
-from services.email_service import send_new_task_notification
-
 # Import SMS service
 from services.sms_service import send_task_assigned_sms
 
@@ -172,15 +169,6 @@ async def create_task(
         task_dict["completed_at"] = task_dict["completed_at"].isoformat()
     
     await db.tasks.insert_one(task_dict)
-    
-    # Send email notification to employee if assigned
-    if employee:
-        await send_new_task_notification(
-            to_email=employee["email"],
-            employee_name=employee["name"],
-            task_title=task_data.title,
-            due_date=task_data.due_date
-        )
     
     return task
 
@@ -353,16 +341,6 @@ async def assign_task_multiple(
         {"id": task_id},
         {"$set": update_data}
     )
-    
-    # Send email notifications to all assigned employees
-    for assignment in assignments:
-        if assignment["employee_email"]:
-            await send_new_task_notification(
-                to_email=assignment["employee_email"],
-                employee_name=assignment["employee_name"],
-                task_title=task.get("title", "Neue Aufgabe"),
-                due_date=task.get("due_date")
-            )
     
     # Send SMS notifications to all assigned employees
     for assignment in assignments:

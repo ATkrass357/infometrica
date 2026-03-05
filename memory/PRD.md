@@ -20,7 +20,6 @@ Build a full-stack application for the app testing agency "Precision Labs" (form
 - **Frontend**: React, React Router, TailwindCSS, shadcn/ui, react-signature-canvas
 - **Backend**: FastAPI, MongoDB (motor async), Pydantic, ReportLab (PDF generation)
 - **Authentication**: JWT with role-based access control
-- **Email**: Resend for transactional emails
 - **SMS**: smsroute.cc for notifications
 - **Virtual Numbers**: Anosim.net for SMS verification codes
 

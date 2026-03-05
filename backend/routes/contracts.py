@@ -18,9 +18,6 @@ from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer, Image
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
 
-# Import email service
-from services.email_service import send_contract_ready
-
 router = APIRouter(prefix="/api/contracts", tags=["contracts"])
 
 # Directory for storing contracts
@@ -81,13 +78,6 @@ async def create_contract(
     }
     
     await db.contracts.insert_one(contract)
-    
-    # Send email notification
-    await send_contract_ready(
-        to_email=contract_data.employee_email,
-        employee_name=contract_data.employee_name,
-        position=contract_data.position
-    )
     
     return {
         "message": "Vertrag erstellt",
