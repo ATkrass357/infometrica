@@ -42,8 +42,11 @@ export const Navbar = () => {
             <img 
               src={LOGO_URL} 
               alt="Precision Labs" 
-              className="h-10 w-auto"
+              className="h-12 w-auto"
             />
+            <span className="text-xl font-bold text-[#0A0A0A]">
+              Precision <span className="text-[#00C853]">Labs</span>
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -91,7 +94,12 @@ export const Navbar = () => {
       }`}>
         <div className="p-6">
           <div className="flex justify-between items-center mb-12">
-            <img src={LOGO_URL} alt="Precision Labs" className="h-10" />
+            <div className="flex items-center gap-3">
+              <img src={LOGO_URL} alt="Precision Labs" className="h-12" />
+              <span className="text-xl font-bold text-[#0A0A0A]">
+                Precision <span className="text-[#00C853]">Labs</span>
+              </span>
+            </div>
             <button
               onClick={() => setIsMobileMenuOpen(false)}
               className="p-2 hover:bg-slate-100 rounded-full transition-colors"

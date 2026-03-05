@@ -32,7 +32,12 @@ export const Footer = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-5">
-            <img src={LOGO_URL} alt="Precision Labs" className="h-12 mb-6 brightness-0 invert" />
+            <div className="flex items-center gap-3 mb-6">
+              <img src={LOGO_URL} alt="Precision Labs" className="h-14 brightness-0 invert" />
+              <span className="text-2xl font-bold text-white">
+                Precision <span className="text-[#00C853]">Labs</span>
+              </span>
+            </div>
             <p className="text-slate-400 leading-relaxed max-w-sm mb-8">
               Ihr Partner für professionelles Application Testing. 
               Deutsche Präzision trifft auf modernste Testing-Methoden.
