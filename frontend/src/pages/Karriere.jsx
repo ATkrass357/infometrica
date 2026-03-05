@@ -247,14 +247,14 @@ const Karriere = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-orange-50">
+      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-50 via-white to-emerald-50">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="inline-block px-4 py-2 bg-#E8F5E9 text-orange-600 rounded-full text-sm font-medium mb-6">
+          <div className="inline-block px-4 py-2 bg-emerald-50 text-emerald-600 rounded-full text-sm font-medium mb-6">
             Karriere bei Precision Labs
           </div>
           <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
             Werde Teil unseres{' '}
-            <span className="text-#00C853">Teams</span>
+            <span className="text-emerald-500">Teams</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
             Arbeite mit den besten Testing-Experten und gestalte die Zukunft der 
@@ -269,7 +269,7 @@ const Karriere = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Warum <span className="text-#00C853">Precision Labs?</span>
+              Warum <span className="text-emerald-500">Precision Labs?</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Entdecke die Vorteile, die dich bei uns erwarten
@@ -284,8 +284,8 @@ const Karriere = () => {
                   key={index}
                   className="bg-gray-50 p-8 rounded-2xl hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2"
                 >
-                  <div className="w-14 h-14 bg-#E8F5E9 rounded-xl flex items-center justify-center mb-6">
-                    <Icon className="text-#00C853" size={28} />
+                  <div className="w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center mb-6">
+                    <Icon className="text-emerald-500" size={28} />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">
                     {benefit.title}
@@ -305,7 +305,7 @@ const Karriere = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Offene <span className="text-#00C853">Stellen</span>
+              Offene <span className="text-emerald-500">Stellen</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Finde deine passende Position in unserem Team
@@ -325,11 +325,11 @@ const Karriere = () => {
                     </h3>
                     <div className="flex flex-wrap gap-4 mb-4">
                       <div className="flex items-center text-gray-600">
-                        <MapPin size={18} className="mr-2 text-#00C853" />
+                        <MapPin size={18} className="mr-2 text-emerald-500" />
                         {position.location}
                       </div>
                       <div className="flex items-center text-gray-600">
-                        <Clock size={18} className="mr-2 text-#00C853" />
+                        <Clock size={18} className="mr-2 text-emerald-500" />
                         {position.type}
                       </div>
                     </div>
@@ -339,7 +339,7 @@ const Karriere = () => {
                       <ul className="space-y-2">
                         {position.requirements.map((req, idx) => (
                           <li key={idx} className="flex items-start">
-                            <CheckCircle className="text-#00C853 mr-2 flex-shrink-0 mt-0.5" size={18} />
+                            <CheckCircle className="text-emerald-500 mr-2 flex-shrink-0 mt-0.5" size={18} />
                             <span className="text-gray-600">{req}</span>
                           </li>
                         ))}
@@ -349,7 +349,7 @@ const Karriere = () => {
                   <div className="lg:ml-6">
                     <a
                       href="#bewerbung"
-                      className="inline-flex items-center justify-center px-6 py-3 bg-#00C853 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors duration-200 whitespace-nowrap"
+                      className="inline-flex items-center justify-center px-6 py-3 bg-emerald-500 text-white rounded-xl font-semibold hover:bg-emerald-600 transition-colors duration-200 whitespace-nowrap"
                     >
                       Jetzt bewerben
                     </a>
@@ -366,7 +366,7 @@ const Karriere = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Jetzt <span className="text-#00C853">bewerben</span>
+              Jetzt <span className="text-emerald-500">bewerben</span>
             </h2>
             <p className="text-xl text-gray-600">
               Sende uns deine Bewerbungsunterlagen und wir melden uns zeitnah bei dir
@@ -456,7 +456,7 @@ const Karriere = () => {
               {/* Account-Daten */}
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4 pb-2 border-b border-gray-200">
-                  <Lock className="inline mr-2 text-#00C853" size={20} />
+                  <Lock className="inline mr-2 text-emerald-500" size={20} />
                   Zugangsdaten
                 </h3>
                 <p className="text-sm text-gray-600 mb-4">
@@ -596,7 +596,7 @@ const Karriere = () => {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full h-14 bg-#00C853 hover:bg-orange-600 text-white text-lg font-semibold rounded-xl transition-all duration-200 transform hover:scale-105"
+                className="w-full h-14 bg-emerald-500 hover:bg-emerald-600 text-white text-lg font-semibold rounded-xl transition-all duration-200 transform hover:scale-105"
               >
                 {isSubmitting ? (
                   <span className="flex items-center justify-center">
@@ -616,7 +616,7 @@ const Karriere = () => {
           <div className="mt-8 text-center text-sm text-gray-600">
             <p>
               Mit dem Absenden Ihrer Bewerbung stimmen Sie unserer{' '}
-              <Link to="/datenschutz" className="text-#00C853 hover:text-orange-600 underline">
+              <Link to="/datenschutz" className="text-emerald-500 hover:text-emerald-600 underline">
                 Datenschutzerklärung
               </Link>{' '}
               zu.
@@ -626,17 +626,17 @@ const Karriere = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-#00C853 to-orange-600">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-emerald-500 to-emerald-600">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
             Fragen zu deiner Karriere?
           </h2>
-          <p className="text-xl text-#E8F5E9 mb-8">
+          <p className="text-xl text-emerald-100 mb-8">
             Unser HR-Team beantwortet gerne alle deine Fragen rund um Bewerbung und Karrieremöglichkeiten.
           </p>
           <Link
             to="/kontakt"
-            className="inline-flex items-center justify-center px-10 py-5 bg-white text-orange-600 rounded-xl font-bold text-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200 shadow-2xl"
+            className="inline-flex items-center justify-center px-10 py-5 bg-white text-emerald-600 rounded-xl font-bold text-lg hover:bg-gray-50 transform hover:scale-105 transition-all duration-200 shadow-2xl"
           >
             HR-Team kontaktieren
           </Link>
@@ -648,7 +648,7 @@ const Karriere = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl max-w-lg w-full shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
             {/* Header */}
-            <div className="bg-gradient-to-r from-#00C853 to-orange-600 p-6 text-white text-center relative">
+            <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 p-6 text-white text-center relative">
               <button
                 onClick={() => setShowSuccessModal(false)}
                 className="absolute top-4 right-4 p-1 hover:bg-white/20 rounded-full transition-colors"
@@ -659,14 +659,14 @@ const Karriere = () => {
                 <PartyPopper size={32} className="text-white" />
               </div>
               <h3 className="text-2xl font-bold">Bewerbung erfolgreich!</h3>
-              <p className="text-#E8F5E9 mt-2">Vielen Dank für Ihr Interesse an Precision Labs</p>
+              <p className="text-emerald-100 mt-2">Vielen Dank für Ihr Interesse an Precision Labs</p>
             </div>
 
             {/* Content */}
             <div className="p-6 space-y-6">
-              <div className="bg-orange-50 border border-orange-200 rounded-xl p-4">
+              <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4">
                 <h4 className="font-semibold text-gray-900 mb-2 flex items-center gap-2">
-                  <CheckCircle className="text-#00C853" size={20} />
+                  <CheckCircle className="text-emerald-500" size={20} />
                   Nächster Schritt
                 </h4>
                 <p className="text-gray-600 text-sm">
@@ -695,7 +695,7 @@ const Karriere = () => {
               <div className="space-y-3">
                 <h4 className="font-semibold text-gray-900">Login-Adresse:</h4>
                 <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-3">
-                  <code className="flex-1 text-sm text-orange-600 break-all">
+                  <code className="flex-1 text-sm text-emerald-600 break-all">
                     {getLoginUrl()}
                   </code>
                   <button
@@ -714,7 +714,7 @@ const Karriere = () => {
                   href={getLoginUrl()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-#00C853 text-white rounded-xl font-semibold hover:bg-orange-600 transition-colors"
+                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 text-white rounded-xl font-semibold hover:bg-emerald-600 transition-colors"
                 >
                   <ExternalLink size={18} />
                   Zum Login
