@@ -273,9 +273,9 @@ const AdminAnosim = () => {
                   Mitarbeiter auswählen
                 </label>
                 <div className="space-y-2 max-h-[200px] overflow-y-auto">
-                  {availableEmployees.map((emp) => (
+                  {availableEmployees.map((emp, idx) => (
                     <div
-                      key={emp.id}
+                      key={`emp-${emp.id}-${idx}`}
                       onClick={() => setSelectedEmployee(emp)}
                       className={`p-4 rounded-lg cursor-pointer transition-all border ${
                         selectedEmployee?.id === emp.id

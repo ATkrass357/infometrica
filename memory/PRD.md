@@ -1,39 +1,43 @@
-# Benke IT Solutions - App Testing Agency Platform
+# Precision Labs - App Testing Agency Platform
 
 ## Original Problem Statement
-Build a full-stack application for the app testing agency "Benke IT Solutions" with:
-1. **Public Website** - German language, white/orange theme
-2. **Admin Panel** - Tokyo Night theme for managing applications, tasks, and contracts
-3. **Employee Dashboard** - Orange/white theme for viewing assigned tasks and signing contracts
+Build a full-stack application for the app testing agency "Precision Labs" (formerly "Benke IT Solutions") with:
+1. **Public Website** - German language, green/white theme (ultra-modern design)
+2. **Admin Panel** - Tokyo Night theme for managing applications, tasks, contracts, and virtual phone numbers
+3. **Employee Dashboard** - Orange/white theme for viewing assigned tasks, signing contracts, and viewing SMS verification codes
 
 ## Core Requirements
 - German language throughout
 - Role-based authentication (Admin, Applicant, Employee)
-- Task management with 4-part descriptions
+- Task management with 4-part descriptions and multi-person assignment
 - Application tracking with ID verification (Geldwaschegesetz compliance)
 - Digital contract signing with IBAN collection
 - Minijob employment contracts (603 EUR/month)
+- SMS notifications via smsroute.cc
+- Virtual phone numbers via Anosim.net for testing
 
 ## Tech Stack
 - **Frontend**: React, React Router, TailwindCSS, shadcn/ui, react-signature-canvas
 - **Backend**: FastAPI, MongoDB (motor async), Pydantic, ReportLab (PDF generation)
 - **Authentication**: JWT with role-based access control
 - **Email**: Resend for transactional emails
+- **SMS**: smsroute.cc for notifications
+- **Virtual Numbers**: Anosim.net for SMS verification codes
 
 ---
 
 ## What's Been Implemented
 
 ### Public Website (100% Complete)
-- [x] Home page with hero section
+- [x] Home page with hero section (green/white ultra-modern design)
 - [x] Unternehmen (About) page
 - [x] Dienstleistungen (Services) page
 - [x] Karriere (Career) page with application form + password selection
 - [x] Kontakt (Contact) page
-- [x] Impressum (Imprint) page with correct company data
+- [x] Impressum (Imprint) page - Precision Labs branding
 - [x] Datenschutz (Privacy Policy) page
-- [x] Logo and branding - **BENKE IT**
-- [x] Footer with admin login link
+- [x] Logo and branding - **Precision Labs**
+- [x] Footer (Emergent badge removed as requested)
 
 ### Admin Panel (100% Complete)
 - [x] Secure login at `/admin/login`
@@ -44,34 +48,42 @@ Build a full-stack application for the app testing agency "Benke IT Solutions" w
 - [x] Task Management with multi-person assignment
 - [x] Contract Management
 - [x] Document Management
+- [x] **Anosim Number Management** at `/admin/anosim` (NEW - March 2026)
 
 ### Employee Dashboard (100% Complete)
 - [x] Secure login at `/mitarbeiter/login`
 - [x] Orange/white theme
-- [x] Contract signing with IBAN and signature
-- [x] Task viewing
+- [x] Contract signing with IBAN and signature (before ID verification)
+- [x] Task viewing with status management
+- [x] **SMS Verification Panel** - Shows when task is "In Bearbeitung" (NEW - March 2026)
 - [x] Settings page
 - [x] Documents page
 
+### SMS Integration (100% Complete)
+- [x] smsroute.cc integration for transactional SMS
+- [x] Automated notifications for:
+  - Application acceptance
+  - Contract signed
+  - ID verification complete
+  - Account unlocked
+  - Task assignment
+
+### Anosim.net Integration (100% Complete - March 2026)
+- [x] Admin can assign virtual phone numbers to employees
+- [x] Admin can view/remove number assignments
+- [x] Employees see SMS panel only when task is "In Bearbeitung"
+- [x] Auto-refresh and manual refresh of incoming SMS
+- [x] Automatic verification code extraction from SMS text
+
 ---
 
-## Rebranding Status (December 2025)
-
-### ✅ COMPLETED
-- All frontend components updated to "Benke IT Solutions"
-- All backend email templates updated
-- All login pages show "Benke IT" logo
-- All footers show "© 2026 Benke IT Solutions"
-- Impressum updated with new company data
-- FROM_EMAIL changed to noreply@benke-it.de
-- All test files updated with new email addresses
-- All documentation updated
-
-### Company Information
-- **Name**: Benke IT Solutions
-- **Address**: Potsdamer Straße 6, 14947 Nuthe-Urstromtal, Deutschland
-- **Email**: info@benke-it.de
-- **Website**: www.benke-it.de
+## Onboarding Flow (Updated)
+1. User applies via Karriere page
+2. Admin accepts application
+3. **Employee signs contract** (NEW: Contract before ID)
+4. Employee uploads ID documents
+5. Admin verifies documents and unlocks account
+6. Employee can now access full dashboard and tasks
 
 ---
 
@@ -79,10 +91,8 @@ Build a full-stack application for the app testing agency "Benke IT Solutions" w
 
 | Role | Email | Password | Status |
 |------|-------|----------|--------|
-| Admin | admin@benke-it.de | R&2w&ccKXdhFs*M!qA | - |
-| Employee | mitarbeiter@benke-it.de | Mitarbeiter123! | Freigeschaltet |
-
-**Note:** The actual database users may still have old email addresses. These credentials are for documentation purposes.
+| Admin | admin@benke-it.de | Inf0m3tr!ca#2025Sec | Active |
+| Employee | mitarbeiter@infometrica.de | Mitarbeiter123! | Freigeschaltet |
 
 ---
 
@@ -96,6 +106,7 @@ Build a full-stack application for the app testing agency "Benke IT Solutions" w
 | GET | /api/applications | Get all applications (admin) |
 | POST | /api/applications/{id}/accept | Accept single application |
 | POST | /api/applications/bulk-accept | Accept multiple applications |
+| POST | /api/applications/sign-contract | Sign employment contract |
 | POST | /api/applications/{id}/unlock | Unlock verified employee |
 
 ### Task Endpoints
@@ -124,20 +135,15 @@ Build a full-stack application for the app testing agency "Benke IT Solutions" w
 | GET | /api/employee/documents | Get documents |
 | POST | /api/employee/documents/upload | Upload document |
 
----
-
-## Upcoming Tasks
-
-### P1 - High Priority
-- [ ] Create DEPLOYMENT.md from existing deployment guide
-
-### P2 - Medium Priority
-- [ ] Employee management module in admin panel (CRUD operations)
-- [ ] Refactor server.py into separate route files
-
-### P3 - Future Enhancements
-- [ ] Dashboard analytics
-- [ ] Multi-language support
+### Anosim Endpoints (NEW - March 2026)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | /api/anosim/assignments | Get all number assignments (admin) |
+| POST | /api/anosim/assign | Assign number to employee (admin) |
+| POST | /api/anosim/unassign | Remove number from employee (admin) |
+| GET | /api/anosim/my-number | Get assigned number (employee) |
+| GET | /api/anosim/my-sms | Get SMS for assigned number (employee) |
+| GET | /api/anosim/latest-code | Get latest verification code (employee) |
 
 ---
 
@@ -149,23 +155,52 @@ Build a full-stack application for the app testing agency "Benke IT Solutions" w
 │   │   ├── admin.py
 │   │   ├── applications.py
 │   │   ├── contracts.py
-│   │   └── employee.py
+│   │   ├── employee.py
+│   │   └── anosim.py (NEW)
 │   ├── services/
-│   │   └── email_service.py
+│   │   ├── email_service.py
+│   │   ├── sms_service.py
+│   │   └── anosim_service.py (NEW)
 │   ├── uploads/
 │   └── server.py
 └── frontend/
     └── src/
         ├── components/
-        │   ├── pages/
-        │   │   ├── admin/
-        │   │   ├── employee/
-        │   │   └── public/
-        │   └── layouts/
+        │   ├── SMSPanel.jsx (NEW)
+        │   ├── admin/
+        │   └── mitarbeiter/
+        ├── pages/
+        │   ├── admin/
+        │   │   ├── AdminAnosim.jsx (NEW)
+        │   │   └── ...
+        │   ├── mitarbeiter/
+        │   └── public/
         └── App.js
 ```
 
 ---
 
+## Upcoming Tasks
+
+### P1 - High Priority
+- [ ] Full employee management module in admin panel (CRUD operations)
+
+### P2 - Medium Priority
+- [ ] Dashboard analytics
+
+### P3 - Future Enhancements
+- [ ] Multi-language support
+
+---
+
+## Completed Tasks (March 2026)
+- [x] Anosim.net API integration
+- [x] Admin page for managing virtual phone numbers
+- [x] SMS Panel in employee task view
+- [x] Automatic code extraction from SMS
+- [x] Auto-refresh functionality for SMS
+
+---
+
 ## Last Updated
-December 2025 - Complete rebranding from Infometrica to Benke IT Solutions verified and completed.
+March 2026 - Anosim.net integration completed and tested (100% pass rate).

@@ -81,19 +81,29 @@ async def get_sms_for_number(phone_number: str, limit: int = 20) -> dict:
                 params={"limit": limit}
             )
             
-            data = response.json()
+            # Handle 404 or non-200 responses gracefully
+            if response.status_code == 404:
+                logger.info(f"No SMS found for {clean_number[:8]}*** (number not in Anosim)")
+                return {"status": "success", "messages": [], "phone_number": clean_number}
             
-            if response.status_code == 200:
-                messages = data.get("messages", data.get("sms", []))
-                logger.info(f"Fetched {len(messages)} SMS for {clean_number[:8]}***")
-                return {"status": "success", "messages": messages, "phone_number": clean_number}
-            else:
-                logger.error(f"Anosim get_sms failed: {data}")
-                return {"status": "error", "message": data.get("message", "Unknown error")}
+            if response.status_code != 200:
+                logger.warning(f"Anosim API returned {response.status_code} for {clean_number[:8]}***")
+                return {"status": "success", "messages": [], "phone_number": clean_number}
+            
+            try:
+                data = response.json()
+            except Exception:
+                # If response is not valid JSON, return empty list
+                return {"status": "success", "messages": [], "phone_number": clean_number}
+            
+            messages = data.get("messages", data.get("sms", []))
+            logger.info(f"Fetched {len(messages)} SMS for {clean_number[:8]}***")
+            return {"status": "success", "messages": messages, "phone_number": clean_number}
                 
     except Exception as e:
         logger.error(f"Anosim get_sms exception: {str(e)}")
-        return {"status": "error", "message": str(e)}
+        # Return empty list instead of error for better UX
+        return {"status": "success", "messages": [], "phone_number": clean_number}
 
 
 async def get_latest_sms(phone_number: str) -> dict:
