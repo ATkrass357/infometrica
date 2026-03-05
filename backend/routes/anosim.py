@@ -138,7 +138,11 @@ async def admin_assign_number(
         )
     
     # Assign the number to the employee (with booking_id if provided)
-    update_data = {"anosim_number": request.anosim_number}
+    from datetime import datetime, timezone
+    update_data = {
+        "anosim_number": request.anosim_number,
+        "anosim_assigned_at": datetime.now(timezone.utc).isoformat()
+    }
     if request.anosim_booking_id:
         update_data["anosim_booking_id"] = request.anosim_booking_id
     
@@ -242,14 +246,17 @@ async def employee_get_my_sms(
 ):
     """
     Get SMS messages for the employee's assigned number
+    Only returns messages received AFTER the number was assigned
     """
+    from datetime import datetime
+    
     payload = verify_employee_token(authorization)
     employee_id = payload.get("id")
     
-    # Get employee's assigned number and booking_id
+    # Get employee's assigned number, booking_id, and assignment timestamp
     employee = await db.employees.find_one(
         {"id": employee_id},
-        {"_id": 0, "anosim_number": 1, "anosim_booking_id": 1}
+        {"_id": 0, "anosim_number": 1, "anosim_booking_id": 1, "anosim_assigned_at": 1}
     )
     
     if not employee or not employee.get("anosim_number"):
@@ -260,6 +267,15 @@ async def employee_get_my_sms(
     
     phone_number = employee.get("anosim_number")
     booking_id = employee.get("anosim_booking_id")
+    assigned_at_str = employee.get("anosim_assigned_at")
+    
+    # Parse assignment timestamp
+    assigned_at = None
+    if assigned_at_str:
+        try:
+            assigned_at = datetime.fromisoformat(assigned_at_str.replace('Z', '+00:00'))
+        except:
+            pass
     
     # Fetch SMS - use booking_id if available (faster, avoids rate limits)
     if booking_id:
@@ -271,18 +287,36 @@ async def employee_get_my_sms(
     if result["status"] != "success":
         raise HTTPException(status_code=500, detail=result.get("message", "Fehler beim Abrufen der SMS"))
     
-    # Add extracted verification codes to messages
+    # Filter messages to only show those received AFTER assignment
     messages = result.get("messages", [])
+    filtered_messages = []
+    
     for msg in messages:
+        # Get message timestamp
+        msg_date_str = msg.get("messageDate") or msg.get("received_at") or msg.get("timestamp") or msg.get("date")
+        
+        if assigned_at and msg_date_str:
+            try:
+                msg_date = datetime.fromisoformat(msg_date_str.replace('Z', '+00:00'))
+                # Only include messages received after assignment
+                if msg_date <= assigned_at:
+                    continue
+            except:
+                pass
+        
+        # Extract verification code
         text = msg.get("messageText", msg.get("text", msg.get("message", msg.get("body", ""))))
         if text:
             code = extract_verification_code(text)
             if code:
                 msg["extracted_code"] = code
+        
+        filtered_messages.append(msg)
     
     return {
         "phone_number": phone_number,
-        "messages": messages
+        "messages": filtered_messages[:limit],
+        "assigned_at": assigned_at_str
     }
 
 
