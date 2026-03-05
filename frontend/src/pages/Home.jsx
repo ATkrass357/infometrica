@@ -1,209 +1,296 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Shield, Zap, BarChart3, Code2, ChevronRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Shield, Zap, BarChart3, Code2, Play, CheckCircle } from 'lucide-react';
+
+const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458a-46a4-83aa-a7ef43569440/images/31c2d350dad6978320d16680435185ac4d3ed1b7bc213f06a2774d3ee186a694.png";
 
 const Home = () => {
+  const stats = [
+    { value: '500+', label: 'Getestete Apps', delay: '0ms' },
+    { value: '98%', label: 'Erfolgsquote', delay: '100ms' },
+    { value: '24h', label: 'Response Time', delay: '200ms' },
+    { value: '25+', label: 'Experten', delay: '300ms' },
+  ];
+
+  const services = [
+    {
+      icon: Shield,
+      title: 'Funktionales Testing',
+      desc: 'End-to-End Validierung aller Features',
+      tags: ['Regression', 'Integration', 'E2E'],
+      size: 'large',
+    },
+    {
+      icon: Zap,
+      title: 'Performance',
+      desc: 'Speed & Load Optimierung',
+      tags: ['Load Tests', 'Stress Tests'],
+      size: 'small',
+      accent: true,
+    },
+    {
+      icon: BarChart3,
+      title: 'Usability',
+      desc: 'UX Testing durch echte Nutzer',
+      tags: ['A/B Tests', 'Accessibility'],
+      size: 'small',
+    },
+    {
+      icon: Code2,
+      title: 'Automatisierung',
+      desc: 'CI/CD Pipeline Integration',
+      tags: ['Selenium', 'Cypress', 'Appium'],
+      size: 'large',
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section - Asymmetric Layout */}
-      <section className="relative pt-28 pb-24 lg:pt-36 lg:pb-32 overflow-hidden">
-        {/* Geometric Background */}
+    <div className="min-h-screen bg-white overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center">
+        {/* Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-[#00C853] transform skew-x-[-6deg] translate-x-20 hidden lg:block" />
-          <div className="absolute top-20 left-10 w-72 h-72 bg-[#B9F6CA] rounded-full blur-3xl opacity-40" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#B9F6CA] rounded-full blur-3xl opacity-30" />
+          <div className="absolute -top-1/2 -right-1/4 w-[800px] h-[800px] rounded-full bg-gradient-to-br from-[#E8F5E9] to-transparent blur-3xl opacity-60" />
+          <div className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#F0FDF4] to-transparent blur-3xl opacity-40" />
+          
+          {/* Grid Pattern */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(0,200,83,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,83,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-12 py-32">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
             <div className="space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#1A1A1A] text-white text-sm font-medium tracking-wide rounded-full">
-                <span className="w-2 h-2 bg-[#00C853] rounded-full animate-pulse" />
-                PRÄZISION IN JEDEM PIXEL
+              {/* Badge */}
+              <div className="inline-flex items-center gap-3 px-4 py-2 bg-[#0A0A0A] rounded-full">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C853] opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00C853]"></span>
+                </span>
+                <span className="text-white text-sm font-medium tracking-wide">Jetzt verfügbar für neue Projekte</span>
               </div>
               
-              <h1 className="text-5xl lg:text-7xl font-bold text-[#1A1A1A] leading-[0.95] tracking-tight">
-                Wir testen.
+              {/* Headline */}
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-[#0A0A0A] leading-[0.9]">
+                Software
                 <br />
-                <span className="text-[#00C853]">Sie profitieren.</span>
+                <span className="text-[#00C853]">fehlerfrei</span>
+                <br />
+                machen.
               </h1>
               
-              <p className="text-lg text-[#4A4A4A] max-w-lg leading-relaxed">
-                Precision Labs ist Ihr Spezialist für professionelles Application Testing. 
-                Wir finden die Fehler, bevor Ihre Nutzer es tun.
+              {/* Subline */}
+              <p className="text-lg md:text-xl text-slate-600 max-w-md leading-relaxed">
+                Wir sind Precision Labs — Ihr Partner für professionelles Application Testing. 
+                Deutsche Gründlichkeit trifft auf modernste Methoden.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-4 pt-4">
                 <Link
                   to="/kontakt"
-                  data-testid="home-hero-cta"
-                  className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-[#00C853] text-white font-semibold rounded-md hover:bg-[#009624] hover:scale-105 transition-all duration-200 shadow-lg shadow-[#00C853]/20"
+                  data-testid="hero-cta-primary"
+                  className="group inline-flex items-center gap-3 h-14 px-8 bg-[#00C853] text-white font-semibold rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 shadow-lg shadow-[#00C853]/25"
                 >
                   Projekt starten
-                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform duration-200" />
                 </Link>
                 <Link
                   to="/dienstleistungen"
-                  data-testid="home-services-link"
-                  className="inline-flex items-center justify-center gap-3 px-8 py-4 border-2 border-[#1A1A1A] text-[#1A1A1A] font-semibold rounded-md hover:bg-[#1A1A1A] hover:text-white transition-all duration-200"
+                  data-testid="hero-cta-secondary"
+                  className="group inline-flex items-center gap-3 h-14 px-8 border-2 border-slate-200 text-[#0A0A0A] font-semibold rounded-full hover:border-[#0A0A0A] transition-colors duration-200"
                 >
-                  Leistungen ansehen
+                  <Play size={18} className="text-[#00C853]" />
+                  So arbeiten wir
                 </Link>
               </div>
             </div>
 
-            {/* Right - Stats Cards */}
-            <div className="relative lg:pl-12">
+            {/* Right - Stats Grid */}
+            <div className="relative">
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white p-8 border-l-4 border-[#00C853] shadow-xl rounded-lg">
-                  <div className="text-5xl font-bold text-[#1A1A1A] mb-2">500+</div>
-                  <div className="text-[#4A4A4A] font-medium">Getestete Apps</div>
-                </div>
-                <div className="bg-[#1A1A1A] p-8 text-white mt-8 rounded-lg">
-                  <div className="text-5xl font-bold mb-2">98%</div>
-                  <div className="text-gray-400 font-medium">Kundenzufriedenheit</div>
-                </div>
-                <div className="bg-[#1A1A1A] p-8 text-white rounded-lg">
-                  <div className="text-5xl font-bold mb-2">2+</div>
-                  <div className="text-gray-400 font-medium">Jahre Erfahrung</div>
-                </div>
-                <div className="bg-white p-8 border border-gray-200 shadow-xl rounded-lg hover:border-[#00C853] transition-colors duration-300">
-                  <div className="text-5xl font-bold text-[#1A1A1A] mb-2">25+</div>
-                  <div className="text-[#4A4A4A] font-medium">Test-Experten</div>
-                </div>
+                {stats.map((stat, i) => (
+                  <div
+                    key={i}
+                    className="group relative bg-white border border-slate-100 p-8 rounded-2xl hover:border-[#00C853]/50 hover:-translate-y-1 transition-all duration-300"
+                    style={{ animationDelay: stat.delay }}
+                  >
+                    <div className="absolute top-4 right-4 w-8 h-8 rounded-full bg-[#F0FDF4] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                      <ArrowUpRight size={14} className="text-[#00C853]" />
+                    </div>
+                    <div className="text-4xl md:text-5xl font-bold text-[#0A0A0A] mb-2">{stat.value}</div>
+                    <div className="text-slate-500 font-medium">{stat.label}</div>
+                  </div>
+                ))}
+              </div>
+              
+              {/* Floating Badge */}
+              <div className="absolute -bottom-4 -left-4 bg-[#0A0A0A] text-white px-6 py-3 rounded-full shadow-xl">
+                <span className="font-mono text-sm">seit 2024 🇩🇪</span>
               </div>
             </div>
           </div>
         </div>
+        
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400">
+          <span className="text-xs font-mono uppercase tracking-widest">Scroll</span>
+          <div className="w-px h-12 bg-gradient-to-b from-slate-300 to-transparent" />
+        </div>
       </section>
 
-      {/* Services - Bento Grid */}
-      <section className="py-24 md:py-32 px-6 lg:px-12 bg-[#F4F7F5]">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-8 mb-16">
+      {/* Services Bento Grid */}
+      <section className="py-24 md:py-32 px-6 md:px-12 bg-[#F8F9FA] noise-overlay">
+        <div className="max-w-[1400px] mx-auto relative z-10">
+          {/* Section Header */}
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-16">
             <div>
-              <div className="text-[#00C853] font-semibold tracking-wide mb-4">DIENSTLEISTUNGEN</div>
-              <h2 className="text-4xl lg:text-5xl font-bold text-[#1A1A1A] leading-tight">
-                Testing auf<br />höchstem Niveau
+              <span className="text-[#00C853] font-mono text-sm uppercase tracking-widest mb-4 block">Services</span>
+              <h2 className="text-4xl md:text-6xl font-bold text-[#0A0A0A]">
+                Was wir<br />testen.
               </h2>
             </div>
             <Link
               to="/dienstleistungen"
-              className="group inline-flex items-center gap-2 text-[#1A1A1A] font-semibold hover:text-[#00C853] transition-colors"
+              className="group inline-flex items-center gap-2 text-[#0A0A0A] font-semibold hover:text-[#00C853] transition-colors"
             >
-              Alle Leistungen
-              <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+              Alle Services
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
           {/* Bento Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Large Card */}
-            <div className="lg:col-span-2 bg-[#1A1A1A] p-10 group hover:bg-[#2A2A2A] transition-colors duration-300 rounded-lg">
-              <Shield className="text-[#00C853] mb-6" size={48} strokeWidth={1.5} />
-              <h3 className="text-2xl font-bold text-white mb-4">Funktionales Testing</h3>
-              <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                Umfassende Prüfung aller Funktionen Ihrer Anwendung. Wir stellen sicher, 
-                dass jedes Feature einwandfrei funktioniert – auf allen Plattformen und Geräten.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {['Regression Tests', 'Integration Tests', 'End-to-End'].map((tag) => (
-                  <span key={tag} className="px-4 py-2 bg-[#333] text-gray-300 text-sm font-medium rounded-md">
-                    {tag}
-                  </span>
-                ))}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            {/* Large Card 1 */}
+            <div className="md:col-span-2 group relative bg-[#0A0A0A] p-10 rounded-2xl overflow-hidden hover-lift">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#00C853]/10 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2" />
+              <div className="relative z-10">
+                <Shield className="text-[#00C853] mb-6" size={48} strokeWidth={1.5} />
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-4">Funktionales Testing</h3>
+                <p className="text-slate-400 text-lg leading-relaxed mb-8">
+                  End-to-End Validierung aller App-Features auf allen Plattformen und Geräten.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {['Regression', 'Integration', 'E2E', 'API'].map(tag => (
+                    <span key={tag} className="px-4 py-1.5 bg-white/10 text-white/80 text-sm rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Small Card */}
-            <div className="bg-[#00C853] p-10 group rounded-lg hover:scale-[1.02] transition-transform duration-300">
-              <Zap className="text-white mb-6" size={48} strokeWidth={1.5} />
-              <h3 className="text-2xl font-bold text-white mb-4">Performance Testing</h3>
-              <p className="text-white/80 leading-relaxed">
-                Analyse von Ladezeiten, Speicherverbrauch und Systemstabilität unter Last.
+            {/* Small Card - Accent */}
+            <div className="group relative bg-[#00C853] p-8 rounded-2xl overflow-hidden hover-lift">
+              <Zap className="text-white mb-4" size={40} strokeWidth={1.5} />
+              <h3 className="text-xl font-bold text-white mb-2">Performance</h3>
+              <p className="text-white/80 text-sm leading-relaxed">
+                Speed & Load Testing unter realen Bedingungen.
               </p>
             </div>
 
             {/* Small Card */}
-            <div className="bg-white p-10 group hover:border-[#00C853] border border-gray-200 transition-colors duration-300 rounded-lg">
-              <BarChart3 className="text-[#1A1A1A] mb-6" size={48} strokeWidth={1.5} />
-              <h3 className="text-2xl font-bold text-[#1A1A1A] mb-4">Usability Testing</h3>
-              <p className="text-[#4A4A4A] leading-relaxed">
-                Bewertung der Benutzerfreundlichkeit durch echte Nutzer-Tests und Expertenbewertungen.
+            <div className="group relative bg-white border border-slate-100 p-8 rounded-2xl hover:border-[#00C853]/50 transition-colors hover-lift">
+              <BarChart3 className="text-[#0A0A0A] mb-4" size={40} strokeWidth={1.5} />
+              <h3 className="text-xl font-bold text-[#0A0A0A] mb-2">Usability</h3>
+              <p className="text-slate-600 text-sm leading-relaxed">
+                UX Testing durch echte User und Experten.
               </p>
             </div>
 
-            {/* Large Card */}
-            <div className="lg:col-span-2 bg-gradient-to-br from-[#1A1A1A] to-[#2A2A2A] p-10 relative overflow-hidden rounded-lg">
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#00C853]/10 rounded-full blur-3xl" />
+            {/* Large Card 2 */}
+            <div className="md:col-span-2 group relative bg-gradient-to-br from-slate-50 to-white border border-slate-100 p-10 rounded-2xl overflow-hidden hover-lift">
+              <div className="absolute bottom-0 right-0 w-48 h-48 bg-[#00C853]/5 rounded-full blur-2xl" />
               <div className="relative z-10">
                 <Code2 className="text-[#00C853] mb-6" size={48} strokeWidth={1.5} />
-                <h3 className="text-2xl font-bold text-white mb-4">Automatisiertes Testing</h3>
-                <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                  CI/CD-Integration mit automatisierten Test-Suites. Kontinuierliche Qualitätssicherung 
-                  bei jedem Deployment – schnell, zuverlässig und kosteneffizient.
+                <h3 className="text-2xl md:text-3xl font-bold text-[#0A0A0A] mb-4">Automatisierung</h3>
+                <p className="text-slate-600 text-lg leading-relaxed mb-8">
+                  CI/CD-Integration mit automatisierten Test-Suites für kontinuierliche Qualität.
                 </p>
-                <Link
-                  to="/dienstleistungen"
-                  className="inline-flex items-center gap-2 text-[#00C853] font-semibold hover:text-[#B9F6CA] transition-colors"
-                >
-                  Mehr erfahren <ArrowRight size={18} />
-                </Link>
+                <div className="flex flex-wrap gap-2">
+                  {['Selenium', 'Cypress', 'Appium', 'Jenkins'].map(tag => (
+                    <span key={tag} className="px-4 py-1.5 bg-[#0A0A0A] text-white text-sm rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </div>
+            </div>
+
+            {/* Wide Card */}
+            <div className="md:col-span-2 group relative bg-[#0A0A0A] p-8 rounded-2xl flex items-center gap-8 hover-lift">
+              <div className="flex-1">
+                <span className="text-[#00C853] font-mono text-xs uppercase tracking-widest mb-2 block">Neu</span>
+                <h3 className="text-xl font-bold text-white mb-2">Mobile App Testing</h3>
+                <p className="text-slate-400 text-sm">iOS & Android native und hybrid Apps.</p>
+              </div>
+              <Link to="/dienstleistungen" className="w-12 h-12 rounded-full bg-[#00C853] flex items-center justify-center hover:scale-110 transition-transform">
+                <ArrowRight className="text-white" size={20} />
+              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Why Us - Split Section */}
-      <section className="py-24 md:py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+      {/* Why Us Section */}
+      <section className="py-24 md:py-32 px-6 md:px-12">
+        <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Image Side */}
             <div className="relative">
-              <div className="aspect-[4/5] bg-[#F4F7F5] overflow-hidden rounded-lg">
+              <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-slate-100">
                 <img
                   src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800"
                   alt="Team bei der Arbeit"
                   className="w-full h-full object-cover"
                 />
               </div>
+              
               {/* Floating Card */}
-              <div className="absolute -bottom-8 -right-8 bg-[#00C853] p-8 max-w-xs hidden lg:block rounded-lg shadow-xl">
-                <div className="text-white">
-                  <div className="text-4xl font-bold mb-2">Deutschland</div>
-                  <div className="text-white/80">Nuthe-Urstromtal</div>
+              <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-2xl border border-slate-100 max-w-xs">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-[#00C853] flex items-center justify-center">
+                    <CheckCircle className="text-white" size={24} />
+                  </div>
+                  <div>
+                    <div className="font-bold text-[#0A0A0A]">ISTQB Zertifiziert</div>
+                    <div className="text-sm text-slate-500">Alle Teammitglieder</div>
+                  </div>
                 </div>
+              </div>
+              
+              {/* Experience Badge */}
+              <div className="absolute top-6 -left-6 bg-[#0A0A0A] text-white px-6 py-4 rounded-2xl">
+                <div className="text-3xl font-bold">2+</div>
+                <div className="text-sm text-slate-400">Jahre Erfahrung</div>
               </div>
             </div>
 
             {/* Content Side */}
             <div className="space-y-8">
-              <div className="text-[#00C853] font-semibold tracking-wide">ÜBER UNS</div>
-              <h2 className="text-4xl lg:text-5xl font-bold text-[#1A1A1A] leading-tight">
-                Deutsche Präzision.<br />
-                Globale Standards.
+              <span className="text-[#00C853] font-mono text-sm uppercase tracking-widest">Warum Precision Labs</span>
+              <h2 className="text-4xl md:text-6xl font-bold text-[#0A0A0A] leading-[0.95]">
+                Deutsche<br />
+                Präzision.
               </h2>
-              <p className="text-lg text-[#4A4A4A] leading-relaxed">
-                Seit über 2 Jahren setzen wir Maßstäbe im Application Testing. 
-                Unser Team aus zertifizierten Experten verbindet deutsche Gründlichkeit 
-                mit modernsten Testing-Methoden.
+              <p className="text-lg text-slate-600 leading-relaxed max-w-lg">
+                Wir verbinden deutsche Gründlichkeit mit modernsten Testing-Methoden. 
+                Unser Team aus zertifizierten Experten findet die Fehler, bevor Ihre Nutzer es tun.
               </p>
 
               <div className="space-y-6 pt-4">
                 {[
-                  { title: 'ISTQB-zertifizierte Tester', desc: 'Höchste Qualifikationsstandards' },
-                  { title: 'Agile Methoden', desc: 'Nahtlose Integration in Ihren Workflow' },
-                  { title: 'Dedizierter Support', desc: 'Persönlicher Ansprechpartner für Ihr Projekt' },
+                  { title: '100% Remote', desc: 'Flexibel für Ihr Team' },
+                  { title: 'Agile Methoden', desc: 'Nahtlose Integration' },
+                  { title: '24h Support', desc: 'Immer erreichbar' },
                 ].map((item, i) => (
-                  <div key={i} className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-[#00C853] flex items-center justify-center flex-shrink-0 rounded-md">
-                      <CheckCircle2 className="text-white" size={24} strokeWidth={1.5} />
+                  <div key={i} className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-full border-2 border-slate-200 flex items-center justify-center group-hover:border-[#00C853] group-hover:bg-[#00C853] transition-all duration-300">
+                      <CheckCircle size={20} className="text-slate-400 group-hover:text-white transition-colors" />
                     </div>
                     <div>
-                      <div className="font-bold text-[#1A1A1A]">{item.title}</div>
-                      <div className="text-[#4A4A4A]">{item.desc}</div>
+                      <div className="font-bold text-[#0A0A0A]">{item.title}</div>
+                      <div className="text-slate-500 text-sm">{item.desc}</div>
                     </div>
                   </div>
                 ))}
@@ -211,10 +298,9 @@ const Home = () => {
 
               <Link
                 to="/unternehmen"
-                data-testid="home-about-link"
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-[#1A1A1A] text-white font-semibold rounded-md hover:bg-[#333] transition-all duration-200 mt-4"
+                className="group inline-flex items-center gap-3 h-14 px-8 bg-[#0A0A0A] text-white font-semibold rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 mt-4"
               >
-                Unternehmen entdecken
+                Mehr über uns
                 <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -223,34 +309,34 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 md:py-32 bg-[#1A1A1A] relative overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#00C853]/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[#00C853]/10 rounded-full blur-3xl" />
-        </div>
+      <section className="py-24 md:py-32 px-6 md:px-12 bg-[#0A0A0A] relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,200,83,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,83,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#00C853]/10 rounded-full blur-3xl" />
         
-        <div className="max-w-4xl mx-auto px-6 lg:px-12 text-center relative z-10">
-          <h2 className="text-4xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+        <div className="max-w-4xl mx-auto text-center relative z-10">
+          <span className="text-[#00C853] font-mono text-sm uppercase tracking-widest mb-6 block">Loslegen</span>
+          <h2 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[0.95]">
             Bereit für<br />
-            <span className="text-[#00C853]">fehlerfreie Apps?</span>
+            <span className="text-[#00C853]">fehlerfreie</span> Apps?
           </h2>
-          <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+          <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto">
             Kontaktieren Sie uns für eine unverbindliche Erstberatung. 
-            Wir analysieren Ihre Anforderungen und erstellen ein maßgeschneidertes Angebot.
+            Wir analysieren Ihre Anforderungen kostenlos.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/kontakt"
-              data-testid="home-cta-contact"
-              className="group inline-flex items-center justify-center gap-3 px-10 py-5 bg-[#00C853] text-white font-bold text-lg rounded-md hover:bg-[#009624] hover:scale-105 transition-all duration-200 shadow-lg shadow-[#00C853]/30"
+              data-testid="cta-contact"
+              className="group inline-flex items-center justify-center gap-3 h-16 px-10 bg-[#00C853] text-white font-bold text-lg rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 shadow-lg shadow-[#00C853]/30"
             >
               Jetzt Kontakt aufnehmen
               <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               to="/karriere"
-              data-testid="home-cta-career"
-              className="inline-flex items-center justify-center gap-3 px-10 py-5 border-2 border-gray-700 text-white font-bold text-lg rounded-md hover:border-[#00C853] hover:text-[#00C853] transition-all duration-200"
+              data-testid="cta-careers"
+              className="inline-flex items-center justify-center gap-3 h-16 px-10 border-2 border-slate-700 text-white font-bold text-lg rounded-full hover:border-[#00C853] hover:text-[#00C853] transition-colors duration-200"
             >
               Karriere bei uns
             </Link>

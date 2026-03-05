@@ -4,6 +4,7 @@ import { Lock, Mail, AlertCircle, Briefcase } from 'lucide-react';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458a-46a4-83aa-a7ef43569440/images/31c2d350dad6978320d16680435185ac4d3ed1b7bc213f06a2774d3ee186a694.png";
 
 const MitarbeiterLogin = () => {
   const navigate = useNavigate();
@@ -73,17 +74,8 @@ const MitarbeiterLogin = () => {
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center space-x-3 mb-4">
-            <div className="w-16 h-16 bg-[#00C853] rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-3xl">P</span>
-            </div>
-            <div className="text-left">
-              <h1 className="text-2xl font-bold text-gray-900">
-                Precision <span className="text-[#00C853]">Labs</span>
-              </h1>
-              <p className="text-sm text-gray-600">Mitarbeiter Portal</p>
-            </div>
-          </div>
+          <img src={LOGO_URL} alt="Precision Labs" className="h-16 mx-auto mb-4" />
+          <p className="text-sm text-gray-600">Mitarbeiter Portal</p>
         </div>
 
         {/* Login Card */}
