@@ -134,9 +134,12 @@ const MitarbeiterLayout = ({ children }) => {
             <div className="flex items-center space-x-2">
               <PrecisionLogo className="w-8 h-8" />
               <span className="text-lg font-bold text-gray-900">
-                Mitarbeiter
+                Precision <span className="text-emerald-500">Labs</span>
               </span>
             </div>
+          )}
+          {!isSidebarOpen && (
+            <PrecisionLogo className="w-8 h-8 mx-auto" />
           )}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -198,7 +201,9 @@ const MitarbeiterLayout = ({ children }) => {
             <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
               <div className="flex items-center space-x-2">
                 <PrecisionLogo className="w-8 h-8" />
-                <span className="text-lg font-bold text-gray-900">Mitarbeiter</span>
+                <span className="text-lg font-bold text-gray-900">
+                  Precision <span className="text-emerald-500">Labs</span>
+                </span>
               </div>
               <button
                 onClick={() => setIsMobileSidebarOpen(false)}
