@@ -79,8 +79,8 @@ const Datenschutz = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-orange-50 via-white to-orange-50">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="w-20 h-20 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Shield className="text-orange-500" size={40} />
+          <div className="w-20 h-20 bg-#E8F5E9 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Shield className="text-#00C853" size={40} />
           </div>
           <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
             Datenschutz­erklärung
@@ -116,11 +116,11 @@ const Datenschutz = () => {
               Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
             </p>
             <div className="bg-gray-50 p-6 rounded-xl space-y-2 text-gray-700">
-              <p className="font-semibold text-lg">Benke IT Solutions</p>
+              <p className="font-semibold text-lg">Precision Labs</p>
               <p>Potsdamer Straße 6</p>
               <p>14947 Nuthe-Urstromtal</p>
               <p>Deutschland</p>
-              <p className="pt-3">E-Mail: datenschutz@benke-it.de</p>
+              <p className="pt-3">E-Mail: datenschutz@precision-labs.de</p>
             </div>
             <p className="text-gray-700 mt-6 text-sm">
               Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder 
@@ -135,8 +135,8 @@ const Datenschutz = () => {
             return (
               <div key={index} className="bg-white rounded-2xl shadow-lg p-8 lg:p-12 mb-8">
                 <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center">
-                  <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center mr-4">
-                    <Icon className="text-orange-500" size={24} />
+                  <div className="w-12 h-12 bg-#E8F5E9 rounded-xl flex items-center justify-center mr-4">
+                    <Icon className="text-#00C853" size={24} />
                   </div>
                   {section.title}
                 </h2>
@@ -164,37 +164,37 @@ const Datenschutz = () => {
             </h2>
             <div className="space-y-4 text-gray-700">
               <div className="flex items-start">
-                <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                <div className="w-6 h-6 bg-#00C853 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
                 <p><strong>Recht auf Auskunft:</strong> Sie haben das Recht, eine Bestätigung darüber zu verlangen, ob Sie betreffende personenbezogene Daten verarbeitet werden.</p>
               </div>
               <div className="flex items-start">
-                <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                <div className="w-6 h-6 bg-#00C853 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
                 <p><strong>Recht auf Berichtigung:</strong> Sie haben das Recht, die Berichtigung unrichtiger oder die Vervollständigung unvollständiger Daten zu verlangen.</p>
               </div>
               <div className="flex items-start">
-                <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                <div className="w-6 h-6 bg-#00C853 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
                 <p><strong>Recht auf Löschung:</strong> Sie haben das Recht, die Löschung Ihrer personenbezogenen Daten zu verlangen.</p>
               </div>
               <div className="flex items-start">
-                <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                <div className="w-6 h-6 bg-#00C853 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
                 <p><strong>Recht auf Einschränkung:</strong> Sie haben das Recht, die Einschränkung der Verarbeitung zu verlangen.</p>
               </div>
               <div className="flex items-start">
-                <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                <div className="w-6 h-6 bg-#00C853 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
                 <p><strong>Recht auf Datenübertragbarkeit:</strong> Sie haben das Recht, Ihre Daten in einem strukturierten, gängigen und maschinenlesbaren Format zu erhalten.</p>
               </div>
               <div className="flex items-start">
-                <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
+                <div className="w-6 h-6 bg-#00C853 rounded-full flex items-center justify-center mr-3 mt-1 flex-shrink-0">
                   <span className="text-white text-sm font-bold">✓</span>
                 </div>
                 <p><strong>Widerspruchsrecht:</strong> Sie haben das Recht, gegen die Verarbeitung Ihrer Daten Widerspruch einzulegen.</p>
@@ -212,8 +212,8 @@ const Datenschutz = () => {
             </p>
             <div className="bg-orange-50 p-6 rounded-xl">
               <p className="text-gray-900 font-semibold mb-2">Datenschutzbeauftragter</p>
-              <p className="text-gray-700">Benke IT Solutions</p>
-              <p className="text-gray-700">E-Mail: datenschutz@benke-it.de</p>
+              <p className="text-gray-700">Precision Labs</p>
+              <p className="text-gray-700">E-Mail: datenschutz@precision-labs.de</p>
               <p className="text-gray-700">Telefon: +49 (0) 123 456789</p>
             </div>
           </div>
@@ -222,13 +222,13 @@ const Datenschutz = () => {
           <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/"
-              className="inline-flex items-center justify-center px-6 py-3 text-orange-500 hover:text-orange-600 font-semibold transition-colors duration-200"
+              className="inline-flex items-center justify-center px-6 py-3 text-#00C853 hover:text-orange-600 font-semibold transition-colors duration-200"
             >
               ← Zurück zur Startseite
             </Link>
             <Link
               to="/impressum"
-              className="inline-flex items-center justify-center px-6 py-3 text-orange-500 hover:text-orange-600 font-semibold transition-colors duration-200"
+              className="inline-flex items-center justify-center px-6 py-3 text-#00C853 hover:text-orange-600 font-semibold transition-colors duration-200"
             >
               Zum Impressum →
             </Link>

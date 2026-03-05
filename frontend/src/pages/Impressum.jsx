@@ -25,11 +25,11 @@ const Impressum = () => {
             {/* Company Information */}
             <div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                <Building2 className="mr-3 text-orange-500" size={28} />
+                <Building2 className="mr-3 text-#00C853" size={28} />
                 Firmeninformationen
               </h2>
               <div className="space-y-2 text-gray-700 ml-11">
-                <p className="font-semibold text-lg">Benke IT Solutions</p>
+                <p className="font-semibold text-lg">Precision Labs</p>
                 <p>Potsdamer Straße 6</p>
                 <p>14947 Nuthe-Urstromtal</p>
                 <p>Deutschland</p>
@@ -45,12 +45,12 @@ const Impressum = () => {
               </h2>
               <div className="space-y-3">
                 <div className="flex items-center text-gray-700">
-                  <Mail className="mr-3 text-orange-500 flex-shrink-0" size={20} />
-                  <span>E-Mail: info@benke-it.de</span>
+                  <Mail className="mr-3 text-#00C853 flex-shrink-0" size={20} />
+                  <span>E-Mail: info@precision-labs.de</span>
                 </div>
                 <div className="flex items-start text-gray-700">
-                  <MapPin className="mr-3 text-orange-500 flex-shrink-0 mt-1" size={20} />
-                  <span>Internet: www.benke-it.de</span>
+                  <MapPin className="mr-3 text-#00C853 flex-shrink-0 mt-1" size={20} />
+                  <span>Internet: www.precision-labs.de</span>
                 </div>
               </div>
             </div>
@@ -119,7 +119,7 @@ const Impressum = () => {
                     href="https://ec.europa.eu/consumers/odr/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-orange-500 hover:text-orange-600 underline"
+                    className="text-#00C853 hover:text-orange-600 underline"
                   >
                     https://ec.europa.eu/consumers/odr/
                   </a>
@@ -186,7 +186,7 @@ const Impressum = () => {
           <div className="mt-8 text-center">
             <Link
               to="/"
-              className="inline-flex items-center justify-center px-6 py-3 text-orange-500 hover:text-orange-600 font-semibold transition-colors duration-200"
+              className="inline-flex items-center justify-center px-6 py-3 text-#00C853 hover:text-orange-600 font-semibold transition-colors duration-200"
             >
               ← Zurück zur Startseite
             </Link>

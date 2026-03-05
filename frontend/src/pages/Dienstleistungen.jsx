@@ -8,8 +8,7 @@ import {
   Smartphone,
   Monitor,
   Globe,
-  ArrowRight,
-  CheckCircle2
+  ArrowRight
 } from 'lucide-react';
 
 const Dienstleistungen = () => {
@@ -19,16 +18,16 @@ const Dienstleistungen = () => {
       title: 'Funktionales Testing',
       description: 'Umfassende Überprüfung aller Funktionen Ihrer Anwendung. Wir testen jeden Button, jede Eingabe und jeden Workflow.',
       features: ['Unit Testing', 'Integration Tests', 'End-to-End Testing', 'Regression Tests'],
-      accent: 'bg-slate-900',
+      accent: 'bg-[#1A1A1A]',
       textColor: 'text-white',
-      accentColor: 'text-orange-500',
+      accentColor: 'text-[#00C853]',
     },
     {
       icon: Zap,
       title: 'Performance Testing',
       description: 'Analyse der Geschwindigkeit, Stabilität und Skalierbarkeit. Ihre App performt auch unter Hochlast.',
       features: ['Load Testing', 'Stress Testing', 'Response Time Analyse', 'Memory Profiling'],
-      accent: 'bg-orange-500',
+      accent: 'bg-[#00C853]',
       textColor: 'text-white',
       accentColor: 'text-white',
     },
@@ -37,18 +36,18 @@ const Dienstleistungen = () => {
       title: 'Usability Testing',
       description: 'Bewertung der Benutzerfreundlichkeit durch echte Nutzer. Optimierung der User Experience.',
       features: ['UX Analyse', 'A/B Testing', 'Accessibility Tests', 'Interface Review'],
-      accent: 'bg-white border border-slate-200',
-      textColor: 'text-slate-900',
-      accentColor: 'text-orange-500',
+      accent: 'bg-white border border-gray-200',
+      textColor: 'text-[#1A1A1A]',
+      accentColor: 'text-[#00C853]',
     },
     {
       icon: Code2,
       title: 'Automatisierung',
       description: 'CI/CD-Integration mit automatisierten Test-Suites. Kontinuierliche Qualitätssicherung.',
       features: ['Selenium', 'Cypress', 'Appium', 'CI/CD Integration'],
-      accent: 'bg-slate-100',
-      textColor: 'text-slate-900',
-      accentColor: 'text-orange-500',
+      accent: 'bg-[#F4F7F5]',
+      textColor: 'text-[#1A1A1A]',
+      accentColor: 'text-[#00C853]',
     },
   ];
 
@@ -66,17 +65,17 @@ const Dienstleistungen = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="pt-32 pb-20 px-6 lg:px-8 bg-white">
+      <section className="pt-32 pb-20 px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl">
-            <div className="text-orange-500 font-semibold tracking-wide mb-4">LEISTUNGEN</div>
-            <h1 className="text-5xl lg:text-7xl font-black text-slate-900 leading-[0.9] tracking-tight mb-6">
+            <div className="text-[#00C853] font-semibold tracking-wide mb-4">LEISTUNGEN</div>
+            <h1 className="text-5xl lg:text-7xl font-bold text-[#1A1A1A] leading-[0.95] tracking-tight mb-6">
               Testing-Services<br />
-              <span className="text-orange-500">die überzeugen.</span>
+              <span className="text-[#00C853]">die überzeugen.</span>
             </h1>
-            <p className="text-xl text-slate-600 leading-relaxed">
+            <p className="text-xl text-[#4A4A4A] leading-relaxed">
               Von funktionalen Tests bis zur Performance-Optimierung – wir bieten 
               das komplette Spektrum professioneller Qualitätssicherung.
             </p>
@@ -85,7 +84,7 @@ const Dienstleistungen = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="py-24 px-6 lg:px-8">
+      <section className="py-24 px-6 lg:px-12 bg-[#F4F7F5]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {services.map((service, index) => {
@@ -93,9 +92,9 @@ const Dienstleistungen = () => {
               return (
                 <div
                   key={index}
-                  className={`${service.accent} p-10 transition-all duration-300 hover:shadow-xl`}
+                  className={`${service.accent} p-10 transition-all duration-300 hover:shadow-xl rounded-lg`}
                 >
-                  <Icon className={service.accentColor} size={48} />
+                  <Icon className={service.accentColor} size={48} strokeWidth={1.5} />
                   <h3 className={`text-2xl font-bold ${service.textColor} mt-6 mb-4`}>
                     {service.title}
                   </h3>
@@ -106,12 +105,12 @@ const Dienstleistungen = () => {
                     {service.features.map((feature, idx) => (
                       <span
                         key={idx}
-                        className={`px-4 py-2 text-sm font-medium ${
-                          service.accent === 'bg-slate-900' 
-                            ? 'bg-slate-800 text-slate-300' 
-                            : service.accent === 'bg-orange-500'
-                            ? 'bg-orange-400 text-white'
-                            : 'bg-slate-100 text-slate-700'
+                        className={`px-4 py-2 text-sm font-medium rounded-md ${
+                          service.accent === 'bg-[#1A1A1A]' 
+                            ? 'bg-[#2A2A2A] text-gray-300' 
+                            : service.accent === 'bg-[#00C853]'
+                            ? 'bg-[#009624] text-white'
+                            : 'bg-white text-[#4A4A4A] border border-gray-200'
                         }`}
                       >
                         {feature}
@@ -126,11 +125,11 @@ const Dienstleistungen = () => {
       </section>
 
       {/* Platforms */}
-      <section className="py-24 px-6 lg:px-8 bg-white">
+      <section className="py-24 px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-orange-500 font-semibold tracking-wide mb-4">PLATTFORMEN</div>
-            <h2 className="text-4xl lg:text-5xl font-black text-slate-900">
+            <div className="text-[#00C853] font-semibold tracking-wide mb-4">PLATTFORMEN</div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-[#1A1A1A]">
               Alle Plattformen. Ein Partner.
             </h2>
           </div>
@@ -141,13 +140,13 @@ const Dienstleistungen = () => {
               return (
                 <div
                   key={index}
-                  className="text-center p-12 border border-slate-200 hover:border-orange-500 transition-colors duration-300"
+                  className="text-center p-12 border border-gray-200 hover:border-[#00C853] transition-colors duration-300 rounded-lg"
                 >
-                  <div className="w-20 h-20 bg-slate-900 flex items-center justify-center mx-auto mb-6">
-                    <Icon className="text-orange-500" size={36} />
+                  <div className="w-20 h-20 bg-[#1A1A1A] rounded-md flex items-center justify-center mx-auto mb-6">
+                    <Icon className="text-[#00C853]" size={36} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 mb-2">{platform.title}</h3>
-                  <p className="text-slate-600">{platform.desc}</p>
+                  <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">{platform.title}</h3>
+                  <p className="text-[#4A4A4A]">{platform.desc}</p>
                 </div>
               );
             })}
@@ -156,11 +155,11 @@ const Dienstleistungen = () => {
       </section>
 
       {/* Process */}
-      <section className="py-24 px-6 lg:px-8 bg-slate-900">
+      <section className="py-24 px-6 lg:px-12 bg-[#1A1A1A]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-orange-500 font-semibold tracking-wide mb-4">PROZESS</div>
-            <h2 className="text-4xl lg:text-5xl font-black text-white">
+            <div className="text-[#00C853] font-semibold tracking-wide mb-4">PROZESS</div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-white">
               Strukturiert zum Erfolg
             </h2>
           </div>
@@ -168,9 +167,9 @@ const Dienstleistungen = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {process.map((item, index) => (
               <div key={index} className="text-center">
-                <div className="text-6xl font-black text-orange-500 mb-4">{item.step}</div>
+                <div className="text-6xl font-bold text-[#00C853] mb-4">{item.step}</div>
                 <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-                <p className="text-slate-400">{item.desc}</p>
+                <p className="text-gray-400">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -178,17 +177,18 @@ const Dienstleistungen = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 lg:px-8 bg-orange-500">
+      <section className="py-24 px-6 lg:px-12 bg-[#00C853]">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl lg:text-5xl font-black text-white mb-6">
+          <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
             Projekt besprechen?
           </h2>
-          <p className="text-xl text-orange-100 mb-10">
+          <p className="text-xl text-white/80 mb-10">
             Lassen Sie uns gemeinsam die optimale Testing-Strategie für Ihr Projekt entwickeln.
           </p>
           <Link
             to="/kontakt"
-            className="group inline-flex items-center gap-3 px-10 py-5 bg-slate-900 text-white font-bold text-lg hover:bg-slate-800 transition-all duration-300"
+            data-testid="services-contact-cta"
+            className="group inline-flex items-center gap-3 px-10 py-5 bg-[#1A1A1A] text-white font-bold text-lg rounded-md hover:bg-[#2A2A2A] transition-all duration-200"
           >
             Kontakt aufnehmen
             <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />

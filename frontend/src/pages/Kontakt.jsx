@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, ArrowRight } from 'lucide-react';
+import { Mail, MapPin, Send } from 'lucide-react';
 import { toast } from 'sonner';
 
 const Kontakt = () => {
@@ -34,15 +34,15 @@ const Kontakt = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="pt-32 pb-16 px-6 lg:px-8 bg-slate-900">
+      <section className="pt-32 pb-16 px-6 lg:px-12 bg-[#1A1A1A]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-2xl">
-            <div className="text-orange-500 font-semibold tracking-wide mb-4">KONTAKT</div>
-            <h1 className="text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+            <div className="text-[#00C853] font-semibold tracking-wide mb-4">KONTAKT</div>
+            <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Lassen Sie uns<br />
-              <span className="text-orange-500">sprechen.</span>
+              <span className="text-[#00C853]">sprechen.</span>
             </h1>
-            <p className="text-xl text-slate-400">
+            <p className="text-xl text-gray-400">
               Haben Sie ein Projekt? Wir freuen uns auf Ihre Nachricht.
             </p>
           </div>
@@ -50,35 +50,37 @@ const Kontakt = () => {
       </section>
 
       {/* Contact Grid */}
-      <section className="py-24 px-6 lg:px-8">
+      <section className="py-24 px-6 lg:px-12">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Form */}
             <div>
-              <h2 className="text-2xl font-bold text-slate-900 mb-8">Nachricht senden</h2>
+              <h2 className="text-2xl font-bold text-[#1A1A1A] mb-8">Nachricht senden</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Name *</label>
+                    <label className="block text-sm font-semibold text-[#4A4A4A] mb-2">Name *</label>
                     <input
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
+                      data-testid="contact-name"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
                       placeholder="Ihr Name"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">E-Mail *</label>
+                    <label className="block text-sm font-semibold text-[#4A4A4A] mb-2">E-Mail *</label>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
+                      data-testid="contact-email"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
                       placeholder="ihre@email.de"
                     />
                   </div>
@@ -86,51 +88,55 @@ const Kontakt = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Unternehmen</label>
+                    <label className="block text-sm font-semibold text-[#4A4A4A] mb-2">Unternehmen</label>
                     <input
                       type="text"
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
+                      data-testid="contact-company"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
                       placeholder="Ihr Unternehmen"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-slate-700 mb-2">Telefon</label>
+                    <label className="block text-sm font-semibold text-[#4A4A4A] mb-2">Telefon</label>
                     <input
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
+                      data-testid="contact-phone"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
                       placeholder="+49 123 456789"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Betreff *</label>
+                  <label className="block text-sm font-semibold text-[#4A4A4A] mb-2">Betreff *</label>
                   <input
                     type="text"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors"
+                    data-testid="contact-subject"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
                     placeholder="Worum geht es?"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-slate-700 mb-2">Nachricht *</label>
+                  <label className="block text-sm font-semibold text-[#4A4A4A] mb-2">Nachricht *</label>
                   <textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 border border-slate-300 focus:border-orange-500 focus:ring-0 outline-none transition-colors resize-none"
+                    data-testid="contact-message"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors resize-none"
                     placeholder="Beschreiben Sie Ihr Projekt oder Ihre Anfrage..."
                   />
                 </div>
@@ -138,7 +144,8 @@ const Kontakt = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 text-white font-semibold hover:bg-slate-800 disabled:opacity-50 transition-all duration-300"
+                  data-testid="contact-submit"
+                  className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-[#00C853] text-white font-semibold rounded-md hover:bg-[#009624] disabled:opacity-50 transition-all duration-200"
                 >
                   {isSubmitting ? (
                     <>
@@ -157,36 +164,26 @@ const Kontakt = () => {
 
             {/* Contact Info */}
             <div className="lg:pl-12">
-              <h2 className="text-2xl font-bold text-slate-900 mb-8">Kontaktdaten</h2>
+              <h2 className="text-2xl font-bold text-[#1A1A1A] mb-8">Kontaktdaten</h2>
               
               <div className="space-y-8 mb-12">
-                <a href="mailto:info@benke-it.de" className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 bg-slate-900 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors">
+                <a href="mailto:info@precision-labs.de" className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 bg-[#1A1A1A] rounded-md flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C853] transition-colors">
                     <Mail className="text-white" size={20} />
                   </div>
                   <div>
-                    <div className="font-semibold text-slate-900">E-Mail</div>
-                    <div className="text-slate-600 group-hover:text-orange-500 transition-colors">info@benke-it.de</div>
-                  </div>
-                </a>
-
-                <a href="tel:+4930123456789" className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 bg-slate-900 flex items-center justify-center flex-shrink-0 group-hover:bg-orange-500 transition-colors">
-                    <Phone className="text-white" size={20} />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-slate-900">Telefon</div>
-                    <div className="text-slate-600 group-hover:text-orange-500 transition-colors">+49 (0) 30 123 456 789</div>
+                    <div className="font-semibold text-[#1A1A1A]">E-Mail</div>
+                    <div className="text-[#4A4A4A] group-hover:text-[#00C853] transition-colors">info@precision-labs.de</div>
                   </div>
                 </a>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-orange-500 flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-[#00C853] rounded-md flex items-center justify-center flex-shrink-0">
                     <MapPin className="text-white" size={20} />
                   </div>
                   <div>
-                    <div className="font-semibold text-slate-900">Adresse</div>
-                    <div className="text-slate-600">
+                    <div className="font-semibold text-[#1A1A1A]">Adresse</div>
+                    <div className="text-[#4A4A4A]">
                       Potsdamer Straße 6<br />
                       14947 Nuthe-Urstromtal, Deutschland
                     </div>
@@ -195,16 +192,16 @@ const Kontakt = () => {
               </div>
 
               {/* Office Hours */}
-              <div className="bg-slate-50 p-8">
-                <h3 className="font-bold text-slate-900 mb-4">Öffnungszeiten</h3>
-                <div className="space-y-2 text-slate-600">
+              <div className="bg-[#F4F7F5] p-8 rounded-lg">
+                <h3 className="font-bold text-[#1A1A1A] mb-4">Öffnungszeiten</h3>
+                <div className="space-y-2 text-[#4A4A4A]">
                   <div className="flex justify-between">
                     <span>Montag – Freitag</span>
-                    <span className="font-semibold text-slate-900">09:00 – 18:00</span>
+                    <span className="font-semibold text-[#1A1A1A]">09:00 – 18:00</span>
                   </div>
                   <div className="flex justify-between">
                     <span>Samstag – Sonntag</span>
-                    <span className="text-slate-400">Geschlossen</span>
+                    <span className="text-gray-400">Geschlossen</span>
                   </div>
                 </div>
               </div>
@@ -214,11 +211,11 @@ const Kontakt = () => {
       </section>
 
       {/* Map Placeholder */}
-      <section className="h-96 bg-slate-200 relative">
+      <section className="h-96 bg-[#F4F7F5] relative">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <MapPin className="text-slate-400 mx-auto mb-4" size={48} />
-            <p className="text-slate-500 font-medium">Potsdamer Straße 6, Nuthe-Urstromtal</p>
+            <MapPin className="text-[#00C853] mx-auto mb-4" size={48} strokeWidth={1.5} />
+            <p className="text-[#4A4A4A] font-medium">Potsdamer Straße 6, Nuthe-Urstromtal</p>
           </div>
         </div>
       </section>

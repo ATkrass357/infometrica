@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, AlertCircle, Briefcase } from 'lucide-react';
-import { BenkeLogo } from '../../components/Logo';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -30,21 +29,17 @@ const MitarbeiterLogin = () => {
     setIsLoading(true);
 
     try {
-      // Try applicant login first (new flow)
       const response = await axios.post(`${BACKEND_URL}/api/applications/login`, {
         email: formData.email,
         password: formData.password,
       });
 
-      // Store token and applicant data
       localStorage.setItem('employee_token', response.data.access_token);
       localStorage.setItem('employee_data', JSON.stringify(response.data.applicant));
       localStorage.setItem('employee_login_time', Date.now().toString());
 
-      // Redirect to dashboard - the layout will handle status-based routing
       navigate('/mitarbeiter/dashboard');
     } catch (err) {
-      // If applicant login fails, try old employee login for backward compatibility
       try {
         const employeeResponse = await axios.post(`${BACKEND_URL}/api/employee/login`, {
           email: formData.email,
@@ -54,7 +49,7 @@ const MitarbeiterLogin = () => {
         localStorage.setItem('employee_token', employeeResponse.data.access_token);
         localStorage.setItem('employee_data', JSON.stringify({
           ...employeeResponse.data.employee,
-          status: 'Freigeschaltet' // Old employees are fully verified
+          status: 'Freigeschaltet'
         }));
         localStorage.setItem('employee_login_time', Date.now().toString());
 
@@ -68,21 +63,23 @@ const MitarbeiterLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-orange-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#E8F5E9] via-white to-[#E8F5E9] flex items-center justify-center px-4">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-orange-200 opacity-20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-orange-300 opacity-20 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#B9F6CA] opacity-30 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#00C853] opacity-10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <BenkeLogo className="w-16 h-16" />
+            <div className="w-16 h-16 bg-[#00C853] rounded-xl flex items-center justify-center">
+              <span className="text-white font-bold text-3xl">P</span>
+            </div>
             <div className="text-left">
               <h1 className="text-2xl font-bold text-gray-900">
-                Benke <span className="text-orange-500">IT</span>
+                Precision <span className="text-[#00C853]">Labs</span>
               </h1>
               <p className="text-sm text-gray-600">Mitarbeiter Portal</p>
             </div>
@@ -91,8 +88,8 @@ const MitarbeiterLogin = () => {
 
         {/* Login Card */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-8">
-          <div className="flex items-center justify-center w-16 h-16 bg-orange-100 rounded-xl mx-auto mb-6">
-            <Briefcase className="text-orange-500" size={32} />
+          <div className="flex items-center justify-center w-16 h-16 bg-[#E8F5E9] rounded-xl mx-auto mb-6">
+            <Briefcase className="text-[#00C853]" size={32} />
           </div>
 
           <div className="mb-6 text-center">
@@ -124,7 +121,7 @@ const MitarbeiterLogin = () => {
                   onChange={handleChange}
                   required
                   data-testid="employee-login-email"
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
+                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#00C853] focus:ring-2 focus:ring-[#00C853]/20 transition-all"
                   placeholder="ihre@email.de"
                 />
               </div>
@@ -145,7 +142,7 @@ const MitarbeiterLogin = () => {
                   onChange={handleChange}
                   required
                   data-testid="employee-login-password"
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-500/20 transition-all"
+                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#00C853] focus:ring-2 focus:ring-[#00C853]/20 transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -156,7 +153,7 @@ const MitarbeiterLogin = () => {
               type="submit"
               disabled={isLoading}
               data-testid="employee-login-submit"
-              className="w-full py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-orange-700 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-orange-500/30"
+              className="w-full py-3 bg-[#00C853] text-white font-semibold rounded-lg hover:bg-[#009624] focus:outline-none focus:ring-2 focus:ring-[#00C853] focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#00C853]/30"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">
@@ -173,7 +170,7 @@ const MitarbeiterLogin = () => {
           <div className="mt-6 pt-6 border-t border-gray-200 text-center">
             <p className="text-sm text-gray-600">
               Noch kein Konto?{' '}
-              <Link to="/karriere" className="text-orange-500 hover:text-orange-600 font-medium">
+              <Link to="/karriere" className="text-[#00C853] hover:text-[#009624] font-medium">
                 Jetzt bewerben
               </Link>
             </p>
@@ -182,7 +179,7 @@ const MitarbeiterLogin = () => {
 
         {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
-          © 2026 Benke IT Solutions. Alle Rechte vorbehalten.
+          © 2026 Precision Labs. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>
