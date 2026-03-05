@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, Clock, AlertCircle, RefreshCw, Globe, ChevronDown, ChevronUp, Play, Check, Link, KeyRound } from 'lucide-react';
+import { CheckCircle, Clock, AlertCircle, RefreshCw, Globe, ChevronDown, ChevronUp, Play, Check, Link, KeyRound, Phone } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
+import SMSPanel from '../../components/SMSPanel';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -318,6 +319,17 @@ const MitarbeiterAuftrage = () => {
                             </div>
                           )}
                         </div>
+                      </div>
+                    )}
+
+                    {/* SMS Verification Panel - Only shown when task is "In Bearbeitung" */}
+                    {task.status === 'In Bearbeitung' && (
+                      <div className="mt-6 pt-4 border-t border-gray-200">
+                        <div className="flex items-center gap-2 mb-4">
+                          <Phone size={18} className="text-emerald-500" />
+                          <h5 className="font-medium text-emerald-700">SMS Verifizierungscodes</h5>
+                        </div>
+                        <SMSPanel isActive={expandedTask === task.id && task.status === 'In Bearbeitung'} />
                       </div>
                     )}
                   </div>

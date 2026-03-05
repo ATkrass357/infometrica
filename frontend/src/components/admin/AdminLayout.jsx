@@ -12,6 +12,7 @@ import {
   Shield,
   FileSignature,
   FolderOpen,
+  Phone,
 } from 'lucide-react';
 import { BenkeLogo } from '../../components/Logo';
 
@@ -51,6 +52,7 @@ const AdminLayout = ({ children }) => {
     { icon: FileSignature, label: 'Arbeitsverträge', path: '/admin/contracts' },
     { icon: FolderOpen, label: 'Dokumente', path: '/admin/documents' },
     { icon: ClipboardList, label: 'Aufgaben', path: '/admin/tasks' },
+    { icon: Phone, label: 'Anosim Nummern', path: '/admin/anosim' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
 

@@ -9,7 +9,7 @@
 
 ## Login-URL
 
-https://agency-portal-54.preview.emergentagent.com/admin/login
+https://qa-precision-labs.preview.emergentagent.com/admin/login
 
 ## Schritte:
 

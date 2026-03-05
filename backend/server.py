@@ -82,6 +82,10 @@ app.include_router(employee_router)
 from routes.contracts import router as contracts_router
 app.include_router(contracts_router)
 
+# Include anosim routes
+from routes.anosim import router as anosim_router
+app.include_router(anosim_router)
+
 # Include the router in the main app
 app.include_router(api_router)
 
