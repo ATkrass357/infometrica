@@ -13,17 +13,15 @@ ANOSIM_BASE_URL = "https://anosim.net/api/v1"
 ANOSIM_API_KEY = os.environ.get("ANOSIM_API_KEY", "")
 
 
-def get_headers():
-    """Get authentication headers for Anosim API"""
-    return {
-        "Authorization": f"Bearer {ANOSIM_API_KEY}",
-        "Content-Type": "application/json"
-    }
+def get_api_url(endpoint: str) -> str:
+    """Build API URL with apikey parameter"""
+    return f"{ANOSIM_BASE_URL}/{endpoint}?apikey={ANOSIM_API_KEY}"
 
 
-async def get_numbers() -> dict:
+async def get_purchased_numbers() -> dict:
     """
-    Get list of all phone numbers owned by the account
+    Get list of all purchased/active phone numbers from Anosim
+    Uses OrderBookingsCurrent to get active numbers
     
     Returns:
         dict with status and list of numbers
@@ -34,28 +32,76 @@ async def get_numbers() -> dict:
     
     try:
         async with httpx.AsyncClient(timeout=30.0) as client:
-            response = await client.get(
-                f"{ANOSIM_BASE_URL}/numbers",
-                headers=get_headers()
-            )
-            
-            data = response.json()
+            # Get current order bookings (active numbers)
+            response = await client.get(get_api_url("OrderBookingsCurrent"))
             
             if response.status_code == 200:
-                logger.info(f"Fetched {len(data.get('numbers', []))} numbers from Anosim")
-                return {"status": "success", "numbers": data.get("numbers", [])}
+                data = response.json()
+                # Extract phone numbers from bookings
+                numbers = []
+                bookings = data if isinstance(data, list) else data.get("data", data.get("bookings", []))
+                
+                for booking in bookings:
+                    # API returns "number" field, not "phoneNumber"
+                    phone = booking.get("number") or booking.get("phoneNumber") or booking.get("phone")
+                    if phone:
+                        numbers.append({
+                            "id": booking.get("id"),
+                            "phone": phone,
+                            "country": booking.get("country", ""),
+                            "product": booking.get("service") or booking.get("productName", ""),
+                            "status": booking.get("state", "active").lower(),
+                            "expires_at": booking.get("endDate") or booking.get("expiresAt"),
+                            "rental_type": booking.get("rentalType", "")
+                        })
+                
+                logger.info(f"Fetched {len(numbers)} active numbers from Anosim")
+                return {"status": "success", "numbers": numbers}
             else:
-                logger.error(f"Anosim get_numbers failed: {data}")
-                return {"status": "error", "message": data.get("message", "Unknown error")}
+                logger.warning(f"Anosim API returned {response.status_code}")
+                return {"status": "success", "numbers": []}
                 
     except Exception as e:
-        logger.error(f"Anosim get_numbers exception: {str(e)}")
+        logger.error(f"Anosim get_purchased_numbers exception: {str(e)}")
         return {"status": "error", "message": str(e)}
+
+
+async def get_sms_for_booking(booking_id: str) -> dict:
+    """
+    Get SMS messages for a specific order booking ID
+    
+    Args:
+        booking_id: The Anosim order booking ID
+    
+    Returns:
+        dict with status and list of SMS messages
+    """
+    if not ANOSIM_API_KEY:
+        logger.error("ANOSIM_API_KEY not configured")
+        return {"status": "error", "message": "Anosim service not configured"}
+    
+    try:
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            response = await client.get(get_api_url(f"Sms/{booking_id}"))
+            
+            if response.status_code == 200:
+                data = response.json()
+                messages = data if isinstance(data, list) else data.get("data", data.get("sms", []))
+                logger.info(f"Fetched {len(messages)} SMS for booking {booking_id}")
+                return {"status": "success", "messages": messages}
+            else:
+                logger.warning(f"Anosim SMS API returned {response.status_code}")
+                return {"status": "success", "messages": []}
+                
+    except Exception as e:
+        logger.error(f"Anosim get_sms exception: {str(e)}")
+        return {"status": "success", "messages": []}
 
 
 async def get_sms_for_number(phone_number: str, limit: int = 20) -> dict:
     """
     Get SMS messages received on a specific number
+    First finds the booking ID for the number, then fetches SMS
     
     Args:
         phone_number: The phone number to get SMS for (e.g., +491234567890)
@@ -74,35 +120,33 @@ async def get_sms_for_number(phone_number: str, limit: int = 20) -> dict:
         clean_number = f"+{clean_number}"
     
     try:
-        async with httpx.AsyncClient(timeout=30.0) as client:
-            response = await client.get(
-                f"{ANOSIM_BASE_URL}/sms/{clean_number}",
-                headers=get_headers(),
-                params={"limit": limit}
-            )
-            
-            # Handle 404 or non-200 responses gracefully
-            if response.status_code == 404:
-                logger.info(f"No SMS found for {clean_number[:8]}*** (number not in Anosim)")
-                return {"status": "success", "messages": [], "phone_number": clean_number}
-            
-            if response.status_code != 200:
-                logger.warning(f"Anosim API returned {response.status_code} for {clean_number[:8]}***")
-                return {"status": "success", "messages": [], "phone_number": clean_number}
-            
-            try:
-                data = response.json()
-            except Exception:
-                # If response is not valid JSON, return empty list
-                return {"status": "success", "messages": [], "phone_number": clean_number}
-            
-            messages = data.get("messages", data.get("sms", []))
-            logger.info(f"Fetched {len(messages)} SMS for {clean_number[:8]}***")
-            return {"status": "success", "messages": messages, "phone_number": clean_number}
+        # First get the booking ID for this number
+        numbers_result = await get_purchased_numbers()
+        if numbers_result["status"] != "success":
+            return {"status": "success", "messages": [], "phone_number": clean_number}
+        
+        # Find the booking for this number
+        booking_id = None
+        for num in numbers_result.get("numbers", []):
+            num_phone = num.get("phone", "").replace(" ", "").replace("-", "")
+            if not num_phone.startswith("+"):
+                num_phone = f"+{num_phone}"
+            if num_phone == clean_number:
+                booking_id = num.get("id")
+                break
+        
+        if not booking_id:
+            logger.info(f"No booking found for {clean_number[:8]}***")
+            return {"status": "success", "messages": [], "phone_number": clean_number}
+        
+        # Get SMS for this booking
+        sms_result = await get_sms_for_booking(str(booking_id))
+        messages = sms_result.get("messages", [])[:limit]
+        
+        return {"status": "success", "messages": messages, "phone_number": clean_number}
                 
     except Exception as e:
         logger.error(f"Anosim get_sms exception: {str(e)}")
-        # Return empty list instead of error for better UX
         return {"status": "success", "messages": [], "phone_number": clean_number}
 
 

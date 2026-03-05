@@ -10,7 +10,7 @@ import logging
 
 # Import anosim service
 from services.anosim_service import (
-    get_numbers, 
+    get_purchased_numbers, 
     get_sms_for_number, 
     get_latest_sms,
     extract_verification_code
@@ -71,16 +71,41 @@ async def admin_get_numbers(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """
-    Get all available Anosim numbers (Admin only)
+    Get all available Anosim numbers (purchased numbers from Anosim API)
+    Also returns which numbers are already assigned to employees
     """
     verify_admin_token(authorization)
     
-    result = await get_numbers()
+    # Get purchased numbers from Anosim
+    result = await get_purchased_numbers()
     
     if result["status"] != "success":
         raise HTTPException(status_code=500, detail=result.get("message", "Fehler beim Abrufen der Nummern"))
     
-    return result
+    # Get all current assignments from database
+    assignments = await db.employees.find(
+        {"anosim_number": {"$exists": True, "$ne": ""}},
+        {"_id": 0, "id": 1, "name": 1, "email": 1, "anosim_number": 1}
+    ).to_list(100)
+    
+    # Create a map of assigned numbers
+    assigned_map = {a["anosim_number"]: a for a in assignments}
+    
+    # Mark which numbers are assigned
+    numbers = result.get("numbers", [])
+    for num in numbers:
+        phone = num.get("phone", "")
+        if phone in assigned_map:
+            num["assigned_to"] = assigned_map[phone]
+        else:
+            num["assigned_to"] = None
+    
+    return {
+        "status": "success",
+        "numbers": numbers,
+        "total_purchased": len(numbers),
+        "total_assigned": len(assignments)
+    }
 
 
 @router.post("/assign")
