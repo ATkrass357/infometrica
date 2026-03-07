@@ -214,7 +214,6 @@ const Datenschutz = () => {
               <p className="text-gray-900 font-semibold mb-2">Datenschutzbeauftragter</p>
               <p className="text-gray-700">Precision Labs</p>
               <p className="text-gray-700">E-Mail: datenschutz@precision-labs.de</p>
-              <p className="text-gray-700">Telefon: +49 (0) 123 456789</p>
             </div>
           </div>
 
