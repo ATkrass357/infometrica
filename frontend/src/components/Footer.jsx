@@ -58,7 +58,7 @@ export const Footer = () => {
                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
                   <MapPin size={18} className="text-slate-400" />
                 </div>
-                <span className="text-slate-400">Potsdamer Straße 6, 14947 Nuthe-Urstromtal</span>
+                <span className="text-slate-400">Römerstraße 90, 79618 Rheinfelden (Baden)</span>
               </div>
             </div>
           </div>

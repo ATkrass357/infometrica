@@ -117,8 +117,8 @@ const Datenschutz = () => {
             </p>
             <div className="bg-gray-50 p-6 rounded-xl space-y-2 text-gray-700">
               <p className="font-semibold text-lg">Precision Labs</p>
-              <p>Potsdamer Straße 6</p>
-              <p>14947 Nuthe-Urstromtal</p>
+              <p>Römerstraße 90</p>
+              <p>79618 Rheinfelden (Baden)</p>
               <p>Deutschland</p>
               <p className="pt-3">E-Mail: datenschutz@precision-labs.de</p>
             </div>

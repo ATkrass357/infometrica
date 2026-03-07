@@ -88,17 +88,6 @@ const Impressum = () => {
                 </div>
               </div>
 
-              {/* VAT ID */}
-              <div>
-                <h2 className="text-2xl font-bold text-[#0A0A0A] mb-6">
-                  Umsatzsteuer-Identifikationsnummer
-                </h2>
-                <div className="text-slate-600">
-                  <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</p>
-                  <p className="font-mono text-lg text-[#0A0A0A] mt-2 bg-slate-100 inline-block px-4 py-2 rounded-lg">Placeholder</p>
-                </div>
-              </div>
-
               {/* Dispute Resolution */}
               <div>
                 <h2 className="text-2xl font-bold text-[#0A0A0A] mb-6">

@@ -41,8 +41,8 @@ const ContractDocument = ({ contract }) => {
       <div className="mb-6">
         <p className="font-semibold text-gray-900 mb-2">zwischen</p>
         <p className="text-gray-700 mb-1 font-medium">Precision Labs</p>
-        <p className="text-gray-700 mb-1">Potsdamer Straße 6</p>
-        <p className="text-gray-700 mb-1">14947 Nuthe-Urstromtal</p>
+        <p className="text-gray-700 mb-1">Römerstraße 90</p>
+        <p className="text-gray-700 mb-1">79618 Rheinfelden (Baden)</p>
         <p className="text-gray-700 mb-1">Deutschland</p>
         <p className="text-gray-600 italic mb-4">– nachfolgend „Arbeitgeber" genannt –</p>
         

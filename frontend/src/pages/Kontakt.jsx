@@ -184,8 +184,8 @@ const Kontakt = () => {
                   <div>
                     <div className="font-semibold text-[#1A1A1A]">Adresse</div>
                     <div className="text-[#4A4A4A]">
-                      Potsdamer Straße 6<br />
-                      14947 Nuthe-Urstromtal, Deutschland
+                      Römerstraße 90<br />
+                      79618 Rheinfelden (Baden), Deutschland
                     </div>
                   </div>
                 </div>
@@ -215,7 +215,7 @@ const Kontakt = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
             <MapPin className="text-[#00C853] mx-auto mb-4" size={48} strokeWidth={1.5} />
-            <p className="text-[#4A4A4A] font-medium">Potsdamer Straße 6, Nuthe-Urstromtal</p>
+            <p className="text-[#4A4A4A] font-medium">Römerstraße 90, 79618 Rheinfelden (Baden)</p>
           </div>
         </div>
       </section>
