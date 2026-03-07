@@ -57,11 +57,11 @@ const Impressum = () => {
                 <div className="space-y-4">
                   <div className="flex items-center text-slate-600">
                     <Mail className="mr-3 text-[#00C853] flex-shrink-0" size={20} />
-                    <span>E-Mail: info@avisec.de</span>
+                    <span>E-Mail: info@precision-labs.de</span>
                   </div>
                   <div className="flex items-center text-slate-600">
                     <MapPin className="mr-3 text-[#00C853] flex-shrink-0" size={20} />
-                    <span>Internet: www.avisec.de</span>
+                    <span>Internet: www.precision-labs.de</span>
                   </div>
                 </div>
               </div>
@@ -175,7 +175,7 @@ const Impressum = () => {
                 <div className="bg-[#0A0A0A] text-white p-8 rounded-2xl">
                   <h3 className="font-bold text-lg mb-4">Schnellkontakt</h3>
                   <div className="space-y-3 text-slate-400">
-                    <p>info@avisec.de</p>
+                    <p>info@precision-labs.de</p>
                     <p>Römerstraße 90</p>
                     <p>79618 Rheinfelden (Baden)</p>
                   </div>
