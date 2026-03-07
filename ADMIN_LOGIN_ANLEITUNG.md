@@ -9,7 +9,7 @@
 
 ## Login-URL
 
-https://qa-precision-labs.preview.emergentagent.com/admin/login
+https://sms-verify-demo-1.preview.emergentagent.com/admin/login
 
 ## Schritte:
 

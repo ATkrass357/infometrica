@@ -181,7 +181,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                       <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
                       <p>(1) Der Arbeitnehmer erhält eine Vergütung in Höhe von 25 - 70 € pro abgeschlossenem Auftrag, insgesamt maximal 603 EUR monatlich.</p>
                       <p className="mt-2">(2) Die Vergütung ist jeweils am Monatsende des Folgemonats fällig und wird per Überweisung an das vom Arbeitnehmer benannte Konto überwiesen.</p>
-                      <p className="mt-2">(3) Der Arbeitnehmer ist darauf hingewiesen worden, dass er auf Antrag von der Rentenversicherungspflicht befreit werden kann. Der schriftliche Befreiungsantrag ist dem Arbeitgeber zu übergeben (§ 6 Abs. 1b SGB VI).</p>
+                      <p className="mt-2">(3) Der Arbeitnehmer ist darauf hingewiesen worden, dass er auf Antrag von der Rentenversicherungspflicht befreit werden kann. Der schriftliche Befreiungsantrag ist dem Arbeitgeber zu übergeben (§ 6 Abs. 1b Sozialgesetzbuch Sechstes Buch - SGB).</p>
                       <p className="mt-2">(4) Dem Arbeitnehmer ist bekannt, dass ein entsprechender Verzicht nur mit Wirkung für die Zukunft und bei Ausübung von mehreren geringfügigen Beschäftigungsverhältnissen nur einheitlich erklärt werden kann und diese Erklärung den Arbeitnehmer für die Dauer der Beschäftigungen bindet.</p>
                     </div>
 
@@ -202,7 +202,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                     <div>
                       <p className="font-bold text-[#0A0A0A]">§7 Arbeitsverhinderung</p>
                       <p>(1) Der Arbeitnehmer verpflichtet sich, jede Arbeitsverhinderung unverzüglich - noch vor Dienstbeginn - dem Arbeitgeber unter Benennung der voraussichtlichen Verhinderungsdauer schriftlich mitzuteilen.</p>
-                      <p className="mt-2">(2) Im Krankheitsfall hat der Arbeitnehmer unverzüglich, spätestens jedoch nach Ablauf des dritten Kalendertages, dem Arbeitgeber eine ärztlich erstellte Arbeitsunfähigkeitsbescheinigung vorzulegen, aus der sich die voraussichtliche Dauer der Krankheit ergibt.</p>
+                      <p className="mt-2">(2) Im Krankheitsfall hat der Arbeitnehmer unverzüglich, spätestens jedoch nach Ablauf des dritten Kalendertages, dem Arbeitgeber eine ärztlich erstellte Arbeitsunfähigkeitsbescheinigung vorzulegen, aus der sich die voraussichtliche Dauer der Krankheit ergibt. Dauert die Krankheit länger an als in der ärztlich erstellten Bescheinigung angegeben, so ist der Arbeitnehmer gleichfalls zur unverzüglichen Mitteilung und Vorlage einer weiteren Bescheinigung verpflichtet.</p>
                       <p className="mt-2">(3) Der Arbeitgeber zahlt im Falle einer unverschuldeten Arbeitsunfähigkeit infolge Krankheit für sechs Wochen das regelmäßige Arbeitsentgelt weiter (Entgeltfortzahlung im Krankheitsfall).</p>
                       <p className="mt-2">(4) Im Übrigen gelten für den Krankheitsfall die jeweils maßgeblichen gesetzlichen Bestimmungen.</p>
                     </div>

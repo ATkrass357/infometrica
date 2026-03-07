@@ -29,7 +29,7 @@ const Impressum = () => {
               {/* Product Info */}
               <div className="p-8 bg-[#F0FDF4] border border-[#00C853]/20 rounded-2xl">
                 <p className="text-lg text-[#0A0A0A]">
-                  <span className="font-bold">Precision Labs</span> ist ein Produkt der <span className="font-bold">Placeholder</span>
+                  <span className="font-bold">Precision Labs</span> ist ein Produkt der <span className="font-bold">avisec GmbH</span>
                 </p>
               </div>
 
@@ -42,9 +42,9 @@ const Impressum = () => {
                   Firmeninformationen
                 </h2>
                 <div className="space-y-2 text-slate-600 ml-13">
-                  <p className="font-semibold text-lg text-[#0A0A0A]">Placeholder</p>
-                  <p>Placeholder Straße</p>
-                  <p>Placeholder PLZ Placeholder Stadt</p>
+                  <p className="font-semibold text-lg text-[#0A0A0A]">avisec GmbH</p>
+                  <p>Römerstraße 90</p>
+                  <p>79618 Rheinfelden (Baden)</p>
                   <p>Deutschland</p>
                 </div>
               </div>
@@ -57,11 +57,11 @@ const Impressum = () => {
                 <div className="space-y-4">
                   <div className="flex items-center text-slate-600">
                     <Mail className="mr-3 text-[#00C853] flex-shrink-0" size={20} />
-                    <span>E-Mail: placeholder@placeholder.de</span>
+                    <span>E-Mail: info@avisec.de</span>
                   </div>
                   <div className="flex items-center text-slate-600">
                     <MapPin className="mr-3 text-[#00C853] flex-shrink-0" size={20} />
-                    <span>Internet: www.placeholder.de</span>
+                    <span>Internet: www.avisec.de</span>
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@ const Impressum = () => {
                   Vertretungsberechtigte
                 </h2>
                 <div className="text-slate-600">
-                  <p>Geschäftsführer: Placeholder</p>
+                  <p>Geschäftsführer: Daniel Bärtschi</p>
                 </div>
               </div>
 
@@ -83,8 +83,8 @@ const Impressum = () => {
                 </h2>
                 <div className="space-y-2 text-slate-600">
                   <p>Eintragung im Handelsregister</p>
-                  <p>Registergericht: Placeholder</p>
-                  <p>Registernummer: Placeholder</p>
+                  <p>Registergericht: Amtsgericht Freiburg</p>
+                  <p>Registernummer: HRB 726972</p>
                 </div>
               </div>
 
@@ -175,9 +175,9 @@ const Impressum = () => {
                 <div className="bg-[#0A0A0A] text-white p-8 rounded-2xl">
                   <h3 className="font-bold text-lg mb-4">Schnellkontakt</h3>
                   <div className="space-y-3 text-slate-400">
-                    <p>placeholder@placeholder.de</p>
-                    <p>Placeholder Straße</p>
-                    <p>Placeholder Stadt</p>
+                    <p>info@avisec.de</p>
+                    <p>Römerstraße 90</p>
+                    <p>79618 Rheinfelden (Baden)</p>
                   </div>
                 </div>
 
