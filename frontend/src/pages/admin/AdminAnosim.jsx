@@ -367,7 +367,7 @@ const AdminAnosim = () => {
               </label>
               
               {/* Employee Search */}
-              {availableEmployees.length > 3 && (
+              {availableEmployees.length > 0 && (
                 <div className="relative mb-4">
                   <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#565f89]" size={16} />
                   <input
