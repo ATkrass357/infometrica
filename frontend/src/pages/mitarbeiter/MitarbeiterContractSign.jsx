@@ -140,9 +140,9 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                       <div>
                         <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitgeber:</p>
                         <p>Precision Labs</p>
-                        <p>Große Fischerstr. 22</p>
-                        <p>60311 Frankfurt am Main</p>
-                        <p className="text-slate-500 mt-1">vertreten durch Tom Reiser</p>
+                        <p>Römerstraße 90</p>
+                        <p>79618 Rheinfelden (Baden)</p>
+                        <p className="text-slate-500 mt-1">vertreten durch Daniel Bärtschi</p>
                       </div>
                       <div>
                         <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitnehmer:</p>
@@ -231,11 +231,11 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
 
                     {/* Signatures */}
                     <div className="pt-6 mt-6 border-t border-slate-300">
-                      <p className="text-slate-600 mb-4">Frankfurt am Main, {new Date().toLocaleDateString('de-DE')}</p>
+                      <p className="text-slate-600 mb-4">Rheinfelden (Baden), {new Date().toLocaleDateString('de-DE')}</p>
                       <div className="grid grid-cols-2 gap-8">
                         <div>
                           <div className="border-b border-slate-400 pb-1 mb-1"></div>
-                          <p className="text-xs text-slate-500">Tom Reiser</p>
+                          <p className="text-xs text-slate-500">Daniel Bärtschi</p>
                           <p className="text-xs text-slate-500">Arbeitgeber</p>
                         </div>
                         <div>
