@@ -21,8 +21,9 @@ from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
 router = APIRouter(prefix="/api/contracts", tags=["contracts"])
 
 # Directory for storing contracts
-CONTRACT_DIR = "/app/backend/uploads/contracts"
-SIGNATURE_DIR = "/app/backend/uploads/signatures"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CONTRACT_DIR = os.path.join(BASE_DIR, "uploads", "contracts")
+SIGNATURE_DIR = os.path.join(BASE_DIR, "uploads", "signatures")
 os.makedirs(CONTRACT_DIR, exist_ok=True)
 os.makedirs(SIGNATURE_DIR, exist_ok=True)
 

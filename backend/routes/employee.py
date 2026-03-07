@@ -11,7 +11,8 @@ import uuid
 router = APIRouter(prefix="/api/employee", tags=["employee"])
 
 # Directory for employee documents
-DOCUMENTS_DIR = "/app/backend/uploads/documents"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DOCUMENTS_DIR = os.path.join(BASE_DIR, "uploads", "documents")
 os.makedirs(DOCUMENTS_DIR, exist_ok=True)
 
 # Models for settings and documents
@@ -498,7 +499,7 @@ async def download_document(
         if not pdf_filename:
             raise HTTPException(status_code=404, detail="PDF nicht verfügbar")
         
-        pdf_path = f"/app/backend/uploads/contracts/{pdf_filename}"
+        pdf_path = os.path.join(BASE_DIR, "uploads", "contracts", pdf_filename)
         if not os.path.exists(pdf_path):
             raise HTTPException(status_code=404, detail="Datei nicht gefunden")
         

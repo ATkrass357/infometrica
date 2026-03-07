@@ -20,7 +20,8 @@ from services.sms_service import (
 router = APIRouter(prefix="/api/applications", tags=["applications"])
 
 # Directory for storing verification images
-UPLOAD_DIR = "/app/backend/uploads/verifications"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+UPLOAD_DIR = os.path.join(BASE_DIR, "uploads", "verifications")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 # Get database instance

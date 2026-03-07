@@ -6,11 +6,15 @@ from utils.auth import verify_password, create_access_token, decode_token, get_p
 from datetime import timedelta, datetime
 from typing import List
 import uuid
+import os
 
 # Import SMS service
 from services.sms_service import send_task_assigned_sms
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
+
+# Base directory for file paths
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Get database instance - will be injected
 def get_db():
@@ -456,7 +460,7 @@ async def admin_download_document(
     if not document:
         raise HTTPException(status_code=404, detail="Dokument nicht gefunden")
     
-    filepath = f"/app/backend/uploads/documents/{document['filename']}"
+    filepath = os.path.join(BASE_DIR, "uploads", "documents", document['filename'])
     if not os.path.exists(filepath):
         raise HTTPException(status_code=404, detail="Datei nicht gefunden")
     
@@ -483,7 +487,7 @@ async def admin_delete_document(
         raise HTTPException(status_code=404, detail="Dokument nicht gefunden")
     
     # Delete file
-    filepath = f"/app/backend/uploads/documents/{document['filename']}"
+    filepath = os.path.join(BASE_DIR, "uploads", "documents", document['filename'])
     if os.path.exists(filepath):
         os.remove(filepath)
     
