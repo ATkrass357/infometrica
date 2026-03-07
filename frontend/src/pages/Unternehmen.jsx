@@ -11,7 +11,7 @@ const Unternehmen = () => {
   ];
 
   const milestones = [
-    { year: '2024', event: 'Gründung in Nuthe-Urstromtal' },
+    { year: '2024', event: 'Gründung in Rheinfelden (Baden)' },
     { year: '2025', event: '10+ Testing-Experten' },
     { year: '2026', event: '25+ Test-Experten' },
   ];
@@ -58,7 +58,7 @@ const Unternehmen = () => {
               </div>
               <div className="absolute -bottom-6 -left-6 bg-[#00C853] p-6 hidden lg:block rounded-lg shadow-xl">
                 <div className="text-white font-bold text-lg">Deutschland HQ</div>
-                <div className="text-white/80 text-sm">Nuthe-Urstromtal</div>
+                <div className="text-white/80 text-sm">Rheinfelden (Baden)</div>
               </div>
             </div>
           </div>
