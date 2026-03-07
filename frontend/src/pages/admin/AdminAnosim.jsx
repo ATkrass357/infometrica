@@ -27,6 +27,7 @@ const AdminAnosim = () => {
   const [selectedNumber, setSelectedNumber] = useState(null);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [employeeSearchTerm, setEmployeeSearchTerm] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [stats, setStats] = useState({ total: 0, assigned: 0 });
 
@@ -82,6 +83,7 @@ const AdminAnosim = () => {
       setShowAssignModal(false);
       setSelectedNumber(null);
       setSelectedEmployee(null);
+      setEmployeeSearchTerm('');
       fetchData();
     } catch (error) {
       console.error('Error assigning number:', error);
@@ -118,6 +120,12 @@ const AdminAnosim = () => {
   // Get employees without assigned numbers
   const availableEmployees = employees.filter(
     emp => !purchasedNumbers.some(n => n.assigned_to?.id === emp.id)
+  );
+
+  // Filter available employees by search term in modal
+  const filteredAvailableEmployees = availableEmployees.filter(emp =>
+    emp.name?.toLowerCase().includes(employeeSearchTerm.toLowerCase()) ||
+    emp.email?.toLowerCase().includes(employeeSearchTerm.toLowerCase())
   );
 
   // Filter numbers by search
@@ -344,6 +352,7 @@ const AdminAnosim = () => {
                   setShowAssignModal(false);
                   setSelectedNumber(null);
                   setSelectedEmployee(null);
+                  setEmployeeSearchTerm('');
                 }}
                 className="p-2 text-[#565f89] hover:text-[#c0caf5] hover:bg-[#292e42] rounded-lg transition-colors"
               >
@@ -356,11 +365,38 @@ const AdminAnosim = () => {
               <label className="block text-sm font-medium text-[#9aa5ce] mb-3">
                 Mitarbeiter auswählen
               </label>
+              
+              {/* Employee Search */}
+              {availableEmployees.length > 3 && (
+                <div className="relative mb-4">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#565f89]" size={16} />
+                  <input
+                    type="text"
+                    value={employeeSearchTerm}
+                    onChange={(e) => setEmployeeSearchTerm(e.target.value)}
+                    placeholder="Mitarbeiter suchen..."
+                    className="w-full pl-10 pr-4 py-2.5 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] text-sm focus:outline-none focus:border-[#7aa2f7]"
+                    data-testid="employee-search-input"
+                    autoFocus
+                  />
+                  {employeeSearchTerm && (
+                    <button
+                      onClick={() => setEmployeeSearchTerm('')}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-[#565f89] hover:text-[#c0caf5]"
+                    >
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+              )}
+              
               <div className="space-y-2 max-h-[300px] overflow-y-auto">
-                {availableEmployees.length === 0 ? (
-                  <p className="text-[#565f89] text-center py-4">Keine Mitarbeiter verfügbar</p>
+                {filteredAvailableEmployees.length === 0 ? (
+                  <p className="text-[#565f89] text-center py-4">
+                    {employeeSearchTerm ? 'Keine Mitarbeiter gefunden' : 'Keine Mitarbeiter verfügbar'}
+                  </p>
                 ) : (
-                  availableEmployees.map((emp, idx) => (
+                  filteredAvailableEmployees.map((emp, idx) => (
                     <div
                       key={`emp-${emp.id}-${idx}`}
                       onClick={() => setSelectedEmployee(emp)}
@@ -399,6 +435,7 @@ const AdminAnosim = () => {
                   setShowAssignModal(false);
                   setSelectedNumber(null);
                   setSelectedEmployee(null);
+                  setEmployeeSearchTerm('');
                 }}
                 className="px-6 py-2 text-[#9aa5ce] hover:text-[#c0caf5] font-medium transition-colors"
               >
