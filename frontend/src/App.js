@@ -20,6 +20,7 @@ import AdminAnosim from "@/pages/admin/AdminAnosim";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import MitarbeiterLogin from "@/pages/mitarbeiter/MitarbeiterLogin";
+import MitarbeiterSignup from "@/pages/mitarbeiter/MitarbeiterSignup";
 import MitarbeiterDashboard from "@/pages/mitarbeiter/MitarbeiterDashboard";
 import MitarbeiterAuftrage from "@/pages/mitarbeiter/MitarbeiterAuftrage";
 import MitarbeiterEinstellungen from "@/pages/mitarbeiter/MitarbeiterEinstellungen";
@@ -118,6 +119,7 @@ function App() {
           
           {/* Mitarbeiter Routes */}
           <Route path="/mitarbeiter/login" element={<MitarbeiterLogin />} />
+          <Route path="/mitarbeiter/signup" element={<MitarbeiterSignup />} />
           <Route
             path="/mitarbeiter/dashboard"
             element={

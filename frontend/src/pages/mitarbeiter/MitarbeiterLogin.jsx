@@ -162,8 +162,8 @@ const MitarbeiterLogin = () => {
           <div className="mt-6 pt-6 border-t border-gray-200 text-center">
             <p className="text-sm text-gray-600">
               Noch kein Konto?{' '}
-              <Link to="/karriere" className="text-[#00C853] hover:text-[#009624] font-medium">
-                Jetzt bewerben
+              <Link to="/mitarbeiter/signup" className="text-[#00C853] hover:text-[#009624] font-medium">
+                Konto erstellen
               </Link>
             </p>
           </div>
