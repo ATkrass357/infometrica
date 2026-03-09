@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, User, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react';
+import { Mail, Lock, User, Phone, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -11,6 +11,7 @@ const MitarbeiterSignup = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     password: '',
     passwordConfirm: '',
   });
@@ -32,7 +33,7 @@ const MitarbeiterSignup = () => {
     setError('');
 
     // Validation
-    if (!formData.name || !formData.email || !formData.password) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.password) {
       setError('Bitte füllen Sie alle Felder aus.');
       return;
     }
@@ -57,7 +58,7 @@ const MitarbeiterSignup = () => {
         position: 'Bewerber',
         motivation: 'Registrierung über Mitarbeiter-Signup',
         experience: '',
-        mobilnummer: '',
+        mobilnummer: formData.phone,
         strasse: '',
         plz: '',
         stadt: '',
@@ -121,6 +122,9 @@ const MitarbeiterSignup = () => {
             <p className="text-slate-600">
               Erstellen Sie jetzt ein Mitarbeiter Konto um Ihre Bewerbung zu verfolgen
             </p>
+            <p className="text-sm text-slate-500 mt-2">
+              Benutzen Sie bitte die E-Mail und Telefonnummer, die Sie bei der Bewerbung auch benutzt haben.
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -158,6 +162,25 @@ const MitarbeiterSignup = () => {
                   placeholder="ihre@email.de"
                   className="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00C853] focus:border-transparent transition-all"
                   data-testid="signup-email"
+                />
+              </div>
+            </div>
+
+            {/* Phone */}
+            <div>
+              <label className="block text-sm font-medium text-[#4A4A4A] mb-2">
+                Telefonnummer
+              </label>
+              <div className="relative">
+                <Phone className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder="+49 170 1234567"
+                  className="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00C853] focus:border-transparent transition-all"
+                  data-testid="signup-phone"
                 />
               </div>
             </div>
