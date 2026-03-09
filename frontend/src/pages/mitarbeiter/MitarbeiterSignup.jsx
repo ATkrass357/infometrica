@@ -65,7 +65,10 @@ const MitarbeiterSignup = () => {
     email: '',
     phone: '',
     birthday: '',
-    address: '',
+    nationality: '',
+    street: '',
+    plz: '',
+    city: '',
     password: '',
     passwordConfirm: '',
   });
@@ -87,7 +90,7 @@ const MitarbeiterSignup = () => {
     setError('');
 
     // Validation
-    if (!formData.name || !formData.email || !formData.phone || !formData.password) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.birthday || !formData.street || !formData.plz || !formData.city || !formData.password) {
       setError('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
     }
@@ -106,17 +109,17 @@ const MitarbeiterSignup = () => {
 
     try {
       await axios.post(`${BACKEND_URL}/api/applications/submit`, {
-        full_name: formData.name,
+        name: formData.name,
         email: formData.email,
         password: formData.password,
         position: 'Bewerber',
-        motivation: 'Registrierung über Mitarbeiter-Signup',
-        experience: '',
+        message: 'Registrierung über Mitarbeiter-Signup',
         mobilnummer: formData.phone,
-        strasse: formData.address,
-        plz: '',
-        stadt: '',
+        strasse: formData.street,
+        postleitzahl: formData.plz,
+        stadt: formData.city,
         geburtsdatum: formData.birthday,
+        staatsangehoerigkeit: formData.nationality || 'Deutsch',
       });
 
       setSuccess(true);
@@ -125,11 +128,23 @@ const MitarbeiterSignup = () => {
         navigate('/mitarbeiter/login');
       }, 2000);
     } catch (err) {
-      if (err.response?.status === 400 && err.response?.data?.detail?.includes('existiert bereits')) {
-        setError('Diese E-Mail-Adresse ist bereits registriert. Bitte melden Sie sich an.');
-      } else {
-        setError(err.response?.data?.detail || 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.');
+      const errorDetail = err.response?.data?.detail;
+      let errorMessage = 'Registrierung fehlgeschlagen. Bitte versuchen Sie es erneut.';
+      
+      if (typeof errorDetail === 'string') {
+        if (errorDetail.includes('existiert bereits')) {
+          errorMessage = 'Diese E-Mail-Adresse ist bereits registriert. Bitte melden Sie sich an.';
+        } else {
+          errorMessage = errorDetail;
+        }
+      } else if (Array.isArray(errorDetail)) {
+        // Pydantic validation errors
+        errorMessage = errorDetail.map(e => e.msg || e.message || 'Ungültige Eingabe').join(', ');
+      } else if (errorDetail && typeof errorDetail === 'object') {
+        errorMessage = errorDetail.msg || errorDetail.message || 'Registrierung fehlgeschlagen.';
       }
+      
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -271,20 +286,55 @@ const MitarbeiterSignup = () => {
 
                 {/* Address */}
                 <FormField 
-                  label="Adresse" 
-                  tooltip="Ihre vollständige Adresse wird für die Vertragsunterlagen und den Postversand benötigt."
+                  label="Straße und Hausnummer" 
+                  tooltip="Ihre Straße und Hausnummer wird für die Vertragsunterlagen und den Postversand benötigt."
                   icon={MapPin}
                 >
                   <input
                     type="text"
-                    name="address"
-                    value={formData.address}
+                    name="street"
+                    value={formData.street}
                     onChange={handleChange}
-                    placeholder="Straße, PLZ Stadt"
+                    placeholder="Musterstraße 123"
                     className="w-full pl-12 pr-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00C853] focus:border-transparent transition-all bg-[#F8F9FA]"
-                    data-testid="signup-address"
+                    data-testid="signup-street"
                   />
                 </FormField>
+
+                {/* PLZ and City in a row */}
+                <div className="grid grid-cols-2 gap-4">
+                  <FormField 
+                    label="PLZ" 
+                    tooltip="Ihre Postleitzahl für die Adressverifizierung."
+                    icon={MapPin}
+                  >
+                    <input
+                      type="text"
+                      name="plz"
+                      value={formData.plz}
+                      onChange={handleChange}
+                      placeholder="12345"
+                      className="w-full pl-12 pr-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00C853] focus:border-transparent transition-all bg-[#F8F9FA]"
+                      data-testid="signup-plz"
+                    />
+                  </FormField>
+
+                  <FormField 
+                    label="Stadt" 
+                    tooltip="Ihre Stadt für die Vertragsunterlagen."
+                    icon={MapPin}
+                  >
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      placeholder="Berlin"
+                      className="w-full pl-12 pr-4 py-3.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00C853] focus:border-transparent transition-all bg-[#F8F9FA]"
+                      data-testid="signup-city"
+                    />
+                  </FormField>
+                </div>
 
                 {/* Divider */}
                 <div className="border-t border-slate-200 my-8"></div>
