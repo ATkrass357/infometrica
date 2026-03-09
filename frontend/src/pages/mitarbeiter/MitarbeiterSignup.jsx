@@ -120,6 +120,10 @@ const MitarbeiterSignup = () => {
       });
 
       setSuccess(true);
+      // Redirect to login page after short delay
+      setTimeout(() => {
+        navigate('/mitarbeiter/login');
+      }, 2000);
     } catch (err) {
       if (err.response?.status === 400 && err.response?.data?.detail?.includes('existiert bereits')) {
         setError('Diese E-Mail-Adresse ist bereits registriert. Bitte melden Sie sich an.');
