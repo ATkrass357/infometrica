@@ -17,6 +17,7 @@ import AdminVerifications from "@/pages/admin/AdminVerifications";
 import AdminContracts from "@/pages/admin/AdminContracts";
 import AdminDokumente from "@/pages/admin/AdminDokumente";
 import AdminAnosim from "@/pages/admin/AdminAnosim";
+import AdminEmailInbox from "@/pages/admin/AdminEmailInbox";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import MitarbeiterLogin from "@/pages/mitarbeiter/MitarbeiterLogin";
@@ -112,6 +113,16 @@ function App() {
               <ProtectedRoute>
                 <AdminLayout>
                   <AdminAnosim />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/email-inbox"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminEmailInbox />
                 </AdminLayout>
               </ProtectedRoute>
             }

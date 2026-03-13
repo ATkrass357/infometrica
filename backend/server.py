@@ -86,6 +86,10 @@ app.include_router(contracts_router)
 from routes.anosim import router as anosim_router
 app.include_router(anosim_router)
 
+# Include email inbox routes
+from routes.email_inbox import router as email_inbox_router
+app.include_router(email_inbox_router)
+
 # Include the router in the main app
 app.include_router(api_router)
 

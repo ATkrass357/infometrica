@@ -13,6 +13,7 @@ import {
   FileSignature,
   FolderOpen,
   Phone,
+  Mail,
 } from 'lucide-react';
 import { PrecisionLogo } from '../../components/Logo';
 
@@ -53,6 +54,7 @@ const AdminLayout = ({ children }) => {
     { icon: FolderOpen, label: 'Dokumente', path: '/admin/documents' },
     { icon: ClipboardList, label: 'Aufgaben', path: '/admin/tasks' },
     { icon: Phone, label: 'Anosim Nummern', path: '/admin/anosim' },
+    { icon: Mail, label: 'E-Mail Postfächer', path: '/admin/email-inbox' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
 

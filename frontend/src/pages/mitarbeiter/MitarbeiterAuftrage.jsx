@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, Clock, AlertCircle, RefreshCw, Globe, ChevronDown, ChevronUp, Play, Check, Link, KeyRound, Phone } from 'lucide-react';
+import { CheckCircle, Clock, AlertCircle, RefreshCw, Globe, ChevronDown, ChevronUp, Play, Check, Link, KeyRound, Phone, Mail } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import SMSPanel from '../../components/SMSPanel';
+import EmailPanel from './EmailPanel';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -325,11 +326,25 @@ const MitarbeiterAuftrage = () => {
                     {/* SMS Verification Panel - Only shown when task is "In Bearbeitung" */}
                     {task.status === 'In Bearbeitung' && (
                       <div className="mt-6 pt-4 border-t border-gray-200">
-                        <div className="flex items-center gap-2 mb-4">
-                          <Phone size={18} className="text-emerald-500" />
-                          <h5 className="font-medium text-emerald-700">SMS Verifizierungscodes</h5>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          {/* SMS Panel */}
+                          <div>
+                            <div className="flex items-center gap-2 mb-4">
+                              <Phone size={18} className="text-emerald-500" />
+                              <h5 className="font-medium text-emerald-700">SMS Verifizierungscodes</h5>
+                            </div>
+                            <SMSPanel isActive={expandedTask === task.id && task.status === 'In Bearbeitung'} />
+                          </div>
+                          
+                          {/* Email Panel */}
+                          <div>
+                            <div className="flex items-center gap-2 mb-4">
+                              <Mail size={18} className="text-purple-500" />
+                              <h5 className="font-medium text-purple-700">E-Mail Verifizierungscodes</h5>
+                            </div>
+                            <EmailPanel />
+                          </div>
                         </div>
-                        <SMSPanel isActive={expandedTask === task.id && task.status === 'In Bearbeitung'} />
                       </div>
                     )}
                   </div>
