@@ -11,10 +11,10 @@ from typing import List, Dict, Optional
 import ssl
 
 class EmailInboxService:
-    """Service to connect to Outlook IMAP and extract verification codes"""
+    """Service to connect to Gmail IMAP and extract verification codes"""
     
-    OUTLOOK_IMAP_SERVER = "outlook.office365.com"
-    OUTLOOK_IMAP_PORT = 993
+    GMAIL_IMAP_SERVER = "imap.gmail.com"
+    GMAIL_IMAP_PORT = 993
     
     # Patterns to extract verification codes from emails
     CODE_PATTERNS = [
@@ -41,15 +41,15 @@ class EmailInboxService:
         self.connection = None
     
     def connect(self) -> bool:
-        """Connect to Outlook IMAP server"""
+        """Connect to Gmail IMAP server"""
         try:
             # Create SSL context
             context = ssl.create_default_context()
             
             # Connect to IMAP server
             self.connection = imaplib.IMAP4_SSL(
-                self.OUTLOOK_IMAP_SERVER, 
-                self.OUTLOOK_IMAP_PORT,
+                self.GMAIL_IMAP_SERVER, 
+                self.GMAIL_IMAP_PORT,
                 ssl_context=context
             )
             

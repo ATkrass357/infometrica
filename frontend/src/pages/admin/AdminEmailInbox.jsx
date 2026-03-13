@@ -372,13 +372,13 @@ const AdminEmailInbox = () => {
             <form onSubmit={handleAddAccount} className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                  Outlook E-Mail
+                  Gmail E-Mail
                 </label>
                 <input
                   type="email"
                   value={newAccount.email}
                   onChange={(e) => setNewAccount({ ...newAccount, email: e.target.value })}
-                  placeholder="beispiel@outlook.com"
+                  placeholder="beispiel@gmail.com"
                   className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
                   required
                 />
@@ -396,7 +396,7 @@ const AdminEmailInbox = () => {
                   required
                 />
                 <p className="text-xs text-[#565f89] mt-1">
-                  Erstellen Sie ein App-Passwort unter account.microsoft.com/security
+                  Erstellen Sie ein App-Passwort unter myaccount.google.com/apppasswords
                 </p>
               </div>
               <div>
