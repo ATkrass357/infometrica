@@ -188,10 +188,10 @@ const AdminEmailInbox = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#c0caf5]">E-Mail Postfächer</h1>
-          <p className="text-[#565f89] mt-1">Outlook-Konten verwalten und Mitarbeitern zuweisen</p>
+          <p className="text-[#565f89] mt-1">Gmail-Konten verwalten und Mitarbeitern zuweisen</p>
         </div>
         <div className="flex gap-3">
           <button
@@ -205,13 +205,14 @@ const AdminEmailInbox = () => {
             className="flex items-center gap-2 px-4 py-2 bg-[#7aa2f7] text-[#1a1b26] rounded-lg font-medium hover:bg-[#89b4fa] transition-colors"
           >
             <Plus size={18} />
-            Konto hinzufügen
+            <span className="hidden sm:inline">Konto hinzufügen</span>
+            <span className="sm:hidden">Hinzufügen</span>
           </button>
         </div>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-[#1a1b26] p-4 rounded-xl border border-[#292e42]">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 bg-[#7aa2f7]/10 rounded-lg flex items-center justify-center">
@@ -259,8 +260,8 @@ const AdminEmailInbox = () => {
         />
       </div>
 
-      {/* Accounts Table */}
-      <div className="bg-[#1a1b26] rounded-xl border border-[#292e42] overflow-hidden">
+      {/* Desktop Table */}
+      <div className="hidden md:block bg-[#1a1b26] rounded-xl border border-[#292e42] overflow-hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-[#292e42]">
@@ -354,6 +355,63 @@ const AdminEmailInbox = () => {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-3">
+        {filteredAccounts.length === 0 ? (
+          <div className="bg-[#1a1b26] border border-[#292e42] rounded-xl p-8 text-center text-[#565f89]">
+            {searchTerm ? 'Keine E-Mail-Konten gefunden' : 'Noch keine E-Mail-Konten hinzugefügt'}
+          </div>
+        ) : (
+          filteredAccounts.map((account) => (
+            <div key={account.id} className="bg-[#1a1b26] border border-[#292e42] rounded-xl p-4">
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-8 h-8 bg-[#7aa2f7]/10 rounded-lg flex items-center justify-center flex-shrink-0">
+                    <Mail className="text-[#7aa2f7]" size={16} />
+                  </div>
+                  <span className="text-[#c0caf5] font-mono text-sm truncate">{account.email}</span>
+                </div>
+                {account.is_active ? (
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#9ece6a]/10 text-[#9ece6a] rounded-full text-xs flex-shrink-0">
+                    <CheckCircle size={12} />
+                    Aktiv
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2 py-1 bg-[#f7768e]/10 text-[#f7768e] rounded-full text-xs flex-shrink-0">
+                    <AlertCircle size={12} />
+                    Inaktiv
+                  </span>
+                )}
+              </div>
+              {account.description && (
+                <p className="text-sm text-[#9aa5ce] mb-2">{account.description}</p>
+              )}
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#292e42]">
+                <div>
+                  {account.assigned_to ? (
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm text-[#9ece6a]">{account.assigned_to.name}</span>
+                      <button onClick={() => handleUnassign(account.id)} className="p-1 text-[#f7768e] hover:bg-[#f7768e]/10 rounded">
+                        <X size={14} />
+                      </button>
+                    </div>
+                  ) : (
+                    <span className="text-sm text-[#565f89]">Nicht zugewiesen</span>
+                  )}
+                </div>
+                <div className="flex items-center gap-1">
+                  <button onClick={() => handleTestAccount(account.id)} className="p-2 text-[#7aa2f7] hover:bg-[#7aa2f7]/10 rounded-lg"><Send size={16} /></button>
+                  {!account.assigned_to && (
+                    <button onClick={() => { setSelectedAccount(account); setShowAssignModal(true); }} className="p-2 text-[#9ece6a] hover:bg-[#9ece6a]/10 rounded-lg"><UserPlus size={16} /></button>
+                  )}
+                  <button onClick={() => handleDeleteAccount(account.id)} className="p-2 text-[#f7768e] hover:bg-[#f7768e]/10 rounded-lg"><Trash2 size={16} /></button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
 
       {/* Add Account Modal */}

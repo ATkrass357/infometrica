@@ -5,8 +5,8 @@ const AdminDashboard = () => {
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-[#7aa2f7] to-[#bb9af7] rounded-2xl p-8 text-white">
-        <h1 className="text-3xl font-bold mb-2">Willkommen im Admin-Portal!</h1>
+      <div className="bg-gradient-to-r from-[#7aa2f7] to-[#bb9af7] rounded-2xl p-5 sm:p-8 text-white">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-2">Willkommen im Admin-Portal!</h1>
         <p className="text-blue-100">
           Ihr Dashboard wird derzeit entwickelt. Bald können Sie hier alle wichtigen Funktionen verwalten.
         </p>
@@ -46,9 +46,9 @@ const AdminDashboard = () => {
       </div>
 
       {/* Coming Soon Section */}
-      <div className="bg-[#16161e] border border-[#292e42] rounded-xl p-8">
-        <h2 className="text-2xl font-bold text-[#c0caf5] mb-4">Bald verfügbar</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="bg-[#16161e] border border-[#292e42] rounded-xl p-5 sm:p-8">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#c0caf5] mb-4">Bald verfügbar</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex items-start space-x-3">
             <div className="w-2 h-2 bg-[#7aa2f7] rounded-full mt-2"></div>
             <div>

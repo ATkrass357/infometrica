@@ -229,7 +229,7 @@ const AdminApplications = () => {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-[#c0caf5]">Bewerbungen</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#c0caf5]">Bewerbungen</h1>
           <p className="text-[#9aa5ce] mt-1">
             {filteredApplications.length} von {applications.length} Bewerbung{applications.length !== 1 ? 'en' : ''}
             {selectedIds.length > 0 && (
@@ -306,9 +306,9 @@ const AdminApplications = () => {
 
       {/* Info Banner for bulk selection */}
       {statusFilter === 'all' && applications.filter(a => a.status === 'Neu').length > 0 && (
-        <div className="bg-[#7aa2f7]/10 border border-[#7aa2f7]/30 rounded-lg p-4 flex items-center justify-between">
+        <div className="bg-[#7aa2f7]/10 border border-[#7aa2f7]/30 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <CheckSquare size={20} className="text-[#7aa2f7]" />
+            <CheckSquare size={20} className="text-[#7aa2f7] flex-shrink-0" />
             <span className="text-[#c0caf5]">
               <strong>{applications.filter(a => a.status === 'Neu').length}</strong> neue Bewerbung(en) können ausgewählt und akzeptiert werden.
             </span>
@@ -322,8 +322,8 @@ const AdminApplications = () => {
         </div>
       )}
 
-      {/* Table */}
-      <div className="bg-[#16161e] border border-[#292e42] rounded-xl overflow-hidden">
+      {/* Desktop Table */}
+      <div className="hidden md:block bg-[#16161e] border border-[#292e42] rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -442,6 +442,65 @@ const AdminApplications = () => {
         </div>
       </div>
 
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-3">
+        {filteredApplications.length === 0 ? (
+          <div className="bg-[#16161e] border border-[#292e42] rounded-xl p-8 text-center text-[#565f89]">
+            {searchQuery || statusFilter !== 'all' 
+              ? 'Keine Bewerbungen gefunden' 
+              : 'Noch keine Bewerbungen vorhanden'}
+          </div>
+        ) : (
+          filteredApplications.map((app) => (
+            <div
+              key={app.id}
+              className={`bg-[#16161e] border rounded-xl p-4 ${
+                selectedIds.includes(app.id) ? 'border-[#7aa2f7] bg-[#7aa2f7]/5' : 'border-[#292e42]'
+              }`}
+              data-testid={`application-card-${app.id}`}
+            >
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3">
+                  {app.status === 'Neu' && (
+                    <button
+                      onClick={() => toggleSelection(app.id)}
+                      className="text-[#7aa2f7] hover:text-[#7dcfff] transition-colors flex-shrink-0"
+                      data-testid={`checkbox-mobile-${app.id}`}
+                    >
+                      {selectedIds.includes(app.id) ? <CheckSquare size={20} /> : <Square size={20} />}
+                    </button>
+                  )}
+                  <div>
+                    <p className="text-[#c0caf5] font-medium">{app.name}</p>
+                    <p className="text-xs text-[#565f89] mt-0.5">{formatDate(app.created_at)}</p>
+                  </div>
+                </div>
+                {getStatusBadge(app.status)}
+              </div>
+              <p className="text-sm text-[#9aa5ce] mb-1 truncate">{app.email}</p>
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#292e42]">
+                <span className="px-2.5 py-1 bg-[#bb9af7]/10 text-[#bb9af7] rounded-full text-xs font-medium">
+                  {app.position}
+                </span>
+                <div className="flex items-center gap-1">
+                  <button onClick={() => setSelectedApp(app)} className="p-2 text-[#7dcfff] hover:bg-[#7dcfff]/10 rounded-lg" data-testid={`view-application-mobile-${app.id}`}>
+                    <Eye size={18} />
+                  </button>
+                  {app.status === 'Neu' && (
+                    <button onClick={() => handleAccept(app)} disabled={processingId === app.id} className="p-2 text-[#9ece6a] hover:bg-[#9ece6a]/10 rounded-lg disabled:opacity-50" data-testid={`accept-application-mobile-${app.id}`}>
+                      {processingId === app.id ? <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#9ece6a]"></div> : <UserCheck size={18} />}
+                    </button>
+                  )}
+                  <button onClick={() => handleDelete(app.id)} className="p-2 text-[#f7768e] hover:bg-[#f7768e]/10 rounded-lg" data-testid={`delete-application-mobile-${app.id}`}>
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+
       {/* Detail Modal */}
       {selectedApp && (
         <div
@@ -461,7 +520,7 @@ const AdminApplications = () => {
               {/* Personal Info */}
               <div>
                 <h3 className="text-lg font-semibold text-[#c0caf5] mb-4">Persönliche Daten</h3>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm text-[#565f89]">Name</p>
                     <p className="text-[#c0caf5] font-medium">{selectedApp.name}</p>
@@ -472,7 +531,7 @@ const AdminApplications = () => {
                   </div>
                   <div>
                     <p className="text-sm text-[#565f89]">E-Mail</p>
-                    <p className="text-[#c0caf5]">{selectedApp.email}</p>
+                    <p className="text-[#c0caf5] break-all">{selectedApp.email}</p>
                   </div>
                   <div>
                     <p className="text-sm text-[#565f89]">Mobilnummer</p>
@@ -519,7 +578,7 @@ const AdminApplications = () => {
               </div>
             </div>
 
-            <div className="p-6 border-t border-[#292e42] flex justify-end space-x-3">
+            <div className="p-6 border-t border-[#292e42] flex flex-col sm:flex-row justify-end gap-3">
               <button
                 onClick={() => setSelectedApp(null)}
                 className="px-6 py-2 bg-[#292e42] text-[#c0caf5] rounded-lg hover:bg-[#414868] transition-colors"
@@ -532,7 +591,7 @@ const AdminApplications = () => {
                     handleAccept(selectedApp);
                     setSelectedApp(null);
                   }}
-                  className="px-6 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors flex items-center gap-2"
+                  className="px-6 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors flex items-center justify-center gap-2"
                 >
                   <UserCheck size={18} />
                   Akzeptieren

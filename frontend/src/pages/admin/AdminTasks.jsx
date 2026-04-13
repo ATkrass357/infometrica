@@ -509,10 +509,10 @@ const AdminTasks = () => {
               data-testid={`task-card-${task.id}`}
             >
               {/* Task Header */}
-              <div className="p-4 flex items-center justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-semibold text-[#c0caf5]">{task.title}</h3>
+              <div className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-2 mb-2">
+                    <h3 className="text-base sm:text-lg font-semibold text-[#c0caf5]">{task.title}</h3>
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${getStatusColor(task.status)}`}>
                       {task.status}
                     </span>
@@ -520,7 +520,7 @@ const AdminTasks = () => {
                       {task.priority}
                     </span>
                   </div>
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-[#9aa5ce]">
+                  <div className="flex flex-wrap items-center gap-3 text-sm text-[#9aa5ce]">
                     <div className={`flex items-center gap-1 ${!task.assigned_to && (!task.assignments || task.assignments.length === 0) ? 'text-[#e0af68]' : ''}`}>
                       {task.assignments && task.assignments.length > 1 ? (
                         <Users size={14} />
@@ -548,7 +548,7 @@ const AdminTasks = () => {
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 self-end sm:self-auto">
                   <button
                     onClick={() => openAssignModal(task)}
                     className={`p-2 rounded-lg transition-colors ${
@@ -848,7 +848,7 @@ const AdminTasks = () => {
 
                           <p className="text-xs text-[#565f89] mb-2">Oder Login-Daten:</p>
                           
-                          <div className="grid grid-cols-2 gap-3">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                               <label className="block text-xs font-medium text-[#9aa5ce] mb-1">
                                 Test E-Mail

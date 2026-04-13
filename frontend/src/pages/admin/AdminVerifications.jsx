@@ -155,7 +155,7 @@ const AdminVerifications = () => {
   return (
     <div className="space-y-6" data-testid="admin-verifications-page">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#c0caf5] flex items-center gap-3">
             <Shield className="text-[#7aa2f7]" size={28} />
@@ -197,24 +197,24 @@ const AdminVerifications = () => {
           verifications.map((verification) => (
             <div
               key={verification.id}
-              className="bg-[#16161e] border border-[#292e42] rounded-xl p-5"
+              className="bg-[#16161e] border border-[#292e42] rounded-xl p-4 sm:p-5"
               data-testid={`verification-card-${verification.id}`}
             >
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#7aa2f7]/20 rounded-full flex items-center justify-center">
+                  <div className="w-12 h-12 bg-[#7aa2f7]/20 rounded-full flex items-center justify-center flex-shrink-0">
                     <User className="text-[#7aa2f7]" size={24} />
                   </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-[#c0caf5]">{verification.name}</h3>
-                    <p className="text-sm text-[#9aa5ce]">{verification.email}</p>
+                  <div className="min-w-0">
+                    <h3 className="text-base sm:text-lg font-semibold text-[#c0caf5]">{verification.name}</h3>
+                    <p className="text-sm text-[#9aa5ce] truncate">{verification.email}</p>
                     <p className="text-xs text-[#565f89] mt-1">
                       Position: {verification.position}
                     </p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 ml-16 sm:ml-0">
                   {getStatusBadge(verification.status)}
                   
                   <button
@@ -228,10 +228,10 @@ const AdminVerifications = () => {
                   {verification.status === 'Verifiziert' && (
                     <button
                       onClick={() => handleUnlock(verification.id)}
-                      className="px-4 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors flex items-center gap-2"
+                      className="px-3 sm:px-4 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors flex items-center gap-2 text-sm"
                     >
                       <Unlock size={16} />
-                      Freischalten
+                      <span className="hidden sm:inline">Freischalten</span>
                     </button>
                   )}
                 </div>
@@ -318,7 +318,7 @@ const AdminVerifications = () => {
               {/* Applicant Info */}
               <div className="mt-6 bg-[#1a1b26] rounded-lg p-4">
                 <h3 className="text-sm font-medium text-[#9aa5ce] mb-3">Bewerberdaten</h3>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm">
                   <div>
                     <p className="text-[#565f89]">Name</p>
                     <p className="text-[#c0caf5]">{selectedVerification.name}</p>
@@ -339,10 +339,10 @@ const AdminVerifications = () => {
               </div>
             </div>
 
-            <div className="p-6 border-t border-[#292e42] flex justify-between">
+            <div className="p-4 sm:p-6 border-t border-[#292e42] flex flex-col sm:flex-row justify-between gap-3">
               <button
                 onClick={() => handleDeleteDocuments(selectedVerification.id)}
-                className="px-4 py-2 bg-[#f7768e]/20 text-[#f7768e] rounded-lg hover:bg-[#f7768e]/30 transition-colors flex items-center gap-2"
+                className="px-4 py-2 bg-[#f7768e]/20 text-[#f7768e] rounded-lg hover:bg-[#f7768e]/30 transition-colors flex items-center justify-center gap-2"
               >
                 <Trash2 size={16} />
                 Dokumente löschen
@@ -354,7 +354,7 @@ const AdminVerifications = () => {
                     setSelectedVerification(null);
                     setImageData({ front: null, back: null });
                   }}
-                  className="px-4 py-2 bg-[#292e42] text-[#c0caf5] rounded-lg hover:bg-[#343b58] transition-colors"
+                  className="flex-1 sm:flex-none px-4 py-2 bg-[#292e42] text-[#c0caf5] rounded-lg hover:bg-[#343b58] transition-colors"
                 >
                   Schließen
                 </button>
@@ -362,7 +362,7 @@ const AdminVerifications = () => {
                 {selectedVerification.status === 'Verifiziert' && (
                   <button
                     onClick={() => handleUnlock(selectedVerification.id)}
-                    className="px-6 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors flex items-center gap-2"
+                    className="flex-1 sm:flex-none px-6 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors flex items-center justify-center gap-2"
                   >
                     <Unlock size={16} />
                     Freischalten

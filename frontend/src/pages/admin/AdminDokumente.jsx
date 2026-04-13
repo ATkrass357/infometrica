@@ -169,7 +169,7 @@ const AdminDokumente = () => {
       {/* Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-[#c0caf5]">Mitarbeiter-Dokumente</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-[#c0caf5]">Mitarbeiter-Dokumente</h1>
           <p className="text-[#9aa5ce] mt-1">
             {filteredDocuments.length} von {documents.length} Dokument(en)
             {pendingCount > 0 && (
@@ -242,8 +242,8 @@ const AdminDokumente = () => {
         </select>
       </div>
 
-      {/* Documents Table */}
-      <div className="bg-[#16161e] border border-[#292e42] rounded-xl overflow-hidden">
+      {/* Desktop Table */}
+      <div className="hidden md:block bg-[#16161e] border border-[#292e42] rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
@@ -355,6 +355,56 @@ const AdminDokumente = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Mobile Cards */}
+      <div className="md:hidden space-y-3">
+        {filteredDocuments.length === 0 ? (
+          <div className="bg-[#16161e] border border-[#292e42] rounded-xl p-8 text-center text-[#565f89]">
+            {searchQuery || statusFilter !== 'all' 
+              ? 'Keine Dokumente gefunden' 
+              : 'Noch keine Dokumente vorhanden'}
+          </div>
+        ) : (
+          filteredDocuments.map((doc) => (
+            <div key={doc.id} className="bg-[#16161e] border border-[#292e42] rounded-xl p-4" data-testid={`document-card-${doc.id}`}>
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 bg-[#292e42] rounded-lg flex items-center justify-center flex-shrink-0">
+                    <FileText size={20} className="text-[#7aa2f7]" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-[#c0caf5] font-medium truncate" title={doc.name}>{doc.name}</p>
+                    <p className="text-xs text-[#565f89]">{doc.size}</p>
+                  </div>
+                </div>
+                {getStatusBadge(doc.status)}
+              </div>
+              <div className="flex items-center gap-2 text-sm text-[#9aa5ce] mb-2">
+                <User size={14} className="text-[#565f89] flex-shrink-0" />
+                <span className="truncate">{doc.employee_name}</span>
+              </div>
+              <div className="flex items-center justify-between mt-3 pt-3 border-t border-[#292e42]">
+                <div className="flex items-center gap-2">
+                  <span className="px-2.5 py-1 bg-[#bb9af7]/10 text-[#bb9af7] rounded-full text-xs">{doc.category}</span>
+                  <span className="text-xs text-[#565f89]">{doc.uploaded_at}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <button onClick={() => handleDownload(doc)} className="p-2 text-[#7dcfff] hover:bg-[#7dcfff]/10 rounded-lg"><Download size={16} /></button>
+                  {doc.status === 'pending' && (
+                    <>
+                      <button onClick={() => handleApprove(doc.id)} disabled={processingId === doc.id} className="p-2 text-[#9ece6a] hover:bg-[#9ece6a]/10 rounded-lg disabled:opacity-50">
+                        {processingId === doc.id ? <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#9ece6a]"></div> : <CheckCircle size={16} />}
+                      </button>
+                      <button onClick={() => handleReject(doc.id)} disabled={processingId === doc.id} className="p-2 text-[#e0af68] hover:bg-[#e0af68]/10 rounded-lg disabled:opacity-50"><XCircle size={16} /></button>
+                    </>
+                  )}
+                  <button onClick={() => handleDelete(doc.id)} className="p-2 text-[#f7768e] hover:bg-[#f7768e]/10 rounded-lg"><Trash2 size={16} /></button>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
