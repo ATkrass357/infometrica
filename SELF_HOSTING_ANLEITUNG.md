@@ -817,6 +817,21 @@ sudo systemctl status mongod
 sudo journalctl -u mongod --no-pager | tail -50
 ```
 
+### Login gibt "500 Internal Server Error" (bcrypt/passlib Kompatibilität):
+
+`passlib` ist nicht kompatibel mit `bcrypt>=4.1`. Downgrade auf kompatible Version:
+```bash
+cd ~/infometrica/backend
+source venv/bin/activate
+pip install bcrypt==4.0.1
+sudo systemctl restart precision-backend
+```
+
+Danach Admin neu erstellen (falls nötig):
+```bash
+curl -X POST https://precision-labs.de/api/admin/init-admin
+```
+
 ### SSL-Zertifikat erneuern:
 
 ```bash

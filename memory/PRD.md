@@ -203,5 +203,10 @@ Build a full-stack application for the app testing agency "Precision Labs" (form
 
 ---
 
+## Deployment Notes
+- **WICHTIG:** `bcrypt` muss auf Version `4.0.1` bleiben (nicht 4.1+), weil `passlib` mit neueren Versionen inkompatibel ist.
+- Admin-Eintrag in der DB muss das Feld `password_hash` haben (nicht `password`), plus `id` und `role`.
+- Bei Neuinstallation: `pip install -r requirements.txt` und dann `curl -X POST https://precision-labs.de/api/admin/init-admin`
+
 ## Last Updated
-March 2026 - Anosim.net integration completed and tested (100% pass rate).
+April 2026 - VPS Admin-Login 500-Fehler behoben (bcrypt Kompatibilität + DB-Schema).
