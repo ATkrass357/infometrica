@@ -220,30 +220,6 @@ Warte bis es fertig ist (kann 2-5 Minuten dauern).
 apt install -y curl wget git build-essential software-properties-common
 ```
 
-### 5.3 Neuen Benutzer erstellen (Sicherheit):
-
-```bash
-adduser infometrica
-```
-
-- Gib ein Passwort ein (wird nicht angezeigt beim Tippen!)
-- Bestätige das Passwort
-- Die anderen Fragen kannst du mit Enter überspringen
-
-### 5.4 Benutzer Admin-Rechte geben:
-
-```bash
-usermod -aG sudo infometrica
-```
-
-### 5.5 Zum neuen Benutzer wechseln:
-
-```bash
-su - infometrica
-```
-
-Dein Prompt sollte jetzt `infometrica@server:~$` zeigen.
-
 ---
 
 ## 6. MongoDB installieren
@@ -394,7 +370,7 @@ scp -r /pfad/zum/code/* infometrica@DEINE_SERVER_IP:/home/infometrica/infometric
 
 Auf dem Server:
 ```bash
-cd ~/infometrica
+cd /root/infometrica
 ls -la
 ```
 
@@ -407,13 +383,13 @@ Du solltest `backend` und `frontend` Ordner sehen.
 ### 10.1 In den Backend-Ordner wechseln:
 
 ```bash
-cd ~/infometrica/backend
+cd /root/infometrica/backend
 ```
 
 ### 10.2 Python Virtual Environment erstellen:
 
 ```bash
-python3 -m venv venv
+python3.11 -m venv venv
 ```
 
 ### 10.3 Virtual Environment aktivieren:
@@ -443,18 +419,14 @@ Füge folgenden Inhalt ein (passe die Werte an!):
 
 ```env
 MONGO_URL=mongodb://localhost:27017
-DB_NAME=infometrica_production
-CORS_ORIGINS=https://deine-domain.de,https://www.deine-domain.de
-RESEND_API_KEY=re_xxxxxxxxxxxxxxxxxxxxxxxxx
-FROM_EMAIL=noreply@deine-domain.de
-FRONTEND_URL=https://deine-domain.de
+DB_NAME=precision_labs_db
+CORS_ORIGINS=https://precision.de,https://www.precision.de
+FRONTEND_URL=https://precision.de
 JWT_SECRET=HIER_EINEN_LANGEN_ZUFAELLIGEN_STRING_EINGEBEN
 ```
 
 **Wichtig:** 
-- Ersetze `deine-domain.de` mit deiner echten Domain
 - Für `JWT_SECRET` erstelle einen zufälligen String (mindestens 32 Zeichen)
-- `RESEND_API_KEY` bekommst du von [resend.com](https://resend.com)
 
 Zum Speichern: `Ctrl + X`, dann `Y`, dann `Enter`
 
@@ -487,7 +459,7 @@ deactivate
 ### 11.1 In den Frontend-Ordner wechseln:
 
 ```bash
-cd ~/infometrica/frontend
+cd /root/infometrica/frontend
 ```
 
 ### 11.2 Environment-Datei erstellen:
@@ -499,7 +471,7 @@ nano .env
 Füge ein:
 
 ```env
-REACT_APP_BACKEND_URL=https://deine-domain.de
+REACT_APP_BACKEND_URL=https://precision.de
 ```
 
 Speichern: `Ctrl + X`, dann `Y`, dann `Enter`
@@ -537,25 +509,25 @@ Nginx ist ein Webserver, der deine Anwendung im Internet bereitstellt.
 ### 12.1 Nginx installieren:
 
 ```bash
-sudo apt install -y nginx
+apt install -y nginx
 ```
 
 ### 12.2 Nginx-Konfiguration erstellen:
 
 ```bash
-sudo nano /etc/nginx/sites-available/infometrica
+nano /etc/nginx/sites-available/precision-labs
 ```
 
-Füge folgenden Inhalt ein (ersetze `deine-domain.de`!):
+Füge folgenden Inhalt ein:
 
 ```nginx
 server {
     listen 80;
-    server_name deine-domain.de www.deine-domain.de;
+    server_name _;
 
     # Frontend (React Build)
     location / {
-        root /home/infometrica/infometrica/frontend/build;
+        root /root/infometrica/frontend/build;
         index index.html;
         try_files $uri $uri/ /index.html;
     }
@@ -584,19 +556,19 @@ Speichern: `Ctrl + X`, dann `Y`, dann `Enter`
 ### 12.3 Konfiguration aktivieren:
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/infometrica /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/precision-labs /etc/nginx/sites-enabled/
 ```
 
 ### 12.4 Standard-Konfiguration deaktivieren:
 
 ```bash
-sudo rm /etc/nginx/sites-enabled/default
+rm -f /etc/nginx/sites-enabled/default
 ```
 
 ### 12.5 Nginx-Konfiguration testen:
 
 ```bash
-sudo nginx -t
+nginx -t
 ```
 
 Du solltest "syntax is ok" und "test is successful" sehen.
@@ -604,48 +576,33 @@ Du solltest "syntax is ok" und "test is successful" sehen.
 ### 12.6 Nginx neu starten:
 
 ```bash
-sudo systemctl restart nginx
-sudo systemctl enable nginx
+systemctl restart nginx
+systemctl enable nginx
 ```
 
 ### 12.7 Berechtigungen setzen:
 
 ```bash
-sudo chmod 755 /home/infometrica
-sudo chmod -R 755 /home/infometrica/infometrica/frontend/build
+chmod -R 755 /root/infometrica/frontend/build
 ```
 
 ---
 
 ## 13. SSL-Zertifikat einrichten
 
-SSL sorgt dafür, dass deine Website über HTTPS erreichbar ist (sicher).
+**HINWEIS:** SSL wird auf dem Proxy-Server (precision.de) eingerichtet, nicht auf dem Main Server.
+Wenn du keinen separaten Proxy-Server nutzt, überspringe diesen Abschnitt und richte SSL direkt ein.
 
-### 13.1 Certbot installieren:
-
-```bash
-sudo apt install -y certbot python3-certbot-nginx
-```
-
-### 13.2 SSL-Zertifikat erstellen:
+### Für Setup ohne Proxy-Server:
 
 ```bash
-sudo certbot --nginx -d deine-domain.de -d www.deine-domain.de
+apt install -y certbot python3-certbot-nginx
+certbot --nginx -d deine-domain.de -d www.deine-domain.de
 ```
 
-Folge den Anweisungen:
-1. E-Mail-Adresse eingeben
-2. Nutzungsbedingungen akzeptieren (A)
-3. Newsletter? (N)
-4. Redirect HTTP zu HTTPS? Wähle **2** (Redirect)
+### Für Setup mit Proxy-Server (precision.de):
 
-### 13.3 Automatische Erneuerung testen:
-
-```bash
-sudo certbot renew --dry-run
-```
-
-Sollte ohne Fehler durchlaufen.
+Siehe Abschnitt **16. Proxy-Server einrichten**
 
 ---
 
@@ -656,24 +613,24 @@ Damit Backend und MongoDB automatisch starten, wenn der Server neu startet.
 ### 14.1 Systemd-Service für Backend erstellen:
 
 ```bash
-sudo nano /etc/systemd/system/infometrica-backend.service
+nano /etc/systemd/system/precision-backend.service
 ```
 
 Füge ein:
 
 ```ini
 [Unit]
-Description=Infometrica Backend API
+Description=Precision Labs Backend API
 After=network.target mongod.service
 Wants=mongod.service
 
 [Service]
 Type=simple
-User=infometrica
-Group=infometrica
-WorkingDirectory=/home/infometrica/infometrica/backend
-Environment="PATH=/home/infometrica/infometrica/backend/venv/bin"
-ExecStart=/home/infometrica/infometrica/backend/venv/bin/uvicorn server:app --host 127.0.0.1 --port 8001
+User=root
+Group=root
+WorkingDirectory=/root/infometrica/backend
+Environment="PATH=/root/infometrica/backend/venv/bin"
+ExecStart=/root/infometrica/backend/venv/bin/uvicorn server:app --host 127.0.0.1 --port 8001
 Restart=always
 RestartSec=5
 
@@ -686,15 +643,15 @@ Speichern: `Ctrl + X`, dann `Y`, dann `Enter`
 ### 14.2 Service aktivieren und starten:
 
 ```bash
-sudo systemctl daemon-reload
-sudo systemctl enable infometrica-backend
-sudo systemctl start infometrica-backend
+systemctl daemon-reload
+systemctl enable precision-backend
+systemctl start precision-backend
 ```
 
 ### 14.3 Status überprüfen:
 
 ```bash
-sudo systemctl status infometrica-backend
+systemctl status precision-backend
 ```
 
 Du solltest "active (running)" sehen. Drücke `q` zum Beenden.
@@ -706,9 +663,9 @@ Du solltest "active (running)" sehen. Drücke `q` zum Beenden.
 ### 15.1 UFW aktivieren:
 
 ```bash
-sudo ufw allow ssh
-sudo ufw allow 'Nginx Full'
-sudo ufw enable
+ufw allow ssh
+ufw allow 'Nginx Full'
+ufw enable
 ```
 
 Bei der Frage tippe `y`.
@@ -716,7 +673,7 @@ Bei der Frage tippe `y`.
 ### 15.2 Status überprüfen:
 
 ```bash
-sudo ufw status
+ufw status
 ```
 
 Du solltest sehen:
@@ -725,19 +682,19 @@ Du solltest sehen:
 
 ---
 
-## 16. Testen
+## 16. Testen (Main Server)
 
 ### 16.1 Alle Services überprüfen:
 
 ```bash
 # MongoDB
-sudo systemctl status mongod
+systemctl status mongod
 
 # Backend
-sudo systemctl status infometrica-backend
+systemctl status precision-backend
 
 # Nginx
-sudo systemctl status nginx
+systemctl status nginx
 ```
 
 Alle sollten "active (running)" zeigen.
@@ -1044,20 +1001,18 @@ FRONTEND_URL=https://precision.de
 
 **Backend neu starten:**
 ```bash
-sudo systemctl restart infometrica-backend
+systemctl restart precision-backend
 ```
 
-### 16.6 Firewall auf Main Server:
+### 17.6 Firewall auf Main Server (Optional):
 
-Erlaube nur Zugriff vom Proxy Server:
+Wenn du nur Zugriff vom Proxy Server erlauben willst:
 
 ```bash
 # Auf Main Server (VPS-GnxrPFnC):
-sudo ufw allow from PROXY_SERVER_IP to any port 80
-sudo ufw allow from PROXY_SERVER_IP to any port 8001
-sudo ufw deny 80
-sudo ufw deny 8001
-sudo ufw reload
+ufw allow from PROXY_SERVER_IP to any port 80
+ufw deny 80
+ufw reload
 ```
 
 ---
@@ -1066,54 +1021,49 @@ sudo ufw reload
 
 ### Schnell-Update (alles in einem Befehl):
 
-**Mit User wechseln und updaten:**
 ```bash
-su - infometrica
-cd ~/infometrica && git fetch --all && git reset --hard origin/main && cd frontend && yarn build && sudo chmod -R 755 ~/infometrica/frontend/build && sudo systemctl restart infometrica-backend && sudo systemctl restart nginx && echo "DONE"
+cd /root/infometrica && git fetch --all && git reset --hard origin/main && cd frontend && yarn build && chmod -R 755 /root/infometrica/frontend/build && systemctl restart precision-backend && systemctl restart nginx && echo "DONE"
 ```
 
 ### Einzelne Schritte:
 
 ```bash
-# 1. Zum infometrica User wechseln
-su - infometrica
-
-# 2. Code aktualisieren
-cd ~/infometrica
+# 1. Code aktualisieren
+cd /root/infometrica
 git fetch --all
 git reset --hard origin/main
 
-# 3. Frontend neu bauen
+# 2. Frontend neu bauen
 cd frontend
 yarn install
 yarn build
 
-# 4. Berechtigungen setzen
-sudo chmod -R 755 ~/infometrica/frontend/build
+# 3. Berechtigungen setzen
+chmod -R 755 /root/infometrica/frontend/build
 
-# 5. Services neu starten
-sudo systemctl restart infometrica-backend
-sudo systemctl restart nginx
+# 4. Services neu starten
+systemctl restart precision-backend
+systemctl restart nginx
 
-# 6. Prüfen ob alles läuft
-echo "=== Services ===" && sudo systemctl is-active mongod && sudo systemctl is-active infometrica-backend && sudo systemctl is-active nginx
+# 5. Prüfen ob alles läuft
+echo "=== Services ===" && systemctl is-active mongod && systemctl is-active precision-backend && systemctl is-active nginx
 ```
 
 ### Status prüfen:
 
 ```bash
 # Alle Services prüfen
-echo "=== Services ===" && sudo systemctl is-active mongod && sudo systemctl is-active infometrica-backend && sudo systemctl is-active nginx && echo "" && echo "=== Backend API ===" && curl -s https://precision.de/api/ && echo "" && echo "=== ALL GOOD ==="
+echo "=== Services ===" && systemctl is-active mongod && systemctl is-active precision-backend && systemctl is-active nginx && echo "" && echo "=== Backend API ===" && curl -s http://localhost:8001/api/ && echo "" && echo "=== ALL GOOD ==="
 ```
 
 ### Bei Problemen - Logs checken:
 
 ```bash
 # Backend Logs
-sudo journalctl -u infometrica-backend --no-pager | tail -50
+journalctl -u precision-backend --no-pager | tail -50
 
 # Nginx Logs
-sudo tail -20 /var/log/nginx/error.log
+tail -20 /var/log/nginx/error.log
 ```
 
 ---
