@@ -208,5 +208,17 @@ Build a full-stack application for the app testing agency "Precision Labs" (form
 - Admin-Eintrag in der DB muss das Feld `password_hash` haben (nicht `password`), plus `id` und `role`.
 - Bei Neuinstallation: `pip install -r requirements.txt` und dann `curl -X POST https://precision-labs.de/api/admin/init-admin`
 
+## Mobile Responsive (April 2026)
+- [x] Admin Login - responsive
+- [x] Admin Dashboard - Cards stacking, responsive headings
+- [x] Admin Applications - Table → Mobile Cards (hidden md:block / md:hidden pattern)
+- [x] Admin Tasks - Badge wrapping, responsive credentials grid
+- [x] Admin Contracts - Responsive card layout
+- [x] Admin Verifications - Flex-col on mobile, responsive modal footer
+- [x] Admin Documents - Table → Mobile Cards
+- [x] Admin Email Inbox - Stats grid responsive (grid-cols-1 sm:grid-cols-3), Table → Mobile Cards
+- [x] Admin Anosim - Stats/number cards responsive
+- [x] Mobile sidebar with hamburger menu
+
 ## Last Updated
-April 2026 - VPS Admin-Login 500-Fehler behoben (bcrypt Kompatibilität + DB-Schema).
+April 2026 - Admin Panel Mobile Optimierung abgeschlossen (100% Testrate).
