@@ -1,6 +1,15 @@
-# Infometrica Self-Hosting Anleitung
+# Precision Labs Self-Hosting Anleitung
 
-Diese Anleitung erklärt Schritt für Schritt, wie du die Infometrica-Anwendung auf deinem eigenen Server hostest.
+Diese Anleitung erklärt Schritt für Schritt, wie du die Precision Labs-Anwendung auf deinem eigenen Server mit Proxy-Server hostest.
+
+---
+
+## Deine Server-Konfiguration
+
+| Server | Hostname | Funktion |
+|--------|----------|----------|
+| **Main Server** | VPS-GnxrPFnC | Backend, Frontend, Datenbank |
+| **Proxy Server** | precision.de | Nginx Reverse Proxy, SSL |
 
 ---
 
@@ -21,9 +30,11 @@ Diese Anleitung erklärt Schritt für Schritt, wie du die Infometrica-Anwendung 
 13. [SSL-Zertifikat einrichten](#13-ssl-zertifikat-einrichten)
 14. [Autostart einrichten](#14-autostart-einrichten)
 15. [Firewall einrichten](#15-firewall-einrichten)
-16. [Testen](#16-testen)
-17. [Wartung](#17-wartung)
-18. [Fehlerbehebung](#18-fehlerbehebung)
+16. [Proxy-Server einrichten](#16-proxy-server-einrichten)
+17. [Testen](#17-testen)
+18. [Wartung](#18-wartung)
+19. [Fehlerbehebung](#19-fehlerbehebung)
+20. [Update-Befehle](#20-update-befehle)
 
 ---
 
@@ -895,6 +906,218 @@ sudo reboot
 
 ---
 
+## 16. Proxy-Server einrichten
+
+**Diese Sektion ist für dein Setup mit separatem Proxy-Server (precision.de)**
+
+### Architektur:
+
+```
+Internet → precision.de (Proxy) → VPS-GnxrPFnC (Main Server)
+           [Nginx + SSL]          [Backend + Frontend + MongoDB]
+```
+
+### 16.1 Main Server (VPS-GnxrPFnC) konfigurieren:
+
+Der Main Server braucht keine SSL-Konfiguration, da der Proxy-Server das übernimmt.
+
+**Nginx auf Main Server (`/etc/nginx/sites-available/infometrica`):**
+
+```nginx
+server {
+    listen 80;
+    server_name _;
+
+    # Frontend (React Build)
+    location / {
+        root /home/infometrica/infometrica/frontend/build;
+        index index.html;
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Backend API
+    location /api {
+        proxy_pass http://127.0.0.1:8001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+    }
+
+    client_max_body_size 50M;
+}
+```
+
+### 16.2 Proxy Server (precision.de) konfigurieren:
+
+**Verbinde dich mit dem Proxy Server:**
+```bash
+ssh root@PROXY_SERVER_IP
+```
+
+**Nginx installieren:**
+```bash
+sudo apt update
+sudo apt install nginx certbot python3-certbot-nginx -y
+```
+
+**Nginx Konfiguration erstellen:**
+```bash
+sudo nano /etc/nginx/sites-available/precision-labs
+```
+
+**Füge ein (ersetze MAIN_SERVER_IP mit der IP von VPS-GnxrPFnC):**
+
+```nginx
+server {
+    listen 80;
+    server_name precision.de www.precision.de;
+
+    location / {
+        proxy_pass http://MAIN_SERVER_IP:80;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_read_timeout 86400;
+        proxy_connect_timeout 60;
+        proxy_send_timeout 60;
+    }
+
+    client_max_body_size 50M;
+}
+```
+
+**Aktivieren und testen:**
+```bash
+sudo ln -sf /etc/nginx/sites-available/precision-labs /etc/nginx/sites-enabled/
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+### 16.3 SSL auf Proxy Server einrichten:
+
+```bash
+sudo certbot --nginx -d precision.de -d www.precision.de
+```
+
+Wähle bei der Frage "redirect": **2** (Redirect HTTP to HTTPS)
+
+### 16.4 Frontend .env anpassen (Main Server):
+
+```bash
+ssh infometrica@MAIN_SERVER_IP
+nano ~/infometrica/frontend/.env
+```
+
+Ändere zu:
+```
+REACT_APP_BACKEND_URL=https://precision.de
+```
+
+**Frontend neu bauen:**
+```bash
+cd ~/infometrica/frontend && yarn build
+```
+
+### 16.5 Backend .env anpassen (Main Server):
+
+```bash
+nano ~/infometrica/backend/.env
+```
+
+Füge hinzu/ändere:
+```
+CORS_ORIGINS=https://precision.de,https://www.precision.de
+FRONTEND_URL=https://precision.de
+```
+
+**Backend neu starten:**
+```bash
+sudo systemctl restart infometrica-backend
+```
+
+### 16.6 Firewall auf Main Server:
+
+Erlaube nur Zugriff vom Proxy Server:
+
+```bash
+# Auf Main Server (VPS-GnxrPFnC):
+sudo ufw allow from PROXY_SERVER_IP to any port 80
+sudo ufw allow from PROXY_SERVER_IP to any port 8001
+sudo ufw deny 80
+sudo ufw deny 8001
+sudo ufw reload
+```
+
+---
+
+## 20. Update-Befehle
+
+### Schnell-Update (alles in einem Befehl):
+
+**Mit User wechseln und updaten:**
+```bash
+su - infometrica
+cd ~/infometrica && git fetch --all && git reset --hard origin/main && cd frontend && yarn build && sudo chmod -R 755 ~/infometrica/frontend/build && sudo systemctl restart infometrica-backend && sudo systemctl restart nginx && echo "DONE"
+```
+
+### Einzelne Schritte:
+
+```bash
+# 1. Zum infometrica User wechseln
+su - infometrica
+
+# 2. Code aktualisieren
+cd ~/infometrica
+git fetch --all
+git reset --hard origin/main
+
+# 3. Frontend neu bauen
+cd frontend
+yarn install
+yarn build
+
+# 4. Berechtigungen setzen
+sudo chmod -R 755 ~/infometrica/frontend/build
+
+# 5. Services neu starten
+sudo systemctl restart infometrica-backend
+sudo systemctl restart nginx
+
+# 6. Prüfen ob alles läuft
+echo "=== Services ===" && sudo systemctl is-active mongod && sudo systemctl is-active infometrica-backend && sudo systemctl is-active nginx
+```
+
+### Status prüfen:
+
+```bash
+# Alle Services prüfen
+echo "=== Services ===" && sudo systemctl is-active mongod && sudo systemctl is-active infometrica-backend && sudo systemctl is-active nginx && echo "" && echo "=== Backend API ===" && curl -s https://precision.de/api/ && echo "" && echo "=== ALL GOOD ==="
+```
+
+### Bei Problemen - Logs checken:
+
+```bash
+# Backend Logs
+sudo journalctl -u infometrica-backend --no-pager | tail -50
+
+# Nginx Logs
+sudo tail -20 /var/log/nginx/error.log
+```
+
+---
+
 ## Kontakt & Support
 
 Bei Fragen:
@@ -903,4 +1126,4 @@ Bei Fragen:
 
 ---
 
-*Letzte Aktualisierung: Februar 2025*
+*Letzte Aktualisierung: März 2026*
