@@ -4,12 +4,10 @@ import {
   LayoutDashboard,
   ClipboardList,
   Settings,
-  FileText,
   LogOut,
   Menu,
   X,
   ChevronRight,
-  FileSignature,
   Clock,
 } from 'lucide-react';
 import { PrecisionLogo } from '../Logo';
@@ -75,10 +73,8 @@ const MitarbeiterLayout = ({ children }) => {
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Main', path: '/mitarbeiter/dashboard' },
-    { icon: FileSignature, label: 'Vertrag', path: '/mitarbeiter/vertrag' },
     { icon: ClipboardList, label: 'Aufträge', path: '/mitarbeiter/auftrage' },
     { icon: Settings, label: 'Einstellungen', path: '/mitarbeiter/einstellungen' },
-    { icon: FileText, label: 'Dokumente', path: '/mitarbeiter/dokumente' },
   ];
 
   const handleLogout = () => {

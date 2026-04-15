@@ -25,8 +25,6 @@ import MitarbeiterSignup from "@/pages/mitarbeiter/MitarbeiterSignup";
 import MitarbeiterDashboard from "@/pages/mitarbeiter/MitarbeiterDashboard";
 import MitarbeiterAuftrage from "@/pages/mitarbeiter/MitarbeiterAuftrage";
 import MitarbeiterEinstellungen from "@/pages/mitarbeiter/MitarbeiterEinstellungen";
-import MitarbeiterDokumente from "@/pages/mitarbeiter/MitarbeiterDokumente";
-import MitarbeiterVertrag from "@/pages/mitarbeiter/MitarbeiterVertrag";
 import MitarbeiterLayout from "@/components/mitarbeiter/MitarbeiterLayout";
 import ProtectedEmployeeRoute from "@/components/mitarbeiter/ProtectedEmployeeRoute";
 import { Toaster } from "@/components/ui/sonner";
@@ -157,26 +155,6 @@ function App() {
               <ProtectedEmployeeRoute>
                 <MitarbeiterLayout>
                   <MitarbeiterEinstellungen />
-                </MitarbeiterLayout>
-              </ProtectedEmployeeRoute>
-            }
-          />
-          <Route
-            path="/mitarbeiter/dokumente"
-            element={
-              <ProtectedEmployeeRoute>
-                <MitarbeiterLayout>
-                  <MitarbeiterDokumente />
-                </MitarbeiterLayout>
-              </ProtectedEmployeeRoute>
-            }
-          />
-          <Route
-            path="/mitarbeiter/vertrag"
-            element={
-              <ProtectedEmployeeRoute>
-                <MitarbeiterLayout>
-                  <MitarbeiterVertrag />
                 </MitarbeiterLayout>
               </ProtectedEmployeeRoute>
             }

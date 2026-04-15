@@ -75,11 +75,7 @@ const AdminApplications = () => {
 
   const openAppDetail = (app) => {
     setSelectedApp(app);
-    if (app.quiz_completed) {
-      fetchQuizAnswers(app.id);
-    } else {
-      setQuizAnswers(null);
-    }
+    fetchQuizAnswers(app.id);
   };
 
   const handleApproveQuiz = async (appId) => {
@@ -641,31 +637,30 @@ const AdminApplications = () => {
               </div>
 
               {/* Quiz Answers */}
-              {selectedApp.quiz_completed && (
-                <div>
-                  <h3 className="text-lg font-semibold text-[#c0caf5] mb-4 flex items-center gap-2">
-                    <ClipboardList size={18} className="text-[#bb9af7]" />
-                    Quiz-Antworten
-                  </h3>
-                  {loadingQuiz ? (
-                    <div className="flex items-center justify-center py-4">
-                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#7aa2f7]"></div>
-                    </div>
-                  ) : quizAnswers?.completed ? (
-                    <div className="space-y-2 max-h-60 overflow-y-auto bg-[#1a1b26] rounded-lg p-4">
-                      {quizAnswers.answers.map((a) => (
-                        <div key={a.question_id} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 py-2 border-b border-[#292e42] last:border-0">
-                          <span className="text-xs text-[#565f89] sm:w-48 flex-shrink-0">{QUIZ_QUESTIONS[a.question_id] || `Frage ${a.question_id}`}</span>
-                          <span className="text-sm text-[#c0caf5]">{a.answer}</span>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-sm text-[#565f89]">Quiz noch nicht abgeschlossen</p>
-                  )}
+              <div>
+                <h3 className="text-lg font-semibold text-[#c0caf5] mb-4 flex items-center gap-2">
+                  <ClipboardList size={18} className="text-[#bb9af7]" />
+                  Quiz-Antworten
+                </h3>
+                {loadingQuiz ? (
+                  <div className="flex items-center justify-center py-4">
+                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#7aa2f7]"></div>
+                  </div>
+                ) : quizAnswers?.completed ? (
+                  <div className="space-y-2 max-h-60 overflow-y-auto bg-[#1a1b26] rounded-lg p-4">
+                    {quizAnswers.answers.map((a) => (
+                      <div key={a.question_id} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 py-2 border-b border-[#292e42] last:border-0">
+                        <span className="text-xs text-[#565f89] sm:w-48 flex-shrink-0">{QUIZ_QUESTIONS[a.question_id] || `Frage ${a.question_id}`}</span>
+                        <span className="text-sm text-[#c0caf5]">{a.answer}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-[#565f89]">Quiz noch nicht abgeschlossen</p>
+                )}
 
-                  {/* Approve button */}
-                  {selectedApp.quiz_completed && !selectedApp.quiz_approved && (
+                {/* Approve button */}
+                {selectedApp.quiz_completed && !selectedApp.quiz_approved && (
                     <button
                       onClick={() => handleApproveQuiz(selectedApp.id)}
                       disabled={approvingQuiz}
@@ -687,7 +682,6 @@ const AdminApplications = () => {
                     </div>
                   )}
                 </div>
-              )}
             </div>
 
             <div className="p-6 border-t border-[#292e42] flex flex-col sm:flex-row justify-end gap-3">
