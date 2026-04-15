@@ -10,12 +10,15 @@ import logging
 logger = logging.getLogger(__name__)
 
 ANOSIM_BASE_URL = "https://anosim.net/api/v1"
-ANOSIM_API_KEY = os.environ.get("ANOSIM_API_KEY", "")
+
+
+def get_anosim_key():
+    return os.environ.get("ANOSIM_API_KEY", "")
 
 
 def get_api_url(endpoint: str) -> str:
     """Build API URL with apikey parameter"""
-    return f"{ANOSIM_BASE_URL}/{endpoint}?apikey={ANOSIM_API_KEY}"
+    return f"{ANOSIM_BASE_URL}/{endpoint}?apikey={get_anosim_key()}"
 
 
 async def get_purchased_numbers() -> dict:
@@ -26,7 +29,7 @@ async def get_purchased_numbers() -> dict:
     Returns:
         dict with status and list of numbers
     """
-    if not ANOSIM_API_KEY:
+    if not get_anosim_key():
         logger.error("ANOSIM_API_KEY not configured")
         return {"status": "error", "message": "Anosim service not configured"}
     
@@ -76,7 +79,7 @@ async def get_sms_for_booking(booking_id: str) -> dict:
     Returns:
         dict with status and list of SMS messages
     """
-    if not ANOSIM_API_KEY:
+    if not get_anosim_key():
         logger.error("ANOSIM_API_KEY not configured")
         return {"status": "error", "message": "Anosim service not configured"}
     
@@ -110,7 +113,7 @@ async def get_sms_for_number(phone_number: str, limit: int = 20) -> dict:
     Returns:
         dict with status and list of SMS messages
     """
-    if not ANOSIM_API_KEY:
+    if not get_anosim_key():
         logger.error("ANOSIM_API_KEY not configured")
         return {"status": "error", "message": "Anosim service not configured"}
     
@@ -177,14 +180,13 @@ async def get_balance() -> dict:
     Returns:
         dict with balance information
     """
-    if not ANOSIM_API_KEY:
+    if not get_anosim_key():
         return {"status": "error", "message": "Anosim service not configured"}
     
     try:
         async with httpx.AsyncClient(timeout=10.0) as client:
             response = await client.get(
-                f"{ANOSIM_BASE_URL}/balance",
-                headers=get_headers()
+                get_api_url("balance")
             )
             return response.json()
     except Exception as e:
@@ -202,14 +204,13 @@ async def rent_number(country: str = "DE") -> dict:
     Returns:
         dict with the rented number details
     """
-    if not ANOSIM_API_KEY:
+    if not get_anosim_key():
         return {"status": "error", "message": "Anosim service not configured"}
     
     try:
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.post(
-                f"{ANOSIM_BASE_URL}/numbers/rent",
-                headers=get_headers(),
+                get_api_url("numbers/rent"),
                 json={"country": country}
             )
             
