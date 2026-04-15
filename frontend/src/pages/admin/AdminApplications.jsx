@@ -34,6 +34,7 @@ const AdminApplications = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [selectedIds, setSelectedIds] = useState([]);
   const [bulkProcessing, setBulkProcessing] = useState(false);
+  const [approvingQuiz, setApprovingQuiz] = useState(false);
 
   const fetchApplications = async () => {
     try {
@@ -78,6 +79,23 @@ const AdminApplications = () => {
       fetchQuizAnswers(app.id);
     } else {
       setQuizAnswers(null);
+    }
+  };
+
+  const handleApproveQuiz = async (appId) => {
+    setApprovingQuiz(true);
+    try {
+      const token = localStorage.getItem('admin_token');
+      await axios.post(`${BACKEND_URL}/api/quiz/admin/${appId}/approve`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success('Quiz freigegeben! Mitarbeiter kann jetzt den Vertrag unterschreiben.');
+      setSelectedApp(null);
+      fetchApplications();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Fehler bei der Freigabe');
+    } finally {
+      setApprovingQuiz(false);
     }
   };
 
@@ -644,6 +662,29 @@ const AdminApplications = () => {
                     </div>
                   ) : (
                     <p className="text-sm text-[#565f89]">Quiz noch nicht abgeschlossen</p>
+                  )}
+
+                  {/* Approve button */}
+                  {selectedApp.quiz_completed && !selectedApp.quiz_approved && (
+                    <button
+                      onClick={() => handleApproveQuiz(selectedApp.id)}
+                      disabled={approvingQuiz}
+                      className="mt-4 w-full flex items-center justify-center gap-2 px-4 py-3 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors disabled:opacity-50 font-medium"
+                      data-testid="approve-quiz-btn"
+                    >
+                      {approvingQuiz ? (
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
+                      ) : (
+                        <CheckCircle size={18} />
+                      )}
+                      Quiz freigeben (Vertrag freischalten)
+                    </button>
+                  )}
+                  {selectedApp.quiz_approved && (
+                    <div className="mt-4 flex items-center gap-2 px-4 py-3 bg-[#9ece6a]/10 border border-[#9ece6a]/30 rounded-lg text-[#9ece6a] text-sm">
+                      <CheckCircle size={16} />
+                      Quiz freigegeben - Mitarbeiter kann Vertrag unterschreiben
+                    </div>
                   )}
                 </div>
               )}

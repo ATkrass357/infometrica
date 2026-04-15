@@ -108,3 +108,33 @@ async def get_quiz_answers(
         return {"completed": False, "answers": []}
     
     return {"completed": True, **quiz}
+
+
+# Admin: Approve quiz (allow employee to proceed to contract)
+@router.post("/admin/{applicant_id}/approve")
+async def approve_quiz(
+    applicant_id: str,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    if not payload or payload.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Nur Admins")
+
+    application = await db.applications.find_one({"id": applicant_id})
+    if not application:
+        raise HTTPException(status_code=404, detail="Bewerbung nicht gefunden")
+    
+    if not application.get("quiz_completed"):
+        raise HTTPException(status_code=400, detail="Quiz noch nicht abgeschlossen")
+
+    await db.applications.update_one(
+        {"id": applicant_id},
+        {"$set": {"quiz_approved": True, "quiz_approved_at": datetime.now(timezone.utc).isoformat()}}
+    )
+
+    return {"message": "Quiz freigegeben, Mitarbeiter kann jetzt den Vertrag unterschreiben"}

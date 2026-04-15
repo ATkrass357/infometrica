@@ -10,6 +10,7 @@ import {
   X,
   ChevronRight,
   FileSignature,
+  Clock,
 } from 'lucide-react';
 import { PrecisionLogo } from '../Logo';
 import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
@@ -30,6 +31,7 @@ const MitarbeiterLayout = ({ children }) => {
   const [applicantData, setApplicantData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [quizApproved, setQuizApproved] = useState(false);
 
   useEffect(() => {
     checkApplicantStatus();
@@ -56,6 +58,7 @@ const MitarbeiterLayout = ({ children }) => {
       setApplicantStatus(response.data.status);
       setApplicantData(response.data);
       setQuizCompleted(response.data.quiz_completed || false);
+      setQuizApproved(response.data.quiz_approved || false);
       
       // Update local storage
       localStorage.setItem('employee_data', JSON.stringify(response.data));
@@ -108,6 +111,26 @@ const MitarbeiterLayout = ({ children }) => {
           applicant={applicantData}
           onQuizCompleted={checkApplicantStatus}
         />
+      );
+    }
+    if (!quizApproved) {
+      return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+          <div className="max-w-md w-full text-center">
+            <div className="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
+              <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Clock size={32} className="text-amber-500" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">Quiz abgeschlossen</h2>
+              <p className="text-gray-600 mb-6">
+                Vielen Dank! Ihre Antworten werden jetzt von unserem Team geprüft. Sobald die Freigabe erfolgt ist, können Sie Ihren Arbeitsvertrag unterschreiben.
+              </p>
+              <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-500">
+                Dies kann einige Stunden dauern. Sie werden benachrichtigt, sobald es weitergeht.
+              </div>
+            </div>
+          </div>
+        </div>
       );
     }
     return (

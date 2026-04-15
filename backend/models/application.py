@@ -57,6 +57,8 @@ class ApplicationResponse(BaseModel):
     created_at: datetime
     quiz_completed: Optional[bool] = None
     quiz_completed_at: Optional[str] = None
+    quiz_approved: Optional[bool] = None
+    quiz_approved_at: Optional[str] = None
 
 
 class ApplicantLoginResponse(BaseModel):
