@@ -243,10 +243,12 @@ async def get_my_email_codes(
     if not account:
         return {"codes": [], "message": "E-Mail-Konto nicht gefunden"}
     
-    # Check if employee has active task
+    # Check if employee has active task (single or multi-assignment)
     active_task = await db.tasks.find_one({
-        "assigned_to.id": employee["id"],
-        "status": "In Bearbeitung"
+        "$or": [
+            {"assigned_to": employee["id"], "status": "In Bearbeitung"},
+            {"assignments.employee_id": employee["id"], "status": "In Bearbeitung"}
+        ]
     })
     
     if not active_task:
