@@ -185,6 +185,7 @@ Build a full-stack application for the app testing agency "Precision Labs" (form
 
 ### P1 - High Priority
 - [ ] Full employee management module in admin panel (CRUD operations)
+- [ ] WhatsApp-Weiterleitung von SMS-Verifizierungscodes
 
 ### P2 - Medium Priority
 - [ ] Dashboard analytics
@@ -200,6 +201,15 @@ Build a full-stack application for the app testing agency "Precision Labs" (form
 - [x] SMS Panel in employee task view
 - [x] Automatic code extraction from SMS
 - [x] Auto-refresh functionality for SMS
+
+## Completed Tasks (April 2026)
+- [x] VPS Admin-Login 500-Fehler behoben (bcrypt Kompatibilität + DB-Schema)
+- [x] Admin Panel Mobile Optimierung (alle Seiten)
+- [x] Einführungs-Quiz (15 Fragen) für Web Application Tester Minijob
+  - Quiz erscheint nach Akzeptierung, vor Vertrag
+  - Fragetypen: Auswahl (Ja/Nein), Textfeld, Info-Bestätigung
+  - Admin kann Quiz-Antworten in Bewerbungsdetails einsehen
+  - Kein Bestehen/Nicht-bestehen - rein informativ
 
 ---
 
@@ -221,4 +231,4 @@ Build a full-stack application for the app testing agency "Precision Labs" (form
 - [x] Mobile sidebar with hamburger menu
 
 ## Last Updated
-April 2026 - Admin Panel Mobile Optimierung abgeschlossen (100% Testrate).
+April 2026 - Einführungs-Quiz für Mitarbeiter implementiert (100% Testrate).
