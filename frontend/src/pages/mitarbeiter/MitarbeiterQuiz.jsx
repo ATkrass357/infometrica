@@ -33,9 +33,9 @@ const QUESTIONS = [
   },
   {
     id: 5,
-    type: 'text',
-    question: 'Ist es für Sie in Ordnung, dass Sie bei den Tests Ihr echtes Ausweisdokument verwenden? Bitte erklären Sie kurz.',
-    placeholder: 'Ihre Antwort...',
+    type: 'select',
+    question: 'Ist es für Sie in Ordnung, dass Sie bei den Tests Ihr echtes Ausweisdokument verwenden?',
+    options: ['Ja', 'Nein'],
   },
   {
     id: 6,
