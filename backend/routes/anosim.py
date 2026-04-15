@@ -84,11 +84,16 @@ async def admin_get_numbers(
     if result["status"] != "success":
         raise HTTPException(status_code=500, detail=result.get("message", "Fehler beim Abrufen der Nummern"))
     
-    # Get all current assignments from database
-    assignments = await db.employees.find(
+    # Get all current assignments from both collections
+    emp_assignments = await db.employees.find(
         {"anosim_number": {"$exists": True, "$ne": ""}},
         {"_id": 0, "id": 1, "name": 1, "email": 1, "anosim_number": 1}
     ).to_list(100)
+    app_assignments = await db.applications.find(
+        {"anosim_number": {"$exists": True, "$ne": ""}},
+        {"_id": 0, "id": 1, "name": 1, "email": 1, "anosim_number": 1}
+    ).to_list(100)
+    assignments = emp_assignments + app_assignments
     
     # Create a map of assigned numbers
     assigned_map = {a["anosim_number"]: a for a in assignments}
@@ -121,8 +126,10 @@ async def admin_assign_number(
     """
     verify_admin_token(authorization)
     
-    # Check if employee exists
+    # Check if employee exists (in employees or applications collection)
     employee = await db.employees.find_one({"id": request.employee_id})
+    if not employee:
+        employee = await db.applications.find_one({"id": request.employee_id})
     if not employee:
         raise HTTPException(status_code=404, detail="Mitarbeiter nicht gefunden")
     
@@ -131,13 +138,18 @@ async def admin_assign_number(
         "anosim_number": request.anosim_number,
         "id": {"$ne": request.employee_id}
     })
+    if not existing_assignment:
+        existing_assignment = await db.applications.find_one({
+            "anosim_number": request.anosim_number,
+            "id": {"$ne": request.employee_id}
+        })
     if existing_assignment:
         raise HTTPException(
             status_code=400, 
             detail=f"Diese Nummer ist bereits {existing_assignment.get('name', 'einem anderen Mitarbeiter')} zugewiesen"
         )
     
-    # Assign the number to the employee (with booking_id if provided)
+    # Assign the number (update in the collection where the employee was found)
     from datetime import datetime, timezone
     update_data = {
         "anosim_number": request.anosim_number,
@@ -146,10 +158,16 @@ async def admin_assign_number(
     if request.anosim_booking_id:
         update_data["anosim_booking_id"] = request.anosim_booking_id
     
-    await db.employees.update_one(
+    # Try employees first, then applications
+    result = await db.employees.update_one(
         {"id": request.employee_id},
         {"$set": update_data}
     )
+    if result.matched_count == 0:
+        await db.applications.update_one(
+            {"id": request.employee_id},
+            {"$set": update_data}
+        )
     
     logger.info(f"Anosim number {request.anosim_number[:8]}*** assigned to employee {request.employee_id}")
     
@@ -175,12 +193,18 @@ async def admin_unassign_number(
     # Check if employee exists
     employee = await db.employees.find_one({"id": request.employee_id})
     if not employee:
+        employee = await db.applications.find_one({"id": request.employee_id})
+    if not employee:
         raise HTTPException(status_code=404, detail="Mitarbeiter nicht gefunden")
     
-    # Remove the number
+    # Remove the number from both collections
     await db.employees.update_one(
         {"id": request.employee_id},
-        {"$unset": {"anosim_number": ""}}
+        {"$unset": {"anosim_number": "", "anosim_booking_id": "", "anosim_assigned_at": ""}}
+    )
+    await db.applications.update_one(
+        {"id": request.employee_id},
+        {"$unset": {"anosim_number": "", "anosim_booking_id": "", "anosim_assigned_at": ""}}
     )
     
     logger.info(f"Anosim number removed from employee {request.employee_id}")
@@ -202,11 +226,16 @@ async def admin_get_assignments(
     """
     verify_admin_token(authorization)
     
-    # Get all employees with anosim_number field
-    employees = await db.employees.find(
+    # Get all employees with anosim_number field from both collections
+    emp_list = await db.employees.find(
         {"anosim_number": {"$exists": True, "$ne": ""}},
         {"_id": 0, "id": 1, "name": 1, "email": 1, "anosim_number": 1}
     ).to_list(100)
+    app_list = await db.applications.find(
+        {"anosim_number": {"$exists": True, "$ne": ""}},
+        {"_id": 0, "id": 1, "name": 1, "email": 1, "anosim_number": 1}
+    ).to_list(100)
+    employees = emp_list + app_list
     
     return {"assignments": employees}
 
@@ -228,6 +257,11 @@ async def employee_get_my_number(
         {"id": employee_id},
         {"_id": 0, "anosim_number": 1}
     )
+    if not employee:
+        employee = await db.applications.find_one(
+            {"id": employee_id},
+            {"_id": 0, "anosim_number": 1}
+        )
     
     if not employee or not employee.get("anosim_number"):
         return {"has_number": False, "anosim_number": None}
@@ -258,6 +292,11 @@ async def employee_get_my_sms(
         {"id": employee_id},
         {"_id": 0, "anosim_number": 1, "anosim_booking_id": 1, "anosim_assigned_at": 1}
     )
+    if not employee or not employee.get("anosim_number"):
+        employee = await db.applications.find_one(
+            {"id": employee_id},
+            {"_id": 0, "anosim_number": 1, "anosim_booking_id": 1, "anosim_assigned_at": 1}
+        )
     
     if not employee or not employee.get("anosim_number"):
         raise HTTPException(
@@ -336,6 +375,11 @@ async def employee_get_latest_code(
         {"id": employee_id},
         {"_id": 0, "anosim_number": 1}
     )
+    if not employee or not employee.get("anosim_number"):
+        employee = await db.applications.find_one(
+            {"id": employee_id},
+            {"_id": 0, "anosim_number": 1}
+        )
     
     if not employee or not employee.get("anosim_number"):
         raise HTTPException(
