@@ -90,6 +90,11 @@ app.include_router(anosim_router)
 from routes.email_inbox import router as email_inbox_router
 app.include_router(email_inbox_router)
 
+# Include quiz routes
+from routes.quiz import router as quiz_router
+app.include_router(quiz_router)
+
+
 # Include the router in the main app
 app.include_router(api_router)
 

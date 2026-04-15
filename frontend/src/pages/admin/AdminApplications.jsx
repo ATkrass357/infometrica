@@ -1,14 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Eye, RefreshCw, MapPin, UserCheck, CheckCircle, X, Clock, Shield, Unlock, Search, CheckSquare, Square } from 'lucide-react';
+import { Trash2, Eye, RefreshCw, MapPin, UserCheck, CheckCircle, X, Clock, Shield, Unlock, Search, CheckSquare, Square, ClipboardList } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+const QUIZ_QUESTIONS = {
+  1: 'Deutscher Staatsbürger?',
+  2: 'Gültiger Personalausweis/Reisepass?',
+  3: 'Mindestens 18 Jahre alt?',
+  4: 'Ident-Verfahren Info verstanden',
+  5: 'Einverstanden mit echtem Ausweis?',
+  6: 'Smartphone mit Kamera?',
+  7: 'Stabile Internetverbindung?',
+  8: 'Mind. 5 Stunden/Woche?',
+  9: 'Minijob bewusst?',
+  10: 'Deutsches Bankkonto?',
+  11: 'Homeoffice-Info verstanden',
+  12: 'Vertraulichkeit?',
+  13: 'Selbstständiges Arbeiten?',
+  14: 'Erfahrung mit Testing?',
+  15: 'Fragen/Anmerkungen',
+};
+
 const AdminApplications = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedApp, setSelectedApp] = useState(null);
+  const [quizAnswers, setQuizAnswers] = useState(null);
+  const [loadingQuiz, setLoadingQuiz] = useState(false);
   const [processingId, setProcessingId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -35,6 +55,31 @@ const AdminApplications = () => {
   useEffect(() => {
     fetchApplications();
   }, []);
+
+  const fetchQuizAnswers = async (appId) => {
+    setLoadingQuiz(true);
+    setQuizAnswers(null);
+    try {
+      const token = localStorage.getItem('admin_token');
+      const response = await axios.get(`${BACKEND_URL}/api/quiz/admin/${appId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setQuizAnswers(response.data);
+    } catch (error) {
+      console.error('Error fetching quiz:', error);
+    } finally {
+      setLoadingQuiz(false);
+    }
+  };
+
+  const openAppDetail = (app) => {
+    setSelectedApp(app);
+    if (app.quiz_completed) {
+      fetchQuizAnswers(app.id);
+    } else {
+      setQuizAnswers(null);
+    }
+  };
 
   const handleDelete = async (id) => {
     if (!window.confirm('Möchten Sie diese Bewerbung wirklich löschen?')) {
@@ -402,7 +447,7 @@ const AdminApplications = () => {
                     <td className="px-6 py-4">
                       <div className="flex items-center space-x-2">
                         <button
-                          onClick={() => setSelectedApp(app)}
+                          onClick={() => openAppDetail(app)}
                           className="p-2 text-[#7dcfff] hover:bg-[#7dcfff]/10 rounded-lg transition-colors"
                           title="Details ansehen"
                           data-testid={`view-application-${app.id}`}
@@ -483,7 +528,7 @@ const AdminApplications = () => {
                   {app.position}
                 </span>
                 <div className="flex items-center gap-1">
-                  <button onClick={() => setSelectedApp(app)} className="p-2 text-[#7dcfff] hover:bg-[#7dcfff]/10 rounded-lg" data-testid={`view-application-mobile-${app.id}`}>
+                  <button onClick={() => openAppDetail(app)} className="p-2 text-[#7dcfff] hover:bg-[#7dcfff]/10 rounded-lg" data-testid={`view-application-mobile-${app.id}`}>
                     <Eye size={18} />
                   </button>
                   {app.status === 'Neu' && (
@@ -576,6 +621,32 @@ const AdminApplications = () => {
                   )}
                 </div>
               </div>
+
+              {/* Quiz Answers */}
+              {selectedApp.quiz_completed && (
+                <div>
+                  <h3 className="text-lg font-semibold text-[#c0caf5] mb-4 flex items-center gap-2">
+                    <ClipboardList size={18} className="text-[#bb9af7]" />
+                    Quiz-Antworten
+                  </h3>
+                  {loadingQuiz ? (
+                    <div className="flex items-center justify-center py-4">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#7aa2f7]"></div>
+                    </div>
+                  ) : quizAnswers?.completed ? (
+                    <div className="space-y-2 max-h-60 overflow-y-auto bg-[#1a1b26] rounded-lg p-4">
+                      {quizAnswers.answers.map((a) => (
+                        <div key={a.question_id} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3 py-2 border-b border-[#292e42] last:border-0">
+                          <span className="text-xs text-[#565f89] sm:w-48 flex-shrink-0">{QUIZ_QUESTIONS[a.question_id] || `Frage ${a.question_id}`}</span>
+                          <span className="text-sm text-[#c0caf5]">{a.answer}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-[#565f89]">Quiz noch nicht abgeschlossen</p>
+                  )}
+                </div>
+              )}
             </div>
 
             <div className="p-6 border-t border-[#292e42] flex flex-col sm:flex-row justify-end gap-3">

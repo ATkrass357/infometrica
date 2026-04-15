@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { PrecisionLogo } from '../Logo';
 import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
+import MitarbeiterQuiz from '../../pages/mitarbeiter/MitarbeiterQuiz';
 import MitarbeiterContractSign from '../../pages/mitarbeiter/MitarbeiterContractSign';
 import MitarbeiterVerification from '../../pages/mitarbeiter/MitarbeiterVerification';
 import MitarbeiterAwaitingApproval from '../../pages/mitarbeiter/MitarbeiterAwaitingApproval';
@@ -28,6 +29,7 @@ const MitarbeiterLayout = ({ children }) => {
   const [applicantStatus, setApplicantStatus] = useState(null);
   const [applicantData, setApplicantData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [quizCompleted, setQuizCompleted] = useState(false);
 
   useEffect(() => {
     checkApplicantStatus();
@@ -53,6 +55,7 @@ const MitarbeiterLayout = ({ children }) => {
       
       setApplicantStatus(response.data.status);
       setApplicantData(response.data);
+      setQuizCompleted(response.data.quiz_completed || false);
       
       // Update local storage
       localStorage.setItem('employee_data', JSON.stringify(response.data));
@@ -99,6 +102,14 @@ const MitarbeiterLayout = ({ children }) => {
   }
 
   if (applicantStatus === 'Akzeptiert') {
+    if (!quizCompleted) {
+      return (
+        <MitarbeiterQuiz
+          applicant={applicantData}
+          onQuizCompleted={checkApplicantStatus}
+        />
+      );
+    }
     return (
       <MitarbeiterContractSign 
         applicant={applicantData} 
