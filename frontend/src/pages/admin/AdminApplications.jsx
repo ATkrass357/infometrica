@@ -15,7 +15,7 @@ const QUIZ_QUESTIONS = {
   7: 'Was ist ein Bug?',
   8: 'Was ist responsives Design?',
   9: 'Was tun bei Fehlerfund?',
-  10: 'Was ist ein Browser?',
+  10: 'Was ist eine IP-Adresse?',
   11: 'Was bedeutet Cache leeren?',
   12: 'Was ist ein Testbericht?',
   13: 'Warum Vertraulichkeit?',

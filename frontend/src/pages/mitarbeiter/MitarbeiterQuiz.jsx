@@ -64,8 +64,8 @@ const QUESTIONS = [
   {
     id: 10,
     type: 'select',
-    question: 'Was ist ein Browser?',
-    options: ['Ein Betriebssystem', 'Ein Programm zum Öffnen von Webseiten (z.B. Chrome, Firefox)', 'Ein Antivirenprogramm'],
+    question: 'Was ist eine IP-Adresse?',
+    options: ['Ein Passwort für den Router', 'Eine eindeutige Kennung eines Geräts im Netzwerk', 'Ein Browser-Plugin'],
   },
   {
     id: 11,
