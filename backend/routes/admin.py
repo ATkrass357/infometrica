@@ -284,8 +284,10 @@ async def assign_task(
     if not assigned_to:
         raise HTTPException(status_code=400, detail="Mitarbeiter muss ausgewählt werden")
     
-    # Get employee name
+    # Get employee name - check both collections
     employee = await db.employees.find_one({"id": assigned_to})
+    if not employee:
+        employee = await db.applications.find_one({"id": assigned_to})
     assigned_to_name = employee.get("name") if employee else "Unbekannt"
     
     # Prepare update data
@@ -328,8 +330,10 @@ async def assign_task_multiple(
     assigned_names = []
     
     for item in request.assignments:
-        # Get employee info
+        # Get employee info - check both employees and applications collections
         employee = await db.employees.find_one({"id": item.employee_id})
+        if not employee:
+            employee = await db.applications.find_one({"id": item.employee_id})
         if not employee:
             continue
         
@@ -369,6 +373,8 @@ async def assign_task_multiple(
     # Send SMS notifications to all assigned employees
     for assignment in assignments:
         employee = await db.employees.find_one({"id": assignment["employee_id"]})
+        if not employee:
+            employee = await db.applications.find_one({"id": assignment["employee_id"]})
         if employee:
             phone = employee.get("phone", "") or employee.get("mobilnummer", "")
             if phone:
