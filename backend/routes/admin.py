@@ -123,10 +123,30 @@ async def get_employees(
     """Get all employees for task assignment dropdown"""
     verify_admin_token(authorization)
     
+    # Get employees from dedicated employees collection
     employees = await db.employees.find(
         {"is_active": True},
         {"_id": 0, "id": 1, "name": 1, "email": 1, "position": 1, "department": 1}
     ).to_list(100)
+    
+    # Also get accepted/verified/unlocked applicants from applications collection
+    applicants = await db.applications.find(
+        {"status": {"$in": ["Akzeptiert", "Verifiziert", "Freigeschaltet", "Vertrag unterschrieben"]}},
+        {"_id": 0, "id": 1, "name": 1, "email": 1, "position": 1}
+    ).to_list(100)
+    
+    # Merge, avoiding duplicates by email
+    existing_emails = {e["email"] for e in employees}
+    for app in applicants:
+        if app.get("email") not in existing_emails:
+            employees.append({
+                "id": app["id"],
+                "name": app.get("name", ""),
+                "email": app.get("email", ""),
+                "position": app.get("position", ""),
+                "department": "Mitarbeiter"
+            })
+            existing_emails.add(app["email"])
     
     return employees
 
