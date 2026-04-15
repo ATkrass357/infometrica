@@ -52,8 +52,8 @@ const QUESTIONS = [
   {
     id: 8,
     type: 'select',
-    question: 'Wo wird diese Tätigkeit ausgeführt?',
-    options: ['Im Büro vor Ort', 'Im Homeoffice', 'Auf Baustellen'],
+    question: 'Was bedeutet "responsives Design" bei einer Webseite?',
+    options: ['Die Seite lädt schneller', 'Die Seite passt sich an verschiedene Bildschirmgrößen an', 'Die Seite hat mehr Farben'],
   },
   {
     id: 9,
@@ -64,14 +64,14 @@ const QUESTIONS = [
   {
     id: 10,
     type: 'select',
-    question: 'Welches Gerät benötigen Sie zwingend für diese Tätigkeit?',
-    options: ['Nur einen Laptop', 'Ein Smartphone mit Kamera und Internetzugang', 'Einen Drucker'],
+    question: 'Was ist ein Browser?',
+    options: ['Ein Betriebssystem', 'Ein Programm zum Öffnen von Webseiten (z.B. Chrome, Firefox)', 'Ein Antivirenprogramm'],
   },
   {
     id: 11,
     type: 'select',
-    question: 'Um welche Art von Beschäftigung handelt es sich?',
-    options: ['Vollzeit (40h/Woche)', 'Minijob (geringfügige Beschäftigung)', 'Ehrenamtlich'],
+    question: 'Was bedeutet "Cache leeren" im Browser?',
+    options: ['Den Browser deinstallieren', 'Gespeicherte Daten und Dateien löschen, damit Seiten neu geladen werden', 'Das Internet ausschalten'],
   },
   {
     id: 12,
