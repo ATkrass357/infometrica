@@ -116,8 +116,23 @@ async def get_employee_tasks(
     
     employee_id = payload.get("id")
     
-    # Get tasks assigned to this employee
-    tasks = await db.tasks.find({"assigned_to": employee_id}).sort("created_at", -1).to_list(100)
+    # Get tasks assigned to this employee (single or multi-assignment)
+    tasks = await db.tasks.find({
+        "$or": [
+            {"assigned_to": employee_id},
+            {"assignments.employee_id": employee_id}
+        ]
+    }).sort("created_at", -1).to_list(100)
+    
+    # For multi-assigned tasks, inject the employee-specific credentials
+    for task in tasks:
+        if task.get("assignments"):
+            for a in task["assignments"]:
+                if a.get("employee_id") == employee_id:
+                    task["test_ident_link"] = a.get("test_ident_link", "")
+                    task["test_login_email"] = a.get("test_login_email", "")
+                    task["test_login_password"] = a.get("test_login_password", "")
+                    break
     
     return [Task(**task) for task in tasks]
 
@@ -141,7 +156,13 @@ async def update_task_status(
     employee_id = payload.get("id")
     
     # Check if task belongs to this employee
-    task = await db.tasks.find_one({"id": task_id, "assigned_to": employee_id})
+    task = await db.tasks.find_one({
+        "id": task_id,
+        "$or": [
+            {"assigned_to": employee_id},
+            {"assignments.employee_id": employee_id}
+        ]
+    })
     
     if not task:
         raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
@@ -176,11 +197,12 @@ async def get_employee_stats(
     
     employee_id = payload.get("id")
     
-    # Count tasks by status
-    total_tasks = await db.tasks.count_documents({"assigned_to": employee_id})
-    open_tasks = await db.tasks.count_documents({"assigned_to": employee_id, "status": "Offen"})
-    in_progress = await db.tasks.count_documents({"assigned_to": employee_id, "status": "In Bearbeitung"})
-    completed = await db.tasks.count_documents({"assigned_to": employee_id, "status": "Abgeschlossen"})
+    # Count tasks by status (single or multi-assignment)
+    query = {"$or": [{"assigned_to": employee_id}, {"assignments.employee_id": employee_id}]}
+    total_tasks = await db.tasks.count_documents(query)
+    open_tasks = await db.tasks.count_documents({**query, "status": "Offen"})
+    in_progress = await db.tasks.count_documents({**query, "status": "In Bearbeitung"})
+    completed = await db.tasks.count_documents({**query, "status": "Abgeschlossen"})
     
     return {
         "total_tasks": total_tasks,
