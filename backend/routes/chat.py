@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, Depends, Header, UploadFile, File, Form
+from fastapi import APIRouter, HTTPException, Depends, Header, UploadFile, File, Form, Request
 from fastapi.responses import FileResponse
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from utils.auth import decode_token
@@ -7,11 +7,45 @@ from pydantic import BaseModel
 from typing import Optional
 import os
 import uuid
+import httpx
+import logging
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
 
 UPLOAD_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads", "chat")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+TELEGRAM_BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_API = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}"
+
+
+async def send_telegram_notification(db, sender_name: str, message: str, is_image: bool = False):
+    """Send notification to all Telegram subscribers when admin receives a message"""
+    if not TELEGRAM_BOT_TOKEN:
+        return
+    try:
+        subscribers = await db.telegram_subscribers.find({}, {"_id": 0, "chat_id": 1}).to_list(100)
+        if not subscribers:
+            return
+        text = f"Neue Nachricht von {sender_name}:\n\n"
+        if is_image:
+            text += "Bild gesendet"
+        else:
+            text += message
+        async with httpx.AsyncClient(timeout=10) as client:
+            for sub in subscribers:
+                try:
+                    await client.post(f"{TELEGRAM_API}/sendMessage", json={
+                        "chat_id": sub["chat_id"],
+                        "text": text,
+                        "parse_mode": "HTML"
+                    })
+                except Exception:
+                    pass
+    except Exception as e:
+        logger.error(f"Telegram notification error: {e}")
 
 def get_db():
     from server import db
@@ -67,6 +101,12 @@ async def send_message(
     }
 
     await db.messages.insert_one(msg_doc)
+
+    # Notify via Telegram if message is sent TO an admin
+    if sender_role != "admin":
+        admin_check = await db.admins.find_one({"id": data.recipient_id})
+        if admin_check:
+            await send_telegram_notification(db, sender_name, data.message)
 
     return {"message": "Nachricht gesendet", "conversation_id": conversation_id}
 
@@ -278,7 +318,56 @@ async def send_image(
     }
 
     await db.messages.insert_one(msg_doc)
+
+    # Notify via Telegram if image is sent TO an admin
+    if sender_role != "admin":
+        admin_check = await db.admins.find_one({"id": recipient_id})
+        if admin_check:
+            await send_telegram_notification(db, sender_name, "", is_image=True)
+
     return {"message": "Bild gesendet", "image": filename}
+
+
+# Telegram webhook - handles /start command to register subscribers
+@router.post("/telegram/webhook")
+async def telegram_webhook(request: Request, db: AsyncIOMotorDatabase = Depends(get_db)):
+    data = await request.json()
+    message = data.get("message", {})
+    text = message.get("text", "")
+    chat_id = message.get("chat", {}).get("id")
+    first_name = message.get("from", {}).get("first_name", "")
+
+    if not chat_id:
+        return {"ok": True}
+
+    if text == "/start":
+        # Register subscriber
+        await db.telegram_subscribers.update_one(
+            {"chat_id": chat_id},
+            {"$set": {
+                "chat_id": chat_id,
+                "name": first_name,
+                "registered_at": datetime.now(timezone.utc).isoformat()
+            }},
+            upsert=True
+        )
+        # Send welcome message
+        if TELEGRAM_BOT_TOKEN:
+            async with httpx.AsyncClient(timeout=10) as client:
+                await client.post(f"{TELEGRAM_API}/sendMessage", json={
+                    "chat_id": chat_id,
+                    "text": f"Willkommen {first_name}! Sie erhalten ab jetzt Benachrichtigungen wenn neue Nachrichten an den Admin gesendet werden."
+                })
+    elif text == "/stop":
+        await db.telegram_subscribers.delete_one({"chat_id": chat_id})
+        if TELEGRAM_BOT_TOKEN:
+            async with httpx.AsyncClient(timeout=10) as client:
+                await client.post(f"{TELEGRAM_API}/sendMessage", json={
+                    "chat_id": chat_id,
+                    "text": "Benachrichtigungen deaktiviert. Senden Sie /start um sie wieder zu aktivieren."
+                })
+
+    return {"ok": True}
 
 
 # Serve chat images
