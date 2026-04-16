@@ -1,11 +1,17 @@
-from fastapi import APIRouter, HTTPException, Depends, Header
+from fastapi import APIRouter, HTTPException, Depends, Header, UploadFile, File, Form
+from fastapi.responses import FileResponse
 from motor.motor_asyncio import AsyncIOMotorDatabase
 from utils.auth import decode_token
 from datetime import datetime, timezone
 from pydantic import BaseModel
 from typing import Optional
+import os
+import uuid
 
 router = APIRouter(prefix="/api/chat", tags=["chat"])
+
+UPLOAD_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads", "chat")
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 def get_db():
     from server import db
@@ -212,3 +218,73 @@ async def get_unread_count(
     count = await db.messages.count_documents({"recipient_id": user_id, "read": False})
     
     return {"unread": count}
+
+
+# Upload image and send as message
+@router.post("/send-image")
+async def send_image(
+    recipient_id: str = Form(...),
+    file: UploadFile = File(...),
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    token = authorization.split(" ")[1]
+    payload = decode_token(token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+
+    # Validate file type
+    allowed = [".jpg", ".jpeg", ".png", ".gif", ".webp"]
+    ext = os.path.splitext(file.filename)[1].lower()
+    if ext not in allowed:
+        raise HTTPException(status_code=400, detail="Nur Bilder erlaubt (jpg, png, gif, webp)")
+
+    # Save file
+    filename = f"{uuid.uuid4().hex}{ext}"
+    filepath = os.path.join(UPLOAD_DIR, filename)
+    content = await file.read()
+    with open(filepath, "wb") as f:
+        f.write(content)
+
+    sender_id = payload.get("id")
+    sender_role = payload.get("role", "employee")
+
+    # Get sender name
+    if sender_role == "admin":
+        admin = await db.admins.find_one({"id": sender_id}, {"_id": 0, "name": 1})
+        sender_name = admin.get("name", "Admin") if admin else "Admin"
+    else:
+        emp = await db.employees.find_one({"id": sender_id}, {"_id": 0, "name": 1})
+        if not emp:
+            emp = await db.applications.find_one({"id": sender_id}, {"_id": 0, "name": 1})
+        sender_name = emp.get("name", "Mitarbeiter") if emp else "Mitarbeiter"
+
+    participants = sorted([sender_id, recipient_id])
+    conversation_id = f"{participants[0]}_{participants[1]}"
+
+    msg_doc = {
+        "conversation_id": conversation_id,
+        "sender_id": sender_id,
+        "sender_name": sender_name,
+        "sender_role": sender_role,
+        "recipient_id": recipient_id,
+        "message": "",
+        "image": filename,
+        "read": False,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+
+    await db.messages.insert_one(msg_doc)
+    return {"message": "Bild gesendet", "image": filename}
+
+
+# Serve chat images
+@router.get("/image/{filename}")
+async def get_chat_image(filename: str):
+    filepath = os.path.join(UPLOAD_DIR, filename)
+    if not os.path.exists(filepath):
+        raise HTTPException(status_code=404, detail="Bild nicht gefunden")
+    return FileResponse(filepath)

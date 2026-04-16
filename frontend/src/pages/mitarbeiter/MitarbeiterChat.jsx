@@ -1,8 +1,32 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { MessageCircle, Send, ArrowLeft, Shield } from 'lucide-react';
+import { MessageCircle, Send, Image, X, Shield } from 'lucide-react';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+const AVATAR_COLORS = [
+  'bg-emerald-500', 'bg-blue-500', 'bg-purple-500', 'bg-rose-500',
+  'bg-amber-500', 'bg-teal-500', 'bg-indigo-500', 'bg-pink-500',
+];
+
+const getInitials = (name) => {
+  if (!name) return '?';
+  const parts = name.trim().split(' ');
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return name.substring(0, 2).toUpperCase();
+};
+
+const getColor = (name) => {
+  let hash = 0;
+  for (let i = 0; i < (name || '').length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+};
+
+const Avatar = ({ name, size = 'w-10 h-10 text-sm' }) => (
+  <div className={`${size} ${getColor(name)} rounded-full flex items-center justify-center text-white font-bold flex-shrink-0`}>
+    {getInitials(name)}
+  </div>
+);
 
 const MitarbeiterChat = () => {
   const [messages, setMessages] = useState([]);
@@ -10,21 +34,21 @@ const MitarbeiterChat = () => {
   const [sending, setSending] = useState(false);
   const [adminId, setAdminId] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
   const messagesEndRef = useRef(null);
+  const fileInputRef = useRef(null);
   const pollRef = useRef(null);
 
   const token = localStorage.getItem('employee_token');
   const headers = { Authorization: `Bearer ${token}` };
   const employeeData = JSON.parse(localStorage.getItem('employee_data') || '{}');
 
-  // Find the admin to chat with
   const findAdmin = useCallback(async () => {
     try {
-      // Check existing conversations first
       const convoRes = await axios.get(`${BACKEND_URL}/api/chat/conversations`, { headers });
       const convos = convoRes.data.conversations || [];
       if (convos.length > 0) {
-        // Extract admin id from conversation_id
         const convoId = convos[0].conversation_id;
         const parts = convoId.split('_');
         const myId = employeeData.id;
@@ -32,7 +56,6 @@ const MitarbeiterChat = () => {
         setAdminId(partnerId);
         return partnerId;
       }
-      // Default admin id
       setAdminId('admin-001');
       return 'admin-001';
     } catch (e) {
@@ -47,7 +70,7 @@ const MitarbeiterChat = () => {
       const res = await axios.get(`${BACKEND_URL}/api/chat/messages/${aId}`, { headers });
       setMessages(res.data.messages || []);
     } catch (e) {
-      console.error('Error fetching messages:', e);
+      console.error('Error:', e);
     } finally {
       setLoading(false);
     }
@@ -68,26 +91,46 @@ const MitarbeiterChat = () => {
   }, [messages]);
 
   const handleSend = async () => {
-    if (!newMessage.trim() || !adminId) return;
+    if ((!newMessage.trim() && !imageFile) || !adminId) return;
     setSending(true);
     try {
-      await axios.post(`${BACKEND_URL}/api/chat/send`, {
-        recipient_id: adminId,
-        message: newMessage.trim()
-      }, { headers });
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        formData.append('recipient_id', adminId);
+        await axios.post(`${BACKEND_URL}/api/chat/send-image`, formData, {
+          headers: { ...headers, 'Content-Type': 'multipart/form-data' }
+        });
+        setImageFile(null);
+        setImagePreview(null);
+      }
+      if (newMessage.trim()) {
+        await axios.post(`${BACKEND_URL}/api/chat/send`, {
+          recipient_id: adminId,
+          message: newMessage.trim()
+        }, { headers });
+      }
       setNewMessage('');
       fetchMessages(adminId);
     } catch (e) {
-      console.error('Error sending:', e);
+      console.error('Error:', e);
     } finally {
       setSending(false);
     }
   };
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file || !file.type.startsWith('image/')) return;
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onload = (ev) => setImagePreview(ev.target.result);
+    reader.readAsDataURL(file);
+  };
+
   const formatTime = (iso) => {
     if (!iso) return '';
-    const d = new Date(iso);
-    return d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+    return new Date(iso).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
   };
 
   if (loading) {
@@ -102,9 +145,7 @@ const MitarbeiterChat = () => {
     <div className="h-[calc(100vh-8rem)] flex flex-col bg-white rounded-2xl border border-gray-200 overflow-hidden" data-testid="employee-chat-page">
       {/* Header */}
       <div className="flex items-center gap-3 p-4 border-b border-gray-100">
-        <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-          <Shield size={18} className="text-emerald-600" />
-        </div>
+        <Avatar name="Admin" />
         <div>
           <p className="font-semibold text-gray-900">Precision Labs Support</p>
           <p className="text-xs text-gray-500">Nachrichten an den Administrator</p>
@@ -123,17 +164,23 @@ const MitarbeiterChat = () => {
           messages.map((msg, i) => {
             const isMe = msg.sender_role !== 'admin';
             return (
-              <div key={i} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
+              <div key={i} className={`flex items-end gap-2 ${isMe ? 'justify-end' : 'justify-start'}`}>
+                {!isMe && <Avatar name="Admin" size="w-7 h-7 text-xs" />}
                 <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
-                  isMe
-                    ? 'bg-emerald-500 text-white rounded-br-md'
-                    : 'bg-white text-gray-900 border border-gray-200 rounded-bl-md'
+                  isMe ? 'bg-emerald-500 text-white rounded-br-md' : 'bg-white text-gray-900 border border-gray-200 rounded-bl-md'
                 }`}>
-                  <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>
-                  <p className={`text-xs mt-1 ${isMe ? 'text-emerald-100' : 'text-gray-400'}`}>
-                    {formatTime(msg.created_at)}
-                  </p>
+                  {msg.image && (
+                    <img
+                      src={`${BACKEND_URL}/api/chat/image/${msg.image}`}
+                      alt="Bild"
+                      className="rounded-lg max-w-full max-h-64 mb-1 cursor-pointer"
+                      onClick={() => window.open(`${BACKEND_URL}/api/chat/image/${msg.image}`, '_blank')}
+                    />
+                  )}
+                  {msg.message && <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>}
+                  <p className={`text-xs mt-1 ${isMe ? 'text-emerald-100' : 'text-gray-400'}`}>{formatTime(msg.created_at)}</p>
                 </div>
+                {isMe && <Avatar name={employeeData.name || 'MA'} size="w-7 h-7 text-xs" />}
               </div>
             );
           })
@@ -141,9 +188,32 @@ const MitarbeiterChat = () => {
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Image Preview */}
+      {imagePreview && (
+        <div className="px-4 pt-3 bg-white border-t border-gray-100">
+          <div className="relative inline-block">
+            <img src={imagePreview} alt="Preview" className="h-20 rounded-lg border border-gray-200" />
+            <button
+              onClick={() => { setImageFile(null); setImagePreview(null); }}
+              className="absolute -top-2 -right-2 p-1 bg-red-500 text-white rounded-full"
+            >
+              <X size={12} />
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Input */}
       <div className="p-4 border-t border-gray-100 bg-white">
         <div className="flex items-center gap-2">
+          <input type="file" ref={fileInputRef} accept="image/*" className="hidden" onChange={handleFileSelect} />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="p-2.5 text-gray-400 hover:text-emerald-500 hover:bg-gray-50 rounded-full transition-colors"
+            data-testid="chat-image-btn"
+          >
+            <Image size={20} />
+          </button>
           <input
             type="text"
             value={newMessage}
@@ -155,7 +225,7 @@ const MitarbeiterChat = () => {
           />
           <button
             onClick={handleSend}
-            disabled={!newMessage.trim() || sending}
+            disabled={(!newMessage.trim() && !imageFile) || sending}
             className="p-2.5 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             data-testid="chat-send-btn"
           >
