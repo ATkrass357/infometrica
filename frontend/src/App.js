@@ -18,6 +18,7 @@ import AdminContracts from "@/pages/admin/AdminContracts";
 import AdminDokumente from "@/pages/admin/AdminDokumente";
 import AdminAnosim from "@/pages/admin/AdminAnosim";
 import AdminEmailInbox from "@/pages/admin/AdminEmailInbox";
+import AdminChat from "@/pages/admin/AdminChat";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import MitarbeiterLogin from "@/pages/mitarbeiter/MitarbeiterLogin";
@@ -25,6 +26,7 @@ import MitarbeiterSignup from "@/pages/mitarbeiter/MitarbeiterSignup";
 import MitarbeiterDashboard from "@/pages/mitarbeiter/MitarbeiterDashboard";
 import MitarbeiterAuftrage from "@/pages/mitarbeiter/MitarbeiterAuftrage";
 import MitarbeiterEinstellungen from "@/pages/mitarbeiter/MitarbeiterEinstellungen";
+import MitarbeiterChat from "@/pages/mitarbeiter/MitarbeiterChat";
 import MitarbeiterLayout from "@/components/mitarbeiter/MitarbeiterLayout";
 import ProtectedEmployeeRoute from "@/components/mitarbeiter/ProtectedEmployeeRoute";
 import { Toaster } from "@/components/ui/sonner";
@@ -125,6 +127,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin/chat"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminChat />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
           
           {/* Mitarbeiter Routes */}
           <Route path="/mitarbeiter/login" element={<MitarbeiterLogin />} />
@@ -155,6 +167,16 @@ function App() {
               <ProtectedEmployeeRoute>
                 <MitarbeiterLayout>
                   <MitarbeiterEinstellungen />
+                </MitarbeiterLayout>
+              </ProtectedEmployeeRoute>
+            }
+          />
+          <Route
+            path="/mitarbeiter/chat"
+            element={
+              <ProtectedEmployeeRoute>
+                <MitarbeiterLayout>
+                  <MitarbeiterChat />
                 </MitarbeiterLayout>
               </ProtectedEmployeeRoute>
             }

@@ -94,6 +94,11 @@ app.include_router(email_inbox_router)
 from routes.quiz import router as quiz_router
 app.include_router(quiz_router)
 
+# Include chat routes
+from routes.chat import router as chat_router
+app.include_router(chat_router)
+
+
 
 # Include the router in the main app
 app.include_router(api_router)

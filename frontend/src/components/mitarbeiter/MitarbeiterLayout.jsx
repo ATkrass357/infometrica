@@ -9,6 +9,7 @@ import {
   X,
   ChevronRight,
   Clock,
+  MessageCircle,
 } from 'lucide-react';
 import { PrecisionLogo } from '../Logo';
 import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
@@ -74,6 +75,7 @@ const MitarbeiterLayout = ({ children }) => {
   const menuItems = [
     { icon: LayoutDashboard, label: 'Main', path: '/mitarbeiter/dashboard' },
     { icon: ClipboardList, label: 'Aufträge', path: '/mitarbeiter/auftrage' },
+    { icon: MessageCircle, label: 'Chat', path: '/mitarbeiter/chat' },
     { icon: Settings, label: 'Einstellungen', path: '/mitarbeiter/einstellungen' },
   ];
 
