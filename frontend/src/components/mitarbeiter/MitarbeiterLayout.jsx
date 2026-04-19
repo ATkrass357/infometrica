@@ -71,11 +71,29 @@ const MitarbeiterLayout = ({ children }) => {
   };
 
   const employeeData = applicantData || JSON.parse(localStorage.getItem('employee_data') || '{}');
+  const [unreadChat, setUnreadChat] = useState(0);
+
+  useEffect(() => {
+    const fetchUnread = async () => {
+      try {
+        const token = localStorage.getItem('employee_token');
+        if (!token) return;
+        const res = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chat/unread`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const data = await res.json();
+        setUnreadChat(data.unread || 0);
+      } catch (e) {}
+    };
+    fetchUnread();
+    const interval = setInterval(fetchUnread, 15000);
+    return () => clearInterval(interval);
+  }, [location]);
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Main', path: '/mitarbeiter/dashboard' },
     { icon: ClipboardList, label: 'Aufträge', path: '/mitarbeiter/auftrage' },
-    { icon: MessageCircle, label: 'Chat', path: '/mitarbeiter/chat' },
+    { icon: MessageCircle, label: 'Chat', path: '/mitarbeiter/chat', badge: unreadChat > 0 ? String(unreadChat) : null, badgeColor: 'bg-red-500' },
     { icon: Settings, label: 'Einstellungen', path: '/mitarbeiter/einstellungen' },
   ];
 
@@ -198,7 +216,14 @@ const MitarbeiterLayout = ({ children }) => {
               >
                 <Icon size={20} />
                 {isSidebarOpen && (
-                  <span className="flex-1 font-medium">{item.label}</span>
+                  <>
+                    <span className="flex-1 font-medium">{item.label}</span>
+                    {item.badge && (
+                      <span className={`px-2 py-0.5 ${item.badgeColor || 'bg-emerald-500'} text-white text-xs font-semibold rounded-full`}>
+                        {item.badge}
+                      </span>
+                    )}
+                  </>
                 )}
               </Link>
             );
@@ -263,6 +288,11 @@ const MitarbeiterLayout = ({ children }) => {
                   >
                     <Icon size={20} />
                     <span className="flex-1 font-medium">{item.label}</span>
+                    {item.badge && (
+                      <span className={`px-2 py-0.5 ${item.badgeColor || 'bg-emerald-500'} text-white text-xs font-semibold rounded-full`}>
+                        {item.badge}
+                      </span>
+                    )}
                   </Link>
                 );
               })}

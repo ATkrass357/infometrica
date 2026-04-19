@@ -124,7 +124,7 @@ async def get_employee_tasks(
         ]
     }).sort("created_at", -1).to_list(100)
     
-    # For multi-assigned tasks, inject the employee-specific credentials
+    # For multi-assigned tasks, inject the employee-specific credentials and status
     for task in tasks:
         if task.get("assignments"):
             for a in task["assignments"]:
@@ -132,6 +132,9 @@ async def get_employee_tasks(
                     task["test_ident_link"] = a.get("test_ident_link", "")
                     task["test_login_email"] = a.get("test_login_email", "")
                     task["test_login_password"] = a.get("test_login_password", "")
+                    # Per-employee status overrides task-level status
+                    if a.get("status"):
+                        task["status"] = a["status"]
                     break
     
     return [Task(**task) for task in tasks]
@@ -167,16 +170,29 @@ async def update_task_status(
     if not task:
         raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
     
-    # Update task
+    # Update per-employee status in assignments array
     update_data = update.dict(exclude_unset=True)
+    new_status = update_data.get("status")
     
-    if update_data.get("status") == "Abgeschlossen":
-        update_data["completed_at"] = datetime.utcnow()
-    
-    await db.tasks.update_one(
-        {"id": task_id},
-        {"$set": update_data}
-    )
+    if task.get("assignments"):
+        # Multi-assignment: update only this employee's status
+        await db.tasks.update_one(
+            {"id": task_id, "assignments.employee_id": employee_id},
+            {"$set": {"assignments.$.status": new_status}}
+        )
+        if new_status == "Abgeschlossen":
+            await db.tasks.update_one(
+                {"id": task_id, "assignments.employee_id": employee_id},
+                {"$set": {"assignments.$.completed_at": datetime.utcnow().isoformat()}}
+            )
+    else:
+        # Single assignment: update task level
+        if new_status == "Abgeschlossen":
+            update_data["completed_at"] = datetime.utcnow()
+        await db.tasks.update_one(
+            {"id": task_id},
+            {"$set": update_data}
+        )
     
     return {"message": "Aufgabe aktualisiert"}
 
@@ -197,12 +213,29 @@ async def get_employee_stats(
     
     employee_id = payload.get("id")
     
-    # Count tasks by status (single or multi-assignment)
-    query = {"$or": [{"assigned_to": employee_id}, {"assignments.employee_id": employee_id}]}
-    total_tasks = await db.tasks.count_documents(query)
-    open_tasks = await db.tasks.count_documents({**query, "status": "Offen"})
-    in_progress = await db.tasks.count_documents({**query, "status": "In Bearbeitung"})
-    completed = await db.tasks.count_documents({**query, "status": "Abgeschlossen"})
+    # Get all tasks for this employee
+    all_tasks = await db.tasks.find({
+        "$or": [{"assigned_to": employee_id}, {"assignments.employee_id": employee_id}]
+    }).to_list(200)
+    
+    # Count per-employee status
+    total_tasks = len(all_tasks)
+    open_tasks = 0
+    in_progress = 0
+    completed = 0
+    for task in all_tasks:
+        status = task.get("status", "Offen")
+        if task.get("assignments"):
+            for a in task["assignments"]:
+                if a.get("employee_id") == employee_id and a.get("status"):
+                    status = a["status"]
+                    break
+        if status == "Offen":
+            open_tasks += 1
+        elif status == "In Bearbeitung":
+            in_progress += 1
+        elif status == "Abgeschlossen":
+            completed += 1
     
     return {
         "total_tasks": total_tasks,

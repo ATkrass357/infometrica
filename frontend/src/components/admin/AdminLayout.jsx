@@ -24,26 +24,30 @@ const AdminLayout = ({ children }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [appCount, setAppCount] = useState(0);
+  const [unreadChat, setUnreadChat] = useState(0);
 
   const adminData = JSON.parse(localStorage.getItem('admin_data') || '{}');
 
-  // Fetch application count
+  // Fetch application count + unread chat
   useEffect(() => {
-    const fetchCount = async () => {
+    const fetchCounts = async () => {
       try {
         const token = localStorage.getItem('admin_token');
-        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/applications/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        const data = await response.json();
-        setAppCount(data.length);
+        const headers = { Authorization: `Bearer ${token}` };
+        const [appRes, chatRes] = await Promise.all([
+          fetch(`${process.env.REACT_APP_BACKEND_URL}/api/applications/`, { headers }),
+          fetch(`${process.env.REACT_APP_BACKEND_URL}/api/chat/unread`, { headers })
+        ]);
+        const appData = await appRes.json();
+        setAppCount(appData.length);
+        const chatData = await chatRes.json();
+        setUnreadChat(chatData.unread || 0);
       } catch (error) {
-        console.error('Error fetching count:', error);
+        console.error('Error fetching counts:', error);
       }
     };
-    fetchCount();
-    // Refresh every 30 seconds
-    const interval = setInterval(fetchCount, 30000);
+    fetchCounts();
+    const interval = setInterval(fetchCounts, 15000);
     return () => clearInterval(interval);
   }, [location]);
 
@@ -56,7 +60,7 @@ const AdminLayout = ({ children }) => {
     { icon: ClipboardList, label: 'Aufgaben', path: '/admin/tasks' },
     { icon: Phone, label: 'Anosim Nummern', path: '/admin/anosim' },
     { icon: Mail, label: 'E-Mail Postfächer', path: '/admin/email-inbox' },
-    { icon: MessageCircle, label: 'Chat', path: '/admin/chat' },
+    { icon: MessageCircle, label: 'Chat', path: '/admin/chat', badge: unreadChat > 0 ? String(unreadChat) : null, badgeColor: 'bg-red-500' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
 
@@ -116,7 +120,7 @@ const AdminLayout = ({ children }) => {
                   <>
                     <span className="flex-1 font-medium">{item.label}</span>
                     {item.badge && (
-                      <span className="px-2 py-0.5 bg-[#7aa2f7] text-white text-xs font-semibold rounded-full">
+                      <span className={`px-2 py-0.5 ${item.badgeColor || 'bg-[#7aa2f7]'} text-white text-xs font-semibold rounded-full`}>
                         {item.badge}
                       </span>
                     )}
@@ -186,7 +190,7 @@ const AdminLayout = ({ children }) => {
                     <Icon size={20} />
                     <span className="flex-1 font-medium">{item.label}</span>
                     {item.badge && (
-                      <span className="px-2 py-0.5 bg-[#7aa2f7] text-white text-xs font-semibold rounded-full">
+                      <span className={`px-2 py-0.5 ${item.badgeColor || 'bg-[#7aa2f7]'} text-white text-xs font-semibold rounded-full`}>
                         {item.badge}
                       </span>
                     )}
