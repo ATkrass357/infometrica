@@ -443,6 +443,7 @@ async def download_contract(
             os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads", "signatures", sig_file),
             os.path.join("uploads", "signatures", sig_file),
             os.path.join(os.getcwd(), "uploads", "signatures", sig_file),
+            f"/root/infometrica/backend/uploads/signatures/{sig_file}",
         ]
         for sig_path in possible_paths:
             if os.path.exists(sig_path):
