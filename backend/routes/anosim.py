@@ -49,7 +49,7 @@ def verify_employee_token(authorization: str = Header(None)):
     token = authorization.split(" ")[1]
     payload = decode_token(token)
     
-    if not payload or payload.get("role") != "employee":
+    if not payload or payload.get("role") not in ("employee", "applicant"):
         raise HTTPException(status_code=401, detail="Ungültiger oder abgelaufener Token")
     
     return payload
