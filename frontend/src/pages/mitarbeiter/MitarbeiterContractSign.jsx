@@ -209,19 +209,13 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
 
                     {/* §8 */}
                     <div>
-                      <p className="font-bold text-[#0A0A0A]">§8 Einstellungsfragebogen</p>
-                      <p>Der als Anlage beigefügte Einstellungsfragebogen ist Bestandteil dieses Vertrages. Der Arbeitnehmer versichert die Vollständigkeit und Richtigkeit der gemachten Angaben.</p>
+                      <p className="font-bold text-[#0A0A0A]">§8 Weitere Beschäftigungen</p>
+                      <p>Der Arbeitnehmer verpflichtet sich, jede Aufnahme einer weiteren Beschäftigung dem Arbeitgeber unverzüglich schriftlich mitzuteilen. Dies gilt für sämtliche Beschäftigungen, unabhängig von der Höhe des Verdienstes oder deren zeitlichem Umfang.</p>
                     </div>
 
                     {/* §9 */}
                     <div>
-                      <p className="font-bold text-[#0A0A0A]">§9 Weitere Beschäftigungen</p>
-                      <p>Der Arbeitnehmer verpflichtet sich, jede Aufnahme einer weiteren Beschäftigung dem Arbeitgeber unverzüglich schriftlich mitzuteilen. Dies gilt für sämtliche Beschäftigungen, unabhängig von der Höhe des Verdienstes oder deren zeitlichem Umfang.</p>
-                    </div>
-
-                    {/* §10 */}
-                    <div>
-                      <p className="font-bold text-[#0A0A0A]">§10 Kündigungsfristen</p>
+                      <p className="font-bold text-[#0A0A0A]">§9 Kündigungsfristen</p>
                       <p>(1) Das Arbeitsverhältnis wird auf unbestimmte Zeit eingegangen. Die ersten 6 Wochen gelten als Probezeit. Während dieser Zeit kann das Arbeitsverhältnis von beiden Seiten mit einer Frist von zwei Wochen (§ 622 Abs. 3 BGB) gekündigt werden.</p>
                       <p className="mt-2">(2) Nach Ablauf der Probezeit gelten die gesetzlichen Kündigungsfristen. Verlängert sich die Kündigungsfrist für die Firma aus tariflichen oder gesetzlichen Gründen, gilt diese Verlängerung auch für den Arbeitnehmer.</p>
                       <p className="mt-2">(3) Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt hiervon unberührt.</p>

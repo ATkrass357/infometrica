@@ -523,13 +523,10 @@ async def download_contract(
 <h3>§7 Arbeitsverhinderung</h3>
 <p>(1) Der Arbeitnehmer verpflichtet sich, jede Arbeitsverhinderung unverzüglich dem Arbeitgeber mitzuteilen.</p>
 
-<h3>§8 Einstellungsfragebogen</h3>
-<p>Der als Anlage beigefügte Einstellungsfragebogen ist Bestandteil dieses Vertrages.</p>
-
-<h3>§9 Weitere Beschäftigungen</h3>
+<h3>§8 Weitere Beschäftigungen</h3>
 <p>Der Arbeitnehmer verpflichtet sich, jede Aufnahme einer weiteren Beschäftigung dem Arbeitgeber unverzüglich schriftlich mitzuteilen.</p>
 
-<h3>§10 Kündigungsfristen</h3>
+<h3>§9 Kündigungsfristen</h3>
 <p>(1) Das Arbeitsverhältnis wird auf unbestimmte Zeit eingegangen. Die ersten 6 Wochen gelten als Probezeit.</p>
 <p>(2) Nach Ablauf der Probezeit gelten die gesetzlichen Kündigungsfristen.</p>
 
