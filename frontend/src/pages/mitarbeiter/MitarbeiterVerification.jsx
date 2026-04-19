@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Upload, Shield, AlertTriangle, CheckCircle, FileImage, Loader2, Download } from 'lucide-react';
+import { Upload, Shield, AlertTriangle, CheckCircle, FileImage, Loader2 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { toast } from 'sonner';
 import axios from 'axios';
@@ -87,25 +87,6 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
           <p className="text-slate-600">
             Willkommen, {applicant?.full_name || applicant?.name}! Bitte laden Sie Ihren Ausweis hoch.
           </p>
-        </div>
-
-        {/* Contract Download */}
-        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <CheckCircle size={20} className="text-emerald-600" />
-            <span className="text-sm text-emerald-800 font-medium">Arbeitsvertrag wurde unterschrieben</span>
-          </div>
-          <button
-            onClick={() => {
-              const token = localStorage.getItem('employee_token');
-              window.open(`${BACKEND_URL}/api/applications/download-contract?token=${token}`, '_blank');
-            }}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors text-sm font-medium"
-            data-testid="download-contract-btn"
-          >
-            <Download size={16} />
-            Vertrag herunterladen
-          </button>
         </div>
 
         {/* Progress Steps */}

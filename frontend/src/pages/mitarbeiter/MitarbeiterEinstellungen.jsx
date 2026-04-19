@@ -11,7 +11,9 @@ import {
   Eye,
   EyeOff,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Download,
+  FileSignature
 } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -368,6 +370,37 @@ const MitarbeiterEinstellungen = () => {
               </button>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Contract Download */}
+      <div className="bg-white rounded-xl border border-gray-200 p-6">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+            <FileSignature className="text-emerald-500" size={20} />
+          </div>
+          <div>
+            <h2 className="text-lg font-semibold text-gray-900">Arbeitsvertrag</h2>
+            <p className="text-sm text-gray-500">Ihren unterschriebenen Vertrag herunterladen</p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+          <div className="flex items-center gap-3">
+            <CheckCircle size={18} className="text-emerald-500" />
+            <p className="text-gray-900 font-medium">Vertrag unterschrieben</p>
+          </div>
+          <button
+            onClick={() => {
+              const token = localStorage.getItem('employee_token');
+              window.open(`${BACKEND_URL}/api/applications/download-contract?token=${token}`, '_blank');
+            }}
+            className="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors text-sm font-medium"
+            data-testid="download-contract-btn"
+          >
+            <Download size={16} />
+            Herunterladen
+          </button>
         </div>
       </div>
 
