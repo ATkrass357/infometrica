@@ -206,10 +206,13 @@ Build a full-stack application for the app testing agency "Precision Labs" (form
 - [x] VPS Admin-Login 500-Fehler behoben (bcrypt Kompatibilität + DB-Schema)
 - [x] Admin Panel Mobile Optimierung (alle Seiten)
 - [x] Einführungs-Quiz (15 Fragen) für Web Application Tester Minijob
-  - Quiz erscheint nach Akzeptierung, vor Vertrag
-  - Fragetypen: Auswahl (Ja/Nein), Textfeld, Info-Bestätigung
-  - Admin kann Quiz-Antworten in Bewerbungsdetails einsehen
-  - Kein Bestehen/Nicht-bestehen - rein informativ
+- [x] Quiz Admin-Freigabe vor Vertrag
+- [x] 1:1 Chat (Admin ↔ Mitarbeiter) mit Bild-Upload im Lightmode
+- [x] Telegram Bot Benachrichtigungen bei neuen Nachrichten
+- [x] Unread-Badge (rot) im Admin- und Mitarbeiter-Sidebar
+- [x] Per-Employee Task Status (pro Mitarbeiter individuell)
+- [x] Employees/Anosim suchen in beiden Collections (employees + applications)
+- [x] Quiz-Fragen umstrukturiert (Ident-Info auf Seite 4)
 
 ---
 
