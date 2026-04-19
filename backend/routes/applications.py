@@ -438,10 +438,17 @@ async def download_contract(
     sig_base64 = ""
     sig_file = application.get("signature_file", "")
     if sig_file:
-        sig_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads", "signatures", sig_file)
-        if os.path.exists(sig_path):
-            with open(sig_path, "rb") as f:
-                sig_base64 = base64.b64encode(f.read()).decode()
+        # Try multiple possible paths
+        possible_paths = [
+            os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads", "signatures", sig_file),
+            os.path.join("uploads", "signatures", sig_file),
+            os.path.join(os.getcwd(), "uploads", "signatures", sig_file),
+        ]
+        for sig_path in possible_paths:
+            if os.path.exists(sig_path):
+                with open(sig_path, "rb") as f:
+                    sig_base64 = base64.b64encode(f.read()).decode()
+                break
     
     sig_img_html = f'<img src="data:image/png;base64,{sig_base64}" style="max-height:55px;display:block;" />' if sig_base64 else ""
     
