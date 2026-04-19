@@ -451,7 +451,7 @@ async def download_contract(
                     sig_base64 = base64.b64encode(f.read()).decode()
                 break
     
-    sig_img_html = f'<img src="data:image/png;base64,{sig_base64}" style="max-height:55px;display:block;" />' if sig_base64 else ""
+    sig_img_html = f'<img src="data:image/png;base64,{sig_base64}" style="max-height:70px;max-width:100%;" />' if sig_base64 else ""
     
     from fastapi.responses import HTMLResponse
     
@@ -474,8 +474,8 @@ async def download_contract(
   li {{ margin-bottom: 4px; }}
   .signatures {{ display: flex; gap: 60px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; }}
   .sig-block {{ flex: 1; }}
-  .sig-line {{ border-bottom: 1px solid #888; min-height: 60px; margin-bottom: 4px; display: flex; align-items: flex-end; padding-bottom: 4px; }}
-  .sig-line img {{ max-height: 55px; display: block; }}
+  .sig-line {{ margin-bottom: 4px; min-height: 70px; border-bottom: 1px solid #888; }}
+  .sig-line img {{ max-height: 70px; max-width: 100%; }}
   .sig-name {{ font-size: 9pt; color: #666; }}
   .print-btn {{ text-align: center; margin: 30px 0; }}
   .print-btn button {{ padding: 12px 32px; background: #00C853; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }}
