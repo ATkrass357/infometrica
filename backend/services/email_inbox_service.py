@@ -16,9 +16,8 @@ class EmailInboxService:
     GMAIL_IMAP_SERVER = "imap.gmail.com"
     GMAIL_IMAP_PORT = 993
     
-    # Patterns to extract verification codes from emails
+    # Patterns to extract verification codes from emails (ordered by specificity)
     CODE_PATTERNS = [
-        r'\b(\d{4,8})\b',  # 4-8 digit codes
         r'code[:\s]+(\d{4,8})',  # "code: 123456"
         r'verification[:\s]+(\d{4,8})',  # "verification: 123456"
         r'bestätigungscode[:\s]+(\d{4,8})',  # German
@@ -26,6 +25,7 @@ class EmailInboxService:
         r'pin[:\s]+(\d{4,8})',  # PIN codes
         r'otp[:\s]+(\d{4,8})',  # OTP codes
         r'(?:is|lautet|ist)[:\s]+(\d{4,8})',  # "Your code is: 123456"
+        r'\b(\d{4,8})\b',  # Generic fallback - any 4-8 digit number
     ]
     
     # Keywords that indicate verification emails
@@ -129,19 +129,14 @@ class EmailInboxService:
         return any(keyword in text for keyword in self.VERIFICATION_KEYWORDS)
     
     def _extract_codes(self, text: str) -> List[str]:
-        """Extract verification codes from text"""
-        codes = []
+        """Extract verification codes from text - returns max 1 most likely code"""
+        # Try specific patterns first, fall back to generic
         for pattern in self.CODE_PATTERNS:
             matches = re.findall(pattern, text.lower())
-            codes.extend(matches)
-        # Remove duplicates while preserving order
-        seen = set()
-        unique_codes = []
-        for code in codes:
-            if code not in seen and len(code) >= 4:
-                seen.add(code)
-                unique_codes.append(code)
-        return unique_codes[:5]  # Return max 5 codes
+            for match in matches:
+                if len(match) >= 4:
+                    return [match]  # Return first match from most specific pattern
+        return []
     
     def fetch_verification_emails(self, since_minutes: int = 60, limit: int = 20) -> List[Dict]:
         """Fetch recent verification emails with codes"""
