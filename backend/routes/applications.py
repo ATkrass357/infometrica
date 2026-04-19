@@ -536,7 +536,7 @@ async def download_contract(
 <div class="signatures">
   <div class="sig-block">
     <p style="color:#666;margin-bottom:8px;">Rheinfelden (Baden), {signed_date}</p>
-    <div class="sig-line"></div>
+    <div class="sig-line"><span style="font-family:'Brush Script MT',cursive,'Segoe Script','Comic Sans MS',sans-serif;font-size:22pt;color:#222;">Daniel Bärtschi</span></div>
     <p class="sig-name">Daniel Bärtschi · Arbeitgeber</p>
   </div>
   <div class="sig-block">
