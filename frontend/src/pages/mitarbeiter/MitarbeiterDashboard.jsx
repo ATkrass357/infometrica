@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, Clock, AlertCircle, TrendingUp } from 'lucide-react';
+import { CheckCircle, Clock, AlertCircle, TrendingUp, Download } from 'lucide-react';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -100,6 +100,23 @@ const MitarbeiterDashboard = () => {
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        {/* Contract Download */}
+        <div
+          onClick={() => {
+            const token = localStorage.getItem('employee_token');
+            window.open(`${BACKEND_URL}/api/applications/download-contract?token=${token}`, '_blank');
+          }}
+          className="bg-white rounded-xl p-6 border border-gray-200 hover:shadow-lg transition-shadow cursor-pointer group"
+          data-testid="download-contract-dashboard"
+        >
+          <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-emerald-200 transition-colors">
+            <Download className="text-emerald-600" size={24} />
+          </div>
+          <p className="text-gray-600 text-sm mb-1">Arbeitsvertrag</p>
+          <p className="text-sm font-medium text-emerald-600">Herunterladen</p>
+        </div>
+
         {statCards.map((stat, index) => {
           const Icon = stat.icon;
           return (

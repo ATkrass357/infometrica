@@ -392,6 +392,169 @@ async def sign_contract(
 
 
 
+# Download signed contract as HTML (for print/save as PDF)
+@router.get("/download-contract")
+async def download_contract(
+    token: str = None,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    # Accept token from query param or header
+    jwt_token = None
+    if token:
+        jwt_token = token
+    elif authorization and authorization.startswith("Bearer "):
+        jwt_token = authorization.split(" ")[1]
+    
+    if not jwt_token:
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    
+    payload = decode_token(jwt_token)
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    
+    applicant_id = payload.get("id")
+    application = await db.applications.find_one({"id": applicant_id}, {"_id": 0})
+    
+    if not application:
+        raise HTTPException(status_code=404, detail="Bewerbung nicht gefunden")
+    
+    if not application.get("contract_signed_at"):
+        raise HTTPException(status_code=400, detail="Vertrag wurde noch nicht unterschrieben")
+    
+    name = application.get("name", "")
+    address = f"{application.get('strasse', '')} · {application.get('postleitzahl', '')} {application.get('stadt', '')}"
+    signed_date = ""
+    if application.get("contract_signed_at"):
+        try:
+            dt = application["contract_signed_at"]
+            if isinstance(dt, str):
+                dt = datetime.fromisoformat(dt)
+            signed_date = dt.strftime("%d.%m.%Y")
+        except:
+            signed_date = "Datum unbekannt"
+    
+    # Load signature as base64
+    sig_base64 = ""
+    sig_file = application.get("signature_file", "")
+    if sig_file:
+        sig_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "uploads", "signatures", sig_file)
+        if os.path.exists(sig_path):
+            with open(sig_path, "rb") as f:
+                sig_base64 = base64.b64encode(f.read()).decode()
+    
+    from fastapi.responses import HTMLResponse
+    
+    html = f"""<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Arbeitsvertrag - {name}</title>
+<style>
+  @page {{ margin: 2cm; }}
+  body {{ font-family: 'Segoe UI', Arial, sans-serif; color: #222; font-size: 11pt; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 40px; }}
+  h1 {{ text-align: center; font-size: 20pt; margin-bottom: 4px; }}
+  .subtitle {{ text-align: center; color: #666; margin-bottom: 30px; }}
+  .parties {{ display: flex; gap: 40px; padding-bottom: 16px; border-bottom: 1px solid #ccc; margin-bottom: 20px; }}
+  .parties div {{ flex: 1; }}
+  .parties p {{ margin: 2px 0; }}
+  .label {{ font-weight: bold; margin-bottom: 4px; }}
+  h3 {{ margin-top: 24px; margin-bottom: 6px; }}
+  ul {{ margin-top: 6px; padding-left: 24px; }}
+  li {{ margin-bottom: 4px; }}
+  .signatures {{ display: flex; gap: 60px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; }}
+  .sig-block {{ flex: 1; }}
+  .sig-line {{ border-bottom: 1px solid #888; height: 60px; margin-bottom: 4px; display: flex; align-items: flex-end; }}
+  .sig-line img {{ max-height: 55px; }}
+  .sig-name {{ font-size: 9pt; color: #666; }}
+  .print-btn {{ text-align: center; margin: 30px 0; }}
+  .print-btn button {{ padding: 12px 32px; background: #00C853; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }}
+  .print-btn button:hover {{ background: #00a844; }}
+  @media print {{ .print-btn {{ display: none; }} }}
+</style>
+</head>
+<body>
+<div class="print-btn"><button onclick="window.print()">Als PDF speichern / Drucken</button></div>
+
+<h1>ARBEITSVERTRAG</h1>
+<p class="subtitle">für Angestellte und Mitarbeiter</p>
+
+<div class="parties">
+  <div>
+    <p class="label">Arbeitgeber:</p>
+    <p>Precision Labs</p>
+    <p>Römerstraße 90</p>
+    <p>79618 Rheinfelden (Baden)</p>
+    <p style="color:#666;margin-top:4px;">vertreten durch Daniel Bärtschi</p>
+  </div>
+  <div>
+    <p class="label">Arbeitnehmer:</p>
+    <p>{name}</p>
+    <p>{address}</p>
+  </div>
+</div>
+
+<p><em>Dieser Vertrag wird zwischen den oben genannten Parteien geschlossen und beinhaltet die nachfolgenden Vereinbarungen:</em></p>
+
+<h3>§1 Beginn des Arbeitsverhältnisses</h3>
+<p>Dieses Arbeitsverhältnis beginnt nach der Unterschrift beider Seiten.</p>
+
+<h3>§2 Tätigkeit</h3>
+<p>Der Arbeitnehmer wird bei Precision Labs im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
+<ul>
+  <li>Überprüfung von Apps und Softwares auf Benutzerfreundlichkeit und Mängel</li>
+  <li>Video-Identifikationen zur Durchführung von Evaluierungen</li>
+  <li>Erstellung und Einreichung der dazugehörigen Abschlussberichte innerhalb des vorgegebenen Zeitrahmens</li>
+</ul>
+
+<h3>§3 Arbeitszeit</h3>
+<p>Die regelmäßige Arbeitszeit beträgt ungefähr 10 Wochenstunden an 2 - 4 Tagen der Woche.</p>
+
+<h3>§4 Vergütung</h3>
+<p>(1) Der Arbeitnehmer erhält eine Vergütung in Höhe von 25 - 70 € pro abgeschlossenem Auftrag, insgesamt maximal 603 EUR monatlich.</p>
+<p>(2) Die Vergütung ist jeweils am Monatsende des Folgemonats fällig und wird per Überweisung an das vom Arbeitnehmer benannte Konto überwiesen.</p>
+
+<h3>§5 Sonderzuwendungen</h3>
+<p>(1) Der Arbeitgeber zahlt Sonderzuwendungen (Urlaubsgeld, Weihnachtsgeld) in den Monaten Juni und Dezember in Höhe von jeweils 603€.</p>
+
+<h3>§6 Urlaubsanspruch</h3>
+<p>(1) Der Arbeitnehmer hat grundsätzlich einen Anspruch auf einen jährlichen Erholungsurlaub von 28 Arbeitstagen.</p>
+
+<h3>§7 Arbeitsverhinderung</h3>
+<p>(1) Der Arbeitnehmer verpflichtet sich, jede Arbeitsverhinderung unverzüglich dem Arbeitgeber mitzuteilen.</p>
+
+<h3>§8 Einstellungsfragebogen</h3>
+<p>Der als Anlage beigefügte Einstellungsfragebogen ist Bestandteil dieses Vertrages.</p>
+
+<h3>§9 Weitere Beschäftigungen</h3>
+<p>Der Arbeitnehmer verpflichtet sich, jede Aufnahme einer weiteren Beschäftigung dem Arbeitgeber unverzüglich schriftlich mitzuteilen.</p>
+
+<h3>§10 Kündigungsfristen</h3>
+<p>(1) Das Arbeitsverhältnis wird auf unbestimmte Zeit eingegangen. Die ersten 6 Wochen gelten als Probezeit.</p>
+<p>(2) Nach Ablauf der Probezeit gelten die gesetzlichen Kündigungsfristen.</p>
+
+<div class="signatures">
+  <div class="sig-block">
+    <p style="color:#666;margin-bottom:8px;">Rheinfelden (Baden), {signed_date}</p>
+    <div class="sig-line"></div>
+    <p class="sig-name">Daniel Bärtschi · Arbeitgeber</p>
+  </div>
+  <div class="sig-block">
+    <p style="color:#666;margin-bottom:8px;">Unterschrieben am {signed_date}</p>
+    <div class="sig-line">
+      {"<img src='data:image/png;base64," + sig_base64 + "' />" if sig_base64 else ""}
+    </div>
+    <p class="sig-name">{name} · Arbeitnehmer</p>
+  </div>
+</div>
+
+</body>
+</html>"""
+    
+    return HTMLResponse(content=html)
+
+
+
 # Get verification image (Admin only) - returns base64 for display
 @router.get("/verification/{application_id}/{side}")
 async def get_verification_image(
