@@ -144,7 +144,8 @@ const AdminTasks = () => {
         creds[a.employee_id] = {
           test_ident_link: a.test_ident_link || '',
           test_login_email: a.test_login_email || '',
-          test_login_password: a.test_login_password || ''
+          test_login_password: a.test_login_password || '',
+          test_phone_number: a.test_phone_number || ''
         };
       });
       setEmployeeCredentials(creds);
@@ -155,7 +156,8 @@ const AdminTasks = () => {
         [task.assigned_to]: {
           test_ident_link: task.test_ident_link || '',
           test_login_email: task.test_login_email || '',
-          test_login_password: task.test_login_password || ''
+          test_login_password: task.test_login_password || '',
+          test_phone_number: task.test_phone_number || ''
         }
       });
     } else {
@@ -184,7 +186,7 @@ const AdminTasks = () => {
         // Add employee with empty credentials
         setEmployeeCredentials(prev => ({
           ...prev,
-          [empId]: { test_ident_link: '', test_login_email: '', test_login_password: '' }
+          [empId]: { test_ident_link: '', test_login_email: '', test_login_password: '', test_phone_number: '' }
         }));
         return [...prev, empId];
       }
@@ -223,7 +225,8 @@ const AdminTasks = () => {
         employee_id: empId,
         test_ident_link: employeeCredentials[empId]?.test_ident_link || '',
         test_login_email: employeeCredentials[empId]?.test_login_email || '',
-        test_login_password: employeeCredentials[empId]?.test_login_password || ''
+        test_login_password: employeeCredentials[empId]?.test_login_password || '',
+        test_phone_number: employeeCredentials[empId]?.test_phone_number || ''
       }));
 
       await axios.put(
@@ -873,6 +876,20 @@ const AdminTasks = () => {
                                 placeholder="Passwort"
                               />
                             </div>
+                          </div>
+
+                          {/* Test Phone Number */}
+                          <div className="mt-3">
+                            <label className="block text-xs font-medium text-[#9aa5ce] mb-1">
+                              Test Handynummer
+                            </label>
+                            <input
+                              type="tel"
+                              value={creds.test_phone_number || ''}
+                              onChange={(e) => updateEmployeeCredentials(empId, 'test_phone_number', e.target.value)}
+                              className="w-full px-3 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] text-sm focus:outline-none focus:border-[#7aa2f7]"
+                              placeholder="+49 123 456789"
+                            />
                           </div>
                         </div>
                       );

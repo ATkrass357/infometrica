@@ -278,8 +278,8 @@ const MitarbeiterAuftrage = () => {
                       </div>
                     )}
 
-                    {/* Test Credentials */}
-                    {(task.test_ident_link || task.test_login_email) && (
+                    {/* Test Credentials - only shown when not completed */}
+                    {task.status !== 'Abgeschlossen' && (task.test_ident_link || task.test_login_email || task.test_phone_number) && (
                       <div className="mt-6 pt-4 border-t border-gray-200">
                         <div className="flex items-center gap-2 mb-4">
                           <KeyRound size={18} className="text-emerald-500" />
@@ -316,6 +316,16 @@ const MitarbeiterAuftrage = () => {
                                     <span className="font-mono text-gray-900">{task.test_login_password}</span>
                                   </div>
                                 )}
+                              </div>
+                            </div>
+                          )}
+
+                          {task.test_phone_number && (
+                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+                              <div className="text-xs text-emerald-600 font-medium mb-1">Test Handynummer</div>
+                              <div className="flex items-center gap-2">
+                                <Phone size={14} className="text-emerald-600" />
+                                <span className="font-mono text-gray-900 text-sm">{task.test_phone_number}</span>
                               </div>
                             </div>
                           )}

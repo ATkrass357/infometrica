@@ -132,6 +132,7 @@ async def get_employee_tasks(
                     task["test_ident_link"] = a.get("test_ident_link", "")
                     task["test_login_email"] = a.get("test_login_email", "")
                     task["test_login_password"] = a.get("test_login_password", "")
+                    task["test_phone_number"] = a.get("test_phone_number", "")
                     # Per-employee status overrides task-level status
                     if a.get("status"):
                         task["status"] = a["status"]
