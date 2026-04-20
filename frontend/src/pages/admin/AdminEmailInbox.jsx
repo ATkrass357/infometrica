@@ -191,7 +191,7 @@ const AdminEmailInbox = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-[#c0caf5]">E-Mail Postfächer</h1>
-          <p className="text-[#565f89] mt-1">Gmail-Konten verwalten und Mitarbeitern zuweisen</p>
+          <p className="text-[#565f89] mt-1">E-Mail-Konten verwalten und Mitarbeitern zuweisen</p>
         </div>
         <div className="flex gap-3">
           <button
@@ -430,20 +430,23 @@ const AdminEmailInbox = () => {
             <form onSubmit={handleAddAccount} className="p-6 space-y-4">
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                  Gmail E-Mail
+                  E-Mail Adresse
                 </label>
                 <input
                   type="email"
                   value={newAccount.email}
                   onChange={(e) => setNewAccount({ ...newAccount, email: e.target.value })}
-                  placeholder="beispiel@gmail.com"
+                  placeholder="beispiel@gmail.com / @gmx.de / @web.de"
                   className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
                   required
                 />
+                <p className="text-xs text-[#565f89] mt-1">
+                  Unterstützt: Gmail, GMX, Web.de
+                </p>
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-2">
-                  App-Passwort
+                  App-Passwort / Passwort
                 </label>
                 <input
                   type="password"
@@ -454,7 +457,7 @@ const AdminEmailInbox = () => {
                   required
                 />
                 <p className="text-xs text-[#565f89] mt-1">
-                  Erstellen Sie ein App-Passwort unter myaccount.google.com/apppasswords
+                  Gmail: App-Passwort (myaccount.google.com/apppasswords) · GMX/Web.de: normales Passwort (IMAP in Einstellungen aktivieren)
                 </p>
               </div>
               <div>

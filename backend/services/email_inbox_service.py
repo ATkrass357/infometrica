@@ -11,10 +11,18 @@ from typing import List, Dict, Optional
 import ssl
 
 class EmailInboxService:
-    """Service to connect to Gmail IMAP and extract verification codes"""
+    """Service to connect to email IMAP and extract verification codes"""
     
-    GMAIL_IMAP_SERVER = "imap.gmail.com"
-    GMAIL_IMAP_PORT = 993
+    # IMAP server configuration per provider
+    IMAP_SERVERS = {
+        "gmail.com": {"server": "imap.gmail.com", "port": 993},
+        "googlemail.com": {"server": "imap.gmail.com", "port": 993},
+        "gmx.de": {"server": "imap.gmx.net", "port": 993},
+        "gmx.net": {"server": "imap.gmx.net", "port": 993},
+        "gmx.at": {"server": "imap.gmx.net", "port": 993},
+        "gmx.ch": {"server": "imap.gmx.net", "port": 993},
+        "web.de": {"server": "imap.web.de", "port": 993},
+    }
     
     # Patterns to extract verification codes from emails (ordered by specificity)
     CODE_PATTERNS = [
@@ -39,17 +47,23 @@ class EmailInboxService:
         self.email_address = email_address
         self.app_password = app_password
         self.connection = None
+        
+        # Determine IMAP server from email domain
+        domain = email_address.split("@")[-1].lower()
+        config = self.IMAP_SERVERS.get(domain, {"server": "imap.gmail.com", "port": 993})
+        self.imap_server = config["server"]
+        self.imap_port = config["port"]
     
     def connect(self) -> bool:
-        """Connect to Gmail IMAP server"""
+        """Connect to IMAP server"""
         try:
             # Create SSL context
             context = ssl.create_default_context()
             
             # Connect to IMAP server
             self.connection = imaplib.IMAP4_SSL(
-                self.GMAIL_IMAP_SERVER, 
-                self.GMAIL_IMAP_PORT,
+                self.imap_server, 
+                self.imap_port,
                 ssl_context=context
             )
             
