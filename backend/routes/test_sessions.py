@@ -28,6 +28,9 @@ class CreateSession(BaseModel):
     anosim_number: Optional[str] = None
     anosim_booking_id: Optional[str] = None
     email_account_id: Optional[str] = None
+    test_ident_link: Optional[str] = None
+    test_login_email: Optional[str] = None
+    test_login_password: Optional[str] = None
     notes: Optional[str] = None
 
 
@@ -49,6 +52,9 @@ async def create_session(
         "anosim_number": data.anosim_number or "",
         "anosim_booking_id": data.anosim_booking_id or "",
         "email_account_id": data.email_account_id or "",
+        "test_ident_link": data.test_ident_link or "",
+        "test_login_email": data.test_login_email or "",
+        "test_login_password": data.test_login_password or "",
         "notes": data.notes or "",
         "status": "waiting",  # waiting, active, expired
         "started_at": None,
@@ -189,6 +195,9 @@ async def get_session_data(
 
     result = {
         "anosim_number": session.get("anosim_number", ""),
+        "test_ident_link": session.get("test_ident_link", ""),
+        "test_login_email": session.get("test_login_email", ""),
+        "test_login_password": session.get("test_login_password", ""),
         "sms_messages": [],
         "emails": [],
         "expires_at": session.get("expires_at"),

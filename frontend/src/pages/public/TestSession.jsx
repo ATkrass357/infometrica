@@ -21,7 +21,8 @@ const TestSession = () => {
       const res = await axios.get(`${BACKEND_URL}/api/test-sessions/public/${token}`);
       setSession(res.data);
       if (res.data.status === 'active') {
-        fetchData();
+        const dataRes = await axios.get(`${BACKEND_URL}/api/test-sessions/public/${token}/data`);
+        setData(dataRes.data);
       }
     } catch (e) {
       setError('Sitzung nicht gefunden');
@@ -81,6 +82,9 @@ const TestSession = () => {
     try {
       const res = await axios.post(`${BACKEND_URL}/api/test-sessions/public/${token}/start`);
       setSession(prev => ({ ...prev, ...res.data }));
+      // Immediately fetch data after starting
+      const dataRes = await axios.get(`${BACKEND_URL}/api/test-sessions/public/${token}/data`);
+      setData(dataRes.data);
     } catch (e) {
       setError(e.response?.data?.detail || 'Fehler beim Starten');
     } finally {
@@ -161,6 +165,35 @@ const TestSession = () => {
             </div>
           </div>
         </div>
+
+        {/* Login Data */}
+        {(data?.test_ident_link || data?.test_login_email) && (
+          <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 mb-4">
+            <h2 className="font-semibold text-gray-900 mb-4">Zugangsdaten</h2>
+            <div className="space-y-3">
+              {data.test_ident_link && (
+                <div className="bg-gray-50 rounded-lg p-3">
+                  <p className="text-xs text-gray-500 mb-1">Ident Link</p>
+                  <a href={data.test_ident_link} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline text-sm break-all font-medium">{data.test_ident_link}</a>
+                </div>
+              )}
+              {data.test_login_email && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="bg-gray-50 rounded-lg p-3">
+                    <p className="text-xs text-gray-500 mb-1">E-Mail</p>
+                    <p className="font-mono text-gray-900 text-sm">{data.test_login_email}</p>
+                  </div>
+                  {data.test_login_password && (
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500 mb-1">Passwort</p>
+                      <p className="font-mono text-gray-900 text-sm">{data.test_login_password}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* SMS Section */}
         {data?.anosim_number && (

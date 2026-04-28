@@ -16,6 +16,9 @@ const AdminTestSessions = () => {
     anosim_number: '',
     anosim_booking_id: '',
     email_account_id: '',
+    test_ident_link: '',
+    test_login_email: '',
+    test_login_password: '',
     notes: '',
   });
 
@@ -49,7 +52,7 @@ const AdminTestSessions = () => {
       const res = await axios.post(`${BACKEND_URL}/api/test-sessions/create`, formData, { headers });
       toast.success('Test-Sitzung erstellt');
       setShowForm(false);
-      setFormData({ title: '', anosim_number: '', anosim_booking_id: '', email_account_id: '', notes: '' });
+      setFormData({ title: '', anosim_number: '', anosim_booking_id: '', email_account_id: '', test_ident_link: '', test_login_email: '', test_login_password: '', notes: '' });
       fetchData();
     } catch (e) {
       toast.error('Fehler beim Erstellen');
@@ -218,6 +221,43 @@ const AdminTestSessions = () => {
                     <option key={acc.id} value={acc.id}>{acc.email}</option>
                   ))}
                 </select>
+              </div>
+              <div className="border-t border-[#292e42] pt-4 mt-2">
+                <p className="text-sm font-medium text-[#c0caf5] mb-3">Login-Daten für den Tester</p>
+                <div className="space-y-3">
+                  <div>
+                    <label className="block text-xs font-medium text-[#9aa5ce] mb-1">Test Ident Link</label>
+                    <input
+                      type="url"
+                      value={formData.test_ident_link}
+                      onChange={(e) => setFormData({ ...formData, test_ident_link: e.target.value })}
+                      placeholder="https://..."
+                      className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-xs font-medium text-[#9aa5ce] mb-1">Test E-Mail</label>
+                      <input
+                        type="email"
+                        value={formData.test_login_email}
+                        onChange={(e) => setFormData({ ...formData, test_login_email: e.target.value })}
+                        placeholder="test@example.com"
+                        className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-medium text-[#9aa5ce] mb-1">Test Passwort</label>
+                      <input
+                        type="text"
+                        value={formData.test_login_password}
+                        onChange={(e) => setFormData({ ...formData, test_login_password: e.target.value })}
+                        placeholder="Passwort"
+                        className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-2">Notizen (optional)</label>
