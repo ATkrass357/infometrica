@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, Clock, AlertCircle, RefreshCw, Globe, ChevronDown, ChevronUp, Play, Check, Link, KeyRound, Phone, Mail } from 'lucide-react';
+import { CheckCircle, Clock, AlertCircle, RefreshCw, Globe, ChevronDown, ChevronUp, Play, Check } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
-import SMSPanel from '../../components/SMSPanel';
-import EmailPanel from './EmailPanel';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -278,85 +276,6 @@ const MitarbeiterAuftrage = () => {
                       </div>
                     )}
 
-                    {/* Test Credentials - only shown when not completed */}
-                    {task.status !== 'Abgeschlossen' && (task.test_ident_link || task.test_login_email || task.test_phone_number) && (
-                      <div className="mt-6 pt-4 border-t border-gray-200">
-                        <div className="flex items-center gap-2 mb-4">
-                          <KeyRound size={18} className="text-emerald-500" />
-                          <h5 className="font-medium text-emerald-700">Test-Zugangsdaten</h5>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {task.test_ident_link && (
-                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-                              <div className="text-xs text-emerald-600 font-medium mb-1">Test Ident Link</div>
-                              <a 
-                                href={task.test_ident_link} 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="text-emerald-700 hover:text-emerald-800 hover:underline text-sm flex items-center gap-1 break-all"
-                              >
-                                <Link size={14} />
-                                {task.test_ident_link}
-                              </a>
-                            </div>
-                          )}
-                          
-                          {task.test_login_email && (
-                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-                              <div className="text-xs text-emerald-600 font-medium mb-1">Test Login Daten</div>
-                              <div className="space-y-1">
-                                <div className="text-sm">
-                                  <span className="text-gray-600">E-Mail:</span>{' '}
-                                  <span className="font-mono text-gray-900">{task.test_login_email}</span>
-                                </div>
-                                {task.test_login_password && (
-                                  <div className="text-sm">
-                                    <span className="text-gray-600">Passwort:</span>{' '}
-                                    <span className="font-mono text-gray-900">{task.test_login_password}</span>
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          )}
-
-                          {task.test_phone_number && (
-                            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
-                              <div className="text-xs text-emerald-600 font-medium mb-1">Test Handynummer</div>
-                              <div className="flex items-center gap-2">
-                                <Phone size={14} className="text-emerald-600" />
-                                <span className="font-mono text-gray-900 text-sm">{task.test_phone_number}</span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* SMS Verification Panel - Only shown when task is "In Bearbeitung" */}
-                    {task.status === 'In Bearbeitung' && (
-                      <div className="mt-6 pt-4 border-t border-gray-200">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                          {/* SMS Panel */}
-                          <div>
-                            <div className="flex items-center gap-2 mb-4">
-                              <Phone size={18} className="text-emerald-500" />
-                              <h5 className="font-medium text-emerald-700">SMS Verifizierungscodes</h5>
-                            </div>
-                            <SMSPanel isActive={expandedTask === task.id && task.status === 'In Bearbeitung'} />
-                          </div>
-                          
-                          {/* Email Panel */}
-                          <div>
-                            <div className="flex items-center gap-2 mb-4">
-                              <Mail size={18} className="text-purple-500" />
-                              <h5 className="font-medium text-purple-700">E-Mail Verifizierungscodes</h5>
-                            </div>
-                            <EmailPanel />
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
                 </div>
               )}

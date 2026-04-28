@@ -15,6 +15,7 @@ import {
   Phone,
   Mail,
   MessageCircle,
+  Timer,
 } from 'lucide-react';
 import { PrecisionLogo } from '../../components/Logo';
 
@@ -61,6 +62,7 @@ const AdminLayout = ({ children }) => {
     { icon: Phone, label: 'Anosim Nummern', path: '/admin/anosim' },
     { icon: Mail, label: 'E-Mail Postfächer', path: '/admin/email-inbox' },
     { icon: MessageCircle, label: 'Chat', path: '/admin/chat', badge: unreadChat > 0 ? String(unreadChat) : null, badgeColor: 'bg-red-500' },
+    { icon: Timer, label: 'Test-Sitzungen', path: '/admin/test-sessions' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
 

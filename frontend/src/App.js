@@ -19,6 +19,8 @@ import AdminDokumente from "@/pages/admin/AdminDokumente";
 import AdminAnosim from "@/pages/admin/AdminAnosim";
 import AdminEmailInbox from "@/pages/admin/AdminEmailInbox";
 import AdminChat from "@/pages/admin/AdminChat";
+import AdminTestSessions from "@/pages/admin/AdminTestSessions";
+import TestSession from "@/pages/public/TestSession";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
 import MitarbeiterLogin from "@/pages/mitarbeiter/MitarbeiterLogin";
@@ -137,6 +139,19 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/admin/test-sessions"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminTestSessions />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Public Test Session */}
+          <Route path="/test/:token" element={<TestSession />} />
           
           {/* Mitarbeiter Routes */}
           <Route path="/mitarbeiter/login" element={<MitarbeiterLogin />} />

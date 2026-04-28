@@ -98,6 +98,11 @@ app.include_router(quiz_router)
 from routes.chat import router as chat_router
 app.include_router(chat_router)
 
+# Include test sessions routes
+from routes.test_sessions import router as test_sessions_router
+app.include_router(test_sessions_router)
+
+
 
 
 # Include the router in the main app
