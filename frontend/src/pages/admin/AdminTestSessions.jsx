@@ -27,17 +27,18 @@ const AdminTestSessions = () => {
 
   const fetchData = useCallback(async () => {
     try {
-      const [sessRes, emailRes] = await Promise.all([
-        axios.get(`${BACKEND_URL}/api/test-sessions/`, { headers }),
-        axios.get(`${BACKEND_URL}/api/email-inbox/accounts`, { headers }).catch(() => ({ data: [] }))
-      ]);
+      const sessRes = await axios.get(`${BACKEND_URL}/api/test-sessions/`, { headers });
       setSessions(sessRes.data || []);
+    } catch (e) {
+      console.error('Error fetching sessions:', e);
+    }
+    try {
+      const emailRes = await axios.get(`${BACKEND_URL}/api/email-inbox/accounts`, { headers });
       setEmailAccounts(emailRes.data || []);
     } catch (e) {
-      console.error('Error:', e);
-    } finally {
-      setLoading(false);
+      setEmailAccounts([]);
     }
+    setLoading(false);
   }, []);
 
   useEffect(() => { fetchData(); }, [fetchData]);
