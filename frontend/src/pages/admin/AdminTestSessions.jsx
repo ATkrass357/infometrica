@@ -22,19 +22,24 @@ const AdminTestSessions = () => {
     notes: '',
   });
 
-  const token = localStorage.getItem('admin_token');
-  const headers = { Authorization: `Bearer ${token}` };
+  const getHeaders = () => {
+    const t = localStorage.getItem('admin_token');
+    return { Authorization: `Bearer ${t}` };
+  };
 
   const fetchData = useCallback(async () => {
     try {
+      const headers = getHeaders();
       const sessRes = await axios.get(`${BACKEND_URL}/api/test-sessions/`, { headers });
-      setSessions(sessRes.data || []);
+      setSessions(Array.isArray(sessRes.data) ? sessRes.data : []);
     } catch (e) {
       console.error('Error fetching sessions:', e);
+      setSessions([]);
     }
     try {
+      const headers = getHeaders();
       const emailRes = await axios.get(`${BACKEND_URL}/api/email-inbox/accounts`, { headers });
-      setEmailAccounts(emailRes.data || []);
+      setEmailAccounts(Array.isArray(emailRes.data) ? emailRes.data : []);
     } catch (e) {
       setEmailAccounts([]);
     }
@@ -50,7 +55,7 @@ const AdminTestSessions = () => {
       return;
     }
     try {
-      const res = await axios.post(`${BACKEND_URL}/api/test-sessions/create`, formData, { headers });
+      const res = await axios.post(`${BACKEND_URL}/api/test-sessions/create`, formData, { headers: getHeaders() });
       toast.success('Test-Sitzung erstellt');
       setShowForm(false);
       setFormData({ title: '', anosim_number: '', anosim_booking_id: '', email_account_id: '', test_ident_link: '', test_login_email: '', test_login_password: '', notes: '' });
@@ -63,7 +68,7 @@ const AdminTestSessions = () => {
   const handleDelete = async (id) => {
     if (!window.confirm('Sitzung löschen?')) return;
     try {
-      await axios.delete(`${BACKEND_URL}/api/test-sessions/${id}`, { headers });
+      await axios.delete(`${BACKEND_URL}/api/test-sessions/${id}`, { headers: getHeaders() });
       toast.success('Gelöscht');
       fetchData();
     } catch (e) {
