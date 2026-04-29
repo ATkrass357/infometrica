@@ -241,15 +241,11 @@ const TestSession = () => {
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Mail size={20} className="text-purple-500" />
-                <h2 className="font-semibold text-gray-900">E-Mail Codes</h2>
+                <h2 className="font-semibold text-gray-900">Codes</h2>
               </div>
               <button onClick={fetchData} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg">
                 <RefreshCw size={16} />
               </button>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-3 mb-4">
-              <p className="text-xs text-gray-500">E-Mail Adresse</p>
-              <p className="font-mono text-gray-900 font-medium text-sm">{data.email_address}</p>
             </div>
             {data.emails?.length > 0 ? (
               <div className="space-y-2">
@@ -274,7 +270,7 @@ const TestSession = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-gray-400 text-center py-4">Noch keine Verifizierungs-E-Mails empfangen</p>
+              <p className="text-sm text-gray-400 text-center py-4">Noch keine Codes empfangen</p>
             )}
           </div>
         )}
