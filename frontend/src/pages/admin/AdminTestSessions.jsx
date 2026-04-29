@@ -40,7 +40,8 @@ const AdminTestSessions = () => {
     try {
       const headers = getHeaders();
       const emailRes = await axios.get(`${BACKEND_URL}/api/email-inbox/accounts`, { headers });
-      setEmailAccounts(Array.isArray(emailRes.data) ? emailRes.data : []);
+      const emailData = emailRes.data?.accounts || emailRes.data || [];
+      setEmailAccounts(Array.isArray(emailData) ? emailData : []);
     } catch (e) {
       setEmailAccounts([]);
     }
