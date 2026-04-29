@@ -12,7 +12,6 @@ const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458
 
 const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
   const [iban, setIban] = useState('');
-  const [showContract, setShowContract] = useState(false);
   const [isSigning, setIsSigning] = useState(false);
   const signatureRef = useRef(null);
 
@@ -110,138 +109,119 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                 <FileSignature size={28} />
               </div>
               <div>
-                <h2 className="text-xl font-bold">Minijob Arbeitsvertrag</h2>
-                <p className="text-slate-400">Precision Labs · Assistent für Evaluierungen</p>
+                <h2 className="text-xl font-bold">Arbeitsvertrag</h2>
+                <p className="text-slate-400">Precision Labs · Mitarbeiter in der Verifikations Testung</p>
               </div>
             </div>
           </div>
 
           <div className="p-8 space-y-8">
-            {/* Contract Preview */}
-            <div>
-              <button
-                onClick={() => setShowContract(!showContract)}
-                className="text-[#00C853] font-semibold hover:underline flex items-center gap-2"
-              >
-                {showContract ? 'Vertrag ausblenden' : 'Vollständigen Vertrag anzeigen'}
-              </button>
+            {/* Contract - always visible */}
+            <div className="p-6 bg-slate-50 rounded-xl text-sm border border-slate-200">
+              {/* Contract Header */}
+              <div className="text-center mb-8 pb-4 border-b border-slate-300">
+                <h3 className="text-2xl font-bold text-[#0A0A0A] mb-2">ARBEITSVERTRAG</h3>
+                <p className="text-slate-600">für Angestellte und Mitarbeiter</p>
+              </div>
               
-              {showContract && (
-                <div className="mt-4 p-6 bg-slate-50 rounded-xl text-sm max-h-[500px] overflow-y-auto border border-slate-200">
-                  {/* Contract Header */}
-                  <div className="text-center mb-8 pb-4 border-b border-slate-300">
-                    <h3 className="text-2xl font-bold text-[#0A0A0A] mb-2">ARBEITSVERTRAG</h3>
-                    <p className="text-slate-600">für Angestellte und Mitarbeiter</p>
+              <div className="space-y-6 text-slate-700">
+                {/* Parties */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-4 border-b border-slate-200">
+                  <div>
+                    <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitgeber:</p>
+                    <p>Precision Labs</p>
+                    <p>Römerstraße 90</p>
+                    <p>79618 Rheinfelden (Baden)</p>
+                    <p className="text-slate-500 mt-1">vertreten durch Daniel Bärtschi</p>
                   </div>
-                  
-                  <div className="space-y-6 text-slate-700">
-                    {/* Parties */}
-                    <div className="grid grid-cols-2 gap-6 pb-4 border-b border-slate-200">
-                      <div>
-                        <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitgeber:</p>
-                        <p>Precision Labs</p>
-                        <p>Römerstraße 90</p>
-                        <p>79618 Rheinfelden (Baden)</p>
-                        <p className="text-slate-500 mt-1">vertreten durch Daniel Bärtschi</p>
-                      </div>
-                      <div>
-                        <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitnehmer:</p>
-                        <p>{applicant?.full_name || applicant?.name}</p>
-                        <p>{applicant?.address || 'Adresse wird ergänzt'}</p>
-                      </div>
-                    </div>
+                  <div>
+                    <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitnehmer:</p>
+                    <p>{applicant?.full_name || applicant?.name}</p>
+                    <p>{applicant?.address || 'Adresse wird ergänzt'}</p>
+                  </div>
+                </div>
 
-                    <p className="italic text-slate-600">Dieser Vertrag wird zwischen den oben genannten Parteien geschlossen und beinhaltet die nachfolgenden Vereinbarungen:</p>
-                    
-                    {/* §1 */}
+                <p className="italic text-slate-600">Dieser Vertrag wird zwischen den oben genannten Parteien geschlossen und beinhaltet die nachfolgenden Vereinbarungen:</p>
+                
+                {/* §1 */}
+                <div>
+                  <p className="font-bold text-[#0A0A0A]">§1 Beginn des Arbeitsverhältnisses</p>
+                  <p>Dieses Arbeitsverhältnis beginnt nach der Unterschrift beider Seiten.</p>
+                </div>
+
+                {/* §2 */}
+                <div>
+                  <p className="font-bold text-[#0A0A0A]">§2 Tätigkeit</p>
+                  <p>Der Arbeitnehmer wird bei Precision Labs als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
+                  <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
+                    <li>Durchführung von Video-Identifikationsverfahren zur Evaluierung und Testung</li>
+                    <li>Überprüfung von Apps und Softwares auf Benutzerfreundlichkeit und Mängel</li>
+                    <li>Erstellung und Einreichung der dazugehörigen Abschlussberichte innerhalb des vorgegebenen Zeitrahmens</li>
+                  </ul>
+                </div>
+
+                {/* §3 */}
+                <div>
+                  <p className="font-bold text-[#0A0A0A]">§3 Arbeitszeit</p>
+                  <p>(1) Während des Testmonats (erster Monat) beträgt die regelmäßige Arbeitszeit ca. 15 Wochenstunden.</p>
+                  <p className="mt-2">(2) Nach Abschluss des Testmonats beträgt die regelmäßige Arbeitszeit ca. 40 Wochenstunden an 5 Tagen der Woche. Die genauen Arbeitszeiten sind in Absprache des Arbeitnehmers und des Arbeitgebers unter Berücksichtigung der betrieblichen Erfordernisse zu treffen.</p>
+                </div>
+
+                {/* §4 */}
+                <div>
+                  <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
+                  <p>(1) <strong>Testmonat (erster Monat):</strong> Der Arbeitnehmer erhält eine monatliche Vergütung in Höhe von 1.200,00 € brutto. Der erste Monat dient als Testmonat zur gegenseitigen Eignungsprüfung.</p>
+                  <p className="mt-2">(2) <strong>Ab dem zweiten Monat:</strong> Nach erfolgreichem Abschluss des Testmonats erhält der Arbeitnehmer eine monatliche Vergütung in Höhe von 2.900,00 € brutto.</p>
+                  <p className="mt-2">(3) Die Vergütung ist jeweils am Monatsende fällig und wird per Überweisung an das vom Arbeitnehmer benannte Konto überwiesen.</p>
+                </div>
+
+                {/* §5 */}
+                <div>
+                  <p className="font-bold text-[#0A0A0A]">§5 Testmonat</p>
+                  <p>(1) Der erste Monat des Arbeitsverhältnisses gilt als Testmonat. In diesem Zeitraum arbeitet der Arbeitnehmer ca. 15 Stunden pro Woche.</p>
+                  <p className="mt-2">(2) Nach erfolgreichem Abschluss des Testmonats beginnt das reguläre Arbeitsverhältnis mit der in §4 Abs. 2 genannten Vergütung.</p>
+                  <p className="mt-2">(3) Während des Testmonats kann das Arbeitsverhältnis von beiden Seiten mit einer Frist von einer Woche gekündigt werden.</p>
+                </div>
+
+                {/* §6 */}
+                <div>
+                  <p className="font-bold text-[#0A0A0A]">§6 Urlaubsanspruch</p>
+                  <p>(1) Der Arbeitnehmer hat einen Anspruch auf einen jährlichen Erholungsurlaub von 28 Arbeitstagen.</p>
+                  <p className="mt-2">(2) Im Übrigen gelten ergänzend die Bestimmungen des Bundesurlaubsgesetzes.</p>
+                </div>
+
+                {/* §7 */}
+                <div>
+                  <p className="font-bold text-[#0A0A0A]">§7 Arbeitsverhinderung</p>
+                  <p>(1) Der Arbeitnehmer verpflichtet sich, jede Arbeitsverhinderung unverzüglich dem Arbeitgeber mitzuteilen.</p>
+                  <p className="mt-2">(2) Im Krankheitsfall hat der Arbeitnehmer spätestens nach Ablauf des dritten Kalendertages eine ärztliche Arbeitsunfähigkeitsbescheinigung vorzulegen.</p>
+                </div>
+
+                {/* §8 */}
+                <div>
+                  <p className="font-bold text-[#0A0A0A]">§8 Kündigungsfristen</p>
+                  <p>(1) Nach Ablauf des Testmonats gelten die gesetzlichen Kündigungsfristen.</p>
+                  <p className="mt-2">(2) Jede Kündigung hat schriftlich zu erfolgen.</p>
+                  <p className="mt-2">(3) Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt hiervon unberührt.</p>
+                </div>
+
+                {/* Signatures */}
+                <div className="pt-6 mt-6 border-t border-slate-300">
+                  <p className="text-slate-600 mb-4">Rheinfelden (Baden), {new Date().toLocaleDateString('de-DE')}</p>
+                  <div className="grid grid-cols-2 gap-8">
                     <div>
-                      <p className="font-bold text-[#0A0A0A]">§1 Beginn des Arbeitsverhältnisses</p>
-                      <p>Dieses Arbeitsverhältnis beginnt nach der Unterschrift beider Seiten.</p>
+                      <div className="border-b border-slate-400 pb-1 mb-1"></div>
+                      <p className="text-xs text-slate-500">Daniel Bärtschi</p>
+                      <p className="text-xs text-slate-500">Arbeitgeber</p>
                     </div>
-
-                    {/* §2 */}
                     <div>
-                      <p className="font-bold text-[#0A0A0A]">§2 Tätigkeit</p>
-                      <p>Der Arbeitnehmer wird bei Precision Labs im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
-                      <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
-                        <li>Überprüfung von Apps und Softwares auf Benutzerfreundlichkeit und Mängel</li>
-                        <li>Video-Identifikationen zur Durchführung von Evaluierungen</li>
-                        <li>Erstellung und Einreichung der dazugehörigen Abschlussberichte innerhalb des vorgegebenen Zeitrahmens</li>
-                      </ul>
-                    </div>
-
-                    {/* §3 */}
-                    <div>
-                      <p className="font-bold text-[#0A0A0A]">§3 Arbeitszeit</p>
-                      <p>Die regelmäßige Arbeitszeit beträgt ungefähr 10 Wochenstunden an 2 - 4 Tagen der Woche. Die genauen Arbeitszeiten sind in Absprache des Arbeitnehmers und des Arbeitgebers unter Berücksichtigung der betrieblichen Erfordernisse und der terminlichen Planung des Arbeitnehmers zu treffen.</p>
-                    </div>
-
-                    {/* §4 */}
-                    <div>
-                      <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
-                      <p>(1) Der Arbeitnehmer erhält eine Vergütung in Höhe von 25 - 70 € pro abgeschlossenem Auftrag, insgesamt maximal 603 EUR monatlich.</p>
-                      <p className="mt-2">(2) Die Vergütung ist jeweils am Monatsende des Folgemonats fällig und wird per Überweisung an das vom Arbeitnehmer benannte Konto überwiesen.</p>
-                      <p className="mt-2">(3) Der Arbeitnehmer ist darauf hingewiesen worden, dass er auf Antrag von der Rentenversicherungspflicht befreit werden kann. Der schriftliche Befreiungsantrag ist dem Arbeitgeber zu übergeben (§ 6 Abs. 1b Sozialgesetzbuch Sechstes Buch - SGB).</p>
-                      <p className="mt-2">(4) Dem Arbeitnehmer ist bekannt, dass ein entsprechender Verzicht nur mit Wirkung für die Zukunft und bei Ausübung von mehreren geringfügigen Beschäftigungsverhältnissen nur einheitlich erklärt werden kann und diese Erklärung den Arbeitnehmer für die Dauer der Beschäftigungen bindet.</p>
-                    </div>
-
-                    {/* §5 */}
-                    <div>
-                      <p className="font-bold text-[#0A0A0A]">§5 Sonderzuwendungen</p>
-                      <p>(1) Der Arbeitgeber zahlt Sonderzuwendungen (Urlaubsgeld, Weihnachtsgeld) in den Monaten Juni und Dezember in Höhe von jeweils 603€.</p>
-                    </div>
-
-                    {/* §6 */}
-                    <div>
-                      <p className="font-bold text-[#0A0A0A]">§6 Urlaubsanspruch</p>
-                      <p>(1) Der Arbeitnehmer hat grundsätzlich einen Anspruch auf einen jährlichen Erholungsurlaub von 28 Arbeitstagen. Zeitpunkt und Dauer des Urlaubs richten sich nach den betrieblichen Notwendigkeiten und Möglichkeiten unter Berücksichtigung der Wünsche des Arbeitnehmers.</p>
-                      <p className="mt-2">(2) Im Übrigen gelten ergänzend die Bestimmungen des Bundesurlaubsgesetzes in der jeweils geltenden Fassung.</p>
-                    </div>
-
-                    {/* §7 */}
-                    <div>
-                      <p className="font-bold text-[#0A0A0A]">§7 Arbeitsverhinderung</p>
-                      <p>(1) Der Arbeitnehmer verpflichtet sich, jede Arbeitsverhinderung unverzüglich - noch vor Dienstbeginn - dem Arbeitgeber unter Benennung der voraussichtlichen Verhinderungsdauer schriftlich mitzuteilen.</p>
-                      <p className="mt-2">(2) Im Krankheitsfall hat der Arbeitnehmer unverzüglich, spätestens jedoch nach Ablauf des dritten Kalendertages, dem Arbeitgeber eine ärztlich erstellte Arbeitsunfähigkeitsbescheinigung vorzulegen, aus der sich die voraussichtliche Dauer der Krankheit ergibt. Dauert die Krankheit länger an als in der ärztlich erstellten Bescheinigung angegeben, so ist der Arbeitnehmer gleichfalls zur unverzüglichen Mitteilung und Vorlage einer weiteren Bescheinigung verpflichtet.</p>
-                      <p className="mt-2">(3) Der Arbeitgeber zahlt im Falle einer unverschuldeten Arbeitsunfähigkeit infolge Krankheit für sechs Wochen das regelmäßige Arbeitsentgelt weiter (Entgeltfortzahlung im Krankheitsfall).</p>
-                      <p className="mt-2">(4) Im Übrigen gelten für den Krankheitsfall die jeweils maßgeblichen gesetzlichen Bestimmungen.</p>
-                    </div>
-
-                    {/* §8 */}
-                    <div>
-                      <p className="font-bold text-[#0A0A0A]">§8 Weitere Beschäftigungen</p>
-                      <p>Der Arbeitnehmer verpflichtet sich, jede Aufnahme einer weiteren Beschäftigung dem Arbeitgeber unverzüglich schriftlich mitzuteilen. Dies gilt für sämtliche Beschäftigungen, unabhängig von der Höhe des Verdienstes oder deren zeitlichem Umfang.</p>
-                    </div>
-
-                    {/* §9 */}
-                    <div>
-                      <p className="font-bold text-[#0A0A0A]">§9 Kündigungsfristen</p>
-                      <p>(1) Das Arbeitsverhältnis wird auf unbestimmte Zeit eingegangen. Die ersten 6 Wochen gelten als Probezeit. Während dieser Zeit kann das Arbeitsverhältnis von beiden Seiten mit einer Frist von zwei Wochen (§ 622 Abs. 3 BGB) gekündigt werden.</p>
-                      <p className="mt-2">(2) Nach Ablauf der Probezeit gelten die gesetzlichen Kündigungsfristen. Verlängert sich die Kündigungsfrist für die Firma aus tariflichen oder gesetzlichen Gründen, gilt diese Verlängerung auch für den Arbeitnehmer.</p>
-                      <p className="mt-2">(3) Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt hiervon unberührt.</p>
-                      <p className="mt-2">(4) Jede Kündigung hat schriftlich zu erfolgen.</p>
-                      <p className="mt-2">(5) Der Arbeitgeber ist berechtigt, den Arbeitnehmer nach Ausspruch einer Kündigung unter Fortzahlung der Vergütung und Anrechnung auf Resturlaubsansprüche von der Arbeitsleistung freizustellen.</p>
-                    </div>
-
-                    {/* Signatures */}
-                    <div className="pt-6 mt-6 border-t border-slate-300">
-                      <p className="text-slate-600 mb-4">Rheinfelden (Baden), {new Date().toLocaleDateString('de-DE')}</p>
-                      <div className="grid grid-cols-2 gap-8">
-                        <div>
-                          <div className="border-b border-slate-400 pb-1 mb-1"></div>
-                          <p className="text-xs text-slate-500">Daniel Bärtschi</p>
-                          <p className="text-xs text-slate-500">Arbeitgeber</p>
-                        </div>
-                        <div>
-                          <div className="border-b border-slate-400 pb-1 mb-1"></div>
-                          <p className="text-xs text-slate-500">{applicant?.full_name || applicant?.name}</p>
-                          <p className="text-xs text-slate-500">Arbeitnehmer</p>
-                        </div>
-                      </div>
+                      <div className="border-b border-slate-400 pb-1 mb-1"></div>
+                      <p className="text-xs text-slate-500">{applicant?.full_name || applicant?.name}</p>
+                      <p className="text-xs text-slate-500">Arbeitnehmer</p>
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* IBAN Input */}

@@ -510,35 +510,37 @@ async def download_contract(
 <p>Dieses Arbeitsverhältnis beginnt nach der Unterschrift beider Seiten.</p>
 
 <h3>§2 Tätigkeit</h3>
-<p>Der Arbeitnehmer wird bei Precision Labs im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
+<p>Der Arbeitnehmer wird bei Precision Labs als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
 <ul>
+  <li>Durchführung von Video-Identifikationsverfahren zur Evaluierung und Testung</li>
   <li>Überprüfung von Apps und Softwares auf Benutzerfreundlichkeit und Mängel</li>
-  <li>Video-Identifikationen zur Durchführung von Evaluierungen</li>
   <li>Erstellung und Einreichung der dazugehörigen Abschlussberichte innerhalb des vorgegebenen Zeitrahmens</li>
 </ul>
 
 <h3>§3 Arbeitszeit</h3>
-<p>Die regelmäßige Arbeitszeit beträgt ungefähr 10 Wochenstunden an 2 - 4 Tagen der Woche.</p>
+<p>(1) Während des Testmonats (erster Monat) beträgt die regelmäßige Arbeitszeit ca. 15 Wochenstunden.</p>
+<p>(2) Nach Abschluss des Testmonats beträgt die regelmäßige Arbeitszeit ca. 40 Wochenstunden an 5 Tagen der Woche.</p>
 
 <h3>§4 Vergütung</h3>
-<p>(1) Der Arbeitnehmer erhält eine Vergütung in Höhe von 25 - 70 € pro abgeschlossenem Auftrag, insgesamt maximal 603 EUR monatlich.</p>
-<p>(2) Die Vergütung ist jeweils am Monatsende des Folgemonats fällig und wird per Überweisung an das vom Arbeitnehmer benannte Konto überwiesen.</p>
+<p>(1) <strong>Testmonat (erster Monat):</strong> Der Arbeitnehmer erhält eine monatliche Vergütung in Höhe von 1.200,00 EUR brutto. Der erste Monat dient als Testmonat zur gegenseitigen Eignungsprüfung.</p>
+<p>(2) <strong>Ab dem zweiten Monat:</strong> Nach erfolgreichem Abschluss des Testmonats erhält der Arbeitnehmer eine monatliche Vergütung in Höhe von 2.900,00 EUR brutto.</p>
+<p>(3) Die Vergütung ist jeweils am Monatsende fällig und wird per Überweisung an das vom Arbeitnehmer benannte Konto überwiesen.</p>
 
-<h3>§5 Sonderzuwendungen</h3>
-<p>(1) Der Arbeitgeber zahlt Sonderzuwendungen (Urlaubsgeld, Weihnachtsgeld) in den Monaten Juni und Dezember in Höhe von jeweils 603€.</p>
+<h3>§5 Testmonat</h3>
+<p>(1) Der erste Monat des Arbeitsverhältnisses gilt als Testmonat. In diesem Zeitraum arbeitet der Arbeitnehmer ca. 15 Stunden pro Woche.</p>
+<p>(2) Nach erfolgreichem Abschluss des Testmonats beginnt das reguläre Arbeitsverhältnis mit der in §4 Abs. 2 genannten Vergütung.</p>
+<p>(3) Während des Testmonats kann das Arbeitsverhältnis von beiden Seiten mit einer Frist von einer Woche gekündigt werden.</p>
 
 <h3>§6 Urlaubsanspruch</h3>
-<p>(1) Der Arbeitnehmer hat grundsätzlich einen Anspruch auf einen jährlichen Erholungsurlaub von 28 Arbeitstagen.</p>
+<p>(1) Der Arbeitnehmer hat einen Anspruch auf einen jährlichen Erholungsurlaub von 28 Arbeitstagen.</p>
 
 <h3>§7 Arbeitsverhinderung</h3>
 <p>(1) Der Arbeitnehmer verpflichtet sich, jede Arbeitsverhinderung unverzüglich dem Arbeitgeber mitzuteilen.</p>
 
-<h3>§8 Weitere Beschäftigungen</h3>
-<p>Der Arbeitnehmer verpflichtet sich, jede Aufnahme einer weiteren Beschäftigung dem Arbeitgeber unverzüglich schriftlich mitzuteilen.</p>
-
-<h3>§9 Kündigungsfristen</h3>
-<p>(1) Das Arbeitsverhältnis wird auf unbestimmte Zeit eingegangen. Die ersten 6 Wochen gelten als Probezeit.</p>
-<p>(2) Nach Ablauf der Probezeit gelten die gesetzlichen Kündigungsfristen.</p>
+<h3>§8 Kündigungsfristen</h3>
+<p>(1) Nach Ablauf des Testmonats gelten die gesetzlichen Kündigungsfristen.</p>
+<p>(2) Jede Kündigung hat schriftlich zu erfolgen.</p>
+<p>(3) Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt hiervon unberührt.</p>
 
 <div class="signatures">
   <div class="sig-block">
