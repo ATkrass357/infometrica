@@ -21,6 +21,7 @@ const AdminTestSessions = () => {
     test_login_password: '',
     notes: '',
   });
+  const [anosimNumbers, setAnosimNumbers] = useState([]);
 
   const getHeaders = () => {
     const t = localStorage.getItem('admin_token');
@@ -42,6 +43,13 @@ const AdminTestSessions = () => {
       setEmailAccounts(Array.isArray(emailRes.data) ? emailRes.data : []);
     } catch (e) {
       setEmailAccounts([]);
+    }
+    try {
+      const headers = getHeaders();
+      const anosimRes = await axios.get(`${BACKEND_URL}/api/anosim/numbers`, { headers });
+      setAnosimNumbers(anosimRes.data?.numbers || []);
+    } catch (e) {
+      setAnosimNumbers([]);
     }
     setLoading(false);
   }, []);
@@ -197,23 +205,25 @@ const AdminTestSessions = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-2">Anosim Nummer</label>
-                <input
-                  type="text"
-                  value={formData.anosim_number}
-                  onChange={(e) => setFormData({ ...formData, anosim_number: e.target.value })}
-                  placeholder="+420..."
+                <select
+                  value={formData.anosim_number ? `${formData.anosim_number}|${formData.anosim_booking_id}` : ''}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      const [number, bookingId] = e.target.value.split('|');
+                      setFormData({ ...formData, anosim_number: number, anosim_booking_id: bookingId || '' });
+                    } else {
+                      setFormData({ ...formData, anosim_number: '', anosim_booking_id: '' });
+                    }
+                  }}
                   className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-[#9aa5ce] mb-2">Anosim Booking ID</label>
-                <input
-                  type="text"
-                  value={formData.anosim_booking_id}
-                  onChange={(e) => setFormData({ ...formData, anosim_booking_id: e.target.value })}
-                  placeholder="Booking ID für SMS-Abruf"
-                  className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                />
+                >
+                  <option value="">Keine Nummer</option>
+                  {anosimNumbers.map((num, i) => (
+                    <option key={i} value={`${num.phone}|${num.booking_id || ''}`}>
+                      {num.phone} {num.assigned_to ? `(zugewiesen: ${num.assigned_to.name})` : ''}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-2">E-Mail Konto</label>
