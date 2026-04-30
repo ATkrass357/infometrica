@@ -166,6 +166,33 @@ const TestSession = () => {
           </div>
         </div>
 
+        {/* Task Steps */}
+        {data?.task && (
+          <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 mb-4">
+            <h2 className="font-semibold text-gray-900 mb-4">{data.task.title}</h2>
+            {data.task.description && (
+              <p className="text-sm text-gray-600 mb-4">{data.task.description}</p>
+            )}
+            {data.task.steps?.length > 0 && (
+              <div className="space-y-3">
+                {data.task.steps.map((step, i) => (
+                  <div key={i} className="flex gap-3">
+                    <div className="w-7 h-7 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-xs font-bold text-emerald-700">{i + 1}</span>
+                    </div>
+                    <p className="text-sm text-gray-700 pt-1">{step}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+            {data.task.website && (
+              <a href={data.task.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-4 text-sm text-emerald-600 hover:underline font-medium">
+                Website öffnen
+              </a>
+            )}
+          </div>
+        )}
+
         {/* Login Data */}
         {(data?.test_ident_link || data?.test_login_email) && (
           <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 mb-4">

@@ -25,6 +25,7 @@ def verify_admin(authorization: str):
 
 class CreateSession(BaseModel):
     title: str
+    task_id: Optional[str] = None
     anosim_number: Optional[str] = None
     anosim_booking_id: Optional[str] = None
     email_account_id: Optional[str] = None
@@ -49,6 +50,7 @@ async def create_session(
         "id": f"session-{uuid.uuid4().hex[:8]}",
         "token": session_token,
         "title": data.title,
+        "task_id": data.task_id or "",
         "anosim_number": data.anosim_number or "",
         "anosim_booking_id": data.anosim_booking_id or "",
         "email_account_id": data.email_account_id or "",
@@ -198,10 +200,17 @@ async def get_session_data(
         "test_ident_link": session.get("test_ident_link", ""),
         "test_login_email": session.get("test_login_email", ""),
         "test_login_password": session.get("test_login_password", ""),
+        "task": None,
         "sms_messages": [],
         "emails": [],
         "expires_at": session.get("expires_at"),
     }
+
+    # Fetch task if assigned
+    if session.get("task_id"):
+        task = await db.tasks.find_one({"id": session["task_id"]}, {"_id": 0, "title": 1, "description": 1, "steps": 1, "website": 1})
+        if task:
+            result["task"] = task
 
     # Fetch SMS if anosim number assigned
     if session.get("anosim_number") and session.get("anosim_booking_id"):

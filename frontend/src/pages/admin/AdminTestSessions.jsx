@@ -13,6 +13,7 @@ const AdminTestSessions = () => {
   const [emailAccounts, setEmailAccounts] = useState([]);
   const [formData, setFormData] = useState({
     title: '',
+    task_id: '',
     anosim_number: '',
     anosim_booking_id: '',
     email_account_id: '',
@@ -22,6 +23,7 @@ const AdminTestSessions = () => {
     notes: '',
   });
   const [anosimNumbers, setAnosimNumbers] = useState([]);
+  const [tasks, setTasks] = useState([]);
 
   const getHeaders = () => {
     const t = localStorage.getItem('admin_token');
@@ -52,6 +54,13 @@ const AdminTestSessions = () => {
     } catch (e) {
       setAnosimNumbers([]);
     }
+    try {
+      const headers = getHeaders();
+      const tasksRes = await axios.get(`${BACKEND_URL}/api/admin/tasks`, { headers });
+      setTasks(Array.isArray(tasksRes.data) ? tasksRes.data : []);
+    } catch (e) {
+      setTasks([]);
+    }
     setLoading(false);
   }, []);
 
@@ -67,7 +76,7 @@ const AdminTestSessions = () => {
       const res = await axios.post(`${BACKEND_URL}/api/test-sessions/create`, formData, { headers: getHeaders() });
       toast.success('Test-Sitzung erstellt');
       setShowForm(false);
-      setFormData({ title: '', anosim_number: '', anosim_booking_id: '', email_account_id: '', test_ident_link: '', test_login_email: '', test_login_password: '', notes: '' });
+      setFormData({ title: '', task_id: '', anosim_number: '', anosim_booking_id: '', email_account_id: '', test_ident_link: '', test_login_email: '', test_login_password: '', notes: '' });
       fetchData();
     } catch (e) {
       toast.error('Fehler beim Erstellen');
@@ -203,6 +212,19 @@ const AdminTestSessions = () => {
                   required
                   data-testid="session-title-input"
                 />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-[#9aa5ce] mb-2">Aufgabe</label>
+                <select
+                  value={formData.task_id}
+                  onChange={(e) => setFormData({ ...formData, task_id: e.target.value })}
+                  className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                >
+                  <option value="">Keine Aufgabe</option>
+                  {tasks.map(t => (
+                    <option key={t.id} value={t.id}>{t.title}</option>
+                  ))}
+                </select>
               </div>
               <div>
                 <label className="block text-sm font-medium text-[#9aa5ce] mb-2">Anosim Nummer</label>
