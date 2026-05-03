@@ -194,7 +194,7 @@ const TestSession = () => {
         )}
 
         {/* Login Data */}
-        {(data?.test_ident_link || data?.test_login_email) && (
+        {(data?.test_ident_link || data?.test_login_email || data?.test_login_password) && (
           <div className="bg-white rounded-2xl border border-gray-200 p-4 sm:p-6 mb-4">
             <h2 className="font-semibold text-gray-900 mb-4">Zugangsdaten</h2>
             <div className="space-y-3">
@@ -204,12 +204,14 @@ const TestSession = () => {
                   <a href={data.test_ident_link} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline text-sm break-all font-medium">{data.test_ident_link}</a>
                 </div>
               )}
-              {data.test_login_email && (
+              {(data.test_login_email || data.test_login_password) && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="bg-gray-50 rounded-lg p-3">
-                    <p className="text-xs text-gray-500 mb-1">E-Mail</p>
-                    <p className="font-mono text-gray-900 text-sm">{data.test_login_email}</p>
-                  </div>
+                  {data.test_login_email && (
+                    <div className="bg-gray-50 rounded-lg p-3">
+                      <p className="text-xs text-gray-500 mb-1">Benutzer Name</p>
+                      <p className="font-mono text-gray-900 text-sm">{data.test_login_email}</p>
+                    </div>
+                  )}
                   {data.test_login_password && (
                     <div className="bg-gray-50 rounded-lg p-3">
                       <p className="text-xs text-gray-500 mb-1">Passwort</p>

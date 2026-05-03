@@ -276,12 +276,12 @@ const AdminTestSessions = () => {
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-medium text-[#9aa5ce] mb-1">Test E-Mail</label>
+                      <label className="block text-xs font-medium text-[#9aa5ce] mb-1">Test Benutzer Name</label>
                       <input
-                        type="email"
+                        type="text"
                         value={formData.test_login_email}
                         onChange={(e) => setFormData({ ...formData, test_login_email: e.target.value })}
-                        placeholder="test@example.com"
+                        placeholder="Benutzername (optional)"
                         className="w-full px-4 py-3 bg-[#16161e] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
                       />
                     </div>
