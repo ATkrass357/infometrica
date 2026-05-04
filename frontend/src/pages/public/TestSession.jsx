@@ -244,16 +244,17 @@ const TestSession = () => {
               <div className="space-y-2">
                 {data.sms_messages.map((sms, i) => (
                   <div key={i} className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center justify-between mb-2">
                       <span className="text-xs text-blue-600 font-medium">{sms.sender || 'SMS'}</span>
                       <span className="text-xs text-gray-400">{sms.received_at || ''}</span>
                     </div>
-                    <p className="text-sm text-gray-900">{sms.text || sms.message || ''}</p>
-                    {sms.code && (
-                      <div className="mt-2 inline-flex items-center gap-1 px-3 py-1 bg-blue-100 rounded-full">
+                    {sms.code ? (
+                      <div className="inline-flex items-center gap-1 px-3 py-1 bg-blue-100 rounded-full">
                         <CheckCircle size={12} className="text-blue-600" />
                         <span className="font-mono font-bold text-blue-800">{sms.code}</span>
                       </div>
+                    ) : (
+                      <p className="text-xs text-gray-400 italic">Kein Code erkannt</p>
                     )}
                   </div>
                 ))}
@@ -284,13 +285,12 @@ const TestSession = () => {
               <div className="space-y-2">
                 {data.emails.map((em, i) => (
                   <div key={i} className="bg-purple-50 border border-purple-200 rounded-lg p-3">
-                    <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center justify-between mb-2">
                       <span className="text-xs text-purple-600 font-medium truncate">{em.sender || ''}</span>
                       <span className="text-xs text-gray-400">{em.received_at || ''}</span>
                     </div>
-                    <p className="text-sm text-gray-700 truncate">{em.subject || ''}</p>
-                    {em.codes?.length > 0 && (
-                      <div className="mt-2 flex flex-wrap gap-2">
+                    {em.codes?.length > 0 ? (
+                      <div className="flex flex-wrap gap-2">
                         {em.codes.map((code, j) => (
                           <span key={j} className="inline-flex items-center gap-1 px-3 py-1 bg-purple-100 rounded-full">
                             <CheckCircle size={12} className="text-purple-600" />
@@ -298,6 +298,8 @@ const TestSession = () => {
                           </span>
                         ))}
                       </div>
+                    ) : (
+                      <p className="text-xs text-gray-400 italic">Kein Code erkannt</p>
                     )}
                   </div>
                 ))}
