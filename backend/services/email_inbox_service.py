@@ -24,17 +24,22 @@ class EmailInboxService:
         "web.de": {"server": "imap.web.de", "port": 993},
     }
     
-    # Patterns to extract verification codes from emails (ordered by specificity)
+    # STRICT code patterns - code MUST appear adjacent to a verification keyword.
+    # Ordered by specificity. Matched on full text in lowercase.
+    # Each pattern must have exactly one capturing group = the code (4-8 digits).
     CODE_PATTERNS = [
-        r'code[:\s]+(\d{4,8})',  # "code: 123456"
-        r'verification[:\s]+(\d{4,8})',  # "verification: 123456"
-        r'bestätigungscode[:\s]+(\d{4,8})',  # German
-        r'verifizierungscode[:\s]+(\d{4,8})',  # German
-        r'pin[:\s]+(\d{4,8})',  # PIN codes
-        r'otp[:\s]+(\d{4,8})',  # OTP codes
-        r'(?:is|lautet|ist)[:\s]+(\d{4,8})',  # "Your code is: 123456"
-        r'\b(\d{4,8})\b',  # Generic fallback - any 4-8 digit number
+        # "verification code: 123456", "bestätigungscode 123456", "security code - 123456"
+        r'(?:verification\s+code|verifikations(?:code)?|bestätigungs(?:code)?|sicherheits(?:code)?|einmal[\-\s]?passwort|zugriffs(?:code)?|security\s+code|access\s+code|login\s+code|one[\-\s]?time\s+(?:password|code)|auth(?:entication)?\s+code|2fa\s+code|otp|pin)[\s:\-=•]{0,6}(\d{4,8})',
+        # "code: 123456", "code is 123456", "code lautet 123456"
+        r'\bcode\b[\s:\-=•]{0,4}(?:is|ist|lautet|:)?[\s:\-=•]{0,4}(\d{4,8})',
+        # "Your/Ihr/Dein code is/lautet 123456"
+        r'(?:your|ihr|dein|deinen)\s+(?:code|pin)[\s:\-=•]{0,6}(?:is|ist|lautet)?[\s:\-=•]{0,6}(\d{4,8})',
+        # Reversed: "123456 is your code", "123456 ist ihr code", "123456 lautet"
+        r'\b(\d{4,8})\s+(?:is\s+(?:your|the)\s+(?:verification|confirmation|security|access|login|auth(?:entication)?|one[\-\s]?time\s+)?\s*(?:code|password|pin)|ist\s+(?:dein|ihr|der)\s+(?:bestätigungs|verifizierungs|sicherheits|zugriffs)?\s*code|lautet)',
     ]
+
+    # Numbers that look like codes but almost certainly aren't
+    YEAR_RE = re.compile(r'^(19|20)\d{2}$')
     
     # Keywords that indicate verification emails
     VERIFICATION_KEYWORDS = [
@@ -142,14 +147,29 @@ class EmailInboxService:
         text = (subject + " " + body).lower()
         return any(keyword in text for keyword in self.VERIFICATION_KEYWORDS)
     
+    def _is_plausible_code(self, code: str) -> bool:
+        """Filter out numbers that look like codes but almost certainly aren't."""
+        if not code or not code.isdigit():
+            return False
+        # Reject years (1900-2099) if exactly 4 digits
+        if len(code) == 4 and self.YEAR_RE.match(code):
+            return False
+        # Reject all-same digits (00000, 11111, ...)
+        if len(set(code)) == 1:
+            return False
+        return True
+
     def _extract_codes(self, text: str) -> List[str]:
-        """Extract verification codes from text - returns max 1 most likely code"""
-        # Try specific patterns first, fall back to generic
+        """
+        Extract verification codes from text using strict context-aware patterns.
+        Returns max 1 most likely code. Generic standalone numbers are NOT matched.
+        """
+        lowered = text.lower()
         for pattern in self.CODE_PATTERNS:
-            matches = re.findall(pattern, text.lower())
+            matches = re.findall(pattern, lowered)
             for match in matches:
-                if len(match) >= 4:
-                    return [match]  # Return first match from most specific pattern
+                if self._is_plausible_code(match):
+                    return [match]
         return []
     
     def fetch_verification_emails(self, since_minutes: int = 60, limit: int = 20) -> List[Dict]:
