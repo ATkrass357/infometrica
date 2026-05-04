@@ -1,35 +1,39 @@
 # Precision Labs – PRD
 
 ## Original Problem Statement
-User deployed "Precision Labs" on VPS. Debugging expanded to a full-featured platform: Admin Panel mobile optimization, 1:1 Admin-Employee Chat with Telegram notifications, HTML-to-PDF Contract generation, GMX/Web.de IMAP support, and public Test-Sitzungen (1-hour links for external testers with live SMS/Email codes).
+Precision Labs VPS-Plattform: Admin Panel Mobile, 1:1 Chat, HTML-Contract, GMX/Web.de IMAP, Test-Sitzungen (1-Stunden-Links).
 
 ## User Language
-German (respond in German only).
+German.
 
 ## Architecture
-- **Frontend**: React + Tailwind + shadcn/ui
-- **Backend**: FastAPI + MongoDB (Motor) + JWT (7-day expiry)
-- **Integrations**: Anosim (virtual numbers), smsroute.cc (SMS), IMAP (Gmail/GMX/Web.de), Telegram Bot API
+- Frontend: React + Tailwind + shadcn/ui
+- Backend: FastAPI + MongoDB + JWT (7 Tage)
+- Integrationen: Anosim, smsroute, IMAP (Gmail/GMX/Web.de), Telegram
 
-## Completed Features
+## Completed
 - Admin login (bcrypt==4.0.1)
-- Admin Panel mobile-responsive
-- Employee-Applicant merged logic (status "Freigeschaltet" = Mitarbeiter)
-- 1:1 Chat (images, unread badges, Telegram webhook)
-- Contract signing (HTML/PDF rendering, base64 signature)
-- GMX/Web.de IMAP support
-- Test-Sitzungen (public 1-hour links, task selection, live SMS/Email codes)
-  - Label "Test Benutzer Name" (optional, statt Test-Email)
-  - "Codes" statt "E-Mail Codes" (E-Mail-Adresse versteckt)
+- Mobile-responsive Admin
+- 1:1 Chat mit Telegram
+- Vertragsgenerierung
+- GMX/Web.de IMAP
+- Test-Sitzungen (Public 1h, Codes SMS+Email)
+
+## Critical Bug Fixes
+**2026-02-05: SMS Forwarding zu Test-Sitzungen (P0 – kostete User 1000€)**
+- Backend: `get_sms_for_number` erwartete Telefonnummer, bekam aber Booking-ID → korrigiert auf `get_sms_for_booking` mit Fallback
+- Frontend: Las `num.booking_id`, API liefert aber `num.id` → Admin-Form korrigiert
+- SMS-Format normalisiert (`messageText` → `text`, `messageDate` → `received_at`)
+- Automatische Code-Extraktion via `extract_verification_code`
+- Nur SMS ab Sessionstart sichtbar
 
 ## Pending
-- **P0**: Vertragsstartdatum automatisieren (Unterschriftsdatum als Startdatum) – wartet auf User-Bestätigung
-- **P1**: WhatsApp-Weiterleitung für SMS-Codes
-- **P2**: Mitarbeiter-CRUD, Dashboard-Analytics, i18n
+- P0: Vertragsstartdatum automatisieren (wartet auf User-Bestätigung)
+- P1: WhatsApp-Weiterleitung SMS-Codes
+- P2: Mitarbeiter-CRUD, Dashboard-Analytics, i18n
 
 ## Deployment
-User runs on VPS via GitHub pull. Standard command:
 `cd ~/infometrica && git stash && git pull origin main && cd frontend && npm run build && sudo systemctl restart precision-backend && sudo systemctl restart nginx`
 
 ## Last Updated
-2026-02-05: Test-Sitzungen – "Test Benutzer Name" (optional) & Passwort-Anzeige unabhängig vom Benutzername.
+2026-02-05: Kritischer SMS-Forwarding-Bug in Test-Sitzungen behoben.

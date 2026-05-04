@@ -242,7 +242,7 @@ const AdminTestSessions = () => {
                 >
                   <option value="">Keine Nummer</option>
                   {anosimNumbers.map((num, i) => (
-                    <option key={i} value={`${num.phone}|${num.booking_id || ''}`}>
+                    <option key={i} value={`${num.phone}|${num.id || num.booking_id || ''}`}>
                       {num.phone} {num.assigned_to ? `(zugewiesen: ${num.assigned_to.name})` : ''}
                     </option>
                   ))}

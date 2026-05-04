@@ -213,11 +213,49 @@ async def get_session_data(
             result["task"] = task
 
     # Fetch SMS if anosim number assigned
-    if session.get("anosim_number") and session.get("anosim_booking_id"):
-        from services.anosim_service import get_sms_for_number
-        sms_data = await get_sms_for_number(session["anosim_booking_id"])
+    sms_raw = []
+    if session.get("anosim_booking_id"):
+        from services.anosim_service import get_sms_for_booking
+        sms_data = await get_sms_for_booking(str(session["anosim_booking_id"]))
         if sms_data.get("status") == "success":
-            result["sms_messages"] = sms_data.get("messages", [])
+            sms_raw = sms_data.get("messages", [])
+    elif session.get("anosim_number"):
+        # Fallback: lookup booking by phone number (slower)
+        from services.anosim_service import get_sms_for_number
+        sms_data = await get_sms_for_number(session["anosim_number"])
+        if sms_data.get("status") == "success":
+            sms_raw = sms_data.get("messages", [])
+
+    # Normalize SMS format for the public frontend + filter by session start
+    from services.anosim_service import extract_verification_code
+    started_at = None
+    if session.get("started_at"):
+        try:
+            started_at = datetime.fromisoformat(session["started_at"])
+        except Exception:
+            started_at = None
+
+    normalized = []
+    for msg in sms_raw:
+        text = msg.get("messageText") or msg.get("text") or msg.get("message") or msg.get("body") or ""
+        received_raw = msg.get("messageDate") or msg.get("received_at") or msg.get("timestamp") or msg.get("date") or ""
+        # Filter messages received before session start (avoid showing old codes)
+        if started_at and received_raw:
+            try:
+                msg_dt = datetime.fromisoformat(str(received_raw).replace("Z", "+00:00"))
+                if msg_dt.tzinfo is None:
+                    msg_dt = msg_dt.replace(tzinfo=timezone.utc)
+                if msg_dt < started_at:
+                    continue
+            except Exception:
+                pass
+        normalized.append({
+            "sender": msg.get("sender") or msg.get("from") or msg.get("originator") or "SMS",
+            "text": text,
+            "received_at": str(received_raw),
+            "code": extract_verification_code(text) if text else None,
+        })
+    result["sms_messages"] = normalized
 
     # Fetch emails if email account assigned
     if session.get("email_account_id"):
