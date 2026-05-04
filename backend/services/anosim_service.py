@@ -93,11 +93,11 @@ async def get_sms_for_booking(booking_id: str) -> dict:
                 logger.info(f"Fetched {len(messages)} SMS for booking {booking_id}")
                 return {"status": "success", "messages": messages}
             else:
-                logger.warning(f"Anosim SMS API returned {response.status_code}")
+                logger.warning(f"Anosim SMS API returned {response.status_code} for booking {booking_id}: {response.text[:200]}")
                 return {"status": "success", "messages": []}
                 
     except Exception as e:
-        logger.error(f"Anosim get_sms exception: {str(e)}")
+        logger.error(f"Anosim get_sms_for_booking exception for booking {booking_id}: {str(e)}")
         return {"status": "success", "messages": []}
 
 
