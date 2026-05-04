@@ -262,9 +262,9 @@ async def get_session_data(
         account = await db.email_accounts.find_one({"id": session["email_account_id"]}, {"_id": 0})
         if account:
             result["email_address"] = account["email"]
-            from services.email_inbox_service import get_verification_codes
+            from services.email_inbox_service import get_verification_codes_smart
             try:
-                emails = get_verification_codes(account["email"], account["app_password"], since_minutes=60)
+                emails = await get_verification_codes_smart(account["email"], account["app_password"], since_minutes=60)
                 result["emails"] = emails
             except Exception:
                 result["emails"] = []

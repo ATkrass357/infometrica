@@ -216,29 +216,28 @@ class EmailInboxService:
                     if not self._is_verification_email(subject, body):
                         continue
                     
-                    # Extract codes
+                    # Extract codes (regex first - fast & free)
                     codes = self._extract_codes(subject + " " + body)
                     
-                    if codes:
-                        # Parse date
-                        try:
-                            # Handle various date formats
-                            date_tuple = email.utils.parsedate_tz(date_str)
-                            if date_tuple:
-                                timestamp = email.utils.mktime_tz(date_tuple)
-                                received_at = datetime.fromtimestamp(timestamp)
-                            else:
-                                received_at = datetime.now()
-                        except:
+                    # Parse date
+                    try:
+                        date_tuple = email.utils.parsedate_tz(date_str)
+                        if date_tuple:
+                            timestamp = email.utils.mktime_tz(date_tuple)
+                            received_at = datetime.fromtimestamp(timestamp)
+                        else:
                             received_at = datetime.now()
-                        
-                        emails.append({
-                            "sender": sender,
-                            "subject": subject[:100],  # Truncate long subjects
-                            "codes": codes,
-                            "received_at": received_at.isoformat(),
-                            "email_id": email_id.decode() if isinstance(email_id, bytes) else str(email_id)
-                        })
+                    except:
+                        received_at = datetime.now()
+
+                    emails.append({
+                        "sender": sender,
+                        "subject": subject[:100],  # Truncate long subjects
+                        "codes": codes,
+                        "received_at": received_at.isoformat(),
+                        "email_id": email_id.decode() if isinstance(email_id, bytes) else str(email_id),
+                        "_body_preview": (subject + "\n\n" + body)[:1500],  # Used for LLM fallback if needed
+                    })
                 
                 except Exception as e:
                     print(f"Error processing email: {e}")
@@ -275,9 +274,82 @@ def get_verification_codes(email_address: str, app_password: str, since_minutes:
     """
     service = EmailInboxService(email_address, app_password)
     try:
-        return service.fetch_verification_emails(since_minutes=since_minutes)
+        results = service.fetch_verification_emails(since_minutes=since_minutes)
+        # Strip private field
+        for r in results:
+            r.pop("_body_preview", None)
+        return results
     finally:
         service.disconnect()
+
+
+async def _extract_code_via_llm(subject: str, body: str) -> Optional[str]:
+    """
+    Ask an LLM to extract the single verification code from an email.
+    Returns the code string (digits only, 4-8 chars) or None.
+    Uses Emergent LLM Key with gpt-5-nano for fastest/cheapest inference.
+    """
+    import os
+    import re as _re
+    from emergentintegrations.llm.chat import LlmChat, UserMessage
+    import uuid as _uuid
+
+    api_key = os.environ.get("EMERGENT_LLM_KEY")
+    if not api_key:
+        return None
+
+    snippet = (subject + "\n\n" + body)[:1500]
+    system_msg = (
+        "You extract one-time verification / confirmation / login codes from emails. "
+        "Reply with ONLY the code (digits, 4-8 chars), nothing else. "
+        "If the email does not clearly contain a verification code intended for the recipient "
+        "(e.g. it's a receipt, tracking number, order number, invoice, year, account balance), reply exactly: NONE."
+    )
+    try:
+        chat = LlmChat(
+            api_key=api_key,
+            session_id=f"code-extract-{_uuid.uuid4().hex[:8]}",
+            system_message=system_msg,
+        ).with_model("openai", "gpt-5-nano")
+        response = await chat.send_message(UserMessage(text=snippet))
+        if not response:
+            return None
+        response = str(response).strip()
+        if response.upper() == "NONE":
+            return None
+        # Extract only digits to defend against stray punctuation
+        match = _re.search(r'\b(\d{4,8})\b', response)
+        if match:
+            return match.group(1)
+        return None
+    except Exception as e:
+        print(f"LLM code extraction failed: {e}")
+        return None
+
+
+async def get_verification_codes_smart(email_address: str, app_password: str, since_minutes: int = 60) -> List[Dict]:
+    """
+    Fetch verification codes with AI fallback for near-100% extraction accuracy.
+    - Regex first (fast, free)
+    - If regex finds no code for a verification-like email, ask LLM
+    """
+    service = EmailInboxService(email_address, app_password)
+    try:
+        results = service.fetch_verification_emails(since_minutes=since_minutes)
+    finally:
+        service.disconnect()
+
+    # LLM fallback for emails without a code
+    for r in results:
+        if not r.get("codes"):
+            preview = r.get("_body_preview", "")
+            code = await _extract_code_via_llm(r.get("subject", ""), preview)
+            if code:
+                r["codes"] = [code]
+        r.pop("_body_preview", None)
+
+    # Only return emails that ended up with a code
+    return [r for r in results if r.get("codes")]
 
 
 def test_email_credentials(email_address: str, app_password: str) -> Dict:
