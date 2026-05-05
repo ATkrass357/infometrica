@@ -263,10 +263,15 @@ async def get_session_data(
         if account:
             result["email_address"] = account["email"]
             from services.email_inbox_service import get_verification_codes_smart
+            import asyncio
             try:
-                emails = await get_verification_codes_smart(account["email"], account["app_password"], since_minutes=60)
+                emails = await asyncio.wait_for(
+                    get_verification_codes_smart(account["email"], account["app_password"], since_minutes=60),
+                    timeout=20.0,
+                )
                 result["emails"] = emails
-            except Exception:
+            except Exception as e:
+                print(f"Email fetch failed: {e}")
                 result["emails"] = []
 
     return result
