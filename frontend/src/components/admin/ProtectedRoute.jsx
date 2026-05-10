@@ -18,19 +18,7 @@ const ProtectedRoute = ({ children }) => {
         return;
       }
 
-      // Check if 30 minutes have passed
-      const timeElapsed = Date.now() - parseInt(loginTime);
-      const thirtyMinutes = 30 * 60 * 1000;
-
-      if (timeElapsed > thirtyMinutes) {
-        // Session expired
-        localStorage.removeItem('admin_token');
-        localStorage.removeItem('admin_data');
-        localStorage.removeItem('login_time');
-        setIsValid(false);
-        return;
-      }
-
+      // Server-side JWT controls lifetime (7 days). Client just verifies token validity.
       try {
         // Verify token with backend
         await axios.get(`${BACKEND_URL}/api/admin/verify`, {
@@ -40,7 +28,7 @@ const ProtectedRoute = ({ children }) => {
         });
         setIsValid(true);
       } catch (error) {
-        // Token invalid
+        // Token invalid or expired
         localStorage.removeItem('admin_token');
         localStorage.removeItem('admin_data');
         localStorage.removeItem('login_time');
