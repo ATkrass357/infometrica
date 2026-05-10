@@ -80,8 +80,15 @@ async def add_email_account(
     if existing:
         raise HTTPException(status_code=400, detail="E-Mail-Konto existiert bereits")
     
-    # Test credentials
-    test_result = test_email_credentials(account.email, account.app_password)
+    # Test credentials (offload sync IMAP call to thread to avoid blocking event loop)
+    import asyncio as _asyncio
+    try:
+        test_result = await _asyncio.wait_for(
+            _asyncio.to_thread(test_email_credentials, account.email, account.app_password),
+            timeout=15.0,
+        )
+    except _asyncio.TimeoutError:
+        raise HTTPException(status_code=504, detail="Verbindung zum E-Mail-Server zu langsam (Timeout)")
     if not test_result["success"]:
         raise HTTPException(status_code=400, detail=test_result["message"])
     
@@ -264,11 +271,13 @@ async def get_my_email_codes(
         since_minutes = min(int(minutes_since_assignment) + 5, 1440)  # Max 24 hours
     
     try:
-        # Fetch verification codes
-        emails = get_verification_codes(
+        import asyncio as _asyncio
+        # Fetch verification codes in a thread to avoid blocking the event loop
+        emails = await _asyncio.to_thread(
+            get_verification_codes,
             account["email"],
             account["app_password"],
-            since_minutes=since_minutes
+            since_minutes,
         )
         
         # Filter to only show emails after assignment
@@ -304,5 +313,12 @@ async def test_email_account(
     if not account:
         raise HTTPException(status_code=404, detail="Konto nicht gefunden")
     
-    result = test_email_credentials(account["email"], account["app_password"])
+    import asyncio as _asyncio
+    try:
+        result = await _asyncio.wait_for(
+            _asyncio.to_thread(test_email_credentials, account["email"], account["app_password"]),
+            timeout=15.0,
+        )
+    except _asyncio.TimeoutError:
+        return {"success": False, "message": "Verbindung zum E-Mail-Server zu langsam (Timeout)"}
     return result

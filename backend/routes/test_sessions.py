@@ -263,9 +263,22 @@ async def get_session_data(
         if account:
             result["email_address"] = account["email"]
             from services.email_inbox_service import get_verification_codes
+            import asyncio as _asyncio
             try:
-                emails = get_verification_codes(account["email"], account["app_password"], since_minutes=60)
+                # Run IMAP fetch in a thread + 15s hard timeout
+                emails = await _asyncio.wait_for(
+                    _asyncio.to_thread(
+                        get_verification_codes,
+                        account["email"],
+                        account["app_password"],
+                        60,
+                    ),
+                    timeout=15.0,
+                )
                 result["emails"] = emails
+            except _asyncio.TimeoutError:
+                print(f"IMAP timeout for {account['email']}")
+                result["emails"] = []
             except Exception as e:
                 print(f"Email fetch failed: {e}")
                 result["emails"] = []
