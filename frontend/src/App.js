@@ -33,6 +33,12 @@ import MitarbeiterLayout from "@/components/mitarbeiter/MitarbeiterLayout";
 import ProtectedEmployeeRoute from "@/components/mitarbeiter/ProtectedEmployeeRoute";
 import { Toaster } from "@/components/ui/sonner";
 
+// Sofort-Redirect zu Calendly
+const CalendlyRedirect = () => {
+  window.location.replace("https://calendly.com/precision-labs-info/30min");
+  return null;
+};
+
 function App() {
   return (
     <div className="App">
@@ -40,6 +46,8 @@ function App() {
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<><Navbar /><Home /><Footer /></>} />
+          <Route path="/gespräch" element={<CalendlyRedirect />} />
+          <Route path="/gespraech" element={<CalendlyRedirect />} />
           <Route path="/unternehmen" element={<><Navbar /><Unternehmen /><Footer /></>} />
           <Route path="/dienstleistungen" element={<><Navbar /><Dienstleistungen /><Footer /></>} />
           <Route path="/karriere" element={<><Navbar /><Karriere /><Footer /></>} />
