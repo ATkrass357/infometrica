@@ -43,6 +43,7 @@ class TaskAssignment(BaseModel):
     test_login_password: Optional[str] = None
     test_phone_number: Optional[str] = None
     assigned_at: datetime = Field(default_factory=datetime.utcnow)
+    due_date: Optional[str] = None
     status: str = "Offen"  # Offen, In Bearbeitung, Abgeschlossen
 
 class Task(BaseModel):
