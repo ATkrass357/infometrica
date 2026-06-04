@@ -14,6 +14,7 @@ import {
   Mail,
   MessageCircle,
   Timer,
+  Share2,
 } from 'lucide-react';
 import { PrecisionLogo } from '../../components/Logo';
 
@@ -59,6 +60,7 @@ const AdminLayout = ({ children }) => {
     { icon: Mail, label: 'E-Mail Postfächer', path: '/admin/email-inbox' },
     { icon: MessageCircle, label: 'Chat', path: '/admin/chat', badge: unreadChat > 0 ? String(unreadChat) : null, badgeColor: 'bg-red-500' },
     { icon: Timer, label: 'Test-Sitzungen', path: '/admin/test-sessions' },
+    { icon: Share2, label: 'Referral-Links', path: '/admin/referrals' },
     { icon: Settings, label: 'Einstellungen', path: '/admin/settings' },
   ];
 

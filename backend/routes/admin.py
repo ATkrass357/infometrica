@@ -168,6 +168,10 @@ async def create_task(
         if employee:
             assigned_to_name = employee["name"]
     
+    # Auto-compute due_date: 1 day after creation/assignment (override any client value)
+    from datetime import timedelta as _timedelta
+    auto_due_date = (datetime.utcnow() + _timedelta(days=1)).date().isoformat()
+    
     # Create task
     task = Task(
         id=str(uuid.uuid4()),
@@ -181,7 +185,7 @@ async def create_task(
         assigned_to_name=assigned_to_name or "",
         assigned_by=admin_payload.get("id"),
         priority=task_data.priority,
-        due_date=task_data.due_date,
+        due_date=auto_due_date,
         status="Offen",
         created_at=datetime.utcnow()
     )
@@ -329,6 +333,11 @@ async def assign_task_multiple(
     assignments = []
     assigned_names = []
     
+    # Compute due_date as next day after assignment (UTC)
+    from datetime import timedelta as _timedelta
+    now_utc = datetime.utcnow()
+    auto_due_date = (now_utc + _timedelta(days=1)).date().isoformat()
+    
     for item in request.assignments:
         # Get employee info - check both employees and applications collections
         employee = await db.employees.find_one({"id": item.employee_id})
@@ -344,7 +353,8 @@ async def assign_task_multiple(
             "test_ident_link": item.test_ident_link or "",
             "test_login_email": item.test_login_email or "",
             "test_login_password": item.test_login_password or "",
-            "assigned_at": datetime.utcnow().isoformat(),
+            "assigned_at": now_utc.isoformat(),
+            "due_date": auto_due_date,
             "status": "Offen"
         }
         assignments.append(assignment)
@@ -362,7 +372,8 @@ async def assign_task_multiple(
         "assigned_to_name": ", ".join(assigned_names) if len(assigned_names) <= 3 else f"{len(assigned_names)} Mitarbeiter",
         "test_ident_link": first_assignment["test_ident_link"],
         "test_login_email": first_assignment["test_login_email"],
-        "test_login_password": first_assignment["test_login_password"]
+        "test_login_password": first_assignment["test_login_password"],
+        "due_date": auto_due_date,
     }
     
     await db.tasks.update_one(

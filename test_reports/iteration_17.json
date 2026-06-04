@@ -1,0 +1,39 @@
+{
+  "summary": "Tested auto due_date (POST /api/admin/tasks + assign-multiple) and complete Referrals module (CRUD, tracking, application submission with referral_slug). Backend: 12/13 pytest tests pass; 1 confirmed bug — TaskAssignment Pydantic model lacks 'due_date' field, so per-assignment due_date is stripped from API responses even though DB stores it correctly. Frontend: /admin/referrals page loads, modal creates referral, public /bewerbungen/{slug} shows banner 'Du bewirbst dich über ...' and tracking endpoint is called (clicks counter incremented 6x during test).",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {
+        "endpoint": "PUT /api/admin/tasks/{id}/assign-multiple (response from GET /api/admin/tasks)",
+        "issue": "Each assignment in 'assignments' array is returned with due_date=null in API response, even though the value is stored correctly in MongoDB. Root cause: models/employee.py -> class TaskAssignment is missing 'due_date: Optional[str] = None'. Pydantic strips unknown fields when Task is serialized via response_model=Task. The legacy top-level task.due_date IS returned correctly."
+      }
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_referrals_and_due_date.py",
+    "/app/test_reports/pytest/pytest_referrals_due_date.xml"
+  ],
+  "action_items": [
+    "Add 'due_date: Optional[str] = None' to TaskAssignment in /app/backend/models/employee.py so that the per-assignment due_date is included in API responses. The data is already persisted correctly; only the response model is missing the field."
+  ],
+  "critical_code_review_comments": [
+    "models/employee.py TaskAssignment is missing due_date field — silently drops persisted value from API responses.",
+    "routes/admin.py create_task uses response_model=Task; Task model has no per-assignment due_date in TaskAssignment which causes the mismatch above.",
+    "applications.py uses datetime.utcnow() (deprecated, no tz) while referrals.py uses datetime.now(timezone.utc) — minor consistency issue."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_referrals_and_due_date.py (new)"
+  ],
+  "success_rate": {"backend": "92% (12/13)", "frontend": "100% (smoke tested)"},
+  "test_credentials": "admin@precision-labs.de / Inf0m3tr!ca#2025Sec (works, /api/admin/login)",
+  "seed_data_creation": "Test referrals/applications/tasks were created and cleaned up automatically inside tests.",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Backend tests live at /app/backend/tests/test_referrals_and_due_date.py. Admin login is /api/admin/login (not /api/auth/login). The only failing case is the TaskAssignment.due_date field missing in the Pydantic model — once added, test_assign_multiple_auto_due_date will pass. All referral endpoints (create, list, track, toggle, delete, submit with valid/invalid/inactive slug) work and counters increment correctly. Frontend Admin → Referral-Links tab + public /bewerbungen/{slug} banner + tracking call all verified working.",
+  "rca of the issue": "The route /api/admin/tasks/{id}/assign-multiple writes assignment objects containing 'due_date' to MongoDB (confirmed via direct DB query: assignment.due_date='2026-06-05'). However, when /api/admin/tasks returns the task list, it is serialized through response_model=List[Task]; Task contains assignments: List[TaskAssignment]; and TaskAssignment (models/employee.py:36-46) has no due_date field. Pydantic strips unknown fields, so each assignment is returned with effectively missing due_date. Mitigation: add 'due_date: Optional[str] = None' to TaskAssignment."
+}

@@ -52,6 +52,18 @@ async def submit_application(
     app_dict['verification_front'] = None
     app_dict['verification_back'] = None
     app_dict['verified_at'] = None
+
+    # Normalize and validate referral_slug
+    ref_slug = (app_dict.get('referral_slug') or '').strip().lower() or None
+    if ref_slug:
+        ref = await db.referrals.find_one({"slug": ref_slug, "active": True})
+        if ref:
+            app_dict['referral_slug'] = ref_slug
+            await db.referrals.update_one({"slug": ref_slug}, {"$inc": {"applications": 1}})
+        else:
+            app_dict['referral_slug'] = None
+    else:
+        app_dict['referral_slug'] = None
     
     # Insert into database
     await db.applications.insert_one(app_dict)

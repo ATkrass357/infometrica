@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { 
   Briefcase, 
   MapPin, 
@@ -27,6 +27,24 @@ import { toast } from 'sonner';
 import axios from 'axios';
 
 const Karriere = () => {
+  const { refSlug } = useParams();
+  const [referralSlug, setReferralSlug] = useState(null);
+  const [referralName, setReferralName] = useState('');
+
+  useEffect(() => {
+    if (!refSlug) return;
+    // Track click & validate slug
+    axios
+      .get(`${process.env.REACT_APP_BACKEND_URL}/api/referrals/track/${encodeURIComponent(refSlug)}`)
+      .then((res) => {
+        if (res.data?.valid) {
+          setReferralSlug(res.data.slug);
+          setReferralName(res.data.name || '');
+        }
+      })
+      .catch(() => {});
+  }, [refSlug]);
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -106,6 +124,7 @@ const Karriere = () => {
         stadt: formData.stadt,
         position: formData.position,
         cv_filename: formData.cv ? formData.cv.name : null,
+        referral_slug: referralSlug || null,
       };
 
       // Submit to backend
@@ -374,6 +393,11 @@ const Karriere = () => {
           </div>
 
           <div className="bg-white p-10 rounded-2xl shadow-lg">
+            {referralSlug && (
+              <div className="mb-6 px-4 py-3 rounded-lg bg-emerald-50 border border-emerald-200 text-sm text-emerald-800" data-testid="referral-banner">
+                Du bewirbst dich über{referralName ? ` "${referralName}"` : ''} (<span className="font-mono">{referralSlug}</span>)
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Persönliche Daten */}
               <div>

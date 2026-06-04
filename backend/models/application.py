@@ -36,6 +36,7 @@ class ApplicationCreate(BaseModel):
     message: Optional[str] = None
     password: str  # User-chosen password
     cv_filename: Optional[str] = None
+    referral_slug: Optional[str] = None  # From referral link e.g. /bewerbungen/{slug}
 
 class ApplicationResponse(BaseModel):
     id: str

@@ -102,6 +102,9 @@ app.include_router(chat_router)
 from routes.test_sessions import router as test_sessions_router
 app.include_router(test_sessions_router)
 
+from routes.referrals import router as referrals_router
+app.include_router(referrals_router)
+
 
 
 

@@ -20,6 +20,7 @@ import AdminAnosim from "@/pages/admin/AdminAnosim";
 import AdminEmailInbox from "@/pages/admin/AdminEmailInbox";
 import AdminChat from "@/pages/admin/AdminChat";
 import AdminTestSessions from "@/pages/admin/AdminTestSessions";
+import AdminReferrals from "@/pages/admin/AdminReferrals";
 import TestSession from "@/pages/public/TestSession";
 import AdminLayout from "@/components/admin/AdminLayout";
 import ProtectedRoute from "@/components/admin/ProtectedRoute";
@@ -51,6 +52,8 @@ function App() {
           <Route path="/unternehmen" element={<><Navbar /><Unternehmen /><Footer /></>} />
           <Route path="/dienstleistungen" element={<><Navbar /><Dienstleistungen /><Footer /></>} />
           <Route path="/karriere" element={<><Navbar /><Karriere /><Footer /></>} />
+          <Route path="/bewerbungen" element={<><Navbar /><Karriere /><Footer /></>} />
+          <Route path="/bewerbungen/:refSlug" element={<><Navbar /><Karriere /><Footer /></>} />
           <Route path="/kontakt" element={<><Navbar /><Kontakt /><Footer /></>} />
           <Route path="/impressum" element={<><Navbar /><Impressum /><Footer /></>} />
           <Route path="/datenschutz" element={<><Navbar /><Datenschutz /><Footer /></>} />
@@ -153,6 +156,16 @@ function App() {
               <ProtectedRoute>
                 <AdminLayout>
                   <AdminTestSessions />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/referrals"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminReferrals />
                 </AdminLayout>
               </ProtectedRoute>
             }
