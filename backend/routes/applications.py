@@ -94,7 +94,7 @@ async def applicant_login(
     if not verify_password(password, application.get("password_hash", "")):
         raise HTTPException(status_code=401, detail="Ungültige Anmeldedaten")
     
-    # Create access token
+    # Create access token (long-lived; user logs out manually)
     access_token = create_access_token(
         data={
             "sub": application["email"],
@@ -102,7 +102,7 @@ async def applicant_login(
             "role": "applicant",
             "status": application["status"]
         },
-        expires_delta=timedelta(minutes=60)
+        expires_delta=timedelta(days=365)
     )
     
     return {

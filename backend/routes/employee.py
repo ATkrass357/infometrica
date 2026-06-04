@@ -64,8 +64,8 @@ async def employee_login(credentials: EmployeeLogin, db: AsyncIOMotorDatabase = 
         {"$set": {"last_login": datetime.utcnow()}}
     )
     
-    # Create access token (30 minutes)
-    access_token_expires = timedelta(minutes=30)
+    # Create access token (long-lived; user logs out manually)
+    access_token_expires = timedelta(days=365)
     access_token = create_access_token(
         data={"sub": employee["email"], "id": employee["id"], "role": "employee"},
         expires_delta=access_token_expires

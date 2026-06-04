@@ -30,7 +30,7 @@ const AdminDashboard = () => {
           </div>
           <h3 className="text-lg font-semibold text-[#c0caf5] mb-2">Session-Zeit</h3>
           <p className="text-sm text-[#9aa5ce]">
-            Ihre Session läuft automatisch nach 30 Minuten Inaktivität ab.
+            Sie bleiben dauerhaft eingeloggt, bis Sie sich manuell abmelden.
           </p>
         </div>
 
@@ -84,8 +84,7 @@ const AdminDashboard = () => {
       <div className="bg-[#7aa2f7]/10 border border-[#7aa2f7]/30 rounded-xl p-6">
         <h3 className="text-lg font-semibold text-[#7aa2f7] mb-2">🎉 Login-System funktioniert!</h3>
         <p className="text-[#c0caf5]">
-          Das Admin-Login-System ist vollständig funktional mit JWT-Authentifizierung, 
-          30-Minuten-Session-Management und geschützten Routen. Bereit für die nächste Phase!
+          Das Admin-Login-System ist vollständig funktional mit JWT-Authentifizierung und geschützten Routen. Bereit für die nächste Phase!
         </p>
       </div>
     </div>

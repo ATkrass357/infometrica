@@ -40,8 +40,8 @@ async def admin_login(credentials: AdminLogin, db: AsyncIOMotorDatabase = Depend
         {"$set": {"last_login": datetime.utcnow()}}
     )
     
-    # Create access token (30 minutes)
-    access_token_expires = timedelta(minutes=30)
+    # Create access token (long-lived; user logs out manually)
+    access_token_expires = timedelta(days=365)
     access_token = create_access_token(
         data={"sub": admin["email"], "id": admin["id"], "role": admin["role"]},
         expires_delta=access_token_expires
