@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, AlertCircle, Briefcase } from 'lucide-react';
 import axios from 'axios';
+import { KeyperionLogo } from '../../components/Logo';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458a-46a4-83aa-a7ef43569440/images/31c2d350dad6978320d16680435185ac4d3ed1b7bc213f06a2774d3ee186a694.png";
 
 const MitarbeiterLogin = () => {
   const navigate = useNavigate();
@@ -74,7 +74,7 @@ const MitarbeiterLogin = () => {
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <img src={LOGO_URL} alt="Precision Labs" className="h-16 mx-auto mb-4" />
+          <KeyperionLogo className="h-14 w-14 mx-auto mb-4" />
           <p className="text-sm text-gray-600">Mitarbeiter Portal</p>
         </div>
 
@@ -171,7 +171,7 @@ const MitarbeiterLogin = () => {
 
         {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
-          © 2026 Precision Labs. Alle Rechte vorbehalten.
+          © 2026 Keyperion Technologies. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

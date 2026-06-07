@@ -443,7 +443,7 @@ async def download_contract(
             if isinstance(dt, str):
                 dt = datetime.fromisoformat(dt)
             signed_date = dt.strftime("%d.%m.%Y")
-        except:
+        except Exception:
             signed_date = "Datum unbekannt"
     
     # Load signature as base64
@@ -504,10 +504,10 @@ async def download_contract(
 <div class="parties">
   <div>
     <p class="label">Arbeitgeber:</p>
-    <p>Precision Labs</p>
-    <p>Römerstraße 90</p>
-    <p>79618 Rheinfelden (Baden)</p>
-    <p style="color:#666;margin-top:4px;">vertreten durch Daniel Bärtschi</p>
+    <p>Keyperion Technologies GmbH</p>
+    <p>Große Gallusstr. 14</p>
+    <p>60315 Frankfurt am Main</p>
+    <p style="color:#666;margin-top:4px;">vertreten durch Lars Kurjo</p>
   </div>
   <div>
     <p class="label">Arbeitnehmer:</p>
@@ -519,10 +519,10 @@ async def download_contract(
 <p><em>Dieser Vertrag wird zwischen den oben genannten Parteien geschlossen und beinhaltet die nachfolgenden Vereinbarungen:</em></p>
 
 <h3>§1 Beginn des Arbeitsverhältnisses</h3>
-<p>Dieses Arbeitsverhältnis beginnt nach der Unterschrift beider Seiten.</p>
+<p>Dieses Arbeitsverhältnis beginnt am {signed_date} (Tag der Unterzeichnung durch beide Parteien).</p>
 
 <h3>§2 Tätigkeit</h3>
-<p>Der Arbeitnehmer wird bei Precision Labs als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
+<p>Der Arbeitnehmer wird bei Keyperion Technologies als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
 <ul>
   <li>Durchführung von Video-Identifikationsverfahren zur Evaluierung und Testung</li>
   <li>Überprüfung von Apps und Softwares auf Benutzerfreundlichkeit und Mängel</li>
@@ -556,9 +556,9 @@ async def download_contract(
 
 <div class="signatures">
   <div class="sig-block">
-    <p style="color:#666;margin-bottom:8px;">Rheinfelden (Baden), {signed_date}</p>
-    <div class="sig-line"><span style="font-family:'Brush Script MT',cursive,'Segoe Script','Comic Sans MS',sans-serif;font-size:22pt;color:#222;">Daniel Bärtschi</span></div>
-    <p class="sig-name">Daniel Bärtschi · Arbeitgeber</p>
+    <p style="color:#666;margin-bottom:8px;">Frankfurt am Main, {signed_date}</p>
+    <div class="sig-line"><span style="font-family:'Brush Script MT',cursive,'Segoe Script','Comic Sans MS',sans-serif;font-size:22pt;color:#222;">Lars Kurjo</span></div>
+    <p class="sig-name">Lars Kurjo · Arbeitgeber</p>
   </div>
   <div class="sig-block">
     <p style="color:#666;margin-bottom:8px;">Unterschrieben am {signed_date}</p>

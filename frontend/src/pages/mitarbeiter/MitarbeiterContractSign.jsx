@@ -6,9 +6,9 @@ import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { toast } from 'sonner';
 import axios from 'axios';
+import { KeyperionLogo } from '../../components/Logo';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458a-46a4-83aa-a7ef43569440/images/31c2d350dad6978320d16680435185ac4d3ed1b7bc213f06a2774d3ee186a694.png";
 
 const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
   const [iban, setIban] = useState('');
@@ -73,7 +73,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
       <div className="w-full max-w-3xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <img src={LOGO_URL} alt="Precision Labs" className="h-16 mx-auto mb-6" />
+          <KeyperionLogo className="h-14 w-14 mx-auto mb-6" />
           <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Arbeitsvertrag unterschreiben</h1>
           <p className="text-slate-600">
             Willkommen, {applicant?.full_name || applicant?.name}! Bitte unterschreiben Sie Ihren Arbeitsvertrag.
@@ -110,7 +110,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
               </div>
               <div>
                 <h2 className="text-xl font-bold">Arbeitsvertrag</h2>
-                <p className="text-slate-400">Precision Labs · Mitarbeiter in der Verifikations Testung</p>
+                <p className="text-slate-400">Keyperion Technologies · Mitarbeiter in der Verifikations Testung</p>
               </div>
             </div>
           </div>
@@ -129,10 +129,10 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-4 border-b border-slate-200">
                   <div>
                     <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitgeber:</p>
-                    <p>Precision Labs</p>
-                    <p>Römerstraße 90</p>
-                    <p>79618 Rheinfelden (Baden)</p>
-                    <p className="text-slate-500 mt-1">vertreten durch Daniel Bärtschi</p>
+                    <p>Keyperion Technologies GmbH</p>
+                    <p>Große Gallusstr. 14</p>
+                    <p>60315 Frankfurt am Main</p>
+                    <p className="text-slate-500 mt-1">vertreten durch Lars Kurjo</p>
                   </div>
                   <div>
                     <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitnehmer:</p>
@@ -146,13 +146,13 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                 {/* §1 */}
                 <div>
                   <p className="font-bold text-[#0A0A0A]">§1 Beginn des Arbeitsverhältnisses</p>
-                  <p>Dieses Arbeitsverhältnis beginnt nach der Unterschrift beider Seiten.</p>
+                  <p>Dieses Arbeitsverhältnis beginnt am {new Date().toLocaleDateString('de-DE')} (Tag der Unterzeichnung durch beide Parteien).</p>
                 </div>
 
                 {/* §2 */}
                 <div>
                   <p className="font-bold text-[#0A0A0A]">§2 Tätigkeit</p>
-                  <p>Der Arbeitnehmer wird bei Precision Labs als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
+                  <p>Der Arbeitnehmer wird bei Keyperion Technologies als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
                   <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
                     <li>Durchführung von Video-Identifikationsverfahren zur Evaluierung und Testung</li>
                     <li>Überprüfung von Apps und Softwares auf Benutzerfreundlichkeit und Mängel</li>
@@ -207,11 +207,11 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
 
                 {/* Signatures */}
                 <div className="pt-6 mt-6 border-t border-slate-300">
-                  <p className="text-slate-600 mb-4">Rheinfelden (Baden), {new Date().toLocaleDateString('de-DE')}</p>
+                  <p className="text-slate-600 mb-4">Frankfurt am Main, {new Date().toLocaleDateString('de-DE')}</p>
                   <div className="grid grid-cols-2 gap-8">
                     <div>
                       <div className="border-b border-slate-400 pb-1 mb-1"></div>
-                      <p className="text-xs text-slate-500">Daniel Bärtschi</p>
+                      <p className="text-xs text-slate-500">Lars Kurjo</p>
                       <p className="text-xs text-slate-500">Arbeitgeber</p>
                     </div>
                     <div>
@@ -298,7 +298,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
 
         {/* Footer */}
         <p className="text-center text-sm text-slate-500 mt-6">
-          © 2026 Precision Labs. Alle Rechte vorbehalten.
+          © 2026 Keyperion Technologies. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

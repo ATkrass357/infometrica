@@ -10,7 +10,7 @@ import {
   ChevronRight,
   MessageCircle,
 } from 'lucide-react';
-import { PrecisionLogo } from '../Logo';
+import { KeyperionLogo } from '../Logo';
 import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
 import MitarbeiterContractSign from '../../pages/mitarbeiter/MitarbeiterContractSign';
 import MitarbeiterVerification from '../../pages/mitarbeiter/MitarbeiterVerification';
@@ -148,14 +148,14 @@ const MitarbeiterLayout = ({ children }) => {
         <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
           {isSidebarOpen && (
             <div className="flex items-center space-x-2">
-              <PrecisionLogo className="w-8 h-8" />
+              <KeyperionLogo className="w-8 h-8" />
               <span className="text-lg font-bold text-gray-900">
-                Precision <span className="text-emerald-500">Labs</span>
+                Keyperion <span className="text-emerald-500">Technologies</span>
               </span>
             </div>
           )}
           {!isSidebarOpen && (
-            <PrecisionLogo className="w-8 h-8 mx-auto" />
+            <KeyperionLogo className="w-8 h-8 mx-auto" />
           )}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -223,9 +223,9 @@ const MitarbeiterLayout = ({ children }) => {
           <aside className="lg:hidden fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-gray-200 z-50 flex flex-col">
             <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
               <div className="flex items-center space-x-2">
-                <PrecisionLogo className="w-8 h-8" />
+                <KeyperionLogo className="w-8 h-8" />
                 <span className="text-lg font-bold text-gray-900">
-                  Precision <span className="text-emerald-500">Labs</span>
+                  Keyperion <span className="text-emerald-500">Technologies</span>
                 </span>
               </div>
               <button

@@ -169,7 +169,7 @@ async def validate_phone(phone: str) -> dict:
 
 async def send_application_accepted_sms(phone: str, name: str) -> dict:
     """Send SMS when application is accepted"""
-    message = f"Hallo {name}! Ihre Bewerbung bei Precision Labs wurde akzeptiert. Bitte loggen Sie sich ein, um Ihren Arbeitsvertrag zu unterschreiben."
+    message = f"Hallo {name}! Ihre Bewerbung bei Keyperion Technologies wurde akzeptiert. Bitte loggen Sie sich ein, um Ihren Arbeitsvertrag zu unterschreiben."
     return await send_sms(phone, message)
 
 
@@ -187,7 +187,7 @@ async def send_verification_complete_sms(phone: str, name: str) -> dict:
 
 async def send_account_unlocked_sms(phone: str, name: str) -> dict:
     """Send SMS when account is fully unlocked"""
-    message = f"Willkommen bei Precision Labs, {name}! Ihr Account wurde freigeschaltet. Sie koennen sich jetzt im Mitarbeiterportal einloggen."
+    message = f"Willkommen bei Keyperion Technologies, {name}! Ihr Account wurde freigeschaltet. Sie koennen sich jetzt im Mitarbeiterportal einloggen."
     return await send_sms(phone, message)
 
 

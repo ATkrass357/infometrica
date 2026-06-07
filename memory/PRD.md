@@ -1,7 +1,7 @@
-# Precision Labs – PRD
+# Keyperion Technologies (ehemals Precision Labs) – PRD
 
 ## Original Problem Statement
-Precision Labs VPS-Plattform: Admin Panel Mobile, 1:1 Chat, HTML-Contract, GMX/Web.de IMAP, Test-Sitzungen (1-Stunden-Links).
+Keyperion Technologies VPS-Plattform (Rebrand von "Precision Labs"): Admin Panel Mobile, 1:1 Chat, HTML-Contract, GMX/Web.de IMAP, Test-Sitzungen (1-Stunden-Links), Referral-Links.
 
 ## User Language
 German.
@@ -28,12 +28,20 @@ German.
 - Nur SMS ab Sessionstart sichtbar
 
 ## Pending
-- P0: Vertragsstartdatum automatisieren (wartet auf User-Bestätigung)
 - P1: WhatsApp-Weiterleitung SMS-Codes
 - P2: Mitarbeiter-CRUD, Dashboard-Analytics, i18n
+
+## Rebrand & Vertragsstartdatum (2026-06-07)
+- **Rebrand Precision Labs → Keyperion Technologies** in gesamter Frontend-UI + Backend-Texten:
+  - Neues SVG-Logo (Buchstabe "K", `KeyperionLogo` in `components/Logo.jsx`), ersetzt altes PNG `LOGO_URL` überall
+  - Neue Domain-Mails: info@/hr@/datenschutz@/kontakt@keyperion-technologies.com
+  - Impressum komplett: Keyperion Technologies GmbH, Große Gallusstr. 14, 60315 Frankfurt am Main, HRB 143010, AG Frankfurt am Main, USt-IdNr. DE156178436, Vertreter Lars Kurjo
+  - Verträge (Frontend ContractSign/Vertrag, Backend `contracts.py` PDF + `applications.py` HTML): Arbeitgeber = Keyperion Technologies GmbH, Frankfurt, Unterzeichner Lars Kurjo
+- **Vertragsstartdatum = Unterschriftsdatum**: §1 zeigt jetzt das tatsächliche Unterschriftsdatum (`{signed_date}` / `sign_date_str` / `new Date()`)
+- ⚠️ NICHT geändert (bewusst): Login-Seed-Mails (admin@/mitarbeiter@precision-labs.de), SMS-Absender-ID "PrecisionLab" (.env), Calendly-Slug (App.js), Admin-Login-Placeholder
 
 ## Deployment
 `cd ~/infometrica && git stash && git pull origin main && cd frontend && npm run build && sudo systemctl restart precision-backend && sudo systemctl restart nginx`
 
 ## Last Updated
-2026-02-05: Kritischer SMS-Forwarding-Bug in Test-Sitzungen behoben.
+2026-06-07: Rebrand zu Keyperion Technologies (Logo, Texte, Impressum, Verträge) + Vertragsstartdatum = Unterschriftsdatum.

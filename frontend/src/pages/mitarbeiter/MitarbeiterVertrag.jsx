@@ -40,9 +40,9 @@ const ContractDocument = ({ contract }) => {
       {/* Parties */}
       <div className="mb-6">
         <p className="font-semibold text-gray-900 mb-2">zwischen</p>
-        <p className="text-gray-700 mb-1 font-medium">Precision Labs</p>
-        <p className="text-gray-700 mb-1">Römerstraße 90</p>
-        <p className="text-gray-700 mb-1">79618 Rheinfelden (Baden)</p>
+        <p className="text-gray-700 mb-1 font-medium">Keyperion Technologies GmbH</p>
+        <p className="text-gray-700 mb-1">Große Gallusstr. 14</p>
+        <p className="text-gray-700 mb-1">60315 Frankfurt am Main</p>
         <p className="text-gray-700 mb-1">Deutschland</p>
         <p className="text-gray-600 italic mb-4">– nachfolgend „Arbeitgeber" genannt –</p>
         
@@ -59,14 +59,14 @@ const ContractDocument = ({ contract }) => {
         <section>
           <h3 className="font-bold text-gray-900 mb-2">§1 Beginn des Arbeitsverhältnisses</h3>
           <p className="text-gray-700">
-            Dieses Arbeitsverhältnis beginnt am Tag der Unterzeichnung durch beide Parteien.
+            Dieses Arbeitsverhältnis beginnt am {today} (Tag der Unterzeichnung durch beide Parteien).
           </p>
         </section>
 
         <section>
           <h3 className="font-bold text-gray-900 mb-2">§2 Tätigkeit</h3>
           <p className="text-gray-700 mb-2">
-            Der Arbeitnehmer wird als <strong>Assistent für Evaluierungen im Homeoffice</strong> bei Precision Labs eingestellt und insbesondere mit folgenden Aufgaben betraut:
+            Der Arbeitnehmer wird als <strong>Assistent für Evaluierungen im Homeoffice</strong> bei Keyperion Technologies eingestellt und insbesondere mit folgenden Aufgaben betraut:
           </p>
           <ul className="list-disc list-inside text-gray-700 space-y-1 ml-4">
             <li>Überprüfung von Apps und Software auf Benutzerfreundlichkeit und Mängel</li>
@@ -100,7 +100,7 @@ const ContractDocument = ({ contract }) => {
             Dem Arbeitnehmer ist bekannt, dass ein entsprechender Verzicht nur mit Wirkung für die Zukunft und bei Ausübung mehrerer geringfügiger Beschäftigungsverhältnisse nur einheitlich erklärt werden kann. Diese Erklärung bindet den Arbeitnehmer für die Dauer der jeweiligen Beschäftigungen.
           </p>
           <p className="text-gray-700">
-            Die Tätigkeit erfolgt bei Precision Labs im Homeoffice.
+            Die Tätigkeit erfolgt bei Keyperion Technologies im Homeoffice.
           </p>
         </section>
 
@@ -174,7 +174,7 @@ const ContractDocument = ({ contract }) => {
       {/* Footer */}
       <div className="mt-8 pt-4 border-t border-gray-200">
         <p className="text-gray-600 text-center">
-          Rheinfelden (Baden), den {today}
+          Frankfurt am Main, den {today}
         </p>
       </div>
     </div>
@@ -404,7 +404,7 @@ const MitarbeiterVertrag = () => {
               <li>• Lesen Sie den Vertrag sorgfältig durch bevor Sie unterschreiben</li>
               <li>• Ihre digitale Unterschrift ist rechtlich bindend</li>
               <li>• Nach der Unterschrift können Sie den Vertrag als PDF herunterladen</li>
-              <li>• Bei Fragen wenden Sie sich an hr@precision-labs.de</li>
+              <li>• Bei Fragen wenden Sie sich an hr@keyperion-technologies.com</li>
             </ul>
           </div>
         </div>

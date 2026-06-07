@@ -1,64 +1,41 @@
 import React from 'react';
 
-export const PrecisionLogo = ({ className = "", size = "default" }) => {
-  const sizes = {
-    small: { container: "w-8 h-8", text: "text-base" },
-    default: { container: "w-10 h-10", text: "text-xl" },
-    large: { container: "w-16 h-16", text: "text-3xl" }
-  };
-
-  const currentSize = sizes[size] || sizes.default;
-
+export const KeyperionLogo = ({ className = "" }) => {
   return (
-    <svg 
+    <svg
       className={className}
-      viewBox="0 0 200 200" 
-      fill="none" 
+      viewBox="0 0 200 200"
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Background Circle with Gradient */}
       <defs>
-        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="keyperionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#10b981" />
           <stop offset="100%" stopColor="#059669" />
         </linearGradient>
-        <filter id="shadow">
-          <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.2"/>
+        <filter id="keyperionShadow">
+          <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.2" />
         </filter>
       </defs>
-      
-      {/* Rounded Square Background */}
-      <rect 
-        x="20" 
-        y="20" 
-        width="160" 
-        height="160" 
-        rx="32" 
-        fill="url(#logoGradient)"
-        filter="url(#shadow)"
+
+      {/* Rounded square background */}
+      <rect
+        x="20"
+        y="20"
+        width="160"
+        height="160"
+        rx="36"
+        fill="url(#keyperionGradient)"
+        filter="url(#keyperionShadow)"
       />
-      
-      {/* Letter "P" for Precision */}
-      <path
-        d="M 65 60 L 65 140 M 65 60 L 115 60 C 145 60 145 100 115 100 L 65 100"
-        stroke="white"
-        strokeWidth="14"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      
-      {/* Checkmark accent (testing/precision symbol) */}
-      <path
-        d="M 130 110 L 145 125 L 165 95"
-        stroke="white"
-        strokeWidth="8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        opacity="0.9"
-      />
+
+      {/* Letter "K" */}
+      <path d="M 72 56 L 72 144" stroke="white" strokeWidth="15" strokeLinecap="round" />
+      <path d="M 72 102 L 126 56" stroke="white" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M 72 98 L 132 144" stroke="white" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
+
+      {/* Tech accent node */}
+      <circle cx="142" cy="52" r="9" fill="white" fillOpacity="0.9" />
     </svg>
   );
 };
-
-// Keep BenkeLogo as alias for backwards compatibility during transition
-export const BenkeLogo = PrecisionLogo;

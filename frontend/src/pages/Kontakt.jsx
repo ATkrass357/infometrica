@@ -167,13 +167,13 @@ const Kontakt = () => {
               <h2 className="text-2xl font-bold text-[#1A1A1A] mb-8">Kontaktdaten</h2>
               
               <div className="space-y-8 mb-12">
-                <a href="mailto:info@precision-labs.de" className="flex items-start gap-4 group">
+                <a href="mailto:info@keyperion-technologies.com" className="flex items-start gap-4 group">
                   <div className="w-12 h-12 bg-[#1A1A1A] rounded-md flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C853] transition-colors">
                     <Mail className="text-white" size={20} />
                   </div>
                   <div>
                     <div className="font-semibold text-[#1A1A1A]">E-Mail</div>
-                    <div className="text-[#4A4A4A] group-hover:text-[#00C853] transition-colors">info@precision-labs.de</div>
+                    <div className="text-[#4A4A4A] group-hover:text-[#00C853] transition-colors">info@keyperion-technologies.com</div>
                   </div>
                 </a>
 
@@ -184,8 +184,8 @@ const Kontakt = () => {
                   <div>
                     <div className="font-semibold text-[#1A1A1A]">Adresse</div>
                     <div className="text-[#4A4A4A]">
-                      Römerstraße 90<br />
-                      79618 Rheinfelden (Baden), Deutschland
+                      Große Gallusstr. 14<br />
+                      60315 Frankfurt am Main, Deutschland
                     </div>
                   </div>
                 </div>
@@ -215,7 +215,7 @@ const Kontakt = () => {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
             <MapPin className="text-[#00C853] mx-auto mb-4" size={48} strokeWidth={1.5} />
-            <p className="text-[#4A4A4A] font-medium">Römerstraße 90, 79618 Rheinfelden (Baden)</p>
+            <p className="text-[#4A4A4A] font-medium">Große Gallusstr. 14, 60315 Frankfurt am Main</p>
           </div>
         </div>
       </section>

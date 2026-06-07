@@ -116,11 +116,11 @@ const Datenschutz = () => {
               Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
             </p>
             <div className="bg-gray-50 p-6 rounded-xl space-y-2 text-gray-700">
-              <p className="font-semibold text-lg">Precision Labs</p>
-              <p>Römerstraße 90</p>
-              <p>79618 Rheinfelden (Baden)</p>
+              <p className="font-semibold text-lg">Keyperion Technologies GmbH</p>
+              <p>Große Gallusstr. 14</p>
+              <p>60315 Frankfurt am Main</p>
               <p>Deutschland</p>
-              <p className="pt-3">E-Mail: datenschutz@precision-labs.de</p>
+              <p className="pt-3">E-Mail: datenschutz@keyperion-technologies.com</p>
             </div>
             <p className="text-gray-700 mt-6 text-sm">
               Verantwortliche Stelle ist die natürliche oder juristische Person, die allein oder 
@@ -212,8 +212,8 @@ const Datenschutz = () => {
             </p>
             <div className="bg-orange-50 p-6 rounded-xl">
               <p className="text-gray-900 font-semibold mb-2">Datenschutzbeauftragter</p>
-              <p className="text-gray-700">Precision Labs</p>
-              <p className="text-gray-700">E-Mail: datenschutz@precision-labs.de</p>
+              <p className="text-gray-700">Keyperion Technologies GmbH</p>
+              <p className="text-gray-700">E-Mail: datenschutz@keyperion-technologies.com</p>
             </div>
           </div>
 

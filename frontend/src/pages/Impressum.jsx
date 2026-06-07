@@ -22,14 +22,14 @@ const Impressum = () => {
       <section className="py-16 px-6 md:px-12">
         <div className="max-w-[1400px] mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-            
+
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-12">
-              
+
               {/* Product Info */}
-              <div className="p-8 bg-[#F0FDF4] border border-[#00C853]/20 rounded-2xl">
+              <div className="p-8 bg-[#F0FDF4] border border-[#00C853]/20 rounded-2xl" data-testid="impressum-company-box">
                 <p className="text-lg text-[#0A0A0A]">
-                  <span className="font-bold">Precision Labs</span> ist ein Produkt der <span className="font-bold">avisec GmbH</span>
+                  Anbieter dieser Website ist die <span className="font-bold">Keyperion Technologies GmbH</span>.
                 </p>
               </div>
 
@@ -42,9 +42,9 @@ const Impressum = () => {
                   Firmeninformationen
                 </h2>
                 <div className="space-y-2 text-slate-600 ml-13">
-                  <p className="font-semibold text-lg text-[#0A0A0A]">avisec GmbH</p>
-                  <p>Römerstraße 90</p>
-                  <p>79618 Rheinfelden (Baden)</p>
+                  <p className="font-semibold text-lg text-[#0A0A0A]">Keyperion Technologies GmbH</p>
+                  <p>Große Gallusstr. 14</p>
+                  <p>60315 Frankfurt am Main</p>
                   <p>Deutschland</p>
                 </div>
               </div>
@@ -57,11 +57,11 @@ const Impressum = () => {
                 <div className="space-y-4">
                   <div className="flex items-center text-slate-600">
                     <Mail className="mr-3 text-[#00C853] flex-shrink-0" size={20} />
-                    <span>E-Mail: info@precision-labs.de</span>
+                    <span>E-Mail: kontakt@keyperion-technologies.com</span>
                   </div>
                   <div className="flex items-center text-slate-600">
                     <MapPin className="mr-3 text-[#00C853] flex-shrink-0" size={20} />
-                    <span>Internet: www.precision-labs.de</span>
+                    <span>Internet: www.keyperion-technologies.com</span>
                   </div>
                 </div>
               </div>
@@ -69,10 +69,10 @@ const Impressum = () => {
               {/* Legal Representatives */}
               <div>
                 <h2 className="text-2xl font-bold text-[#0A0A0A] mb-6">
-                  Vertretungsberechtigte
+                  Vertretungsberechtigte Person
                 </h2>
                 <div className="text-slate-600">
-                  <p>Geschäftsführer: Daniel Bärtschi</p>
+                  <p>Lars Kurjo</p>
                 </div>
               </div>
 
@@ -82,9 +82,9 @@ const Impressum = () => {
                   Registereintrag
                 </h2>
                 <div className="space-y-2 text-slate-600">
-                  <p>Eintragung im Handelsregister</p>
-                  <p>Registergericht: Amtsgericht Freiburg</p>
-                  <p>Registernummer: HRB 726972</p>
+                  <p>Handelsregister: HRB 143010</p>
+                  <p>Registergericht: Amtsgericht Frankfurt am Main</p>
+                  <p>USt-IdNr.: DE156178436</p>
                 </div>
               </div>
 
@@ -96,9 +96,9 @@ const Impressum = () => {
                 <div className="space-y-4 text-slate-600">
                   <p>
                     Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:{' '}
-                    <a 
-                      href="https://ec.europa.eu/consumers/odr/" 
-                      target="_blank" 
+                    <a
+                      href="https://ec.europa.eu/consumers/odr/"
+                      target="_blank"
                       rel="noopener noreferrer"
                       className="text-[#00C853] hover:underline"
                     >
@@ -107,7 +107,7 @@ const Impressum = () => {
                   </p>
                   <p>Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
                   <p>
-                    Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer 
+                    Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
                     Verbraucherschlichtungsstelle teilzunehmen.
                   </p>
                 </div>
@@ -120,16 +120,16 @@ const Impressum = () => {
                 </h2>
                 <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
                   <p>
-                    Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten 
-                    nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als 
-                    Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde 
-                    Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige 
+                    Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten
+                    nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als
+                    Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde
+                    Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige
                     Tätigkeit hinweisen.
                   </p>
                   <p>
-                    Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den 
-                    allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch 
-                    erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei 
+                    Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den
+                    allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch
+                    erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei
                     Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.
                   </p>
                 </div>
@@ -142,16 +142,16 @@ const Impressum = () => {
                 </h2>
                 <div className="space-y-4 text-slate-600 text-sm leading-relaxed">
                   <p>
-                    Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen 
-                    dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art 
-                    der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen 
+                    Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen
+                    dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art
+                    der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen
                     Zustimmung des jeweiligen Autors bzw. Erstellers.
                   </p>
                   <p>
-                    Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die 
-                    Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche 
-                    gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, 
-                    bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen 
+                    Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die
+                    Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche
+                    gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden,
+                    bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen
                     werden wir derartige Inhalte umgehend entfernen.
                   </p>
                 </div>
@@ -164,9 +164,9 @@ const Impressum = () => {
                 <div className="bg-[#0A0A0A] text-white p-8 rounded-2xl">
                   <h3 className="font-bold text-lg mb-4">Schnellkontakt</h3>
                   <div className="space-y-3 text-slate-400">
-                    <p>info@precision-labs.de</p>
-                    <p>Römerstraße 90</p>
-                    <p>79618 Rheinfelden (Baden)</p>
+                    <p>kontakt@keyperion-technologies.com</p>
+                    <p>Große Gallusstr. 14</p>
+                    <p>60315 Frankfurt am Main</p>
                   </div>
                 </div>
 

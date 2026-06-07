@@ -1,13 +1,12 @@
 import React from 'react';
 import { Clock, Mail, FileText } from 'lucide-react';
-
-const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458a-46a4-83aa-a7ef43569440/images/31c2d350dad6978320d16680435185ac4d3ed1b7bc213f06a2774d3ee186a694.png";
+import { KeyperionLogo } from '../../components/Logo';
 
 const MitarbeiterPending = ({ applicant }) => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F0FDF4] via-white to-[#E8F5E9] flex items-center justify-center p-4">
       <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl border border-slate-100 p-8 text-center">
-        <img src={LOGO_URL} alt="Precision Labs" className="h-14 mx-auto mb-6" />
+        <KeyperionLogo className="h-12 w-12 mx-auto mb-6" />
         
         <div className="w-20 h-20 bg-[#F0FDF4] rounded-full flex items-center justify-center mx-auto mb-6">
           <Clock className="text-[#00C853]" size={40} />
@@ -49,7 +48,7 @@ const MitarbeiterPending = ({ applicant }) => {
         <div className="mt-8 pt-6 border-t border-slate-100">
           <p className="text-sm text-slate-500">
             <Mail className="inline mr-1" size={14} />
-            Bei Fragen wenden Sie sich an <a href="mailto:hr@precision-labs.de" className="text-[#00C853] hover:underline">hr@precision-labs.de</a>
+            Bei Fragen wenden Sie sich an <a href="mailto:hr@keyperion-technologies.com" className="text-[#00C853] hover:underline">hr@keyperion-technologies.com</a>
           </p>
         </div>
       </div>

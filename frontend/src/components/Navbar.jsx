@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
-
-const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458a-46a4-83aa-a7ef43569440/images/31c2d350dad6978320d16680435185ac4d3ed1b7bc213f06a2774d3ee186a694.png";
+import { KeyperionLogo } from './Logo';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -39,13 +38,9 @@ export const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group" data-testid="nav-logo">
-            <img 
-              src={LOGO_URL} 
-              alt="Precision Labs" 
-              className="h-12 w-auto"
-            />
+            <KeyperionLogo className="h-11 w-11" />
             <span className="text-xl font-bold text-[#0A0A0A]">
-              Precision <span className="text-[#00C853]">Labs</span>
+              Keyperion <span className="text-[#00C853]">Technologies</span>
             </span>
           </Link>
 
@@ -95,9 +90,9 @@ export const Navbar = () => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-12">
             <div className="flex items-center gap-3">
-              <img src={LOGO_URL} alt="Precision Labs" className="h-12" />
+              <KeyperionLogo className="h-10 w-10" />
               <span className="text-xl font-bold text-[#0A0A0A]">
-                Precision <span className="text-[#00C853]">Labs</span>
+                Keyperion <span className="text-[#00C853]">Technologies</span>
               </span>
             </div>
             <button

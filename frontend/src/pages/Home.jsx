@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ArrowUpRight, Shield, Zap, BarChart3, Code2, Play, CheckCircle } from 'lucide-react';
 
-const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458a-46a4-83aa-a7ef43569440/images/31c2d350dad6978320d16680435185ac4d3ed1b7bc213f06a2774d3ee186a694.png";
-
 const Home = () => {
   const stats = [
     { value: '500+', label: 'Getestete Apps', delay: '0ms' },
@@ -81,7 +79,7 @@ const Home = () => {
               
               {/* Subline */}
               <p className="text-lg md:text-xl text-slate-600 max-w-md leading-relaxed">
-                Wir sind Precision Labs — Ihr Partner für professionelles Application Testing. 
+                Wir sind Keyperion Technologies — Ihr Partner für professionelles Application Testing. 
                 Deutsche Gründlichkeit trifft auf modernste Methoden.
               </p>
               
@@ -268,7 +266,7 @@ const Home = () => {
 
             {/* Content Side */}
             <div className="space-y-8">
-              <span className="text-[#00C853] font-mono text-sm uppercase tracking-widest">Warum Precision Labs</span>
+              <span className="text-[#00C853] font-mono text-sm uppercase tracking-widest">Warum Keyperion Technologies</span>
               <h2 className="text-4xl md:text-6xl font-bold text-[#0A0A0A] leading-[0.95]">
                 Deutsche<br />
                 Präzision.

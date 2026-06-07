@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, ArrowUpRight } from 'lucide-react';
-
-const LOGO_URL = "https://static.prod-images.emergentagent.com/jobs/7bea0805-458a-46a4-83aa-a7ef43569440/images/31c2d350dad6978320d16680435185ac4d3ed1b7bc213f06a2774d3ee186a694.png";
+import { KeyperionLogo } from './Logo';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -33,9 +32,9 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3 mb-6">
-              <img src={LOGO_URL} alt="Precision Labs" className="h-14 brightness-0 invert" />
+              <KeyperionLogo className="h-12 w-12" />
               <span className="text-2xl font-bold text-white">
-                Precision <span className="text-[#00C853]">Labs</span>
+                Keyperion <span className="text-[#00C853]">Technologies</span>
               </span>
             </div>
             <p className="text-slate-400 leading-relaxed max-w-sm mb-8">
@@ -46,19 +45,19 @@ export const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-4">
               <a 
-                href="mailto:info@precision-labs.de" 
+                href="mailto:info@keyperion-technologies.com" 
                 className="flex items-center gap-4 group"
               >
                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#00C853] transition-colors duration-300">
                   <Mail size={18} className="text-slate-400 group-hover:text-white transition-colors" />
                 </div>
-                <span className="text-slate-400 group-hover:text-white transition-colors">info@precision-labs.de</span>
+                <span className="text-slate-400 group-hover:text-white transition-colors">info@keyperion-technologies.com</span>
               </a>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
                   <MapPin size={18} className="text-slate-400" />
                 </div>
-                <span className="text-slate-400">Römerstraße 90, 79618 Rheinfelden (Baden)</span>
+                <span className="text-slate-400">Große Gallusstr. 14, 60315 Frankfurt am Main</span>
               </div>
             </div>
           </div>
@@ -125,7 +124,7 @@ export const Footer = () => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-slate-500">
-              © {currentYear} Precision Labs. Alle Rechte vorbehalten.
+              © {currentYear} Keyperion Technologies. Alle Rechte vorbehalten.
             </p>
             <div className="flex items-center gap-2 text-sm text-slate-500">
               <span className="w-2 h-2 rounded-full bg-[#00C853] animate-pulse"></span>
