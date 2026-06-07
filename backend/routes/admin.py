@@ -75,29 +75,32 @@ async def verify_token(authorization: str = Header(None)):
 
 @router.post("/init-admin")
 async def initialize_admin(db: AsyncIOMotorDatabase = Depends(get_db)):
-    """Initialize test admin user - REMOVE IN PRODUCTION"""
-    # Check if admin already exists
-    existing_admin = await db.admins.find_one({"email": "admin@precision-labs.de"})
-    
+    """Initialize admin user from environment variables (idempotent)."""
+    admin_email = os.environ.get("ADMIN_EMAIL", "admin@keyperion-technologies.com")
+    admin_password = os.environ.get("ADMIN_PASSWORD")
+
+    existing_admin = await db.admins.find_one({"email": admin_email})
     if existing_admin:
         return {"message": "Admin bereits vorhanden"}
-    
-    # Create test admin
+
+    if not admin_password:
+        raise HTTPException(status_code=500, detail="ADMIN_PASSWORD nicht konfiguriert")
+
     admin_data = {
         "id": "admin-001",
-        "email": "admin@precision-labs.de",
-        "password_hash": get_password_hash("Inf0m3tr!ca#2025Sec"),
+        "email": admin_email,
+        "password_hash": get_password_hash(admin_password),
         "name": "Administrator",
         "role": "admin",
         "created_at": datetime.utcnow(),
         "last_login": None
     }
-    
+
     await db.admins.insert_one(admin_data)
-    
+
     return {
-        "message": "Test-Admin erstellt",
-        "email": "admin@precision-labs.de"
+        "message": "Admin erstellt",
+        "email": admin_email
     }
 
 # ========== TASK MANAGEMENT ==========

@@ -129,3 +129,47 @@ logger = logging.getLogger(__name__)
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
+
+
+@app.on_event("startup")
+async def seed_admin():
+    """Idempotently ensure the admin account matches ADMIN_EMAIL/ADMIN_PASSWORD from env.
+    Migrates the legacy admin record (renames email + resets password) so the existing
+    account/history is preserved and the user is never locked out."""
+    from utils.auth import get_password_hash, verify_password
+
+    new_email = os.environ.get("ADMIN_EMAIL")
+    new_password = os.environ.get("ADMIN_PASSWORD")
+    if not new_email or not new_password:
+        logger.warning("ADMIN_EMAIL/ADMIN_PASSWORD not set - skipping admin seeding")
+        return
+
+    existing_new = await db.admins.find_one({"email": new_email})
+    if existing_new:
+        if not verify_password(new_password, existing_new["password_hash"]):
+            await db.admins.update_one(
+                {"_id": existing_new["_id"]},
+                {"$set": {"password_hash": get_password_hash(new_password)}},
+            )
+            logger.info("Admin password updated from env")
+        return
+
+    legacy = await db.admins.find_one({"email": "admin@precision-labs.de"})
+    if legacy:
+        await db.admins.update_one(
+            {"_id": legacy["_id"]},
+            {"$set": {"email": new_email, "password_hash": get_password_hash(new_password)}},
+        )
+        logger.info("Legacy admin migrated to %s", new_email)
+        return
+
+    await db.admins.insert_one({
+        "id": "admin-001",
+        "email": new_email,
+        "password_hash": get_password_hash(new_password),
+        "name": "Administrator",
+        "role": "admin",
+        "created_at": datetime.now(timezone.utc),
+        "last_login": None,
+    })
+    logger.info("Admin account created for %s", new_email)
