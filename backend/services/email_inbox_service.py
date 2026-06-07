@@ -293,11 +293,16 @@ async def _extract_code_via_llm(subject: str, body: str) -> Optional[str]:
     import os
     import re as _re
     import asyncio as _asyncio
-    from emergentintegrations.llm.chat import LlmChat, UserMessage
     import uuid as _uuid
 
     api_key = os.environ.get("EMERGENT_LLM_KEY")
     if not api_key:
+        return None
+
+    try:
+        from emergentintegrations.llm.chat import LlmChat, UserMessage
+    except ImportError:
+        # Optional AI fallback not available (e.g. self-hosted server) - skip gracefully
         return None
 
     snippet = (subject + "\n\n" + body)[:1500]
