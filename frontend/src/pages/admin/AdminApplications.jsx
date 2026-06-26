@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Eye, RefreshCw, MapPin, UserCheck, CheckCircle, X, Clock, Shield, Unlock, Search, CheckSquare, Square, ClipboardList } from 'lucide-react';
+import { Trash2, Eye, RefreshCw, MapPin, UserCheck, CheckCircle, X, Clock, Shield, Unlock, Search, ClipboardList } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
@@ -32,8 +32,8 @@ const AdminApplications = () => {
   const [processingId, setProcessingId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
-  const [selectedIds, setSelectedIds] = useState([]);
-  const [bulkProcessing, setBulkProcessing] = useState(false);
+  const [acceptApp, setAcceptApp] = useState(null);
+  const [acceptType, setAcceptType] = useState('vollzeit');
   const [approvingQuiz, setApprovingQuiz] = useState(false);
 
   const fetchApplications = async () => {
@@ -114,26 +114,29 @@ const AdminApplications = () => {
     }
   };
 
-  const handleAccept = async (app) => {
-    if (!window.confirm(`Möchten Sie die Bewerbung von "${app.name}" akzeptieren? Der Bewerber kann dann seine Ausweisdokumente hochladen.`)) {
-      return;
-    }
+  const handleAccept = (app) => {
+    setAcceptType('vollzeit');
+    setAcceptApp(app);
+  };
 
-    setProcessingId(app.id);
+  const confirmAccept = async () => {
+    if (!acceptApp) return;
+    setProcessingId(acceptApp.id);
 
     try {
       const token = localStorage.getItem('admin_token');
       await axios.post(
-        `${BACKEND_URL}/api/applications/${app.id}/accept`,
-        {},
+        `${BACKEND_URL}/api/applications/${acceptApp.id}/accept`,
+        { contract_type: acceptType },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      
+
       toast.success('Bewerbung akzeptiert! Der Bewerber kann nun seine Verifizierung durchführen.');
+      setAcceptApp(null);
       fetchApplications();
     } catch (error) {
       const errorMsg = error.response?.data?.detail || 'Fehler beim Akzeptieren';
@@ -142,88 +145,6 @@ const AdminApplications = () => {
       setProcessingId(null);
     }
   };
-
-  // Bulk accept selected applications
-  const handleBulkAccept = async () => {
-    const newApplicationIds = selectedIds.filter(id => {
-      const app = applications.find(a => a.id === id);
-      return app && app.status === 'Neu';
-    });
-
-    if (newApplicationIds.length === 0) {
-      toast.error('Keine neuen Bewerbungen ausgewählt');
-      return;
-    }
-
-    if (!window.confirm(`Möchten Sie ${newApplicationIds.length} Bewerbung(en) akzeptieren?`)) {
-      return;
-    }
-
-    setBulkProcessing(true);
-
-    try {
-      const token = localStorage.getItem('admin_token');
-      const response = await axios.post(
-        `${BACKEND_URL}/api/applications/bulk-accept`,
-        { application_ids: newApplicationIds },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-      
-      const { accepted, failed } = response.data;
-      
-      if (accepted > 0) {
-        toast.success(`${accepted} Bewerbung(en) erfolgreich akzeptiert!`);
-      }
-      if (failed > 0) {
-        toast.error(`${failed} Bewerbung(en) konnten nicht akzeptiert werden`);
-      }
-      
-      setSelectedIds([]);
-      fetchApplications();
-    } catch (error) {
-      const errorMsg = error.response?.data?.detail || 'Fehler bei der Bulk-Akzeptierung';
-      toast.error(errorMsg);
-    } finally {
-      setBulkProcessing(false);
-    }
-  };
-
-  // Toggle selection of a single application
-  const toggleSelection = (id) => {
-    setSelectedIds(prev => 
-      prev.includes(id) 
-        ? prev.filter(i => i !== id)
-        : [...prev, id]
-    );
-  };
-
-  // Toggle select all (only "Neu" applications from filtered list)
-  const toggleSelectAll = () => {
-    const newAppIds = filteredApplications
-      .filter(app => app.status === 'Neu')
-      .map(app => app.id);
-    
-    const allSelected = newAppIds.every(id => selectedIds.includes(id));
-    
-    if (allSelected) {
-      // Deselect all new applications
-      setSelectedIds(prev => prev.filter(id => !newAppIds.includes(id)));
-    } else {
-      // Select all new applications
-      setSelectedIds(prev => [...new Set([...prev, ...newAppIds])]);
-    }
-  };
-
-  // Count of selected "Neu" applications
-  const selectedNewCount = selectedIds.filter(id => {
-    const app = applications.find(a => a.id === id);
-    return app && app.status === 'Neu';
-  }).length;
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('de-DE');
@@ -291,29 +212,9 @@ const AdminApplications = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-[#c0caf5]">Bewerbungen</h1>
           <p className="text-[#9aa5ce] mt-1">
             {filteredApplications.length} von {applications.length} Bewerbung{applications.length !== 1 ? 'en' : ''}
-            {selectedIds.length > 0 && (
-              <span className="ml-2 text-[#7aa2f7]">
-                ({selectedIds.length} ausgewählt)
-              </span>
-            )}
           </p>
         </div>
         <div className="flex items-center gap-3">
-          {selectedNewCount > 0 && (
-            <button
-              onClick={handleBulkAccept}
-              disabled={bulkProcessing}
-              className="flex items-center space-x-2 px-4 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors disabled:opacity-50"
-              data-testid="bulk-accept-btn"
-            >
-              {bulkProcessing ? (
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-              ) : (
-                <CheckSquare size={18} />
-              )}
-              <span>{selectedNewCount} akzeptieren</span>
-            </button>
-          )}
           <button
             onClick={fetchApplications}
             className="flex items-center space-x-2 px-4 py-2 bg-[#7aa2f7] text-white rounded-lg hover:bg-[#7aa2f7]/80 transition-colors"
@@ -363,46 +264,12 @@ const AdminApplications = () => {
         </select>
       </div>
 
-      {/* Info Banner for bulk selection */}
-      {statusFilter === 'all' && applications.filter(a => a.status === 'Neu').length > 0 && (
-        <div className="bg-[#7aa2f7]/10 border border-[#7aa2f7]/30 rounded-lg p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <CheckSquare size={20} className="text-[#7aa2f7] flex-shrink-0" />
-            <span className="text-[#c0caf5]">
-              <strong>{applications.filter(a => a.status === 'Neu').length}</strong> neue Bewerbung(en) können ausgewählt und akzeptiert werden.
-            </span>
-          </div>
-          <button
-            onClick={() => setStatusFilter('Neu')}
-            className="px-4 py-2 bg-[#7aa2f7] text-white rounded-lg hover:bg-[#7aa2f7]/80 transition-colors text-sm"
-          >
-            Nur Neue anzeigen
-          </button>
-        </div>
-      )}
-
       {/* Desktop Table */}
       <div className="hidden md:block bg-[#16161e] border border-[#292e42] rounded-xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
               <tr className="bg-[#1a1b26] border-b border-[#292e42]">
-                <th className="px-4 py-4 text-left">
-                  {filteredApplications.filter(app => app.status === 'Neu').length > 0 && (
-                    <button
-                      onClick={toggleSelectAll}
-                      className="text-[#7aa2f7] hover:text-[#7dcfff] transition-colors"
-                      title="Alle neuen auswählen"
-                      data-testid="select-all-checkbox"
-                    >
-                      {filteredApplications.filter(app => app.status === 'Neu').every(app => selectedIds.includes(app.id)) ? (
-                        <CheckSquare size={20} />
-                      ) : (
-                        <Square size={20} />
-                      )}
-                    </button>
-                  )}
-                </th>
                 <th className="px-6 py-4 text-left text-sm font-semibold text-[#c0caf5]">Name</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold text-[#c0caf5]">E-Mail</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold text-[#c0caf5]">Position</th>
@@ -413,7 +280,7 @@ const AdminApplications = () => {
             <tbody>
               {filteredApplications.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="px-6 py-12 text-center text-[#565f89]">
+                  <td colSpan="5" className="px-6 py-12 text-center text-[#565f89]">
                     {searchQuery || statusFilter !== 'all' 
                       ? 'Keine Bewerbungen gefunden' 
                       : 'Noch keine Bewerbungen vorhanden'}
@@ -423,26 +290,9 @@ const AdminApplications = () => {
                 filteredApplications.map((app) => (
                   <tr
                     key={app.id}
-                    className={`border-b border-[#292e42] hover:bg-[#1a1b26] transition-colors ${
-                      selectedIds.includes(app.id) ? 'bg-[#7aa2f7]/10' : ''
-                    }`}
+                    className="border-b border-[#292e42] hover:bg-[#1a1b26] transition-colors"
                     data-testid={`application-row-${app.id}`}
                   >
-                    <td className="px-4 py-4">
-                      {app.status === 'Neu' && (
-                        <button
-                          onClick={() => toggleSelection(app.id)}
-                          className="text-[#7aa2f7] hover:text-[#7dcfff] transition-colors"
-                          data-testid={`checkbox-${app.id}`}
-                        >
-                          {selectedIds.includes(app.id) ? (
-                            <CheckSquare size={20} />
-                          ) : (
-                            <Square size={20} />
-                          )}
-                        </button>
-                      )}
-                    </td>
                     <td className="px-6 py-4">
                       <div className="text-[#c0caf5] font-medium">{app.name}</div>
                       <div className="text-xs text-[#565f89] mt-1">
@@ -513,22 +363,11 @@ const AdminApplications = () => {
           filteredApplications.map((app) => (
             <div
               key={app.id}
-              className={`bg-[#16161e] border rounded-xl p-4 ${
-                selectedIds.includes(app.id) ? 'border-[#7aa2f7] bg-[#7aa2f7]/5' : 'border-[#292e42]'
-              }`}
+              className="bg-[#16161e] border border-[#292e42] rounded-xl p-4"
               data-testid={`application-card-${app.id}`}
             >
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
-                  {app.status === 'Neu' && (
-                    <button
-                      onClick={() => toggleSelection(app.id)}
-                      className="text-[#7aa2f7] hover:text-[#7dcfff] transition-colors flex-shrink-0"
-                      data-testid={`checkbox-mobile-${app.id}`}
-                    >
-                      {selectedIds.includes(app.id) ? <CheckSquare size={20} /> : <Square size={20} />}
-                    </button>
-                  )}
                   <div>
                     <p className="text-[#c0caf5] font-medium">{app.name}</p>
                     <p className="text-xs text-[#565f89] mt-0.5">{formatDate(app.created_at)}</p>
@@ -711,6 +550,64 @@ const AdminApplications = () => {
                 className="px-6 py-2 bg-[#f7768e] text-white rounded-lg hover:bg-[#f7768e]/80 transition-colors"
               >
                 Löschen
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Accept dialog: choose contract type */}
+      {acceptApp && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50" data-testid="accept-dialog">
+          <div className="bg-[#16161e] border border-[#292e42] rounded-xl w-full max-w-md p-6">
+            <h3 className="text-lg font-bold text-[#c0caf5] mb-1">Bewerbung akzeptieren</h3>
+            <p className="text-sm text-[#9aa5ce] mb-4">
+              Wählen Sie den Vertragstyp für <strong className="text-[#c0caf5]">{acceptApp.name}</strong>.
+            </p>
+            <div className="space-y-2 mb-6">
+              {[
+                { value: 'vollzeit', label: 'Vollzeit', desc: 'Testmonat 1.200 €, danach 2.900 € · ca. 40 Std./Woche' },
+                { value: 'teilzeit', label: 'Teilzeit', desc: 'Grundvergütung 700 € + Provision · bis 20 Std./Woche' },
+                { value: 'minijob', label: 'Minijob', desc: 'Provision 50–300 €/Auftrag · max. 603 €/Monat' },
+              ].map((opt) => (
+                <button
+                  key={opt.value}
+                  onClick={() => setAcceptType(opt.value)}
+                  className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                    acceptType === opt.value
+                      ? 'border-[#9ece6a] bg-[#9ece6a]/10'
+                      : 'border-[#292e42] hover:border-[#414868]'
+                  }`}
+                  data-testid={`contract-type-${opt.value}`}
+                >
+                  <div className="flex items-center gap-2">
+                    <span className={`w-4 h-4 rounded-full border flex-shrink-0 ${acceptType === opt.value ? 'border-[#9ece6a] bg-[#9ece6a]' : 'border-[#565f89]'}`}></span>
+                    <span className="text-[#c0caf5] font-medium">{opt.label}</span>
+                  </div>
+                  <p className="text-xs text-[#565f89] mt-1 ml-6">{opt.desc}</p>
+                </button>
+              ))}
+            </div>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setAcceptApp(null)}
+                className="px-4 py-2 bg-[#292e42] text-[#c0caf5] rounded-lg hover:bg-[#414868] transition-colors"
+                data-testid="accept-dialog-cancel"
+              >
+                Abbrechen
+              </button>
+              <button
+                onClick={confirmAccept}
+                disabled={processingId === acceptApp.id}
+                className="px-4 py-2 bg-[#9ece6a] text-white rounded-lg hover:bg-[#9ece6a]/80 transition-colors flex items-center gap-2 disabled:opacity-50"
+                data-testid="accept-dialog-confirm"
+              >
+                {processingId === acceptApp.id ? (
+                  <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                ) : (
+                  <UserCheck size={18} />
+                )}
+                Akzeptieren
               </button>
             </div>
           </div>

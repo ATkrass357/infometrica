@@ -7,6 +7,7 @@ import { Label } from '../../components/ui/label';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { KeyperionLogo } from '../../components/Logo';
+import { ContractBody, CONTRACT_POSITIONS, CONTRACT_SUBTITLES } from './ContractTemplates';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -14,6 +15,11 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
   const [iban, setIban] = useState('');
   const [isSigning, setIsSigning] = useState(false);
   const signatureRef = useRef(null);
+
+  const contractType = applicant?.contract_type || 'vollzeit';
+  const positionLabel = CONTRACT_POSITIONS[contractType] || CONTRACT_POSITIONS.vollzeit;
+  const contractSubtitle = CONTRACT_SUBTITLES[contractType] || CONTRACT_SUBTITLES.vollzeit;
+  const signedDate = new Date().toLocaleDateString('de-DE');
 
   const formatIBAN = (value) => {
     const cleaned = value.replace(/\s/g, '').toUpperCase();
@@ -110,7 +116,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
               </div>
               <div>
                 <h2 className="text-xl font-bold">Arbeitsvertrag</h2>
-                <p className="text-slate-400">Keyperion Technologies · Mitarbeiter in der Verifikations Testung</p>
+                <p className="text-slate-400">Keyperion Technologies · {positionLabel}</p>
               </div>
             </div>
           </div>
@@ -121,7 +127,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
               {/* Contract Header */}
               <div className="text-center mb-8 pb-4 border-b border-slate-300">
                 <h3 className="text-2xl font-bold text-[#0A0A0A] mb-2">ARBEITSVERTRAG</h3>
-                <p className="text-slate-600">für Angestellte und Mitarbeiter</p>
+                <p className="text-slate-600">{contractSubtitle}</p>
               </div>
               
               <div className="space-y-6 text-slate-700">
@@ -142,72 +148,12 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                 </div>
 
                 <p className="italic text-slate-600">Dieser Vertrag wird zwischen den oben genannten Parteien geschlossen und beinhaltet die nachfolgenden Vereinbarungen:</p>
-                
-                {/* §1 */}
-                <div>
-                  <p className="font-bold text-[#0A0A0A]">§1 Beginn des Arbeitsverhältnisses</p>
-                  <p>Dieses Arbeitsverhältnis beginnt am {new Date().toLocaleDateString('de-DE')} (Tag der Unterzeichnung durch beide Parteien).</p>
-                </div>
 
-                {/* §2 */}
-                <div>
-                  <p className="font-bold text-[#0A0A0A]">§2 Tätigkeit</p>
-                  <p>Der Arbeitnehmer wird bei Keyperion Technologies als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
-                  <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
-                    <li>Durchführung von Video-Identifikationsverfahren zur Evaluierung und Testung</li>
-                    <li>Überprüfung von Apps und Softwares auf Benutzerfreundlichkeit und Mängel</li>
-                    <li>Erstellung und Einreichung der dazugehörigen Abschlussberichte innerhalb des vorgegebenen Zeitrahmens</li>
-                  </ul>
-                </div>
-
-                {/* §3 */}
-                <div>
-                  <p className="font-bold text-[#0A0A0A]">§3 Arbeitszeit</p>
-                  <p>(1) Während des Testmonats (erster Monat) beträgt die regelmäßige Arbeitszeit ca. 15 Wochenstunden.</p>
-                  <p className="mt-2">(2) Nach Abschluss des Testmonats beträgt die regelmäßige Arbeitszeit ca. 40 Wochenstunden an 5 Tagen der Woche. Die genauen Arbeitszeiten sind in Absprache des Arbeitnehmers und des Arbeitgebers unter Berücksichtigung der betrieblichen Erfordernisse zu treffen.</p>
-                </div>
-
-                {/* §4 */}
-                <div>
-                  <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
-                  <p>(1) <strong>Testmonat (erster Monat):</strong> Der Arbeitnehmer erhält eine monatliche Vergütung in Höhe von 1.200,00 € brutto. Der erste Monat dient als Testmonat zur gegenseitigen Eignungsprüfung.</p>
-                  <p className="mt-2">(2) <strong>Ab dem zweiten Monat:</strong> Nach erfolgreichem Abschluss des Testmonats erhält der Arbeitnehmer eine monatliche Vergütung in Höhe von 2.900,00 € brutto.</p>
-                  <p className="mt-2">(3) Die Vergütung ist jeweils am Monatsende fällig und wird per Überweisung an das vom Arbeitnehmer benannte Konto überwiesen.</p>
-                </div>
-
-                {/* §5 */}
-                <div>
-                  <p className="font-bold text-[#0A0A0A]">§5 Testmonat</p>
-                  <p>(1) Der erste Monat des Arbeitsverhältnisses gilt als Testmonat. In diesem Zeitraum arbeitet der Arbeitnehmer ca. 15 Stunden pro Woche.</p>
-                  <p className="mt-2">(2) Nach erfolgreichem Abschluss des Testmonats beginnt das reguläre Arbeitsverhältnis mit der in §4 Abs. 2 genannten Vergütung.</p>
-                  <p className="mt-2">(3) Während des Testmonats kann das Arbeitsverhältnis von beiden Seiten mit einer Frist von einer Woche gekündigt werden.</p>
-                </div>
-
-                {/* §6 */}
-                <div>
-                  <p className="font-bold text-[#0A0A0A]">§6 Urlaubsanspruch</p>
-                  <p>(1) Der Arbeitnehmer hat einen Anspruch auf einen jährlichen Erholungsurlaub von 28 Arbeitstagen.</p>
-                  <p className="mt-2">(2) Im Übrigen gelten ergänzend die Bestimmungen des Bundesurlaubsgesetzes.</p>
-                </div>
-
-                {/* §7 */}
-                <div>
-                  <p className="font-bold text-[#0A0A0A]">§7 Arbeitsverhinderung</p>
-                  <p>(1) Der Arbeitnehmer verpflichtet sich, jede Arbeitsverhinderung unverzüglich dem Arbeitgeber mitzuteilen.</p>
-                  <p className="mt-2">(2) Im Krankheitsfall hat der Arbeitnehmer spätestens nach Ablauf des dritten Kalendertages eine ärztliche Arbeitsunfähigkeitsbescheinigung vorzulegen.</p>
-                </div>
-
-                {/* §8 */}
-                <div>
-                  <p className="font-bold text-[#0A0A0A]">§8 Kündigungsfristen</p>
-                  <p>(1) Nach Ablauf des Testmonats gelten die gesetzlichen Kündigungsfristen.</p>
-                  <p className="mt-2">(2) Jede Kündigung hat schriftlich zu erfolgen.</p>
-                  <p className="mt-2">(3) Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt hiervon unberührt.</p>
-                </div>
+                <ContractBody type={contractType} signedDate={signedDate} />
 
                 {/* Signatures */}
                 <div className="pt-6 mt-6 border-t border-slate-300">
-                  <p className="text-slate-600 mb-4">Frankfurt am Main, {new Date().toLocaleDateString('de-DE')}</p>
+                  <p className="text-slate-600 mb-4">Frankfurt am Main, {signedDate}</p>
                   <div className="grid grid-cols-2 gap-8">
                     <div>
                       <div className="border-b border-slate-400 pb-1 mb-1"></div>

@@ -44,4 +44,11 @@ German.
 `cd ~/infometrica && git stash && git pull origin main && cd frontend && npm run build && sudo systemctl restart precision-backend && sudo systemctl restart nginx`
 
 ## Last Updated
-2026-06-07: Rebrand zu Keyperion Technologies (Logo, Texte, Impressum, Verträge) + Vertragsstartdatum = Unterschriftsdatum.
+2026-06-26: Vertragstyp-Auswahl bei Annahme (Vollzeit/Teilzeit/Minijob) + Bulk-Annahme entfernt.
+
+### Vertragsauswahl bei Annahme (2026-06-26)
+- Admin wählt beim Akzeptieren einer Bewerbung den Vertragstyp: **Vollzeit** (bisheriger Vertrag), **Teilzeit** (700 € + Provision, bis 20 Std.) oder **Minijob** (Provision 50–300 €, max. 603 €/2026). Gespeichert als `contract_type` auf der Bewerbung (Default `vollzeit`).
+- Bewerber sieht auf der Unterschriftsseite + im PDF/HTML-Download genau diesen Vertrag.
+- Vorlagen aus Nutzer-PDFs als Blueprints nachgebaut (ohne Namen), Arbeitgeber = Keyperion Technologies GmbH.
+- **Bulk-Annahme komplett entfernt** (Checkboxen, Bulk-Button, Info-Banner, `/bulk-accept` Endpoint).
+- Dateien: `models/application.py` (+contract_type), `routes/applications.py` (`accept` mit body, `_build_contract_html_parts`), `pages/mitarbeiter/ContractTemplates.jsx` (neu), `MitarbeiterContractSign.jsx`, `pages/admin/AdminApplications.jsx` (Annahme-Dialog).

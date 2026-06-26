@@ -18,6 +18,7 @@ class Application(BaseModel):
     password_hash: str = ""  # Hashed password
     cv_filename: Optional[str] = None
     status: str = "Neu"  # Neu, Akzeptiert, Verifiziert, Freigeschaltet
+    contract_type: Optional[str] = "vollzeit"  # vollzeit, teilzeit, minijob
     verification_front: Optional[str] = None  # ID front image path
     verification_back: Optional[str] = None  # ID back image path
     verified_at: Optional[datetime] = None
@@ -52,6 +53,7 @@ class ApplicationResponse(BaseModel):
     message: Optional[str] = None
     cv_filename: Optional[str]
     status: str
+    contract_type: Optional[str] = "vollzeit"
     verification_front: Optional[str] = None
     verification_back: Optional[str] = None
     verified_at: Optional[datetime] = None
