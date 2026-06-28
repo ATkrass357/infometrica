@@ -730,7 +730,7 @@ async def download_contract(
     <p>Prysm Technologies GmbH</p>
     <p>Große Gallusstr. 14</p>
     <p>60315 Frankfurt am Main</p>
-    <p style="color:#666;margin-top:4px;">vertreten durch Lars Kurjo</p>
+    <p style="color:#666;margin-top:4px;">vertreten durch Maurice Domke</p>
   </div>
   <div>
     <p class="label">Arbeitnehmer:</p>
@@ -746,8 +746,8 @@ async def download_contract(
 <div class="signatures">
   <div class="sig-block">
     <p style="color:#666;margin-bottom:8px;">Frankfurt am Main, {signed_date}</p>
-    <div class="sig-line"><span style="font-family:'Brush Script MT',cursive,'Segoe Script','Comic Sans MS',sans-serif;font-size:22pt;color:#222;">Lars Kurjo</span></div>
-    <p class="sig-name">Lars Kurjo · Arbeitgeber</p>
+    <div class="sig-line"><span style="font-family:'Brush Script MT',cursive,'Segoe Script','Comic Sans MS',sans-serif;font-size:22pt;color:#222;">Maurice Domke</span></div>
+    <p class="sig-name">Maurice Domke · Arbeitgeber</p>
   </div>
   <div class="sig-block">
     <p style="color:#666;margin-bottom:8px;">Unterschrieben am {signed_date}</p>

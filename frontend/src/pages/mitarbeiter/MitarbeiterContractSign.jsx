@@ -139,7 +139,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                     <p>Prysm Technologies GmbH</p>
                     <p>Große Gallusstr. 14</p>
                     <p>60315 Frankfurt am Main</p>
-                    <p className="text-slate-500 mt-1">vertreten durch Lars Kurjo</p>
+                    <p className="text-slate-500 mt-1">vertreten durch Maurice Domke</p>
                   </div>
                   <div>
                     <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitnehmer:</p>
@@ -158,7 +158,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                   <div className="grid grid-cols-2 gap-8">
                     <div>
                       <div className="border-b border-slate-400 pb-1 mb-1"></div>
-                      <p className="text-xs text-slate-500">Lars Kurjo</p>
+                      <p className="text-xs text-slate-500">Maurice Domke</p>
                       <p className="text-xs text-slate-500">Arbeitgeber</p>
                     </div>
                     <div>

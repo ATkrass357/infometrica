@@ -72,7 +72,7 @@ const Impressum = () => {
                   Vertretungsberechtigte Person
                 </h2>
                 <div className="text-slate-600">
-                  <p>Lars Kurjo</p>
+                  <p>Maurice Domke</p>
                 </div>
               </div>
 

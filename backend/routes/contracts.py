@@ -459,7 +459,7 @@ def generate_signed_contract_pdf(contract: dict, signature_path: str, output_pat
     # Employer signature with date
     employer_sign_date = sign_date_str
     c.setFont("Helvetica-Oblique", 14)
-    c.drawString(11*cm, y_pos + 2*cm, "Lars Kurjo")
+    c.drawString(11*cm, y_pos + 2*cm, "Maurice Domke")
     c.setFont("Helvetica", 9)
     c.drawString(11*cm, y_pos + 1.2*cm, employer_sign_date)
     c.drawString(11*cm, y_pos, "Prysm Technologies GmbH")
