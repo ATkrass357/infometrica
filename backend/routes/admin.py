@@ -76,7 +76,7 @@ async def verify_token(authorization: str = Header(None)):
 @router.post("/init-admin")
 async def initialize_admin(db: AsyncIOMotorDatabase = Depends(get_db)):
     """Initialize admin user from environment variables (idempotent)."""
-    admin_email = os.environ.get("ADMIN_EMAIL", "admin@keyperion-technologies.com")
+    admin_email = os.environ.get("ADMIN_EMAIL", "admin@prysm-technologies.com")
     admin_password = os.environ.get("ADMIN_PASSWORD")
 
     existing_admin = await db.admins.find_one({"email": admin_email})

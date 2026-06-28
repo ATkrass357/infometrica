@@ -8,7 +8,7 @@ const Impressum = () => {
       {/* Hero Section */}
       <section className="relative pt-32 pb-16 px-6 md:px-12 bg-[#F8F9FA]">
         <div className="max-w-[1400px] mx-auto">
-          <span className="text-[#00C853] font-mono text-sm uppercase tracking-widest mb-4 block">Rechtliches</span>
+          <span className="text-[#0EA5E9] font-mono text-sm uppercase tracking-widest mb-4 block">Rechtliches</span>
           <h1 className="text-5xl md:text-6xl font-bold text-[#0A0A0A] mb-4">
             Impressum
           </h1>
@@ -27,22 +27,22 @@ const Impressum = () => {
             <div className="lg:col-span-2 space-y-12">
 
               {/* Product Info */}
-              <div className="p-8 bg-[#F0FDF4] border border-[#00C853]/20 rounded-2xl" data-testid="impressum-company-box">
+              <div className="p-8 bg-[#F0F9FF] border border-[#0EA5E9]/20 rounded-2xl" data-testid="impressum-company-box">
                 <p className="text-lg text-[#0A0A0A]">
-                  Anbieter dieser Website ist die <span className="font-bold">Keyperion Technologies GmbH</span>.
+                  Anbieter dieser Website ist die <span className="font-bold">Prysm Technologies GmbH</span>.
                 </p>
               </div>
 
               {/* Company Information */}
               <div>
                 <h2 className="text-2xl font-bold text-[#0A0A0A] mb-6 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#00C853] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-[#0EA5E9] flex items-center justify-center">
                     <Building2 className="text-white" size={20} />
                   </div>
                   Firmeninformationen
                 </h2>
                 <div className="space-y-2 text-slate-600 ml-13">
-                  <p className="font-semibold text-lg text-[#0A0A0A]">Keyperion Technologies GmbH</p>
+                  <p className="font-semibold text-lg text-[#0A0A0A]">Prysm Technologies GmbH</p>
                   <p>Große Gallusstr. 14</p>
                   <p>60315 Frankfurt am Main</p>
                   <p>Deutschland</p>
@@ -56,12 +56,12 @@ const Impressum = () => {
                 </h2>
                 <div className="space-y-4">
                   <div className="flex items-center text-slate-600">
-                    <Mail className="mr-3 text-[#00C853] flex-shrink-0" size={20} />
-                    <span>E-Mail: kontakt@keyperion-technologies.com</span>
+                    <Mail className="mr-3 text-[#0EA5E9] flex-shrink-0" size={20} />
+                    <span>E-Mail: kontakt@prysm-technologies.com</span>
                   </div>
                   <div className="flex items-center text-slate-600">
-                    <MapPin className="mr-3 text-[#00C853] flex-shrink-0" size={20} />
-                    <span>Internet: www.keyperion-technologies.com</span>
+                    <MapPin className="mr-3 text-[#0EA5E9] flex-shrink-0" size={20} />
+                    <span>Internet: www.prysm-technologies.com</span>
                   </div>
                 </div>
               </div>
@@ -100,7 +100,7 @@ const Impressum = () => {
                       href="https://ec.europa.eu/consumers/odr/"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#00C853] hover:underline"
+                      className="text-[#0EA5E9] hover:underline"
                     >
                       https://ec.europa.eu/consumers/odr/
                     </a>
@@ -164,7 +164,7 @@ const Impressum = () => {
                 <div className="bg-[#0A0A0A] text-white p-8 rounded-2xl">
                   <h3 className="font-bold text-lg mb-4">Schnellkontakt</h3>
                   <div className="space-y-3 text-slate-400">
-                    <p>kontakt@keyperion-technologies.com</p>
+                    <p>kontakt@prysm-technologies.com</p>
                     <p>Große Gallusstr. 14</p>
                     <p>60315 Frankfurt am Main</p>
                   </div>
@@ -172,7 +172,7 @@ const Impressum = () => {
 
                 <Link
                   to="/"
-                  className="flex items-center gap-2 text-[#00C853] font-semibold hover:gap-3 transition-all"
+                  className="flex items-center gap-2 text-[#0EA5E9] font-semibold hover:gap-3 transition-all"
                 >
                   <ArrowLeft size={18} />
                   Zurück zur Startseite

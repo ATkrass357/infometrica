@@ -105,7 +105,7 @@ const AdminTestSessions = () => {
       case 'waiting':
         return <span className="inline-flex items-center gap-1 px-2 py-1 bg-amber-500/10 text-amber-400 rounded-full text-xs"><Clock size={12} />Wartend</span>;
       case 'active':
-        return <span className="inline-flex items-center gap-1 px-2 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs"><CheckCircle size={12} />Aktiv</span>;
+        return <span className="inline-flex items-center gap-1 px-2 py-1 bg-sky-500/10 text-sky-400 rounded-full text-xs"><CheckCircle size={12} />Aktiv</span>;
       case 'expired':
         return <span className="inline-flex items-center gap-1 px-2 py-1 bg-red-500/10 text-red-400 rounded-full text-xs"><XCircle size={12} />Abgelaufen</span>;
       default:

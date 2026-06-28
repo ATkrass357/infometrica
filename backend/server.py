@@ -154,7 +154,9 @@ async def seed_admin():
             logger.info("Admin password updated from env")
         return
 
-    legacy = await db.admins.find_one({"email": "admin@precision-labs.de"})
+    legacy = await db.admins.find_one(
+        {"email": {"$in": ["admin@keyperion-technologies.com", "admin@precision-labs.de"]}}
+    )
     if legacy:
         await db.admins.update_one(
             {"_id": legacy["_id"]},

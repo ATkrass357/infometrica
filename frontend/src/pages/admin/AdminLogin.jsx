@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Lock, Mail, AlertCircle } from 'lucide-react';
-import { KeyperionLogo } from '../../components/Logo';
+import { PrysmLogo } from '../../components/Logo';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -61,10 +61,10 @@ const AdminLogin = () => {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <KeyperionLogo className="w-16 h-16" />
+            <PrysmLogo className="w-16 h-16" />
             <div className="text-left">
               <h1 className="text-2xl font-bold text-[#c0caf5]">
-                Keyperion <span className="text-[#10b981]">Technologies</span>
+                Prysm <span className="text-[#0EA5E9]">Technologies</span>
               </h1>
               <p className="text-sm text-[#565f89]">Admin Portal</p>
             </div>
@@ -150,7 +150,7 @@ const AdminLogin = () => {
 
         {/* Footer */}
         <p className="text-center text-sm text-[#565f89] mt-6">
-          © 2026 Keyperion Technologies. Alle Rechte vorbehalten.
+          © 2026 Prysm Technologies. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

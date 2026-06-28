@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Lock, Mail, AlertCircle, Briefcase } from 'lucide-react';
 import axios from 'axios';
-import { KeyperionLogo } from '../../components/Logo';
+import { PrysmLogo } from '../../components/Logo';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -64,24 +64,24 @@ const MitarbeiterLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#E8F5E9] via-white to-[#E8F5E9] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#E0F2FE] via-white to-[#E0F2FE] flex items-center justify-center px-4">
       {/* Background decorations */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#B9F6CA] opacity-30 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#00C853] opacity-10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#BAE6FD] opacity-30 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#0EA5E9] opacity-10 rounded-full blur-3xl"></div>
       </div>
 
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <KeyperionLogo className="h-14 w-14 mx-auto mb-4" />
+          <PrysmLogo className="h-14 w-14 mx-auto mb-4" />
           <p className="text-sm text-gray-600">Mitarbeiter Portal</p>
         </div>
 
         {/* Login Card */}
         <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-8">
-          <div className="flex items-center justify-center w-16 h-16 bg-[#E8F5E9] rounded-xl mx-auto mb-6">
-            <Briefcase className="text-[#00C853]" size={32} />
+          <div className="flex items-center justify-center w-16 h-16 bg-[#E0F2FE] rounded-xl mx-auto mb-6">
+            <Briefcase className="text-[#0EA5E9]" size={32} />
           </div>
 
           <div className="mb-6 text-center">
@@ -113,7 +113,7 @@ const MitarbeiterLogin = () => {
                   onChange={handleChange}
                   required
                   data-testid="employee-login-email"
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#00C853] focus:ring-2 focus:ring-[#00C853]/20 transition-all"
+                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 transition-all"
                   placeholder="ihre@email.de"
                 />
               </div>
@@ -134,7 +134,7 @@ const MitarbeiterLogin = () => {
                   onChange={handleChange}
                   required
                   data-testid="employee-login-password"
-                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#00C853] focus:ring-2 focus:ring-[#00C853]/20 transition-all"
+                  className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:border-[#0EA5E9] focus:ring-2 focus:ring-[#0EA5E9]/20 transition-all"
                   placeholder="••••••••"
                 />
               </div>
@@ -145,7 +145,7 @@ const MitarbeiterLogin = () => {
               type="submit"
               disabled={isLoading}
               data-testid="employee-login-submit"
-              className="w-full py-3 bg-[#00C853] text-white font-semibold rounded-lg hover:bg-[#009624] focus:outline-none focus:ring-2 focus:ring-[#00C853] focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#00C853]/30"
+              className="w-full py-3 bg-[#0EA5E9] text-white font-semibold rounded-lg hover:bg-[#0284C7] focus:outline-none focus:ring-2 focus:ring-[#0EA5E9] focus:ring-offset-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#0EA5E9]/30"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center">
@@ -162,7 +162,7 @@ const MitarbeiterLogin = () => {
           <div className="mt-6 pt-6 border-t border-gray-200 text-center">
             <p className="text-sm text-gray-600">
               Noch kein Konto?{' '}
-              <Link to="/mitarbeiter/signup" className="text-[#00C853] hover:text-[#009624] font-medium">
+              <Link to="/mitarbeiter/signup" className="text-[#0EA5E9] hover:text-[#0284C7] font-medium">
                 Konto erstellen
               </Link>
             </p>
@@ -171,7 +171,7 @@ const MitarbeiterLogin = () => {
 
         {/* Footer */}
         <p className="text-center text-sm text-gray-600 mt-6">
-          © 2026 Keyperion Technologies. Alle Rechte vorbehalten.
+          © 2026 Prysm Technologies. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

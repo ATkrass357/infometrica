@@ -37,10 +37,10 @@ const Kontakt = () => {
       <section className="pt-32 pb-16 px-6 lg:px-12 bg-[#1A1A1A]">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-2xl">
-            <div className="text-[#00C853] font-semibold tracking-wide mb-4">KONTAKT</div>
+            <div className="text-[#0EA5E9] font-semibold tracking-wide mb-4">KONTAKT</div>
             <h1 className="text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
               Lassen Sie uns<br />
-              <span className="text-[#00C853]">sprechen.</span>
+              <span className="text-[#0EA5E9]">sprechen.</span>
             </h1>
             <p className="text-xl text-gray-400">
               Haben Sie ein Projekt? Wir freuen uns auf Ihre Nachricht.
@@ -67,7 +67,7 @@ const Kontakt = () => {
                       onChange={handleChange}
                       required
                       data-testid="contact-name"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#0EA5E9] focus:ring-0 outline-none transition-colors"
                       placeholder="Ihr Name"
                     />
                   </div>
@@ -80,7 +80,7 @@ const Kontakt = () => {
                       onChange={handleChange}
                       required
                       data-testid="contact-email"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#0EA5E9] focus:ring-0 outline-none transition-colors"
                       placeholder="ihre@email.de"
                     />
                   </div>
@@ -95,7 +95,7 @@ const Kontakt = () => {
                       value={formData.company}
                       onChange={handleChange}
                       data-testid="contact-company"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#0EA5E9] focus:ring-0 outline-none transition-colors"
                       placeholder="Ihr Unternehmen"
                     />
                   </div>
@@ -107,7 +107,7 @@ const Kontakt = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       data-testid="contact-phone"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#0EA5E9] focus:ring-0 outline-none transition-colors"
                       placeholder="+49 123 456789"
                     />
                   </div>
@@ -122,7 +122,7 @@ const Kontakt = () => {
                     onChange={handleChange}
                     required
                     data-testid="contact-subject"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#0EA5E9] focus:ring-0 outline-none transition-colors"
                     placeholder="Worum geht es?"
                   />
                 </div>
@@ -136,7 +136,7 @@ const Kontakt = () => {
                     required
                     rows={6}
                     data-testid="contact-message"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#00C853] focus:ring-0 outline-none transition-colors resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:border-[#0EA5E9] focus:ring-0 outline-none transition-colors resize-none"
                     placeholder="Beschreiben Sie Ihr Projekt oder Ihre Anfrage..."
                   />
                 </div>
@@ -145,7 +145,7 @@ const Kontakt = () => {
                   type="submit"
                   disabled={isSubmitting}
                   data-testid="contact-submit"
-                  className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-[#00C853] text-white font-semibold rounded-md hover:bg-[#009624] disabled:opacity-50 transition-all duration-200"
+                  className="group w-full flex items-center justify-center gap-3 px-8 py-4 bg-[#0EA5E9] text-white font-semibold rounded-md hover:bg-[#0284C7] disabled:opacity-50 transition-all duration-200"
                 >
                   {isSubmitting ? (
                     <>
@@ -167,18 +167,18 @@ const Kontakt = () => {
               <h2 className="text-2xl font-bold text-[#1A1A1A] mb-8">Kontaktdaten</h2>
               
               <div className="space-y-8 mb-12">
-                <a href="mailto:info@keyperion-technologies.com" className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 bg-[#1A1A1A] rounded-md flex items-center justify-center flex-shrink-0 group-hover:bg-[#00C853] transition-colors">
+                <a href="mailto:info@prysm-technologies.com" className="flex items-start gap-4 group">
+                  <div className="w-12 h-12 bg-[#1A1A1A] rounded-md flex items-center justify-center flex-shrink-0 group-hover:bg-[#0EA5E9] transition-colors">
                     <Mail className="text-white" size={20} />
                   </div>
                   <div>
                     <div className="font-semibold text-[#1A1A1A]">E-Mail</div>
-                    <div className="text-[#4A4A4A] group-hover:text-[#00C853] transition-colors">info@keyperion-technologies.com</div>
+                    <div className="text-[#4A4A4A] group-hover:text-[#0EA5E9] transition-colors">info@prysm-technologies.com</div>
                   </div>
                 </a>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-[#00C853] rounded-md flex items-center justify-center flex-shrink-0">
+                  <div className="w-12 h-12 bg-[#0EA5E9] rounded-md flex items-center justify-center flex-shrink-0">
                     <MapPin className="text-white" size={20} />
                   </div>
                   <div>
@@ -214,7 +214,7 @@ const Kontakt = () => {
       <section className="h-96 bg-[#F4F7F5] relative">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <MapPin className="text-[#00C853] mx-auto mb-4" size={48} strokeWidth={1.5} />
+            <MapPin className="text-[#0EA5E9] mx-auto mb-4" size={48} strokeWidth={1.5} />
             <p className="text-[#4A4A4A] font-medium">Große Gallusstr. 14, 60315 Frankfurt am Main</p>
           </div>
         </div>

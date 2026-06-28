@@ -5,8 +5,8 @@ import axios from 'axios';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const AVATAR_COLORS = [
-  'bg-emerald-500', 'bg-blue-500', 'bg-purple-500', 'bg-rose-500',
-  'bg-amber-500', 'bg-teal-500', 'bg-indigo-500', 'bg-pink-500',
+  'bg-sky-500', 'bg-blue-500', 'bg-purple-500', 'bg-rose-500',
+  'bg-amber-500', 'bg-sky-500', 'bg-indigo-500', 'bg-pink-500',
 ];
 
 const getInitials = (name) => {
@@ -136,7 +136,7 @@ const MitarbeiterChat = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -147,7 +147,7 @@ const MitarbeiterChat = () => {
       <div className="flex items-center gap-3 p-4 border-b border-gray-100">
         <Avatar name="Admin" />
         <div>
-          <p className="font-semibold text-gray-900">Keyperion Technologies Support</p>
+          <p className="font-semibold text-gray-900">Prysm Technologies Support</p>
           <p className="text-xs text-gray-500">Nachrichten an den Administrator</p>
         </div>
       </div>
@@ -167,7 +167,7 @@ const MitarbeiterChat = () => {
               <div key={i} className={`flex items-end gap-2 ${isMe ? 'justify-end' : 'justify-start'}`}>
                 {!isMe && <Avatar name="Admin" size="w-7 h-7 text-xs" />}
                 <div className={`max-w-[75%] rounded-2xl px-4 py-2.5 ${
-                  isMe ? 'bg-emerald-500 text-white rounded-br-md' : 'bg-white text-gray-900 border border-gray-200 rounded-bl-md'
+                  isMe ? 'bg-sky-500 text-white rounded-br-md' : 'bg-white text-gray-900 border border-gray-200 rounded-bl-md'
                 }`}>
                   {msg.image && (
                     <img
@@ -178,7 +178,7 @@ const MitarbeiterChat = () => {
                     />
                   )}
                   {msg.message && <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>}
-                  <p className={`text-xs mt-1 ${isMe ? 'text-emerald-100' : 'text-gray-400'}`}>{formatTime(msg.created_at)}</p>
+                  <p className={`text-xs mt-1 ${isMe ? 'text-sky-100' : 'text-gray-400'}`}>{formatTime(msg.created_at)}</p>
                 </div>
                 {isMe && <Avatar name={employeeData.name || 'MA'} size="w-7 h-7 text-xs" />}
               </div>
@@ -209,7 +209,7 @@ const MitarbeiterChat = () => {
           <input type="file" ref={fileInputRef} accept="image/*" className="hidden" onChange={handleFileSelect} />
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="p-2.5 text-gray-400 hover:text-emerald-500 hover:bg-gray-50 rounded-full transition-colors"
+            className="p-2.5 text-gray-400 hover:text-sky-500 hover:bg-gray-50 rounded-full transition-colors"
             data-testid="chat-image-btn"
           >
             <Image size={20} />
@@ -220,13 +220,13 @@ const MitarbeiterChat = () => {
             onChange={(e) => setNewMessage(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
             placeholder="Nachricht schreiben..."
-            className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm text-gray-900 focus:outline-none focus:border-emerald-500"
+            className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm text-gray-900 focus:outline-none focus:border-sky-500"
             data-testid="chat-message-input"
           />
           <button
             onClick={handleSend}
             disabled={(!newMessage.trim() && !imageFile) || sending}
-            className="p-2.5 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="p-2.5 bg-sky-500 text-white rounded-full hover:bg-sky-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
             data-testid="chat-send-btn"
           >
             <Send size={18} />

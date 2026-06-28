@@ -3,7 +3,7 @@ import { Upload, Shield, AlertTriangle, CheckCircle, FileImage, Loader2, Downloa
 import { Button } from '../../components/ui/button';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { KeyperionLogo } from '../../components/Logo';
+import { PrysmLogo } from '../../components/Logo';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -78,11 +78,11 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F0FDF4] via-white to-[#E8F5E9] flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#F0F9FF] via-white to-[#E0F2FE] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <KeyperionLogo className="h-14 w-14 mx-auto mb-6" />
+          <PrysmLogo className="h-14 w-14 mx-auto mb-6" />
           <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Identitätsverifizierung</h1>
           <p className="text-slate-600">
             Willkommen, {applicant?.full_name || applicant?.name}! Bitte laden Sie Ihren Ausweis hoch.
@@ -90,17 +90,17 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
         </div>
 
         {/* Contract Download */}
-        <div className="bg-emerald-50 border border-emerald-200 rounded-xl p-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div className="bg-sky-50 border border-sky-200 rounded-xl p-4 mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <CheckCircle size={20} className="text-emerald-600 flex-shrink-0" />
-            <span className="text-sm text-emerald-800 font-medium">Arbeitsvertrag wurde unterschrieben</span>
+            <CheckCircle size={20} className="text-sky-600 flex-shrink-0" />
+            <span className="text-sm text-sky-800 font-medium">Arbeitsvertrag wurde unterschrieben</span>
           </div>
           <button
             onClick={() => {
               const token = localStorage.getItem('employee_token');
               window.open(`${BACKEND_URL}/api/applications/download-contract?token=${token}`, '_blank');
             }}
-            className="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors text-sm font-medium"
+            className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors text-sm font-medium"
             data-testid="download-contract-btn"
           >
             <Download size={16} />
@@ -111,21 +111,21 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
         {/* Progress Steps */}
         <div className="flex items-center justify-center gap-4 mb-8">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#00C853] text-white flex items-center justify-center text-sm font-bold">
+            <div className="w-8 h-8 rounded-full bg-[#0EA5E9] text-white flex items-center justify-center text-sm font-bold">
               <CheckCircle size={16} />
             </div>
-            <span className="text-sm text-[#00C853] font-medium">Bewerbung akzeptiert</span>
+            <span className="text-sm text-[#0EA5E9] font-medium">Bewerbung akzeptiert</span>
           </div>
-          <div className="w-8 h-px bg-[#00C853]"></div>
+          <div className="w-8 h-px bg-[#0EA5E9]"></div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#00C853] text-white flex items-center justify-center text-sm font-bold">
+            <div className="w-8 h-8 rounded-full bg-[#0EA5E9] text-white flex items-center justify-center text-sm font-bold">
               <CheckCircle size={16} />
             </div>
-            <span className="text-sm text-[#00C853] font-medium">Vertrag unterschrieben</span>
+            <span className="text-sm text-[#0EA5E9] font-medium">Vertrag unterschrieben</span>
           </div>
-          <div className="w-8 h-px bg-[#00C853]"></div>
+          <div className="w-8 h-px bg-[#0EA5E9]"></div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#00C853] text-white flex items-center justify-center text-sm font-bold">3</div>
+            <div className="w-8 h-8 rounded-full bg-[#0EA5E9] text-white flex items-center justify-center text-sm font-bold">3</div>
             <span className="text-sm text-[#0A0A0A] font-medium">ID-Verifizierung</span>
           </div>
         </div>
@@ -173,7 +173,7 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
         {/* Upload Section */}
         <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-8">
           <h2 className="text-lg font-semibold text-[#0A0A0A] mb-6 flex items-center gap-2">
-            <FileImage className="text-[#00C853]" size={20} />
+            <FileImage className="text-[#0EA5E9]" size={20} />
             Ausweisdokumente hochladen
           </h2>
 
@@ -186,8 +186,8 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
               <div
                 className={`relative border-2 border-dashed rounded-xl p-6 text-center transition-colors cursor-pointer ${
                   frontPreview 
-                    ? 'border-[#00C853] bg-[#F0FDF4]' 
-                    : 'border-slate-300 hover:border-[#00C853] hover:bg-slate-50'
+                    ? 'border-[#0EA5E9] bg-[#F0F9FF]' 
+                    : 'border-slate-300 hover:border-[#0EA5E9] hover:bg-slate-50'
                 }`}
                 onClick={() => document.getElementById('front-upload').click()}
               >
@@ -198,7 +198,7 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
                       alt="Vorderseite"
                       className="max-h-32 mx-auto rounded-lg shadow-md"
                     />
-                    <p className="text-sm text-[#00C853] font-medium flex items-center justify-center gap-1">
+                    <p className="text-sm text-[#0EA5E9] font-medium flex items-center justify-center gap-1">
                       <CheckCircle size={16} /> Hochgeladen
                     </p>
                   </div>
@@ -228,8 +228,8 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
               <div
                 className={`relative border-2 border-dashed rounded-xl p-6 text-center transition-colors cursor-pointer ${
                   backPreview 
-                    ? 'border-[#00C853] bg-[#F0FDF4]' 
-                    : 'border-slate-300 hover:border-[#00C853] hover:bg-slate-50'
+                    ? 'border-[#0EA5E9] bg-[#F0F9FF]' 
+                    : 'border-slate-300 hover:border-[#0EA5E9] hover:bg-slate-50'
                 }`}
                 onClick={() => document.getElementById('back-upload').click()}
               >
@@ -240,7 +240,7 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
                       alt="Rückseite"
                       className="max-h-32 mx-auto rounded-lg shadow-md"
                     />
-                    <p className="text-sm text-[#00C853] font-medium flex items-center justify-center gap-1">
+                    <p className="text-sm text-[#0EA5E9] font-medium flex items-center justify-center gap-1">
                       <CheckCircle size={16} /> Hochgeladen
                     </p>
                   </div>
@@ -266,7 +266,7 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
           <Button
             onClick={handleSubmit}
             disabled={!frontImage || !backImage || isUploading}
-            className="w-full h-14 bg-[#00C853] hover:bg-[#009624] text-white text-lg font-semibold rounded-xl"
+            className="w-full h-14 bg-[#0EA5E9] hover:bg-[#0284C7] text-white text-lg font-semibold rounded-xl"
             data-testid="verification-submit-btn"
           >
             {isUploading ? (
@@ -285,7 +285,7 @@ const MitarbeiterVerification = ({ applicant, onVerificationComplete }) => {
 
         {/* Footer */}
         <p className="text-center text-sm text-slate-500 mt-6">
-          © 2026 Keyperion Technologies. Alle Rechte vorbehalten.
+          © 2026 Prysm Technologies. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

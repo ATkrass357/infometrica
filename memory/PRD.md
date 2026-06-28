@@ -1,4 +1,12 @@
-# Keyperion Technologies (ehemals Precision Labs) – PRD
+# Prysm Technologies (ehemals Keyperion / Precision Labs) – PRD
+
+## Rebrand → Prysm Technologies + Weiß/Hellblau (2026-06)
+- Komplettes Rebranding **Keyperion Technologies → Prysm Technologies** (Frontend, Backend-Texte, Verträge, Mails, index.html, Impressum).
+- Neues Logo: SVG-Prisma (weißes Dreieck auf hellblauem #0EA5E9 Rounded-Square) in `components/Logo.jsx`, Export `PrysmLogo`.
+- Theme: **Weiß + Hellblau** auf öffentlicher Seite + Mitarbeiter-Portal. Grün/Emerald (#00C853, emerald-*, green-*) → Sky-Blau (#0EA5E9 / sky-* Klassen). Dunkler Text bleibt dunkel.
+- Admin-Panel: nutzt weiterhin separates dunkles "Tokyo Night" Dashboard-Theme (grüne Akzente dort ebenfalls zu sky-blau). Nicht vollständig monochrom/blau umgestellt.
+- Mails/Domain: `*@prysm-technologies.com`. Admin-Login: `admin@prysm-technologies.com` (Legacy-Account wird beim Start automatisch migriert).
+
 
 ## Original Problem Statement
 Keyperion Technologies VPS-Plattform (Rebrand von "Precision Labs"): Admin Panel Mobile, 1:1 Chat, HTML-Contract, GMX/Web.de IMAP, Test-Sitzungen (1-Stunden-Links), Referral-Links.

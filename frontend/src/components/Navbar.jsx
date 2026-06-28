@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight } from 'lucide-react';
-import { KeyperionLogo } from './Logo';
+import { PrysmLogo } from './Logo';
 
 export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -38,9 +38,9 @@ export const Navbar = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group" data-testid="nav-logo">
-            <KeyperionLogo className="h-11 w-11" />
+            <PrysmLogo className="h-11 w-11" />
             <span className="text-xl font-bold text-[#0A0A0A]">
-              Keyperion <span className="text-[#00C853]">Technologies</span>
+              Prysm <span className="text-[#0EA5E9]">Technologies</span>
             </span>
           </Link>
 
@@ -66,7 +66,7 @@ export const Navbar = () => {
           <Link
             to="/kontakt"
             data-testid="nav-cta"
-            className="hidden lg:inline-flex items-center gap-2 h-11 px-6 bg-[#00C853] text-white text-sm font-semibold rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 shadow-lg shadow-[#00C853]/20"
+            className="hidden lg:inline-flex items-center gap-2 h-11 px-6 bg-[#0EA5E9] text-white text-sm font-semibold rounded-full hover:scale-105 active:scale-95 transition-transform duration-200 shadow-lg shadow-[#0EA5E9]/20"
           >
             Beratung anfragen
             <ArrowRight size={16} />
@@ -90,9 +90,9 @@ export const Navbar = () => {
         <div className="p-6">
           <div className="flex justify-between items-center mb-12">
             <div className="flex items-center gap-3">
-              <KeyperionLogo className="h-10 w-10" />
+              <PrysmLogo className="h-10 w-10" />
               <span className="text-xl font-bold text-[#0A0A0A]">
-                Keyperion <span className="text-[#00C853]">Technologies</span>
+                Prysm <span className="text-[#0EA5E9]">Technologies</span>
               </span>
             </div>
             <button
@@ -111,7 +111,7 @@ export const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`py-4 px-4 text-2xl font-semibold rounded-xl transition-colors ${
                   isActive(link.path)
-                    ? 'bg-[#F0FDF4] text-[#00C853]'
+                    ? 'bg-[#F0F9FF] text-[#0EA5E9]'
                     : 'text-[#0A0A0A] hover:bg-slate-50'
                 }`}
               >
@@ -123,7 +123,7 @@ export const Navbar = () => {
           <Link
             to="/kontakt"
             onClick={() => setIsMobileMenuOpen(false)}
-            className="mt-8 flex items-center justify-center gap-2 h-14 bg-[#00C853] text-white font-semibold rounded-full"
+            className="mt-8 flex items-center justify-center gap-2 h-14 bg-[#0EA5E9] text-white font-semibold rounded-full"
           >
             Beratung anfragen
             <ArrowRight size={18} />

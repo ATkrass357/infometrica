@@ -367,7 +367,7 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 <p>Das Arbeitsverhältnis beginnt am {signed_date} (Tag der Unterzeichnung durch beide Parteien). Es wird auf unbestimmte Zeit geschlossen. Die Probezeit beträgt sechs Monate. Während der Probezeit kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.</p>
 
 <h3>§2 Tätigkeit</h3>
-<p>Der Arbeitnehmer wird bei Keyperion Technologies als <strong>Mitarbeiter/in in der Daten- und Produktprüfung</strong> eingestellt. Die Tätigkeit umfasst insbesondere:</p>
+<p>Der Arbeitnehmer wird bei Prysm Technologies als <strong>Mitarbeiter/in in der Daten- und Produktprüfung</strong> eingestellt. Die Tätigkeit umfasst insbesondere:</p>
 <ul>
   <li>Durchführung von Softwaretests, Produkttests und Testläufen unter realen Bedingungen</li>
   <li>Dokumentation und Auswertung der Testergebnisse</li>
@@ -416,7 +416,7 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 <p>Das Arbeitsverhältnis beginnt am {signed_date} (Tag der Unterzeichnung durch beide Parteien). Es wird auf unbestimmte Zeit geschlossen. Die Probezeit beträgt einen Monat. Während der Probezeit kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.</p>
 
 <h3>§2 Tätigkeit</h3>
-<p>Der Arbeitnehmer wird bei Keyperion Technologies als <strong>Mitarbeiter/in in der Daten- und Produktprüfung</strong> eingestellt. Die Tätigkeit umfasst insbesondere:</p>
+<p>Der Arbeitnehmer wird bei Prysm Technologies als <strong>Mitarbeiter/in in der Daten- und Produktprüfung</strong> eingestellt. Die Tätigkeit umfasst insbesondere:</p>
 <ul>
   <li>Durchführung von Softwaretests, Produkttests und Testläufen unter realen Bedingungen</li>
   <li>Dokumentation und Auswertung der Testergebnisse</li>
@@ -488,7 +488,7 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 <p>(1) <strong>Vertraulichkeit:</strong> Der Auftragnehmer verpflichtet sich, sämtliche vertraulichen Informationen, die ihm im Rahmen der Tätigkeit bekannt werden, streng geheim zu halten. Dies umfasst insbesondere Geschäftsgeheimnisse, technische Details von Applikationen, Schwachstellenanalysen, Testmethoden, Partnerinformationen sowie sämtliche Daten im Zusammenhang mit Identifizierungsverfahren. Diese Verpflichtung gilt unbefristet auch nach Beendigung des Vertragsverhältnisses.</p>
 <p>(2) <strong>NDA &amp; Vertragsstrafe:</strong> Eine Weitergabe, Vervielfältigung oder sonstige Nutzung vertraulicher Informationen ohne vorherige schriftliche Zustimmung des Auftraggebers ist untersagt. Bei Zuwiderhandlung zahlt der Auftragnehmer eine Vertragsstrafe in Höhe von 5.000,00 € pro Verstoß. Weitergehende Schadensersatzansprüche bleiben vorbehalten.</p>
 <p>(3) <strong>Datenschutz &amp; DSGVO:</strong> Der Auftragnehmer verarbeitet personenbezogene Daten ausschließlich zweckgebunden und weisungsgemäß unter strikter Einhaltung der DSGVO und des BDSG. Sämtliche personenbezogenen Daten (insbesondere Ausweisdaten, Video-Ident-Aufzeichnungen, Test-Accounts) sind unverzüglich nach Abschluss des jeweiligen Tests durch den Auftragnehmer zu löschen.</p>
-<p>(4) <strong>Datenlöschung durch Auftraggeber und Partner:</strong> Die Keyperion Technologies GmbH verpflichtet sich, alle im Rahmen der Testtätigkeit erhobenen personenbezogenen Daten und Testergebnisse spätestens 30 Tage nach Abschluss des jeweiligen Testzyklus vollständig und unwiederbringlich zu löschen, soweit keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Sie stellt vertraglich sicher, dass auch ihre Partner (Banken, Finanzdienstleister und Software-Anbieter) die Daten fristgerecht löschen. Auf Wunsch wird eine Löschbestätigung vorgelegt.</p>
+<p>(4) <strong>Datenlöschung durch Auftraggeber und Partner:</strong> Die Prysm Technologies GmbH verpflichtet sich, alle im Rahmen der Testtätigkeit erhobenen personenbezogenen Daten und Testergebnisse spätestens 30 Tage nach Abschluss des jeweiligen Testzyklus vollständig und unwiederbringlich zu löschen, soweit keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Sie stellt vertraglich sicher, dass auch ihre Partner (Banken, Finanzdienstleister und Software-Anbieter) die Daten fristgerecht löschen. Auf Wunsch wird eine Löschbestätigung vorgelegt.</p>
 <p>(5) <strong>Auftragsverarbeitung:</strong> Soweit der Auftragnehmer als Auftragsverarbeiter im Sinne von Art. 28 DSGVO tätig wird, gelten die Bestimmungen der separaten Auftragsverarbeitungsvereinbarung (Anlage 1), die Bestandteil dieses Vertrages ist.</p>
 <p>(6) <strong>Technische und organisatorische Maßnahmen:</strong> Der Auftragnehmer trifft angemessene TOMs zum Schutz der Daten.</p>
 <p>(7) Die Regelungen dieses Paragraphen gelten auch nach Vertragsbeendigung fort.</p>
@@ -585,7 +585,7 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 <p>Dieses Arbeitsverhältnis beginnt am {signed_date} (Tag der Unterzeichnung durch beide Parteien).</p>
 
 <h3>§2 Tätigkeit</h3>
-<p>Der Arbeitnehmer wird bei Keyperion Technologies als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
+<p>Der Arbeitnehmer wird bei Prysm Technologies als <strong>Mitarbeiter in der Verifikations Testung</strong> im Homeoffice eingestellt und vor allem mit folgenden Aufgaben beschäftigt:</p>
 <ul>
   <li>Durchführung von Video-Identifikationsverfahren zur Evaluierung und Testung</li>
   <li>Überprüfung von Apps und Softwares auf Benutzerfreundlichkeit und Mängel</li>
@@ -727,7 +727,7 @@ async def download_contract(
 <div class="parties">
   <div>
     <p class="label">Arbeitgeber:</p>
-    <p>Keyperion Technologies GmbH</p>
+    <p>Prysm Technologies GmbH</p>
     <p>Große Gallusstr. 14</p>
     <p>60315 Frankfurt am Main</p>
     <p style="color:#666;margin-top:4px;">vertreten durch Lars Kurjo</p>

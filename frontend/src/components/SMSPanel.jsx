@@ -104,9 +104,9 @@ const SMSPanel = ({ isActive = false }) => {
 
   if (loading) {
     return (
-      <div className="bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-200 rounded-xl p-6">
+      <div className="bg-gradient-to-br from-sky-50 to-sky-50 border border-sky-200 rounded-xl p-6">
         <div className="flex items-center justify-center h-24">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500"></div>
         </div>
       </div>
     );
@@ -132,16 +132,16 @@ const SMSPanel = ({ isActive = false }) => {
   }
 
   return (
-    <div className="bg-gradient-to-br from-emerald-50 to-green-50 border border-emerald-200 rounded-xl p-6" data-testid="sms-panel">
+    <div className="bg-gradient-to-br from-sky-50 to-sky-50 border border-sky-200 rounded-xl p-6" data-testid="sms-panel">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
-            <Phone size={20} className="text-emerald-600" />
+          <div className="w-10 h-10 bg-sky-100 rounded-full flex items-center justify-center">
+            <Phone size={20} className="text-sky-600" />
           </div>
           <div>
-            <h4 className="font-semibold text-emerald-800">SMS Verifizierung</h4>
-            <p className="text-sm text-emerald-600 font-mono">{phoneNumber}</p>
+            <h4 className="font-semibold text-sky-800">SMS Verifizierung</h4>
+            <p className="text-sm text-sky-600 font-mono">{phoneNumber}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -149,8 +149,8 @@ const SMSPanel = ({ isActive = false }) => {
             onClick={() => setAutoRefresh(!autoRefresh)}
             className={`px-3 py-1.5 text-xs rounded-lg flex items-center gap-1 transition-colors ${
               autoRefresh 
-                ? 'bg-emerald-500 text-white' 
-                : 'bg-white text-emerald-600 border border-emerald-300 hover:bg-emerald-50'
+                ? 'bg-sky-500 text-white' 
+                : 'bg-white text-sky-600 border border-sky-300 hover:bg-sky-50'
             }`}
             title={autoRefresh ? "Auto-Refresh aktiv" : "Auto-Refresh aktivieren"}
           >
@@ -160,7 +160,7 @@ const SMSPanel = ({ isActive = false }) => {
           <button
             onClick={() => fetchSMS()}
             disabled={refreshing}
-            className="p-2 bg-white text-emerald-600 rounded-lg border border-emerald-300 hover:bg-emerald-50 transition-colors disabled:opacity-50"
+            className="p-2 bg-white text-sky-600 rounded-lg border border-sky-300 hover:bg-sky-50 transition-colors disabled:opacity-50"
             data-testid="refresh-sms-btn"
           >
             <RefreshCw size={16} className={refreshing ? 'animate-spin' : ''} />
@@ -171,9 +171,9 @@ const SMSPanel = ({ isActive = false }) => {
       {/* Messages */}
       {messages.length === 0 ? (
         <div className="text-center py-8 bg-white/50 rounded-lg">
-          <MessageSquare size={32} className="mx-auto mb-2 text-emerald-300" />
-          <p className="text-sm text-emerald-600">Keine SMS vorhanden</p>
-          <p className="text-xs text-emerald-500 mt-1">Warten auf eingehende Codes...</p>
+          <MessageSquare size={32} className="mx-auto mb-2 text-sky-300" />
+          <p className="text-sm text-sky-600">Keine SMS vorhanden</p>
+          <p className="text-xs text-sky-500 mt-1">Warten auf eingehende Codes...</p>
         </div>
       ) : (
         <div className="space-y-3 max-h-[300px] overflow-y-auto">
@@ -189,14 +189,14 @@ const SMSPanel = ({ isActive = false }) => {
             return (
               <div 
                 key={idx} 
-                className="bg-white p-4 rounded-lg border border-emerald-100 shadow-sm"
+                className="bg-white p-4 rounded-lg border border-sky-100 shadow-sm"
                 data-testid={`sms-message-${idx}`}
               >
                 <div className="flex items-center justify-between gap-3">
                   <div className="flex-1">
                     {code ? (
                       <p className="text-base text-gray-800">
-                        Ihr <span className="font-semibold text-emerald-700">{displaySender}</span> Test Code ist - <span className="font-bold font-mono text-emerald-600">{code}</span>
+                        Ihr <span className="font-semibold text-sky-700">{displaySender}</span> Test Code ist - <span className="font-bold font-mono text-sky-600">{code}</span>
                       </p>
                     ) : (
                       <p className="text-sm text-gray-600">SMS von {displaySender}</p>
@@ -212,8 +212,8 @@ const SMSPanel = ({ isActive = false }) => {
                       onClick={() => copyToClipboard(code, idx)}
                       className={`flex-shrink-0 px-4 py-2 rounded-lg font-mono font-bold text-lg transition-all ${
                         copiedCode === idx
-                          ? 'bg-emerald-500 text-white'
-                          : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'
+                          ? 'bg-sky-500 text-white'
+                          : 'bg-sky-100 text-sky-700 hover:bg-sky-200'
                       }`}
                       data-testid={`copy-code-${idx}`}
                       title="Code kopieren"
@@ -239,8 +239,8 @@ const SMSPanel = ({ isActive = false }) => {
       )}
 
       {/* Info */}
-      <div className="mt-4 pt-3 border-t border-emerald-200">
-        <p className="text-xs text-emerald-600 flex items-center gap-1">
+      <div className="mt-4 pt-3 border-t border-sky-200">
+        <p className="text-xs text-sky-600 flex items-center gap-1">
           <AlertCircle size={12} />
           SMS werden automatisch erkannt und Codes extrahiert
         </p>

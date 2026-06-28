@@ -65,8 +65,8 @@ const MitarbeiterAuftrage = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'Offen': return 'bg-amber-100 text-amber-700 border-amber-200';
-      case 'In Bearbeitung': return 'bg-emerald-100 text-emerald-700 border-emerald-200';
-      case 'Abgeschlossen': return 'bg-green-100 text-green-700 border-green-200';
+      case 'In Bearbeitung': return 'bg-sky-100 text-sky-700 border-sky-200';
+      case 'Abgeschlossen': return 'bg-sky-100 text-sky-700 border-sky-200';
       default: return 'bg-gray-100 text-gray-600 border-gray-200';
     }
   };
@@ -74,7 +74,7 @@ const MitarbeiterAuftrage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64" data-testid="loading-spinner">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -89,7 +89,7 @@ const MitarbeiterAuftrage = () => {
         </div>
         <button
           onClick={fetchTasks}
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors"
+          className="flex items-center justify-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors"
           data-testid="refresh-btn"
         >
           <RefreshCw size={18} />
@@ -110,7 +110,7 @@ const MitarbeiterAuftrage = () => {
             onClick={() => setFilter(tab.key)}
             className={`px-4 py-2 rounded-lg font-medium transition-colors ${
               filter === tab.key
-                ? 'bg-emerald-500 text-white'
+                ? 'bg-sky-500 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
             data-testid={`filter-${tab.key}`}
@@ -155,7 +155,7 @@ const MitarbeiterAuftrage = () => {
                           href={task.website} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="flex items-center gap-1 text-emerald-600 hover:text-emerald-700 hover:underline"
+                          className="flex items-center gap-1 text-sky-600 hover:text-sky-700 hover:underline"
                         >
                           <Globe size={14} />
                           <span>Website öffnen</span>
@@ -175,7 +175,7 @@ const MitarbeiterAuftrage = () => {
                     {task.status === 'Offen' && (
                       <button
                         onClick={() => updateTaskStatus(task.id, 'In Bearbeitung')}
-                        className="flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors text-sm"
+                        className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors text-sm"
                         data-testid={`start-task-${task.id}`}
                       >
                         <Play size={16} />
@@ -185,7 +185,7 @@ const MitarbeiterAuftrage = () => {
                     {task.status === 'In Bearbeitung' && (
                       <button
                         onClick={() => updateTaskStatus(task.id, 'Abgeschlossen')}
-                        className="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors text-sm"
+                        className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors text-sm"
                         data-testid={`complete-task-${task.id}`}
                       >
                         <Check size={16} />
@@ -193,7 +193,7 @@ const MitarbeiterAuftrage = () => {
                       </button>
                     )}
                     {task.status === 'Abgeschlossen' && (
-                      <div className="flex items-center gap-1 text-emerald-600">
+                      <div className="flex items-center gap-1 text-sky-600">
                         <CheckCircle size={20} />
                         <span className="text-sm font-medium">Erledigt</span>
                       </div>
@@ -259,10 +259,10 @@ const MitarbeiterAuftrage = () => {
                     {task.schritt3 && (
                       <div className="bg-white border border-gray-200 rounded-lg p-4">
                         <div className="flex items-center gap-2 mb-2">
-                          <div className="w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-sm font-bold">
+                          <div className="w-8 h-8 bg-sky-100 text-sky-600 rounded-full flex items-center justify-center text-sm font-bold">
                             3
                           </div>
-                          <h5 className="font-medium text-green-700">Schritt 3</h5>
+                          <h5 className="font-medium text-sky-700">Schritt 3</h5>
                         </div>
                         <p className="text-gray-700 pl-10">{task.schritt3}</p>
                       </div>

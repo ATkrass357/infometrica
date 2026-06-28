@@ -6,7 +6,7 @@ import { Input } from '../../components/ui/input';
 import { Label } from '../../components/ui/label';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { KeyperionLogo } from '../../components/Logo';
+import { PrysmLogo } from '../../components/Logo';
 import { ContractBody, CONTRACT_POSITIONS, CONTRACT_SUBTITLES, CONTRACT_TITLES } from './ContractTemplates';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -76,11 +76,11 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F0FDF4] via-white to-[#E8F5E9] flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-[#F0F9FF] via-white to-[#E0F2FE] flex items-center justify-center px-4 py-12">
       <div className="w-full max-w-3xl">
         {/* Header */}
         <div className="text-center mb-8">
-          <KeyperionLogo className="h-14 w-14 mx-auto mb-6" />
+          <PrysmLogo className="h-14 w-14 mx-auto mb-6" />
           <h1 className="text-3xl font-bold text-[#0A0A0A] mb-2">Arbeitsvertrag unterschreiben</h1>
           <p className="text-slate-600">
             Willkommen, {applicant?.full_name || applicant?.name}! Bitte unterschreiben Sie Ihren Arbeitsvertrag.
@@ -90,14 +90,14 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
         {/* Progress Steps */}
         <div className="flex items-center justify-center gap-4 mb-8">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#00C853] text-white flex items-center justify-center text-sm font-bold">
+            <div className="w-8 h-8 rounded-full bg-[#0EA5E9] text-white flex items-center justify-center text-sm font-bold">
               <CheckCircle size={16} />
             </div>
-            <span className="text-sm text-[#00C853] font-medium">Bewerbung akzeptiert</span>
+            <span className="text-sm text-[#0EA5E9] font-medium">Bewerbung akzeptiert</span>
           </div>
-          <div className="w-8 h-px bg-[#00C853]"></div>
+          <div className="w-8 h-px bg-[#0EA5E9]"></div>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#00C853] text-white flex items-center justify-center text-sm font-bold">2</div>
+            <div className="w-8 h-8 rounded-full bg-[#0EA5E9] text-white flex items-center justify-center text-sm font-bold">2</div>
             <span className="text-sm text-[#0A0A0A] font-medium">Vertrag unterschreiben</span>
           </div>
           <div className="w-8 h-px bg-slate-300"></div>
@@ -112,12 +112,12 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
           {/* Contract Header */}
           <div className="bg-[#0A0A0A] text-white p-6">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-xl bg-[#00C853] flex items-center justify-center">
+              <div className="w-14 h-14 rounded-xl bg-[#0EA5E9] flex items-center justify-center">
                 <FileSignature size={28} />
               </div>
               <div>
                 <h2 className="text-xl font-bold">Arbeitsvertrag</h2>
-                <p className="text-slate-400">Keyperion Technologies · {positionLabel}</p>
+                <p className="text-slate-400">Prysm Technologies · {positionLabel}</p>
               </div>
             </div>
           </div>
@@ -136,7 +136,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-4 border-b border-slate-200">
                   <div>
                     <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitgeber:</p>
-                    <p>Keyperion Technologies GmbH</p>
+                    <p>Prysm Technologies GmbH</p>
                     <p>Große Gallusstr. 14</p>
                     <p>60315 Frankfurt am Main</p>
                     <p className="text-slate-500 mt-1">vertreten durch Lars Kurjo</p>
@@ -174,7 +174,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
             {/* IBAN Input */}
             <div>
               <Label className="text-[#0A0A0A] font-semibold flex items-center gap-2 mb-2">
-                <CreditCard size={18} className="text-[#00C853]" />
+                <CreditCard size={18} className="text-[#0EA5E9]" />
                 IBAN für Gehaltszahlung
               </Label>
               <Input
@@ -182,7 +182,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                 value={iban}
                 onChange={handleIBANChange}
                 placeholder=""
-                className="h-12 text-lg font-mono tracking-wider border-slate-200 focus:border-[#00C853] focus:ring-[#00C853]"
+                className="h-12 text-lg font-mono tracking-wider border-slate-200 focus:border-[#0EA5E9] focus:ring-[#0EA5E9]"
                 data-testid="contract-iban-input"
               />
               <p className="text-xs text-slate-500 mt-2">Die Vergütung wird auf dieses Konto überwiesen.</p>
@@ -191,10 +191,10 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
             {/* Signature */}
             <div>
               <Label className="text-[#0A0A0A] font-semibold flex items-center gap-2 mb-2">
-                <PenTool size={18} className="text-[#00C853]" />
+                <PenTool size={18} className="text-[#0EA5E9]" />
                 Ihre Unterschrift
               </Label>
-              <div className="border-2 border-dashed border-slate-300 rounded-xl bg-white hover:border-[#00C853] transition-colors">
+              <div className="border-2 border-dashed border-slate-300 rounded-xl bg-white hover:border-[#0EA5E9] transition-colors">
                 <SignatureCanvas
                   ref={signatureRef}
                   canvasProps={{
@@ -205,7 +205,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
               </div>
               <button
                 onClick={clearSignature}
-                className="mt-2 text-sm text-slate-500 hover:text-[#00C853] flex items-center gap-1"
+                className="mt-2 text-sm text-slate-500 hover:text-[#0EA5E9] flex items-center gap-1"
               >
                 <RotateCcw size={14} />
                 Unterschrift löschen
@@ -225,7 +225,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
             <Button
               onClick={handleSign}
               disabled={isSigning}
-              className="w-full h-14 bg-[#00C853] hover:bg-[#009624] text-white text-lg font-semibold rounded-xl"
+              className="w-full h-14 bg-[#0EA5E9] hover:bg-[#0284C7] text-white text-lg font-semibold rounded-xl"
               data-testid="sign-contract-btn"
             >
               {isSigning ? (
@@ -245,7 +245,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
 
         {/* Footer */}
         <p className="text-center text-sm text-slate-500 mt-6">
-          © 2026 Keyperion Technologies. Alle Rechte vorbehalten.
+          © 2026 Prysm Technologies. Alle Rechte vorbehalten.
         </p>
       </div>
     </div>

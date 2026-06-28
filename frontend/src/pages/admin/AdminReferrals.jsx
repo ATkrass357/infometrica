@@ -154,7 +154,7 @@ const AdminReferrals = () => {
                   </div>
                   <div className="bg-[#1a1b26] rounded-lg p-3">
                     <p className="text-xs text-[#565f89]">Bewerbungen</p>
-                    <p className="text-2xl font-bold text-emerald-400">{ref.applications || 0}</p>
+                    <p className="text-2xl font-bold text-sky-400">{ref.applications || 0}</p>
                   </div>
                   <div className="bg-[#1a1b26] rounded-lg p-3">
                     <p className="text-xs text-[#565f89]">Quote</p>

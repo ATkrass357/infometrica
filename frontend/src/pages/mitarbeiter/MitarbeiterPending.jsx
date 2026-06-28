@@ -1,15 +1,15 @@
 import React from 'react';
 import { Clock, Mail, FileText } from 'lucide-react';
-import { KeyperionLogo } from '../../components/Logo';
+import { PrysmLogo } from '../../components/Logo';
 
 const MitarbeiterPending = ({ applicant }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#F0FDF4] via-white to-[#E8F5E9] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#F0F9FF] via-white to-[#E0F2FE] flex items-center justify-center p-4">
       <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl border border-slate-100 p-8 text-center">
-        <KeyperionLogo className="h-12 w-12 mx-auto mb-6" />
+        <PrysmLogo className="h-12 w-12 mx-auto mb-6" />
         
-        <div className="w-20 h-20 bg-[#F0FDF4] rounded-full flex items-center justify-center mx-auto mb-6">
-          <Clock className="text-[#00C853]" size={40} />
+        <div className="w-20 h-20 bg-[#F0F9FF] rounded-full flex items-center justify-center mx-auto mb-6">
+          <Clock className="text-[#0EA5E9]" size={40} />
         </div>
         
         <h1 className="text-2xl font-bold text-[#0A0A0A] mb-4">
@@ -24,7 +24,7 @@ const MitarbeiterPending = ({ applicant }) => {
 
         <div className="bg-slate-50 rounded-xl p-6 text-left space-y-4">
           <h3 className="font-semibold text-[#0A0A0A] flex items-center gap-2">
-            <FileText size={18} className="text-[#00C853]" />
+            <FileText size={18} className="text-[#0EA5E9]" />
             Ihre Bewerbungsdetails
           </h3>
           <div className="space-y-2 text-sm">
@@ -38,7 +38,7 @@ const MitarbeiterPending = ({ applicant }) => {
             </div>
             <div className="flex justify-between">
               <span className="text-slate-500">Status:</span>
-              <span className="px-2 py-1 bg-[#F0FDF4] text-[#00C853] rounded-full text-xs font-medium">
+              <span className="px-2 py-1 bg-[#F0F9FF] text-[#0EA5E9] rounded-full text-xs font-medium">
                 In Prüfung
               </span>
             </div>
@@ -48,7 +48,7 @@ const MitarbeiterPending = ({ applicant }) => {
         <div className="mt-8 pt-6 border-t border-slate-100">
           <p className="text-sm text-slate-500">
             <Mail className="inline mr-1" size={14} />
-            Bei Fragen wenden Sie sich an <a href="mailto:hr@keyperion-technologies.com" className="text-[#00C853] hover:underline">hr@keyperion-technologies.com</a>
+            Bei Fragen wenden Sie sich an <a href="mailto:hr@prysm-technologies.com" className="text-[#0EA5E9] hover:underline">hr@prysm-technologies.com</a>
           </p>
         </div>
       </div>

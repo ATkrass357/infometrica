@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ClipboardList, ChevronRight, ChevronLeft, CheckCircle, AlertCircle } from 'lucide-react';
-import { KeyperionLogo } from '../../components/Logo';
+import { PrysmLogo } from '../../components/Logo';
 import axios from 'axios';
 import { toast } from 'sonner';
 
@@ -165,7 +165,7 @@ const MitarbeiterQuiz = ({ applicant, onQuizCompleted }) => {
                   onClick={() => setAnswer(q.id, opt)}
                   className={`px-5 py-2.5 rounded-lg border-2 font-medium text-sm transition-all ${
                     answers[q.id] === opt
-                      ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                      ? 'border-sky-500 bg-sky-50 text-sky-700'
                       : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-gray-300'
                   }`}
                   data-testid={`quiz-option-${q.id}-${opt}`}
@@ -185,7 +185,7 @@ const MitarbeiterQuiz = ({ applicant, onQuizCompleted }) => {
               value={answers[q.id] || ''}
               onChange={(e) => setAnswer(q.id, e.target.value)}
               rows={3}
-              className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-emerald-500 resize-none text-sm"
+              className="w-full px-4 py-3 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:border-sky-500 resize-none text-sm"
               placeholder={q.placeholder}
               data-testid={`quiz-text-${q.id}`}
             />
@@ -204,7 +204,7 @@ const MitarbeiterQuiz = ({ applicant, onQuizCompleted }) => {
               onClick={() => setAnswer(q.id, true)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-lg border-2 font-medium text-sm transition-all ${
                 answers[q.id] === true
-                  ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                  ? 'border-sky-500 bg-sky-50 text-sky-700'
                   : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
               }`}
               data-testid={`quiz-confirm-${q.id}`}
@@ -227,10 +227,10 @@ const MitarbeiterQuiz = ({ applicant, onQuizCompleted }) => {
       {/* Header */}
       <div className="bg-white border-b border-gray-200 px-4 py-4">
         <div className="max-w-2xl mx-auto flex items-center gap-3">
-          <KeyperionLogo className="w-10 h-10" />
+          <PrysmLogo className="w-10 h-10" />
           <div>
             <h1 className="text-lg font-bold text-gray-900">
-              Keyperion <span className="text-emerald-500">Technologies</span>
+              Prysm <span className="text-sky-500">Technologies</span>
             </h1>
             <p className="text-xs text-gray-500">Einführungs-Quiz</p>
           </div>
@@ -239,11 +239,11 @@ const MitarbeiterQuiz = ({ applicant, onQuizCompleted }) => {
 
       <div className="max-w-2xl mx-auto px-4 py-6 sm:py-8">
         {/* Welcome */}
-        <div className="bg-gradient-to-r from-emerald-500 to-emerald-600 rounded-2xl p-5 sm:p-6 text-white mb-6">
+        <div className="bg-gradient-to-r from-sky-500 to-sky-600 rounded-2xl p-5 sm:p-6 text-white mb-6">
           <h2 className="text-xl sm:text-2xl font-bold mb-2">
             Willkommen, {applicant?.name}!
           </h2>
-          <p className="text-emerald-100 text-sm sm:text-base">
+          <p className="text-sky-100 text-sm sm:text-base">
             Bevor Sie fortfahren, bitten wir Sie einige Fragen zu Ihrer Tätigkeit als Web Application Tester zu beantworten.
           </p>
         </div>
@@ -256,7 +256,7 @@ const MitarbeiterQuiz = ({ applicant, onQuizCompleted }) => {
           </div>
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
             <div
-              className="h-full bg-emerald-500 rounded-full transition-all duration-300"
+              className="h-full bg-sky-500 rounded-full transition-all duration-300"
               style={{ width: `${((currentPage + 1) / totalPages) * 100}%` }}
             />
           </div>
@@ -283,7 +283,7 @@ const MitarbeiterQuiz = ({ applicant, onQuizCompleted }) => {
             <button
               onClick={handleSubmit}
               disabled={!canGoNext() || submitting}
-              className="flex items-center gap-2 px-6 py-2.5 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-2 px-6 py-2.5 bg-sky-500 text-white font-semibold rounded-lg hover:bg-sky-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               data-testid="quiz-submit-btn"
             >
               {submitting ? (
@@ -302,7 +302,7 @@ const MitarbeiterQuiz = ({ applicant, onQuizCompleted }) => {
             <button
               onClick={() => setCurrentPage(p => p + 1)}
               disabled={!canGoNext()}
-              className="flex items-center gap-2 px-6 py-2.5 bg-emerald-500 text-white font-semibold rounded-lg hover:bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="flex items-center gap-2 px-6 py-2.5 bg-sky-500 text-white font-semibold rounded-lg hover:bg-sky-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
               data-testid="quiz-next-btn"
             >
               Weiter

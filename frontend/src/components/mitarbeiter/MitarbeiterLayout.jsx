@@ -10,7 +10,7 @@ import {
   ChevronRight,
   MessageCircle,
 } from 'lucide-react';
-import { KeyperionLogo } from '../Logo';
+import { PrysmLogo } from '../Logo';
 import MitarbeiterPending from '../../pages/mitarbeiter/MitarbeiterPending';
 import MitarbeiterContractSign from '../../pages/mitarbeiter/MitarbeiterContractSign';
 import MitarbeiterVerification from '../../pages/mitarbeiter/MitarbeiterVerification';
@@ -104,7 +104,7 @@ const MitarbeiterLayout = ({ children }) => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -148,14 +148,14 @@ const MitarbeiterLayout = ({ children }) => {
         <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
           {isSidebarOpen && (
             <div className="flex items-center space-x-2">
-              <KeyperionLogo className="w-8 h-8" />
+              <PrysmLogo className="w-8 h-8" />
               <span className="text-lg font-bold text-gray-900">
-                Keyperion <span className="text-emerald-500">Technologies</span>
+                Prysm <span className="text-sky-500">Technologies</span>
               </span>
             </div>
           )}
           {!isSidebarOpen && (
-            <KeyperionLogo className="w-8 h-8 mx-auto" />
+            <PrysmLogo className="w-8 h-8 mx-auto" />
           )}
           <button
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -176,7 +176,7 @@ const MitarbeiterLayout = ({ children }) => {
                 to={item.path}
                 className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-all group ${
                   active
-                    ? 'bg-emerald-50 text-emerald-600'
+                    ? 'bg-sky-50 text-sky-600'
                     : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900'
                 }`}
               >
@@ -185,7 +185,7 @@ const MitarbeiterLayout = ({ children }) => {
                   <>
                     <span className="flex-1 font-medium">{item.label}</span>
                     {item.badge && (
-                      <span className={`px-2 py-0.5 ${item.badgeColor || 'bg-emerald-500'} text-white text-xs font-semibold rounded-full`}>
+                      <span className={`px-2 py-0.5 ${item.badgeColor || 'bg-sky-500'} text-white text-xs font-semibold rounded-full`}>
                         {item.badge}
                       </span>
                     )}
@@ -205,7 +205,7 @@ const MitarbeiterLayout = ({ children }) => {
           ) : null}
           <button
             onClick={handleLogout}
-            className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-emerald-600 hover:bg-emerald-50 transition-all"
+            className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sky-600 hover:bg-sky-50 transition-all"
           >
             <LogOut size={20} />
             {isSidebarOpen && <span className="font-medium">Abmelden</span>}
@@ -223,9 +223,9 @@ const MitarbeiterLayout = ({ children }) => {
           <aside className="lg:hidden fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-gray-200 z-50 flex flex-col">
             <div className="h-16 flex items-center justify-between px-4 border-b border-gray-200">
               <div className="flex items-center space-x-2">
-                <KeyperionLogo className="w-8 h-8" />
+                <PrysmLogo className="w-8 h-8" />
                 <span className="text-lg font-bold text-gray-900">
-                  Keyperion <span className="text-emerald-500">Technologies</span>
+                  Prysm <span className="text-sky-500">Technologies</span>
                 </span>
               </div>
               <button
@@ -248,14 +248,14 @@ const MitarbeiterLayout = ({ children }) => {
                     onClick={() => setIsMobileSidebarOpen(false)}
                     className={`flex items-center space-x-3 px-3 py-3 rounded-lg transition-all ${
                       active
-                        ? 'bg-emerald-50 text-emerald-600'
+                        ? 'bg-sky-50 text-sky-600'
                         : 'text-gray-700 hover:bg-gray-100'
                     }`}
                   >
                     <Icon size={20} />
                     <span className="flex-1 font-medium">{item.label}</span>
                     {item.badge && (
-                      <span className={`px-2 py-0.5 ${item.badgeColor || 'bg-emerald-500'} text-white text-xs font-semibold rounded-full`}>
+                      <span className={`px-2 py-0.5 ${item.badgeColor || 'bg-sky-500'} text-white text-xs font-semibold rounded-full`}>
                         {item.badge}
                       </span>
                     )}
@@ -271,7 +271,7 @@ const MitarbeiterLayout = ({ children }) => {
               </div>
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-emerald-600 hover:bg-emerald-50 transition-all"
+                className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sky-600 hover:bg-sky-50 transition-all"
               >
                 <LogOut size={20} />
                 <span className="font-medium">Abmelden</span>

@@ -23,7 +23,7 @@ const Unternehmen = () => {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
-              <div className="text-[#00C853] font-semibold tracking-wide mb-4">ÜBER UNS</div>
+              <div className="text-[#0EA5E9] font-semibold tracking-wide mb-4">ÜBER UNS</div>
               <h1 className="text-5xl lg:text-7xl font-bold text-[#1A1A1A] leading-[0.95] tracking-tight mb-6">
                 Deutsche<br />
                 Präzision.
@@ -35,15 +35,15 @@ const Unternehmen = () => {
               </p>
               <div className="flex flex-wrap gap-8">
                 <div>
-                  <div className="text-4xl font-bold text-[#00C853]">2+</div>
+                  <div className="text-4xl font-bold text-[#0EA5E9]">2+</div>
                   <div className="text-[#4A4A4A]">Jahre Erfahrung</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-[#00C853]">100+</div>
+                  <div className="text-4xl font-bold text-[#0EA5E9]">100+</div>
                   <div className="text-[#4A4A4A]">Projekte</div>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold text-[#00C853]">25+</div>
+                  <div className="text-4xl font-bold text-[#0EA5E9]">25+</div>
                   <div className="text-[#4A4A4A]">Experten</div>
                 </div>
               </div>
@@ -56,7 +56,7 @@ const Unternehmen = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-[#00C853] p-6 hidden lg:block rounded-lg shadow-xl">
+              <div className="absolute -bottom-6 -left-6 bg-[#0EA5E9] p-6 hidden lg:block rounded-lg shadow-xl">
                 <div className="text-white font-bold text-lg">Deutschland HQ</div>
                 <div className="text-white/80 text-sm">Frankfurt am Main</div>
               </div>
@@ -69,8 +69,8 @@ const Unternehmen = () => {
       <section className="py-24 px-6 lg:px-12 bg-[#1A1A1A]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div className="border-l-4 border-[#00C853] pl-8">
-              <div className="text-[#00C853] font-semibold mb-4">MISSION</div>
+            <div className="border-l-4 border-[#0EA5E9] pl-8">
+              <div className="text-[#0EA5E9] font-semibold mb-4">MISSION</div>
               <h2 className="text-3xl font-bold text-white mb-6">
                 Qualität für alle zugänglich machen
               </h2>
@@ -99,7 +99,7 @@ const Unternehmen = () => {
       <section className="py-24 px-6 lg:px-12 bg-[#F4F7F5]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-[#00C853] font-semibold tracking-wide mb-4">WERTE</div>
+            <div className="text-[#0EA5E9] font-semibold tracking-wide mb-4">WERTE</div>
             <h2 className="text-4xl lg:text-5xl font-bold text-[#1A1A1A]">
               Was uns antreibt
             </h2>
@@ -111,10 +111,10 @@ const Unternehmen = () => {
               return (
                 <div
                   key={index}
-                  className="bg-white border border-gray-200 p-8 hover:border-[#00C853] transition-colors duration-300 text-center rounded-lg"
+                  className="bg-white border border-gray-200 p-8 hover:border-[#0EA5E9] transition-colors duration-300 text-center rounded-lg"
                 >
                   <div className="w-16 h-16 bg-[#1A1A1A] rounded-md flex items-center justify-center mx-auto mb-6">
-                    <Icon className="text-[#00C853]" size={28} strokeWidth={1.5} />
+                    <Icon className="text-[#0EA5E9]" size={28} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-xl font-bold text-[#1A1A1A] mb-2">{value.title}</h3>
                   <p className="text-[#4A4A4A]">{value.desc}</p>
@@ -129,7 +129,7 @@ const Unternehmen = () => {
       <section className="py-24 px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-[#00C853] font-semibold tracking-wide mb-4">GESCHICHTE</div>
+            <div className="text-[#0EA5E9] font-semibold tracking-wide mb-4">GESCHICHTE</div>
             <h2 className="text-4xl lg:text-5xl font-bold text-[#1A1A1A]">
               Unsere Meilensteine
             </h2>
@@ -138,7 +138,7 @@ const Unternehmen = () => {
           <div className="flex flex-wrap justify-center gap-8">
             {milestones.map((item, index) => (
               <div key={index} className="text-center w-40">
-                <div className="text-5xl font-bold text-[#00C853] mb-2">{item.year}</div>
+                <div className="text-5xl font-bold text-[#0EA5E9] mb-2">{item.year}</div>
                 <div className="h-px w-full bg-gray-300 mb-4"></div>
                 <p className="text-[#4A4A4A] text-sm">{item.event}</p>
               </div>
@@ -148,7 +148,7 @@ const Unternehmen = () => {
       </section>
 
       {/* Team Stats */}
-      <section className="py-24 px-6 lg:px-12 bg-[#00C853]">
+      <section className="py-24 px-6 lg:px-12 bg-[#0EA5E9]">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
@@ -182,7 +182,7 @@ const Unternehmen = () => {
           <Link
             to="/karriere"
             data-testid="about-careers-cta"
-            className="group inline-flex items-center gap-3 px-10 py-5 bg-[#00C853] text-white font-bold text-lg rounded-md hover:bg-[#009624] hover:scale-105 transition-all duration-200 shadow-lg shadow-[#00C853]/30"
+            className="group inline-flex items-center gap-3 px-10 py-5 bg-[#0EA5E9] text-white font-bold text-lg rounded-md hover:bg-[#0284C7] hover:scale-105 transition-all duration-200 shadow-lg shadow-[#0EA5E9]/30"
           >
             Offene Stellen
             <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
