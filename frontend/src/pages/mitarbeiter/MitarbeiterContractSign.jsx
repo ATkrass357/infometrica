@@ -7,7 +7,7 @@ import { Label } from '../../components/ui/label';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { KeyperionLogo } from '../../components/Logo';
-import { ContractBody, CONTRACT_POSITIONS, CONTRACT_SUBTITLES } from './ContractTemplates';
+import { ContractBody, CONTRACT_POSITIONS, CONTRACT_SUBTITLES, CONTRACT_TITLES } from './ContractTemplates';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -19,6 +19,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
   const contractType = applicant?.contract_type || 'vollzeit';
   const positionLabel = CONTRACT_POSITIONS[contractType] || CONTRACT_POSITIONS.vollzeit;
   const contractSubtitle = CONTRACT_SUBTITLES[contractType] || CONTRACT_SUBTITLES.vollzeit;
+  const contractTitle = CONTRACT_TITLES[contractType] || CONTRACT_TITLES.vollzeit;
   const signedDate = new Date().toLocaleDateString('de-DE');
 
   const formatIBAN = (value) => {
@@ -126,7 +127,7 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
             <div className="p-6 bg-slate-50 rounded-xl text-sm border border-slate-200">
               {/* Contract Header */}
               <div className="text-center mb-8 pb-4 border-b border-slate-300">
-                <h3 className="text-2xl font-bold text-[#0A0A0A] mb-2">ARBEITSVERTRAG</h3>
+                <h3 className="text-2xl font-bold text-[#0A0A0A] mb-2">{contractTitle}</h3>
                 <p className="text-slate-600">{contractSubtitle}</p>
               </div>
               

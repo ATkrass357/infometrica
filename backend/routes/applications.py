@@ -247,7 +247,7 @@ async def accept_application(
         raise HTTPException(status_code=400, detail="Bewerbung kann in diesem Status nicht akzeptiert werden")
     
     contract_type = (data or {}).get("contract_type", "vollzeit")
-    if contract_type not in ("vollzeit", "teilzeit", "minijob"):
+    if contract_type not in ("vollzeit", "teilzeit", "minijob", "minijob_at", "vollzeit_at", "teilzeit_at", "freiberufler_at"):
         contract_type = "vollzeit"
     
     await db.applications.update_one(
@@ -455,6 +455,129 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 """
         return subtitle, sections_html
 
+    if contract_type == "minijob_at":
+        subtitle = "Werkvertrag über IT-Applikations-Testing"
+        sections_html = f"""
+<h3>§1 Vertragsgegenstand</h3>
+<p>(1) Der Auftragnehmer erbringt für den Auftraggeber Dienstleistungen im Bereich der IT-Qualitätssicherung und Applikations-Sicherheit.</p>
+<p>(2) Die Tätigkeit umfasst insbesondere:</p>
+<ul>
+  <li>Durchführung und detaillierte Validierung von Identifizierungsprozessen (u. a. WebID, PostID, IDnow und vergleichbare Systeme)</li>
+  <li>Analyse der User Journey bei digitalen Anwendungen, insbesondere im Finanzsektor</li>
+  <li>Identifikation technischer Schwachstellen, Usability-Probleme und funktionaler Inkonsistenzen</li>
+  <li>Erstellung strukturierter Test-Reports inklusive Screenshots, Ablaufprotokollen und Verbesserungsvorschlägen</li>
+</ul>
+<p>(3) Die Tests erfolgen remote und flexibel. Die konkreten Testaufträge werden dem Auftragnehmer über eine Plattform oder per E-Mail mitgeteilt.</p>
+
+<h3>§2 Pflichten des Auftragnehmers</h3>
+<p>(1) Der Auftragnehmer verpflichtet sich, die ihm übertragenen Tests gewissenhaft, fachgerecht und termingerecht durchzuführen.</p>
+<p>(2) Er verpflichtet sich, ausschließlich eigene, gültige Ausweisdokumente zu verwenden und keine Test-Accounts oder Daten Dritter zu missbrauchen.</p>
+<p>(3) Der Auftragnehmer arbeitet selbständig und eigenverantwortlich. Weisungen des Auftraggebers sind im Rahmen des Vertragszwecks zu befolgen.</p>
+
+<h3>§3 Vergütung</h3>
+<p>(1) Die Vergütung erfolgt leistungsorientiert pro erfolgreich abgeschlossenem Test. Die Höhe der Vergütung pro Test wird dem Auftragnehmer vor Auftragsannahme mitgeteilt.</p>
+<p>(2) Die Auszahlung erfolgt monatlich nachträglich auf das vom Auftragnehmer benannte Konto, sofern die Reports vollständig und fristgerecht eingegangen sind.</p>
+<p>(3) Der Auftragnehmer ist für die steuerliche Verarbeitung der Einnahmen selbst verantwortlich.</p>
+
+<h3>§4 Laufzeit und Kündigung</h3>
+<p>(1) Der Vertrag beginnt am {signed_date} (Tag der Unterzeichnung) und wird auf unbestimmte Zeit geschlossen.</p>
+<p>(2) Er kann von beiden Parteien mit einer Frist von 14 Tagen zum Monatsende ordentlich gekündigt werden.</p>
+<p>(3) Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt unberührt.</p>
+
+<h3>§5 Vertraulichkeit (NDA), Datenschutz (DSGVO) &amp; Datenlöschung</h3>
+<p>(1) <strong>Vertraulichkeit:</strong> Der Auftragnehmer verpflichtet sich, sämtliche vertraulichen Informationen, die ihm im Rahmen der Tätigkeit bekannt werden, streng geheim zu halten. Dies umfasst insbesondere Geschäftsgeheimnisse, technische Details von Applikationen, Schwachstellenanalysen, Testmethoden, Partnerinformationen sowie sämtliche Daten im Zusammenhang mit Identifizierungsverfahren. Diese Verpflichtung gilt unbefristet auch nach Beendigung des Vertragsverhältnisses.</p>
+<p>(2) <strong>NDA &amp; Vertragsstrafe:</strong> Eine Weitergabe, Vervielfältigung oder sonstige Nutzung vertraulicher Informationen ohne vorherige schriftliche Zustimmung des Auftraggebers ist untersagt. Bei Zuwiderhandlung zahlt der Auftragnehmer eine Vertragsstrafe in Höhe von 5.000,00 € pro Verstoß. Weitergehende Schadensersatzansprüche bleiben vorbehalten.</p>
+<p>(3) <strong>Datenschutz &amp; DSGVO:</strong> Der Auftragnehmer verarbeitet personenbezogene Daten ausschließlich zweckgebunden und weisungsgemäß unter strikter Einhaltung der DSGVO und des BDSG. Sämtliche personenbezogenen Daten (insbesondere Ausweisdaten, Video-Ident-Aufzeichnungen, Test-Accounts) sind unverzüglich nach Abschluss des jeweiligen Tests durch den Auftragnehmer zu löschen.</p>
+<p>(4) <strong>Datenlöschung durch Auftraggeber und Partner:</strong> Die Keyperion Technologies GmbH verpflichtet sich, alle im Rahmen der Testtätigkeit erhobenen personenbezogenen Daten und Testergebnisse spätestens 30 Tage nach Abschluss des jeweiligen Testzyklus vollständig und unwiederbringlich zu löschen, soweit keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Sie stellt vertraglich sicher, dass auch ihre Partner (Banken, Finanzdienstleister und Software-Anbieter) die Daten fristgerecht löschen. Auf Wunsch wird eine Löschbestätigung vorgelegt.</p>
+<p>(5) <strong>Auftragsverarbeitung:</strong> Soweit der Auftragnehmer als Auftragsverarbeiter im Sinne von Art. 28 DSGVO tätig wird, gelten die Bestimmungen der separaten Auftragsverarbeitungsvereinbarung (Anlage 1), die Bestandteil dieses Vertrages ist.</p>
+<p>(6) <strong>Technische und organisatorische Maßnahmen:</strong> Der Auftragnehmer trifft angemessene TOMs zum Schutz der Daten.</p>
+<p>(7) Die Regelungen dieses Paragraphen gelten auch nach Vertragsbeendigung fort.</p>
+
+<h3>§6 Haftung</h3>
+<p>(1) Der Auftragnehmer haftet für Schäden, die er vorsätzlich oder grob fahrlässig verursacht.</p>
+<p>(2) Die Haftung für leichte Fahrlässigkeit ist auf vertragstypische, vorhersehbare Schäden beschränkt.</p>
+
+<h3>§7 Schlussbestimmungen</h3>
+<p>(1) Änderungen und Ergänzungen dieses Vertrages bedürfen der Schriftform.</p>
+<p>(2) Sollte eine Bestimmung unwirksam sein, bleiben die übrigen Bestimmungen wirksam. Die Parteien verpflichten sich, die unwirksame Bestimmung durch eine wirksame zu ersetzen, die dem wirtschaftlichen Zweck am nächsten kommt.</p>
+<p>(3) Es gilt ausschließlich deutsches Recht. Gerichtsstand ist Frankfurt am Main.</p>
+
+<p style="margin-top:12px;color:#666;"><em>Anlage 1: Auftragsverarbeitungsvereinbarung (Bestandteil dieses Vertrages).</em></p>
+"""
+        return subtitle, sections_html
+
+    if contract_type == "vollzeit_at":
+        subtitle = "Vollzeit (Österreich)"
+        sections_html = f"""
+<h3>§1 Beginn und Dauer</h3>
+<p>Das Arbeitsverhältnis beginnt am {signed_date} und ist unbefristet. Die Probezeit beträgt 1 Monat.</p>
+
+<h3>§2 Tätigkeit</h3>
+<p>Der Arbeitnehmer wird als IT Application Tester beschäftigt. Die Aufgaben umfassen das Testen von Mobile- und Web-Applikationen, insbesondere im Finanzbereich, Durchführung von Ident-Verfahren (WebID, PostID, IDnow), Schwachstellenanalyse und Erstellung von detaillierten Test-Reports.</p>
+
+<h3>§3 Arbeitszeit</h3>
+<p>40 Stunden pro Woche (Vollzeit), flexibel nach Absprache.</p>
+
+<h3>§4 Vergütung</h3>
+<p>Das Bruttogehalt beträgt 2.900,00 € monatlich. Die Vergütung ist bis zum 15. des Folgemonats fällig.</p>
+
+<h3>§5 Urlaub</h3>
+<p>30 Arbeitstage pro Jahr.</p>
+
+<h3>§6 Vertraulichkeit und Datenschutz (NDA + DSGVO)</h3>
+<p>Der Arbeitnehmer verpflichtet sich zur strengsten Vertraulichkeit aller Kundendaten und Testergebnisse. Nach Abschluss jedes Tests sind alle Daten vom Arbeitnehmer und allen beteiligten Partnern innerhalb von 30 Tagen unwiderruflich zu löschen. Bei Verstoß gegen diese Verpflichtung beträgt die Vertragsstrafe 5.000 € pro Fall. Es gilt die DSGVO in vollem Umfang.</p>
+
+<h3>§7 Kündigung</h3>
+<p>Die gesetzlichen Kündigungsfristen des österreichischen Rechts gelten.</p>
+
+<h3>§8 Schlussbestimmungen</h3>
+<p>Es gilt österreichisches Recht. Gerichtsstand ist Frankfurt am Main bzw. das örtlich zuständige Gericht in Österreich.</p>
+"""
+        return subtitle, sections_html
+
+    if contract_type == "teilzeit_at":
+        subtitle = "Teilzeit (Österreich)"
+        sections_html = f"""
+<h3>§1 Beginn und Dauer</h3>
+<p>Das Arbeitsverhältnis beginnt am {signed_date} und ist unbefristet. Probezeit: 1 Monat.</p>
+
+<h3>§2 Tätigkeit</h3>
+<p>IT Application Tester – App-Tests, Schwachstellenanalyse, Ident-Verfahren Testing, Reporting.</p>
+
+<h3>§3 Arbeitszeit</h3>
+<p>20 Stunden pro Woche (flexibel).</p>
+
+<h3>§4 Vergütung</h3>
+<p>Fixgehalt: 1.100,00 € brutto monatlich + erfolgsabhängige Provisionen.</p>
+
+<h3>§5 Vertraulichkeit und Datenschutz</h3>
+<p>Strenge NDA + DSGVO. Alle Daten werden nach Testabschluss innerhalb von 30 Tagen gelöscht. Vertragsstrafe bei Verstoß: 5.000 €.</p>
+
+<h3>§6 Sonstiges</h3>
+<p>Gesetzliche Regelungen Österreich. Gerichtsstand Frankfurt am Main bzw. Österreich.</p>
+"""
+        return subtitle, sections_html
+
+    if contract_type == "freiberufler_at":
+        subtitle = "Selbstständig / Freiberufler (Österreich, ausschließlich Provision)"
+        sections_html = f"""
+<h3>§1 Gegenstand</h3>
+<p>Der Auftragnehmer erbringt als selbstständiger Freiberufler IT Application Testing-Dienstleistungen (App-Tests, Schwachstellenanalyse, Ident-Verfahren-Testing, Reporting) für den Auftraggeber.</p>
+
+<h3>§2 Vergütung</h3>
+<p>Die Vergütung erfolgt ausschließlich provisionsbasiert (je nach vereinbarter Provision pro erfolgreichem Test / Report / Projekt). Kein Fixgehalt.</p>
+
+<h3>§3 Vertraulichkeit und Datenschutz (NDA + DSGVO)</h3>
+<p>Der Auftragnehmer verpflichtet sich zur strengsten Vertraulichkeit. Alle Daten sind nach Abschluss des Tests innerhalb von 30 Tagen vom Auftragnehmer und allen Partnern unwiderruflich zu löschen. Bei Verstoß beträgt die Vertragsstrafe 5.000 € pro Fall. Volle Einhaltung der DSGVO.</p>
+
+<h3>§4 Dauer und Kündigung</h3>
+<p>Unbefristet, kündbar mit 14 Tagen Frist. Es besteht kein Arbeitsverhältnis – der Auftragnehmer ist selbstständig und für seine Sozialversicherung selbst verantwortlich.</p>
+
+<h3>§5 Gerichtsstand</h3>
+<p>Frankfurt am Main bzw. örtlich zuständiges Gericht in Österreich.</p>
+"""
+        return subtitle, sections_html
+
     # Default: Vollzeit (current contract)
     subtitle = "für Angestellte und Mitarbeiter"
     sections_html = f"""
@@ -560,6 +683,10 @@ async def download_contract(
 
     contract_type = application.get("contract_type", "vollzeit")
     subtitle, sections_html = _build_contract_html_parts(contract_type, signed_date)
+    contract_title = {
+        "minijob_at": "WERKVERTRAG",
+        "freiberufler_at": "DIENSTLEISTUNGSVERTRAG",
+    }.get(contract_type, "ARBEITSVERTRAG")
 
     from fastapi.responses import HTMLResponse
     
@@ -594,7 +721,7 @@ async def download_contract(
 <body>
 <div class="print-btn"><button onclick="window.print()">Als PDF speichern / Drucken</button></div>
 
-<h1>ARBEITSVERTRAG</h1>
+<h1>{contract_title}</h1>
 <p class="subtitle">{subtitle}</p>
 
 <div class="parties">

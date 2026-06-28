@@ -44,7 +44,18 @@ German.
 `cd ~/infometrica && git stash && git pull origin main && cd frontend && npm run build && sudo systemctl restart precision-backend && sudo systemctl restart nginx`
 
 ## Last Updated
-2026-06-26: Vertragstyp-Auswahl bei Annahme (Vollzeit/Teilzeit/Minijob) + Bulk-Annahme entfernt.
+2026-06-28: 3 österreichische Verträge ergänzt (Vollzeit AT, Teilzeit AT, Freiberufler AT) → insgesamt 7 Vertragstypen.
+
+### Österreich-Verträge (2026-06-28)
+- 3 neue Auswahloptionen bei der Annahme: **Vollzeit AT** (40 Std., 2.900 €), **Teilzeit AT** (20 Std., 1.100 € + Provision), **Freiberufler AT** (Dienstleistungsvertrag, nur Provision, selbstständig). Alle österreichisches Recht, Gerichtsstand Frankfurt/Österreich, NDA+DSGVO, Vertragsstrafe 5.000 €.
+- Dokumenttitel dynamisch: Freiberufler AT → „DIENSTLEISTUNGSVERTRAG", sonst „ARBEITSVERTRAG".
+- Keys: `vollzeit_at`, `teilzeit_at`, `freiberufler_at`. Insgesamt 7 Typen (vollzeit/teilzeit/minijob/minijob_at/vollzeit_at/teilzeit_at/freiberufler_at).
+
+### „Minijob AT" / Werkvertrag (2026-06-26)
+- 4. Auswahloption bei der Annahme: **Minijob AT** (interner Key `minijob_at`) = Werkvertrag über IT-Applikations-Testing (Vergütung pro Test, selbstständig, NDA/DSGVO, Vertragsstrafe 5.000 €). Dokumenttitel dynamisch „WERKVERTRAG".
+- Vorlage aus Nutzer-PDF (tester_werkvertrag.pdf), Auftraggeber = Keyperion Technologies GmbH.
+- Erweitert: `_build_contract_html_parts` (Backend), `ContractTemplates.jsx` (MinijobATBody + CONTRACT_TITLES), accept-Validierung, AdminApplications-Dialog (4. Option).
+
 
 ### Vertragsauswahl bei Annahme (2026-06-26)
 - Admin wählt beim Akzeptieren einer Bewerbung den Vertragstyp: **Vollzeit** (bisheriger Vertrag), **Teilzeit** (700 € + Provision, bis 20 Std.) oder **Minijob** (Provision 50–300 €, max. 603 €/2026). Gespeichert als `contract_type` auf der Bewerbung (Default `vollzeit`).

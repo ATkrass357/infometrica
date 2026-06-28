@@ -4,12 +4,30 @@ export const CONTRACT_POSITIONS = {
   vollzeit: 'Mitarbeiter in der Verifikations Testung',
   teilzeit: 'Mitarbeiter/in in der Daten- und Produktprüfung (Teilzeit)',
   minijob: 'Mitarbeiter/in in der Daten- und Produktprüfung (Minijob)',
+  minijob_at: 'IT-Applikations-Tester (Werkvertrag)',
+  vollzeit_at: 'IT Application Tester (Vollzeit · Österreich)',
+  teilzeit_at: 'IT Application Tester (Teilzeit · Österreich)',
+  freiberufler_at: 'IT Application Tester (Freiberufler · Österreich)',
 };
 
 export const CONTRACT_SUBTITLES = {
   vollzeit: 'für Angestellte und Mitarbeiter',
   teilzeit: 'Teilzeitbeschäftigung (mit Provision)',
   minijob: 'Geringfügige Beschäftigung (Minijob)',
+  minijob_at: 'Werkvertrag über IT-Applikations-Testing',
+  vollzeit_at: 'Vollzeit (Österreich)',
+  teilzeit_at: 'Teilzeit (Österreich)',
+  freiberufler_at: 'Selbstständig / Freiberufler (Österreich, ausschließlich Provision)',
+};
+
+export const CONTRACT_TITLES = {
+  vollzeit: 'ARBEITSVERTRAG',
+  teilzeit: 'ARBEITSVERTRAG',
+  minijob: 'ARBEITSVERTRAG',
+  minijob_at: 'WERKVERTRAG',
+  vollzeit_at: 'ARBEITSVERTRAG',
+  teilzeit_at: 'ARBEITSVERTRAG',
+  freiberufler_at: 'DIENSTLEISTUNGSVERTRAG',
 };
 
 const TaskList = () => (
@@ -177,8 +195,160 @@ const MinijobBody = ({ signedDate }) => (
   </>
 );
 
+const MinijobATBody = ({ signedDate }) => (
+  <>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§1 Vertragsgegenstand</p>
+      <p>(1) Der Auftragnehmer erbringt für den Auftraggeber Dienstleistungen im Bereich der IT-Qualitätssicherung und Applikations-Sicherheit.</p>
+      <p className="mt-2">(2) Die Tätigkeit umfasst insbesondere:</p>
+      <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
+        <li>Durchführung und detaillierte Validierung von Identifizierungsprozessen (u. a. WebID, PostID, IDnow und vergleichbare Systeme)</li>
+        <li>Analyse der User Journey bei digitalen Anwendungen, insbesondere im Finanzsektor</li>
+        <li>Identifikation technischer Schwachstellen, Usability-Probleme und funktionaler Inkonsistenzen</li>
+        <li>Erstellung strukturierter Test-Reports inklusive Screenshots, Ablaufprotokollen und Verbesserungsvorschlägen</li>
+      </ul>
+      <p className="mt-2">(3) Die Tests erfolgen remote und flexibel. Die konkreten Testaufträge werden dem Auftragnehmer über eine Plattform oder per E-Mail mitgeteilt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§2 Pflichten des Auftragnehmers</p>
+      <p>(1) Der Auftragnehmer verpflichtet sich, die ihm übertragenen Tests gewissenhaft, fachgerecht und termingerecht durchzuführen.</p>
+      <p className="mt-2">(2) Er verpflichtet sich, ausschließlich eigene, gültige Ausweisdokumente zu verwenden und keine Test-Accounts oder Daten Dritter zu missbrauchen.</p>
+      <p className="mt-2">(3) Der Auftragnehmer arbeitet selbständig und eigenverantwortlich. Weisungen des Auftraggebers sind im Rahmen des Vertragszwecks zu befolgen.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§3 Vergütung</p>
+      <p>(1) Die Vergütung erfolgt leistungsorientiert pro erfolgreich abgeschlossenem Test. Die Höhe der Vergütung pro Test wird dem Auftragnehmer vor Auftragsannahme mitgeteilt.</p>
+      <p className="mt-2">(2) Die Auszahlung erfolgt monatlich nachträglich auf das vom Auftragnehmer benannte Konto, sofern die Reports vollständig und fristgerecht eingegangen sind.</p>
+      <p className="mt-2">(3) Der Auftragnehmer ist für die steuerliche Verarbeitung der Einnahmen selbst verantwortlich.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§4 Laufzeit und Kündigung</p>
+      <p>(1) Der Vertrag beginnt am {signedDate} (Tag der Unterzeichnung) und wird auf unbestimmte Zeit geschlossen.</p>
+      <p className="mt-2">(2) Er kann von beiden Parteien mit einer Frist von 14 Tagen zum Monatsende ordentlich gekündigt werden.</p>
+      <p className="mt-2">(3) Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt unberührt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§5 Vertraulichkeit (NDA), Datenschutz (DSGVO) &amp; Datenlöschung</p>
+      <p>(1) <strong>Vertraulichkeit:</strong> Der Auftragnehmer verpflichtet sich, sämtliche vertraulichen Informationen, die ihm im Rahmen der Tätigkeit bekannt werden, streng geheim zu halten. Dies umfasst insbesondere Geschäftsgeheimnisse, technische Details von Applikationen, Schwachstellenanalysen, Testmethoden, Partnerinformationen sowie sämtliche Daten im Zusammenhang mit Identifizierungsverfahren. Diese Verpflichtung gilt unbefristet auch nach Beendigung des Vertragsverhältnisses.</p>
+      <p className="mt-2">(2) <strong>NDA &amp; Vertragsstrafe:</strong> Eine Weitergabe, Vervielfältigung oder sonstige Nutzung vertraulicher Informationen ohne vorherige schriftliche Zustimmung des Auftraggebers ist untersagt. Bei Zuwiderhandlung zahlt der Auftragnehmer eine Vertragsstrafe in Höhe von 5.000,00 € pro Verstoß. Weitergehende Schadensersatzansprüche bleiben vorbehalten.</p>
+      <p className="mt-2">(3) <strong>Datenschutz &amp; DSGVO:</strong> Der Auftragnehmer verarbeitet personenbezogene Daten ausschließlich zweckgebunden und weisungsgemäß unter strikter Einhaltung der DSGVO und des BDSG. Sämtliche personenbezogenen Daten (insbesondere Ausweisdaten, Video-Ident-Aufzeichnungen, Test-Accounts) sind unverzüglich nach Abschluss des jeweiligen Tests durch den Auftragnehmer zu löschen.</p>
+      <p className="mt-2">(4) <strong>Datenlöschung durch Auftraggeber und Partner:</strong> Die Keyperion Technologies GmbH verpflichtet sich, alle im Rahmen der Testtätigkeit erhobenen personenbezogenen Daten und Testergebnisse spätestens 30 Tage nach Abschluss des jeweiligen Testzyklus vollständig und unwiederbringlich zu löschen, soweit keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Sie stellt vertraglich sicher, dass auch ihre Partner (Banken, Finanzdienstleister und Software-Anbieter) die Daten fristgerecht löschen. Auf Wunsch wird eine Löschbestätigung vorgelegt.</p>
+      <p className="mt-2">(5) <strong>Auftragsverarbeitung:</strong> Soweit der Auftragnehmer als Auftragsverarbeiter im Sinne von Art. 28 DSGVO tätig wird, gelten die Bestimmungen der separaten Auftragsverarbeitungsvereinbarung (Anlage 1), die Bestandteil dieses Vertrages ist.</p>
+      <p className="mt-2">(6) <strong>Technische und organisatorische Maßnahmen:</strong> Der Auftragnehmer trifft angemessene TOMs zum Schutz der Daten.</p>
+      <p className="mt-2">(7) Die Regelungen dieses Paragraphen gelten auch nach Vertragsbeendigung fort.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§6 Haftung</p>
+      <p>(1) Der Auftragnehmer haftet für Schäden, die er vorsätzlich oder grob fahrlässig verursacht.</p>
+      <p className="mt-2">(2) Die Haftung für leichte Fahrlässigkeit ist auf vertragstypische, vorhersehbare Schäden beschränkt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§7 Schlussbestimmungen</p>
+      <p>(1) Änderungen und Ergänzungen dieses Vertrages bedürfen der Schriftform.</p>
+      <p className="mt-2">(2) Sollte eine Bestimmung unwirksam sein, bleiben die übrigen Bestimmungen wirksam. Die Parteien verpflichten sich, die unwirksame Bestimmung durch eine wirksame zu ersetzen, die dem wirtschaftlichen Zweck am nächsten kommt.</p>
+      <p className="mt-2">(3) Es gilt ausschließlich deutsches Recht. Gerichtsstand ist Frankfurt am Main.</p>
+      <p className="mt-2 text-slate-500 italic">Anlage 1: Auftragsverarbeitungsvereinbarung (Bestandteil dieses Vertrages).</p>
+    </div>
+  </>
+);
+
+const VollzeitATBody = ({ signedDate }) => (
+  <>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§1 Beginn und Dauer</p>
+      <p>Das Arbeitsverhältnis beginnt am {signedDate} und ist unbefristet. Die Probezeit beträgt 1 Monat.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§2 Tätigkeit</p>
+      <p>Der Arbeitnehmer wird als IT Application Tester beschäftigt. Die Aufgaben umfassen das Testen von Mobile- und Web-Applikationen, insbesondere im Finanzbereich, Durchführung von Ident-Verfahren (WebID, PostID, IDnow), Schwachstellenanalyse und Erstellung von detaillierten Test-Reports.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§3 Arbeitszeit</p>
+      <p>40 Stunden pro Woche (Vollzeit), flexibel nach Absprache.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
+      <p>Das Bruttogehalt beträgt 2.900,00 € monatlich. Die Vergütung ist bis zum 15. des Folgemonats fällig.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§5 Urlaub</p>
+      <p>30 Arbeitstage pro Jahr.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§6 Vertraulichkeit und Datenschutz (NDA + DSGVO)</p>
+      <p>Der Arbeitnehmer verpflichtet sich zur strengsten Vertraulichkeit aller Kundendaten und Testergebnisse. Nach Abschluss jedes Tests sind alle Daten vom Arbeitnehmer und allen beteiligten Partnern innerhalb von 30 Tagen unwiderruflich zu löschen. Bei Verstoß gegen diese Verpflichtung beträgt die Vertragsstrafe 5.000 € pro Fall. Es gilt die DSGVO in vollem Umfang.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§7 Kündigung</p>
+      <p>Die gesetzlichen Kündigungsfristen des österreichischen Rechts gelten.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§8 Schlussbestimmungen</p>
+      <p>Es gilt österreichisches Recht. Gerichtsstand ist Frankfurt am Main bzw. das örtlich zuständige Gericht in Österreich.</p>
+    </div>
+  </>
+);
+
+const TeilzeitATBody = ({ signedDate }) => (
+  <>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§1 Beginn und Dauer</p>
+      <p>Das Arbeitsverhältnis beginnt am {signedDate} und ist unbefristet. Probezeit: 1 Monat.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§2 Tätigkeit</p>
+      <p>IT Application Tester – App-Tests, Schwachstellenanalyse, Ident-Verfahren Testing, Reporting.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§3 Arbeitszeit</p>
+      <p>20 Stunden pro Woche (flexibel).</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
+      <p>Fixgehalt: 1.100,00 € brutto monatlich + erfolgsabhängige Provisionen.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§5 Vertraulichkeit und Datenschutz</p>
+      <p>Strenge NDA + DSGVO. Alle Daten werden nach Testabschluss innerhalb von 30 Tagen gelöscht. Vertragsstrafe bei Verstoß: 5.000 €.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§6 Sonstiges</p>
+      <p>Gesetzliche Regelungen Österreich. Gerichtsstand Frankfurt am Main bzw. Österreich.</p>
+    </div>
+  </>
+);
+
+const FreiberuflerATBody = () => (
+  <>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§1 Gegenstand</p>
+      <p>Der Auftragnehmer erbringt als selbstständiger Freiberufler IT Application Testing-Dienstleistungen (App-Tests, Schwachstellenanalyse, Ident-Verfahren-Testing, Reporting) für den Auftraggeber.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§2 Vergütung</p>
+      <p>Die Vergütung erfolgt ausschließlich provisionsbasiert (je nach vereinbarter Provision pro erfolgreichem Test / Report / Projekt). Kein Fixgehalt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§3 Vertraulichkeit und Datenschutz (NDA + DSGVO)</p>
+      <p>Der Auftragnehmer verpflichtet sich zur strengsten Vertraulichkeit. Alle Daten sind nach Abschluss des Tests innerhalb von 30 Tagen vom Auftragnehmer und allen Partnern unwiderruflich zu löschen. Bei Verstoß beträgt die Vertragsstrafe 5.000 € pro Fall. Volle Einhaltung der DSGVO.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§4 Dauer und Kündigung</p>
+      <p>Unbefristet, kündbar mit 14 Tagen Frist. Es besteht kein Arbeitsverhältnis – der Auftragnehmer ist selbstständig und für seine Sozialversicherung selbst verantwortlich.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§5 Gerichtsstand</p>
+      <p>Frankfurt am Main bzw. örtlich zuständiges Gericht in Österreich.</p>
+    </div>
+  </>
+);
+
 export const ContractBody = ({ type, signedDate }) => {
   if (type === 'teilzeit') return <TeilzeitBody signedDate={signedDate} />;
   if (type === 'minijob') return <MinijobBody signedDate={signedDate} />;
+  if (type === 'minijob_at') return <MinijobATBody signedDate={signedDate} />;
+  if (type === 'vollzeit_at') return <VollzeitATBody signedDate={signedDate} />;
+  if (type === 'teilzeit_at') return <TeilzeitATBody signedDate={signedDate} />;
+  if (type === 'freiberufler_at') return <FreiberuflerATBody />;
   return <VollzeitBody signedDate={signedDate} />;
 };
