@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 :root {
-    --mint: #0EA5E9;
-    --mint-light: #E0F2FE;
+    --mint: #00C853;
+    --mint-light: #E8F5E9;
     --deep-black: #0A0A0A;
     --surface: #F8F9FA;
 }
@@ -67,7 +67,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Selection styling */
 ::selection {
-    background: #0EA5E9;
+    background: #00C853;
     color: white;
 }
 

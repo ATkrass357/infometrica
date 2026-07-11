@@ -1,6 +1,12 @@
 # Prysm Technologies (ehemals Keyperion / Precision Labs) – PRD
 
-## Rebrand → Prysm Technologies + Weiß/Hellblau (2026-06)
+## ⏪ Rebrand rückgängig gemacht → zurück zu Keyperion Technologies (2026-06)
+- Prysm-Rebrand komplett zurückgerollt (git checkout f5aea75): wieder **Keyperion Technologies**, grünes Design (#00C853/emerald), grünes „K"-Logo, Geschäftsführer wieder **Lars Kurjo**.
+- **Mail-Domain jetzt `.de`**: info@/hr@/kontakt@/datenschutz@keyperion-technologies.de.
+- Admin-Login: `admin@keyperion-technologies.de` (Passwort unverändert). Seed migriert alte Accounts (prysm/keyperion.com/precision) automatisch.
+- Deployment-Artefakte bleiben: `backend/requirements-prod.txt`, `DEPLOYMENT.md`.
+
+## (Historie) Rebrand → Prysm Technologies + Weiß/Hellblau (2026-06) — RÜCKGÄNGIG
 - Komplettes Rebranding **Keyperion Technologies → Prysm Technologies** (Frontend, Backend-Texte, Verträge, Mails, index.html, Impressum).
 - Neues Logo: SVG-Prisma (weißes Dreieck auf hellblauem #0EA5E9 Rounded-Square) in `components/Logo.jsx`, Export `PrysmLogo`.
 - Theme: **Weiß + Hellblau** auf öffentlicher Seite + Mitarbeiter-Portal. Grün/Emerald (#00C853, emerald-*, green-*) → Sky-Blau (#0EA5E9 / sky-* Klassen). Dunkler Text bleibt dunkel.

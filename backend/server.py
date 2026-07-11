@@ -155,7 +155,7 @@ async def seed_admin():
         return
 
     legacy = await db.admins.find_one(
-        {"email": {"$in": ["admin@keyperion-technologies.com", "admin@precision-labs.de"]}}
+        {"email": {"$in": ["admin@prysm-technologies.com", "admin@keyperion-technologies.com", "admin@keyperion-technologies.de", "admin@precision-labs.de"]}}
     )
     if legacy:
         await db.admins.update_one(
