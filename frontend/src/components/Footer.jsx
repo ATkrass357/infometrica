@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, ArrowUpRight } from 'lucide-react';
 import { KeyperionLogo } from './Logo';
+import { WhatsAppButton } from './WhatsAppButton';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -22,6 +23,7 @@ export const Footer = () => {
   };
 
   return (
+    <>
     <footer className="bg-[#0A0A0A] text-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(0,200,83,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,83,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
@@ -134,5 +136,7 @@ export const Footer = () => {
         </div>
       </div>
     </footer>
+    <WhatsAppButton />
+    </>
   );
 };
