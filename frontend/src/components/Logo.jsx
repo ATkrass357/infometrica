@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const KeyperionLogo = ({ className = "" }) => {
+export const WeboraLogo = ({ className = "" }) => {
   return (
     <svg
       className={className}
@@ -9,33 +9,38 @@ export const KeyperionLogo = ({ className = "" }) => {
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        <linearGradient id="keyperionGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#10b981" />
-          <stop offset="100%" stopColor="#059669" />
+        <linearGradient id="weboraBg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stopColor="#38BDF8" />
+          <stop offset="55%" stopColor="#0EA5E9" />
+          <stop offset="100%" stopColor="#0284C7" />
         </linearGradient>
-        <filter id="keyperionShadow">
-          <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.2" />
+        <linearGradient id="weboraStroke" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stopColor="#FFFFFF" />
+          <stop offset="100%" stopColor="#E0F2FE" />
+        </linearGradient>
+        <filter id="weboraShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="3" stdDeviation="4" floodColor="#0C4A6E" floodOpacity="0.35" />
         </filter>
       </defs>
 
-      {/* Rounded square background */}
-      <rect
-        x="20"
-        y="20"
-        width="160"
-        height="160"
-        rx="36"
-        fill="url(#keyperionGradient)"
-        filter="url(#keyperionShadow)"
-      />
+      {/* Rounded square background with sky gradient */}
+      <rect x="18" y="18" width="164" height="164" rx="42" fill="url(#weboraBg)" filter="url(#weboraShadow)" />
 
-      {/* Letter "K" */}
-      <path d="M 72 56 L 72 144" stroke="white" strokeWidth="15" strokeLinecap="round" />
-      <path d="M 72 102 L 126 56" stroke="white" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M 72 98 L 132 144" stroke="white" strokeWidth="15" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Glossy top highlight */}
+      <rect x="30" y="30" width="140" height="58" rx="29" fill="#FFFFFF" opacity="0.12" />
 
-      {/* Tech accent node */}
-      <circle cx="142" cy="52" r="9" fill="white" fillOpacity="0.9" />
+      {/* Faint hexagon frame for depth */}
+      <path d="M100 40 L152 70 L152 130 L100 160 L48 130 L48 70 Z" stroke="#FFFFFF" strokeOpacity="0.18" strokeWidth="3" fill="none" />
+
+      {/* Back layer W (offset for depth) */}
+      <path d="M51 62 L77 150 L100 101 L123 150 L149 62" stroke="#BAE6FD" strokeOpacity="0.55" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+
+      {/* Main W monogram */}
+      <path d="M46 58 L74 152 L100 98 L126 152 L154 58" stroke="url(#weboraStroke)" strokeWidth="14" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+
+      {/* Accent nodes */}
+      <circle cx="100" cy="98" r="7" fill="#FFFFFF" />
+      <circle cx="154" cy="56" r="6" fill="#FFFFFF" fillOpacity="0.85" />
     </svg>
   );
 };

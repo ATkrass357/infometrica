@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Mail, MapPin, ArrowUpRight } from 'lucide-react';
-import { KeyperionLogo } from './Logo';
+import { WeboraLogo } from './Logo';
 import { WhatsAppButton } from './WhatsAppButton';
 
 export const Footer = () => {
@@ -26,7 +26,7 @@ export const Footer = () => {
     <>
     <footer className="bg-[#0A0A0A] text-white relative overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(0,200,83,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(0,200,83,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(14,165,233,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(14,165,233,0.02)_1px,transparent_1px)] bg-[size:40px_40px]" />
       
       {/* Main Footer */}
       <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-20 relative z-10">
@@ -34,9 +34,9 @@ export const Footer = () => {
           {/* Brand Column */}
           <div className="lg:col-span-5">
             <div className="flex items-center gap-3 mb-6">
-              <KeyperionLogo className="h-12 w-12" />
+              <WeboraLogo className="h-12 w-12" />
               <span className="text-2xl font-bold text-white">
-                Keyperion <span className="text-[#00C853]">Technologies</span>
+                Webora
               </span>
             </div>
             <p className="text-slate-400 leading-relaxed max-w-sm mb-8">
@@ -47,19 +47,19 @@ export const Footer = () => {
             {/* Contact Info */}
             <div className="space-y-4">
               <a 
-                href="mailto:info@keyperion-technologies.de" 
+                href="mailto:info@webora.de" 
                 className="flex items-center gap-4 group"
               >
-                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#00C853] transition-colors duration-300">
+                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center group-hover:bg-[#0EA5E9] transition-colors duration-300">
                   <Mail size={18} className="text-slate-400 group-hover:text-white transition-colors" />
                 </div>
-                <span className="text-slate-400 group-hover:text-white transition-colors">info@keyperion-technologies.de</span>
+                <span className="text-slate-400 group-hover:text-white transition-colors">info@webora.de</span>
               </a>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
                   <MapPin size={18} className="text-slate-400" />
                 </div>
-                <span className="text-slate-400">Große Gallusstr. 14, 60315 Frankfurt am Main</span>
+                <span className="text-slate-400">Darmstädter Landstraße 60, 65462 Ginsheim-Gustavsburg</span>
               </div>
             </div>
           </div>
@@ -126,10 +126,10 @@ export const Footer = () => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-slate-500">
-              © {currentYear} Keyperion Technologies. Alle Rechte vorbehalten.
+              © {currentYear} Webora. Alle Rechte vorbehalten.
             </p>
             <div className="flex items-center gap-2 text-sm text-slate-500">
-              <span className="w-2 h-2 rounded-full bg-[#00C853] animate-pulse"></span>
+              <span className="w-2 h-2 rounded-full bg-[#0EA5E9] animate-pulse"></span>
               Made with precision in Germany
             </div>
           </div>

@@ -264,7 +264,7 @@ const AdminTasks = () => {
     switch (status) {
       case 'Offen': return 'bg-orange-500/20 text-orange-400';
       case 'In Bearbeitung': return 'bg-blue-500/20 text-blue-400';
-      case 'Abgeschlossen': return 'bg-green-500/20 text-green-400';
+      case 'Abgeschlossen': return 'bg-sky-500/20 text-sky-400';
       default: return 'bg-gray-500/20 text-gray-400';
     }
   };

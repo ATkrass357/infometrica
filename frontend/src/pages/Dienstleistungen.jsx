@@ -20,14 +20,14 @@ const Dienstleistungen = () => {
       features: ['Unit Testing', 'Integration Tests', 'End-to-End Testing', 'Regression Tests'],
       accent: 'bg-[#1A1A1A]',
       textColor: 'text-white',
-      accentColor: 'text-[#00C853]',
+      accentColor: 'text-[#0EA5E9]',
     },
     {
       icon: Zap,
       title: 'Performance Testing',
       description: 'Analyse der Geschwindigkeit, Stabilität und Skalierbarkeit. Ihre App performt auch unter Hochlast.',
       features: ['Load Testing', 'Stress Testing', 'Response Time Analyse', 'Memory Profiling'],
-      accent: 'bg-[#00C853]',
+      accent: 'bg-[#0EA5E9]',
       textColor: 'text-white',
       accentColor: 'text-white',
     },
@@ -38,7 +38,7 @@ const Dienstleistungen = () => {
       features: ['UX Analyse', 'A/B Testing', 'Accessibility Tests', 'Interface Review'],
       accent: 'bg-white border border-gray-200',
       textColor: 'text-[#1A1A1A]',
-      accentColor: 'text-[#00C853]',
+      accentColor: 'text-[#0EA5E9]',
     },
     {
       icon: Code2,
@@ -47,7 +47,7 @@ const Dienstleistungen = () => {
       features: ['Selenium', 'Cypress', 'Appium', 'CI/CD Integration'],
       accent: 'bg-[#F4F7F5]',
       textColor: 'text-[#1A1A1A]',
-      accentColor: 'text-[#00C853]',
+      accentColor: 'text-[#0EA5E9]',
     },
   ];
 
@@ -70,10 +70,10 @@ const Dienstleistungen = () => {
       <section className="pt-32 pb-20 px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="max-w-3xl">
-            <div className="text-[#00C853] font-semibold tracking-wide mb-4">LEISTUNGEN</div>
+            <div className="text-[#0EA5E9] font-semibold tracking-wide mb-4">LEISTUNGEN</div>
             <h1 className="text-5xl lg:text-7xl font-bold text-[#1A1A1A] leading-[0.95] tracking-tight mb-6">
               Testing-Services<br />
-              <span className="text-[#00C853]">die überzeugen.</span>
+              <span className="text-[#0EA5E9]">die überzeugen.</span>
             </h1>
             <p className="text-xl text-[#4A4A4A] leading-relaxed">
               Von funktionalen Tests bis zur Performance-Optimierung – wir bieten 
@@ -108,8 +108,8 @@ const Dienstleistungen = () => {
                         className={`px-4 py-2 text-sm font-medium rounded-md ${
                           service.accent === 'bg-[#1A1A1A]' 
                             ? 'bg-[#2A2A2A] text-gray-300' 
-                            : service.accent === 'bg-[#00C853]'
-                            ? 'bg-[#009624] text-white'
+                            : service.accent === 'bg-[#0EA5E9]'
+                            ? 'bg-[#0284C7] text-white'
                             : 'bg-white text-[#4A4A4A] border border-gray-200'
                         }`}
                       >
@@ -128,7 +128,7 @@ const Dienstleistungen = () => {
       <section className="py-24 px-6 lg:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-[#00C853] font-semibold tracking-wide mb-4">PLATTFORMEN</div>
+            <div className="text-[#0EA5E9] font-semibold tracking-wide mb-4">PLATTFORMEN</div>
             <h2 className="text-4xl lg:text-5xl font-bold text-[#1A1A1A]">
               Alle Plattformen. Ein Partner.
             </h2>
@@ -140,10 +140,10 @@ const Dienstleistungen = () => {
               return (
                 <div
                   key={index}
-                  className="text-center p-12 border border-gray-200 hover:border-[#00C853] transition-colors duration-300 rounded-lg"
+                  className="text-center p-12 border border-gray-200 hover:border-[#0EA5E9] transition-colors duration-300 rounded-lg"
                 >
                   <div className="w-20 h-20 bg-[#1A1A1A] rounded-md flex items-center justify-center mx-auto mb-6">
-                    <Icon className="text-[#00C853]" size={36} strokeWidth={1.5} />
+                    <Icon className="text-[#0EA5E9]" size={36} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-2xl font-bold text-[#1A1A1A] mb-2">{platform.title}</h3>
                   <p className="text-[#4A4A4A]">{platform.desc}</p>
@@ -158,7 +158,7 @@ const Dienstleistungen = () => {
       <section className="py-24 px-6 lg:px-12 bg-[#1A1A1A]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-[#00C853] font-semibold tracking-wide mb-4">PROZESS</div>
+            <div className="text-[#0EA5E9] font-semibold tracking-wide mb-4">PROZESS</div>
             <h2 className="text-4xl lg:text-5xl font-bold text-white">
               Strukturiert zum Erfolg
             </h2>
@@ -167,7 +167,7 @@ const Dienstleistungen = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {process.map((item, index) => (
               <div key={index} className="text-center">
-                <div className="text-6xl font-bold text-[#00C853] mb-4">{item.step}</div>
+                <div className="text-6xl font-bold text-[#0EA5E9] mb-4">{item.step}</div>
                 <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
                 <p className="text-gray-400">{item.desc}</p>
               </div>
@@ -177,7 +177,7 @@ const Dienstleistungen = () => {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 lg:px-12 bg-[#00C853]">
+      <section className="py-24 px-6 lg:px-12 bg-[#0EA5E9]">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
             Projekt besprechen?

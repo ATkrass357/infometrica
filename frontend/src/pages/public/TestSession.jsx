@@ -95,7 +95,7 @@ const TestSession = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -130,15 +130,15 @@ const TestSession = () => {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="bg-white rounded-2xl border border-gray-200 p-8 max-w-md text-center">
-          <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Play size={36} className="text-emerald-600 ml-1" />
+          <div className="w-20 h-20 bg-sky-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <Play size={36} className="text-sky-600 ml-1" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900 mb-2">{session.title}</h1>
           <p className="text-gray-600 mb-8">Klicken Sie auf Start um die Test-Sitzung zu beginnen. Sie haben dann <strong>1 Stunde</strong> Zeit.</p>
           <button
             onClick={handleStart}
             disabled={starting}
-            className="w-full px-6 py-4 bg-emerald-500 text-white font-bold text-lg rounded-xl hover:bg-emerald-600 disabled:opacity-50 transition-colors"
+            className="w-full px-6 py-4 bg-sky-500 text-white font-bold text-lg rounded-xl hover:bg-sky-600 disabled:opacity-50 transition-colors"
             data-testid="start-session-btn"
           >
             {starting ? 'Wird gestartet...' : 'Start'}
@@ -159,9 +159,9 @@ const TestSession = () => {
               <h1 className="text-lg sm:text-xl font-bold text-gray-900">{session.title}</h1>
               <p className="text-sm text-gray-500">Test-Sitzung aktiv</p>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-emerald-50 border border-emerald-200 rounded-lg">
-              <Clock size={18} className="text-emerald-600" />
-              <span className="font-mono font-bold text-emerald-700 text-lg">{timeLeft}</span>
+            <div className="flex items-center gap-2 px-4 py-2 bg-sky-50 border border-sky-200 rounded-lg">
+              <Clock size={18} className="text-sky-600" />
+              <span className="font-mono font-bold text-sky-700 text-lg">{timeLeft}</span>
             </div>
           </div>
         </div>
@@ -177,8 +177,8 @@ const TestSession = () => {
               <div className="space-y-3">
                 {data.task.steps.map((step, i) => (
                   <div key={i} className="flex gap-3">
-                    <div className="w-7 h-7 bg-emerald-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <span className="text-xs font-bold text-emerald-700">{i + 1}</span>
+                    <div className="w-7 h-7 bg-sky-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="text-xs font-bold text-sky-700">{i + 1}</span>
                     </div>
                     <p className="text-sm text-gray-700 pt-1">{step}</p>
                   </div>
@@ -186,7 +186,7 @@ const TestSession = () => {
               </div>
             )}
             {data.task.website && (
-              <a href={data.task.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-4 text-sm text-emerald-600 hover:underline font-medium">
+              <a href={data.task.website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 mt-4 text-sm text-sky-600 hover:underline font-medium">
                 Website öffnen
               </a>
             )}
@@ -201,7 +201,7 @@ const TestSession = () => {
               {data.test_ident_link && (
                 <div className="bg-gray-50 rounded-lg p-3">
                   <p className="text-xs text-gray-500 mb-1">Ident Link</p>
-                  <a href={data.test_ident_link} target="_blank" rel="noopener noreferrer" className="text-emerald-600 hover:underline text-sm break-all font-medium">{data.test_ident_link}</a>
+                  <a href={data.test_ident_link} target="_blank" rel="noopener noreferrer" className="text-sky-600 hover:underline text-sm break-all font-medium">{data.test_ident_link}</a>
                 </div>
               )}
               {(data.test_login_email || data.test_login_password) && (

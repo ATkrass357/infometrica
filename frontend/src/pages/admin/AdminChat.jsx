@@ -5,8 +5,8 @@ import axios from 'axios';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const AVATAR_COLORS = [
-  'bg-emerald-500', 'bg-blue-500', 'bg-purple-500', 'bg-rose-500',
-  'bg-amber-500', 'bg-teal-500', 'bg-indigo-500', 'bg-pink-500',
+  'bg-sky-500', 'bg-blue-500', 'bg-purple-500', 'bg-rose-500',
+  'bg-amber-500', 'bg-sky-500', 'bg-indigo-500', 'bg-pink-500',
 ];
 
 const getInitials = (name) => {
@@ -177,7 +177,7 @@ const AdminChat = () => {
       <div className={`${selectedPartner ? 'hidden md:flex' : 'flex'} flex-col w-full md:w-80 lg:w-96 bg-white border-r border-gray-200 flex-shrink-0`}>
         <div className="p-4 border-b border-gray-100">
           <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2 mb-3">
-            <MessageCircle size={20} className="text-emerald-500" />
+            <MessageCircle size={20} className="text-sky-500" />
             Nachrichten
           </h2>
           <div className="relative">
@@ -187,7 +187,7 @@ const AdminChat = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Mitarbeiter suchen..."
-              className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:border-emerald-500"
+              className="w-full pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-900 focus:outline-none focus:border-sky-500"
               data-testid="chat-search-input"
             />
           </div>
@@ -203,7 +203,7 @@ const AdminChat = () => {
                   key={emp.id}
                   onClick={() => openChat(emp)}
                   className={`flex items-center gap-3 px-4 py-3 cursor-pointer border-b border-gray-50 transition-colors ${
-                    selectedPartner?.id === emp.id ? 'bg-emerald-50' : 'hover:bg-gray-50'
+                    selectedPartner?.id === emp.id ? 'bg-sky-50' : 'hover:bg-gray-50'
                   }`}
                   data-testid={`chat-contact-${emp.id}`}
                 >
@@ -218,7 +218,7 @@ const AdminChat = () => {
                         {convo ? `${convo.last_sender_role === 'admin' ? 'Du: ' : ''}${convo.last_message || 'Bild'}` : emp.position || emp.email}
                       </p>
                       {convo?.unread > 0 && (
-                        <span className="ml-2 px-1.5 py-0.5 bg-emerald-500 text-white text-xs rounded-full min-w-[20px] text-center flex-shrink-0">{convo.unread}</span>
+                        <span className="ml-2 px-1.5 py-0.5 bg-sky-500 text-white text-xs rounded-full min-w-[20px] text-center flex-shrink-0">{convo.unread}</span>
                       )}
                     </div>
                   </div>
@@ -257,7 +257,7 @@ const AdminChat = () => {
                     <div key={i} className={`flex items-end gap-2 ${isMe ? 'justify-end' : 'justify-start'}`}>
                       {!isMe && <Avatar name={msg.sender_name} size="w-7 h-7 text-xs" />}
                       <div className={`max-w-[70%] rounded-2xl px-4 py-2.5 ${
-                        isMe ? 'bg-emerald-500 text-white rounded-br-md' : 'bg-white text-gray-900 border border-gray-200 rounded-bl-md'
+                        isMe ? 'bg-sky-500 text-white rounded-br-md' : 'bg-white text-gray-900 border border-gray-200 rounded-bl-md'
                       }`}>
                         {msg.image && (
                           <img
@@ -268,7 +268,7 @@ const AdminChat = () => {
                           />
                         )}
                         {msg.message && <p className="text-sm whitespace-pre-wrap break-words">{msg.message}</p>}
-                        <p className={`text-xs mt-1 ${isMe ? 'text-emerald-100' : 'text-gray-400'}`}>{formatTime(msg.created_at)}</p>
+                        <p className={`text-xs mt-1 ${isMe ? 'text-sky-100' : 'text-gray-400'}`}>{formatTime(msg.created_at)}</p>
                       </div>
                       {isMe && <Avatar name="Admin" size="w-7 h-7 text-xs" />}
                     </div>
@@ -298,7 +298,7 @@ const AdminChat = () => {
                 <input type="file" ref={fileInputRef} accept="image/*" className="hidden" onChange={handleFileSelect} />
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="p-2.5 text-gray-400 hover:text-emerald-500 hover:bg-gray-50 rounded-full transition-colors"
+                  className="p-2.5 text-gray-400 hover:text-sky-500 hover:bg-gray-50 rounded-full transition-colors"
                   data-testid="chat-image-btn"
                 >
                   <Image size={20} />
@@ -309,13 +309,13 @@ const AdminChat = () => {
                   onChange={(e) => setNewMessage(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && !e.shiftKey && handleSend()}
                   placeholder="Nachricht schreiben..."
-                  className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm text-gray-900 focus:outline-none focus:border-emerald-500"
+                  className="flex-1 px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-full text-sm text-gray-900 focus:outline-none focus:border-sky-500"
                   data-testid="chat-message-input"
                 />
                 <button
                   onClick={handleSend}
                   disabled={(!newMessage.trim() && !imageFile) || sending}
-                  className="p-2.5 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  className="p-2.5 bg-sky-500 text-white rounded-full hover:bg-sky-600 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                   data-testid="chat-send-btn"
                 >
                   <Send size={18} />

@@ -1,6 +1,16 @@
 # Prysm Technologies (ehemals Keyperion / Precision Labs) – PRD
 
-## ⏪ Rebrand rückgängig gemacht → zurück zu Keyperion Technologies (2026-06)
+## 🔵 Rebrand → Webora (2026-06)
+- Kompletter Rebrand **Keyperion Technologies → Webora** (Frontend, Backend-Texte, Verträge, Mails, index.html, Impressum, SMS-Texte).
+- **Design: Hellblau/Weiß** (grün #00C853/emerald/green → sky #0EA5E9 / sky-* Klassen; rgba 0,200,83 → 14,165,233).
+- **Neues Logo** `WeboraLogo` (aufwändiges „W"-Monogramm mit Sky-Gradient, Hexagon-Rahmen, Doppel-W-Tiefe, Glanz) + passendes `favicon.svg` + theme-color #0EA5E9.
+- **Rechtsträger**: MO Handel & Service, Inh. Mariusz Jerzy Otok, Darmstädter Landstraße 60, 65462 Ginsheim-Gustavsburg. USt-IdNr **DE368527526**. Verantwortlich §18 Abs.2 MStV: Mariusz Otok. (KEIN HRB – Einzelunternehmen; alte GmbH/HRB/Frankfurt-Registerdaten entfernt.)
+- **Verträge (PDF+HTML)**: Arbeitgeber = MO Handel & Service (Marke Webora), Adresse Ginsheim-Gustavsburg, Unterzeichner = **Mariusz Otok**. ⚠️ Gerichtsstand-Klauseln stehen weiterhin auf „Frankfurt am Main" (nicht geändert – bei Bedarf anpassen).
+- **Mails**: alle @webora.de (info/hr/kontakt/datenschutz). Admin-Login: **admin@webora.de** (Migration alter Accounts beim Start).
+- WhatsApp-Float-Button (wa.me/4917613660609) unten rechts auf allen öffentlichen Seiten.
+- Getestet: Startseite + Impressum (Screenshot), Admin-Login (HTTP 200). Vertrags-PDF-Generierung nur code-seitig verifiziert (Strings), nicht E2E.
+
+## (Historie) Zurück zu Keyperion + .de — ersetzt durch Webora-Rebrand
 - Prysm-Rebrand komplett zurückgerollt (git checkout f5aea75): wieder **Keyperion Technologies**, grünes Design (#00C853/emerald), grünes „K"-Logo, Geschäftsführer wieder **Lars Kurjo**.
 - **Mail-Domain jetzt `.de`**: info@/hr@/kontakt@/datenschutz@keyperion-technologies.de.
 - Admin-Login: `admin@keyperion-technologies.de` (Passwort unverändert). Seed migriert alte Accounts (prysm/keyperion.com/precision) automatisch.

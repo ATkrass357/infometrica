@@ -133,14 +133,14 @@ const MitarbeiterDokumente = () => {
     switch (status) {
       case 'approved':
         return (
-          <span className="flex items-center gap-1 px-2 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+          <span className="flex items-center gap-1 px-2 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-medium">
             <CheckCircle size={12} />
             Bestätigt
           </span>
         );
       case 'pending':
         return (
-          <span className="flex items-center gap-1 px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-medium">
+          <span className="flex items-center gap-1 px-2 py-1 bg-sky-100 text-sky-700 rounded-full text-xs font-medium">
             <Clock size={12} />
             In Prüfung
           </span>
@@ -155,7 +155,7 @@ const MitarbeiterDokumente = () => {
       case 'contract':
         return <FileText className="text-blue-500" size={24} />;
       case 'payslip':
-        return <FileText className="text-green-500" size={24} />;
+        return <FileText className="text-sky-500" size={24} />;
       case 'tax':
         return <FileText className="text-purple-500" size={24} />;
       case 'insurance':
@@ -175,7 +175,7 @@ const MitarbeiterDokumente = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -196,7 +196,7 @@ const MitarbeiterDokumente = () => {
             className="hidden"
             disabled={uploading}
           />
-          <div className={`flex items-center gap-2 px-4 py-2 bg-emerald-500 text-white rounded-lg hover:bg-emerald-600 transition-colors ${uploading ? 'opacity-50' : ''}`}>
+          <div className={`flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors ${uploading ? 'opacity-50' : ''}`}>
             {uploading ? (
               <>
                 <Loader2 size={18} className="animate-spin" />
@@ -220,7 +220,7 @@ const MitarbeiterDokumente = () => {
             onClick={() => setSelectedCategory(cat)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               selectedCategory === cat
-                ? 'bg-emerald-500 text-white'
+                ? 'bg-sky-500 text-white'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -301,13 +301,13 @@ const MitarbeiterDokumente = () => {
             </p>
             <ul className="text-sm text-blue-700 space-y-1">
               <li className="flex items-center gap-2">
-                <CheckCircle size={14} className="text-green-500" /> Steuer-ID Bescheinigung
+                <CheckCircle size={14} className="text-sky-500" /> Steuer-ID Bescheinigung
               </li>
               <li className="flex items-center gap-2">
-                <CheckCircle size={14} className="text-green-500" /> Krankenkassen-Nachweis
+                <CheckCircle size={14} className="text-sky-500" /> Krankenkassen-Nachweis
               </li>
               <li className="flex items-center gap-2">
-                <Clock size={14} className="text-emerald-500" /> Bankverbindung (optional)
+                <Clock size={14} className="text-sky-500" /> Bankverbindung (optional)
               </li>
             </ul>
           </div>
