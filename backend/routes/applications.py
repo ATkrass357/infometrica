@@ -364,7 +364,7 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
         subtitle = "Teilzeitbeschäftigung (mit Provision)"
         sections_html = f"""
 <h3>§1 Beginn und Dauer</h3>
-<p>Das Arbeitsverhältnis beginnt am {signed_date} (Tag der Unterzeichnung durch beide Parteien). Es wird auf unbestimmte Zeit geschlossen. Die Probezeit beträgt sechs Monate. Während der Probezeit kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.</p>
+<p>Das Arbeitsverhältnis beginnt am {signed_date} (Tag der Unterzeichnung durch beide Parteien). Es wird auf unbestimmte Zeit geschlossen. Die Probezeit beträgt drei Monate. Während der Probezeit kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.</p>
 
 <h3>§2 Tätigkeit</h3>
 <p>Der Arbeitnehmer wird bei Webora als <strong>Mitarbeiter/in in der Daten- und Produktprüfung</strong> eingestellt. Die Tätigkeit umfasst insbesondere:</p>
@@ -382,9 +382,9 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 <p>Die Lage der Arbeitszeit wird in Abstimmung mit dem Arbeitgeber flexibel festgelegt. Kernarbeitszeiten bestehen nicht, der Arbeitnehmer muss jedoch für Absprachen mit dem Team an Werktagen zwischen 9:00 und 17:00 Uhr grundsätzlich erreichbar sein.</p>
 
 <h3>§4 Vergütung</h3>
-<p>(1) <strong>Grundvergütung:</strong> Der Arbeitnehmer erhält eine monatliche Grundvergütung in Höhe von 700,00 € brutto. Diese Vergütung wird für die Erbringung einer wöchentlichen Mindestarbeitszeit von 10 Stunden gezahlt.</p>
-<p>(2) <strong>Provisionsvergütung:</strong> Zusätzlich zur Grundvergütung wird für jeden erfolgreich abgeschlossenen Testauftrag eine variable Provision gewährt. Die Provision wird unabhängig von der Grundvergütung gezahlt und dient der Abgeltung von Arbeitszeit, die über die Mindestarbeitszeit hinausgeht. Ein Anspruch auf eine bestimmte Anzahl von Aufträgen besteht nicht.</p>
-<p>(3) <strong>Auszahlung:</strong> Die Grundvergütung wird spätestens am letzten Bankarbeitstag des Monats ausgezahlt. Die Provision wird im Folgemonat nach Abrechnung gezahlt.</p>
+<p>(1) <strong>Grundvergütung:</strong> Die monatliche Grundvergütung beträgt 700,00 € brutto bei einer Mindestarbeitszeit von 10 Stunden pro Woche. Darüber hinaus geleistete Arbeitsstunden werden mit 13,90 € brutto pro Stunde vergütet.</p>
+<p>(2) <strong>Provisionsvergütung:</strong> Für erfolgreich abgeschlossene Testaufträge kann zusätzlich eine variable Provision gewährt werden. Ein Anspruch auf eine bestimmte Anzahl von Aufträgen besteht nicht.</p>
+<p>(3) <strong>Auszahlung:</strong> Die Auszahlung der Grundvergütung erfolgt spätestens am letzten Bankarbeitstag des Monats. Eventuelle Provisionen werden nach der Abrechnung im Folgemonat ausgezahlt.</p>
 
 <h3>§5 Urlaub</h3>
 <p>Der Arbeitnehmer hat Anspruch auf 24 Arbeitstage bezahlten Erholungsurlaub pro Kalenderjahr (bei einer 5-Tage-Woche). Bei abweichender Verteilung der Arbeitstage wird der Urlaubsanspruch anteilig berechnet.</p>

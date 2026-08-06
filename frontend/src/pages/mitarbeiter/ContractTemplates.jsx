@@ -95,7 +95,7 @@ const TeilzeitBody = ({ signedDate }) => (
   <>
     <div>
       <p className="font-bold text-[#0A0A0A]">§1 Beginn und Dauer</p>
-      <p>Das Arbeitsverhältnis beginnt am {signedDate} (Tag der Unterzeichnung durch beide Parteien). Es wird auf unbestimmte Zeit geschlossen. Die Probezeit beträgt sechs Monate. Während der Probezeit kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.</p>
+      <p>Das Arbeitsverhältnis beginnt am {signedDate} (Tag der Unterzeichnung durch beide Parteien). Es wird auf unbestimmte Zeit geschlossen. Die Probezeit beträgt drei Monate. Während der Probezeit kann das Arbeitsverhältnis mit einer Frist von zwei Wochen gekündigt werden.</p>
     </div>
     <div>
       <p className="font-bold text-[#0A0A0A]">§2 Tätigkeit</p>
@@ -110,9 +110,9 @@ const TeilzeitBody = ({ signedDate }) => (
     </div>
     <div>
       <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
-      <p>(1) <strong>Grundvergütung:</strong> Der Arbeitnehmer erhält eine monatliche Grundvergütung in Höhe von 700,00 € brutto. Diese Vergütung wird für die Erbringung einer wöchentlichen Mindestarbeitszeit von 10 Stunden gezahlt.</p>
-      <p className="mt-2">(2) <strong>Provisionsvergütung:</strong> Zusätzlich zur Grundvergütung wird für jeden erfolgreich abgeschlossenen Testauftrag eine variable Provision gewährt. Die Provision wird unabhängig von der Grundvergütung gezahlt und dient der Abgeltung von Arbeitszeit, die über die Mindestarbeitszeit hinausgeht. Ein Anspruch auf eine bestimmte Anzahl von Aufträgen besteht nicht.</p>
-      <p className="mt-2">(3) <strong>Auszahlung:</strong> Die Grundvergütung wird spätestens am letzten Bankarbeitstag des Monats ausgezahlt. Die Provision wird im Folgemonat nach Abrechnung gezahlt.</p>
+      <p>(1) <strong>Grundvergütung:</strong> Die monatliche Grundvergütung beträgt 700,00 € brutto bei einer Mindestarbeitszeit von 10 Stunden pro Woche. Darüber hinaus geleistete Arbeitsstunden werden mit 13,90 € brutto pro Stunde vergütet.</p>
+      <p className="mt-2">(2) <strong>Provisionsvergütung:</strong> Für erfolgreich abgeschlossene Testaufträge kann zusätzlich eine variable Provision gewährt werden. Ein Anspruch auf eine bestimmte Anzahl von Aufträgen besteht nicht.</p>
+      <p className="mt-2">(3) <strong>Auszahlung:</strong> Die Auszahlung der Grundvergütung erfolgt spätestens am letzten Bankarbeitstag des Monats. Eventuelle Provisionen werden nach der Abrechnung im Folgemonat ausgezahlt.</p>
     </div>
     <div>
       <p className="font-bold text-[#0A0A0A]">§5 Urlaub</p>
