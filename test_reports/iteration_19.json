@@ -1,0 +1,37 @@
+{
+  "verdict": "fixed",
+  "user_reported_bug": "es wurde bei der auswahl nicht geupdated also da wo man zuteilt steht immernoch klein das falsche drunter",
+  "summary": "No relevant testing skill found. Focused code review and live UI test confirmed the admin accept-application dialog now renders the corrected small grey description for Teilzeit and Teilzeit AT.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/tests/bug_verification_contract_dialog.py",
+    "/app/test_reports/bug_verification_19.json",
+    "/app/test_reports/iteration_19.json"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "AdminApplications.jsx renders Teilzeit desc as '20 Std./Woche · 2.200 € brutto + Provision · Probezeit 3 Monate' and Teilzeit AT desc as 'Österreich · 20 Std./Woche · 2.200 € brutto + Provision'."
+  ],
+  "updated_files": [
+    "/app/tests/bug_verification_contract_dialog.py",
+    "/app/test_reports/bug_verification_19.json",
+    "/app/test_reports/iteration_19.json"
+  ],
+  "success_rate": {
+    "backend": "not tested (frontend-only scope)",
+    "frontend": "100% for scoped bug verification"
+  },
+  "seed_data_creation": "None. Used existing pending/Neu applications in the preview admin panel; 36 desktop accept actions were available.",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Admin login succeeded on preview. Opened /admin/applications, clicked an existing accept action, and verified [data-testid='contract-type-teilzeit'] and [data-testid='contract-type-teilzeit_at'] descriptions exactly. Old 'Grundvergütung 700' / 'bis 20 Std./Woche' text was not present in the dialog.",
+  "rca_of_the_issue": "Reproduction path verified: /admin/login -> /admin/applications -> click accept/annehmen on a Neu application -> inspect Bewerbung akzeptieren dialog. The updated frontend options array now supplies the correct user-visible description text. No backend changes or MOCKED APIs were involved."
+}
