@@ -378,11 +378,11 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 <p>Die Tätigkeit erfolgt 100 % im Homeoffice (mobiles Arbeiten). Der Arbeitnehmer stellt einen geeigneten Arbeitsplatz mit Internetzugang zur Verfügung. Der Arbeitgeber stellt die erforderlichen Testzugänge und Softwarelizenzen bereit.</p>
 
 <h3>§3 Arbeitszeit</h3>
-<p>Die regelmäßige wöchentliche Arbeitszeit beträgt derzeit bis zu 20 Stunden. Die tatsächliche Arbeitszeit richtet sich nach dem anfallenden Arbeitsaufkommen (Auftragslage). Eine Mindestvergütung ist in §4 geregelt.</p>
+<p>Die regelmäßige wöchentliche Arbeitszeit beträgt 20 Stunden.</p>
 <p>Die Lage der Arbeitszeit wird in Abstimmung mit dem Arbeitgeber flexibel festgelegt. Kernarbeitszeiten bestehen nicht, der Arbeitnehmer muss jedoch für Absprachen mit dem Team an Werktagen zwischen 9:00 und 17:00 Uhr grundsätzlich erreichbar sein.</p>
 
 <h3>§4 Vergütung</h3>
-<p>(1) <strong>Grundvergütung:</strong> Die monatliche Grundvergütung beträgt 700,00 € brutto bei einer Mindestarbeitszeit von 10 Stunden pro Woche. Darüber hinaus geleistete Arbeitsstunden werden mit 13,90 € brutto pro Stunde vergütet.</p>
+<p>(1) <strong>Grundvergütung:</strong> Die monatliche Grundvergütung beträgt 2.200,00 € brutto bei einer wöchentlichen Arbeitszeit von 20 Stunden.</p>
 <p>(2) <strong>Provisionsvergütung:</strong> Für erfolgreich abgeschlossene Testaufträge kann zusätzlich eine variable Provision gewährt werden. Ein Anspruch auf eine bestimmte Anzahl von Aufträgen besteht nicht.</p>
 <p>(3) <strong>Auszahlung:</strong> Die Auszahlung der Grundvergütung erfolgt spätestens am letzten Bankarbeitstag des Monats. Eventuelle Provisionen werden nach der Abrechnung im Folgemonat ausgezahlt.</p>
 

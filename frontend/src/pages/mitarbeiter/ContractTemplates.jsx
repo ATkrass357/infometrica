@@ -105,12 +105,12 @@ const TeilzeitBody = ({ signedDate }) => (
     </div>
     <div>
       <p className="font-bold text-[#0A0A0A]">§3 Arbeitszeit</p>
-      <p>(1) Die regelmäßige wöchentliche Arbeitszeit beträgt derzeit bis zu 20 Stunden. Die tatsächliche Arbeitszeit richtet sich nach dem anfallenden Arbeitsaufkommen (Auftragslage). Eine Mindestvergütung ist in §4 geregelt.</p>
+      <p>(1) Die regelmäßige wöchentliche Arbeitszeit beträgt 20 Stunden.</p>
       <p className="mt-2">(2) Die Lage der Arbeitszeit wird in Abstimmung mit dem Arbeitgeber flexibel festgelegt. Kernarbeitszeiten bestehen nicht, der Arbeitnehmer muss jedoch für Absprachen mit dem Team an Werktagen zwischen 9:00 und 17:00 Uhr grundsätzlich erreichbar sein.</p>
     </div>
     <div>
       <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
-      <p>(1) <strong>Grundvergütung:</strong> Die monatliche Grundvergütung beträgt 700,00 € brutto bei einer Mindestarbeitszeit von 10 Stunden pro Woche. Darüber hinaus geleistete Arbeitsstunden werden mit 13,90 € brutto pro Stunde vergütet.</p>
+      <p>(1) <strong>Grundvergütung:</strong> Die monatliche Grundvergütung beträgt 2.200,00 € brutto bei einer wöchentlichen Arbeitszeit von 20 Stunden.</p>
       <p className="mt-2">(2) <strong>Provisionsvergütung:</strong> Für erfolgreich abgeschlossene Testaufträge kann zusätzlich eine variable Provision gewährt werden. Ein Anspruch auf eine bestimmte Anzahl von Aufträgen besteht nicht.</p>
       <p className="mt-2">(3) <strong>Auszahlung:</strong> Die Auszahlung der Grundvergütung erfolgt spätestens am letzten Bankarbeitstag des Monats. Eventuelle Provisionen werden nach der Abrechnung im Folgemonat ausgezahlt.</p>
     </div>

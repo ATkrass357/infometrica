@@ -567,7 +567,7 @@ const AdminApplications = () => {
             <div className="space-y-2 mb-6">
               {[
                 { value: 'vollzeit', label: 'Vollzeit', desc: 'Testmonat 1.200 €, danach 2.900 € · ca. 40 Std./Woche' },
-                { value: 'teilzeit', label: 'Teilzeit', desc: 'Grundvergütung 700 € (min. 10 Std./Woche) + 13,90 €/Std. Mehrstunden + Provision · Probezeit 3 Monate' },
+                { value: 'teilzeit', label: 'Teilzeit', desc: '20 Std./Woche · 2.200 € brutto + Provision · Probezeit 3 Monate' },
                 { value: 'minijob', label: 'Minijob', desc: 'Provision 50–300 €/Auftrag · max. 603 €/Monat' },
                 { value: 'minijob_at', label: 'Minijob AT', desc: 'Werkvertrag · Vergütung pro Test · selbstständig' },
                 { value: 'vollzeit_at', label: 'Vollzeit AT', desc: 'Österreich · 40 Std./Woche · 2.900 € brutto' },
