@@ -548,7 +548,7 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 <p>20 Stunden pro Woche (flexibel).</p>
 
 <h3>§4 Vergütung</h3>
-<p>Fixgehalt: 1.100,00 € brutto monatlich + erfolgsabhängige Provisionen.</p>
+<p>Fixgehalt: 2.200,00 € brutto monatlich bei 20 Wochenstunden + erfolgsabhängige Provisionen.</p>
 
 <h3>§5 Vertraulichkeit und Datenschutz</h3>
 <p>Strenge NDA + DSGVO. Alle Daten werden nach Testabschluss innerhalb von 30 Tagen gelöscht. Vertragsstrafe bei Verstoß: 5.000 €.</p>

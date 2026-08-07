@@ -305,7 +305,7 @@ const TeilzeitATBody = ({ signedDate }) => (
     </div>
     <div>
       <p className="font-bold text-[#0A0A0A]">§4 Vergütung</p>
-      <p>Fixgehalt: 1.100,00 € brutto monatlich + erfolgsabhängige Provisionen.</p>
+      <p>Fixgehalt: 2.200,00 € brutto monatlich bei 20 Wochenstunden + erfolgsabhängige Provisionen.</p>
     </div>
     <div>
       <p className="font-bold text-[#0A0A0A]">§5 Vertraulichkeit und Datenschutz</p>
