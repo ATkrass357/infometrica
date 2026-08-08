@@ -68,6 +68,8 @@ German.
 `cd ~/infometrica && git stash && git pull origin main && cd frontend && npm run build && sudo systemctl restart precision-backend && sudo systemctl restart nginx`
 
 ## Last Updated
+2026-06-30: Bugfix – Datenschutzklausel fehlte im Backend-PDF für `teilzeit`. §12 „Datenschutz, Datensicherheit und ausschließliche Testzwecke" (5 Absätze) im teilzeit-Zweig von `_build_contract_html_parts` (applications.py) ergänzt, damit Frontend-Vorschau und PDF übereinstimmen. Testing-Agent: 13/13 Backend-Tests bestanden (100%). Klausel jetzt in allen 5 Arbeitsverträgen: vollzeit §11 (Default §9), teilzeit §12, minijob §11, vollzeit_at §9, teilzeit_at §7. freiberufler_at/minijob_at (Werk-/Dienstleistungsvertrag) bewusst ohne diese Klausel.
+
 2026-06-28: 3 österreichische Verträge ergänzt (Vollzeit AT, Teilzeit AT, Freiberufler AT) → insgesamt 7 Vertragstypen.
 
 ### Österreich-Verträge (2026-06-28)
