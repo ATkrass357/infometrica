@@ -1,0 +1,22 @@
+{
+  "summary": "Backend testing of Datenschutz clause in all 5 employment contract types + full end-to-end teilzeit contract flow. All 13 tests passed (100%).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {"ui_bugs": [], "integration_issues": [], "design_issues": []},
+  "test_report_links": [
+    "/app/backend/tests/test_contract_datenschutz.py",
+    "/app/test_reports/pytest/pytest_datenschutz.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "applications.py is 908 lines - consider splitting contract HTML generator into a separate module (e.g., routes/contract_templates.py) for maintainability.",
+    "Contract HTML templates contain lots of duplicated boilerplate across the 7 branches inside _build_contract_html_parts - could be refactored to a data-driven approach (dict of clauses) to reduce risk of a similar missing-clause bug recurring."
+  ],
+  "updated_files": ["/app/backend/tests/test_contract_datenschutz.py"],
+  "success_rate": {"backend": "100%", "frontend": "not tested (per request)"},
+  "test_credentials": "admin@webora.de / Kp9!xRv2Lq@Zm7Tn4&Q (verified working)",
+  "seed_data_creation": "Created transient TEST_teilzeit_<uuid>@example.com applicants; cleaned up via DELETE /api/applications/{id} in fixture teardown.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Datenschutz clause is present in all 5 employment contracts (vollzeit §11, teilzeit §12, minijob §9, vollzeit_at §9, teilzeit_at §7). freiberufler_at (Austria freelancer / Werkvertrag) intentionally does NOT include it. E2E flow (submit→accept→sign→download-contract) works end to end via REACT_APP_BACKEND_URL.",
+  "rca of the issue": "Original bug: teilzeit branch of _build_contract_html_parts was missing the §12 Datenschutz block. Fix (already applied by main agent) inserts the full 5-paragraph clause under §12 in the teilzeit branch (routes/applications.py line ~410). Verified via parametrized test and end-to-end download-contract HTML inspection - the header 'Datenschutz, Datensicherheit und ausschließliche Testzwecke' and paragraphs (1)-(5) plus DSGVO/Art. 32 references now appear. Teilzeit-specific terms verified: 20 Stunden weekly, 2.200,00 EUR brutto, drei Monate Probezeit."
+}

@@ -88,6 +88,14 @@ const VollzeitBody = ({ signedDate }) => (
       <p className="mt-2">(2) Jede Kündigung hat schriftlich zu erfolgen.</p>
       <p className="mt-2">(3) Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt hiervon unberührt.</p>
     </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§9 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+      <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+      <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+      <p className="mt-2">(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+      <p className="mt-2">(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
+    </div>
   </>
 );
 
@@ -142,6 +150,14 @@ const TeilzeitBody = ({ signedDate }) => (
       <p className="font-bold text-[#0A0A0A]">§11 Salvatorische Klausel</p>
       <p>Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird dadurch die Gültigkeit des übrigen Vertrages nicht berührt. Anstelle der unwirksamen Bestimmung tritt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.</p>
     </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§12 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+      <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+      <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+      <p className="mt-2">(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+      <p className="mt-2">(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
+    </div>
   </>
 );
 
@@ -191,6 +207,14 @@ const MinijobBody = ({ signedDate }) => (
     <div>
       <p className="font-bold text-[#0A0A0A]">§10 Salvatorische Klausel</p>
       <p>Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird dadurch die Gültigkeit des übrigen Vertrages nicht berührt. Anstelle der unwirksamen Bestimmung tritt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§11 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+      <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+      <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+      <p className="mt-2">(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+      <p className="mt-2">(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
     </div>
   </>
 );
@@ -286,6 +310,14 @@ const VollzeitATBody = ({ signedDate }) => (
       <p className="font-bold text-[#0A0A0A]">§8 Schlussbestimmungen</p>
       <p>Es gilt österreichisches Recht. Gerichtsstand ist Frankfurt am Main bzw. das örtlich zuständige Gericht in Österreich.</p>
     </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§9 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+      <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+      <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+      <p className="mt-2">(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+      <p className="mt-2">(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
+    </div>
   </>
 );
 
@@ -314,6 +346,14 @@ const TeilzeitATBody = ({ signedDate }) => (
     <div>
       <p className="font-bold text-[#0A0A0A]">§6 Sonstiges</p>
       <p>Gesetzliche Regelungen Österreich. Gerichtsstand Frankfurt am Main bzw. Österreich.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§7 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+      <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+      <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+      <p className="mt-2">(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+      <p className="mt-2">(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
     </div>
   </>
 );

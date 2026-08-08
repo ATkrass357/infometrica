@@ -406,6 +406,13 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 
 <h3>§11 Salvatorische Klausel</h3>
 <p>Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird dadurch die Gültigkeit des übrigen Vertrages nicht berührt. Anstelle der unwirksamen Bestimmung tritt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.</p>
+
+<h3>§12 Datenschutz, Datensicherheit und ausschließliche Testzwecke</h3>
+<p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+<p>(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+<p>(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+<p>(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+<p>(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
 """
         return subtitle, sections_html
 
@@ -452,6 +459,13 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 
 <h3>§10 Salvatorische Klausel</h3>
 <p>Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird dadurch die Gültigkeit des übrigen Vertrages nicht berührt. Anstelle der unwirksamen Bestimmung tritt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.</p>
+
+<h3>§11 Datenschutz, Datensicherheit und ausschließliche Testzwecke</h3>
+<p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+<p>(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+<p>(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+<p>(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+<p>(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
 """
         return subtitle, sections_html
 
@@ -532,6 +546,13 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 
 <h3>§8 Schlussbestimmungen</h3>
 <p>Es gilt österreichisches Recht. Gerichtsstand ist Frankfurt am Main bzw. das örtlich zuständige Gericht in Österreich.</p>
+
+<h3>§9 Datenschutz, Datensicherheit und ausschließliche Testzwecke</h3>
+<p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+<p>(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+<p>(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+<p>(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+<p>(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
 """
         return subtitle, sections_html
 
@@ -555,6 +576,13 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 
 <h3>§6 Sonstiges</h3>
 <p>Gesetzliche Regelungen Österreich. Gerichtsstand Frankfurt am Main bzw. Österreich.</p>
+
+<h3>§7 Datenschutz, Datensicherheit und ausschließliche Testzwecke</h3>
+<p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+<p>(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+<p>(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+<p>(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+<p>(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
 """
         return subtitle, sections_html
 
@@ -616,6 +644,13 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 <p>(1) Nach Ablauf des Testmonats gelten die gesetzlichen Kündigungsfristen.</p>
 <p>(2) Jede Kündigung hat schriftlich zu erfolgen.</p>
 <p>(3) Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt hiervon unberührt.</p>
+
+<h3>§9 Datenschutz, Datensicherheit und ausschließliche Testzwecke</h3>
+<p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
+<p>(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
+<p>(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
+<p>(4) Der Arbeitgeber trifft gemäß Art. 32 DSGVO geeignete technische und organisatorische Maßnahmen, um personenbezogene Daten vor unbefugter oder unrechtmäßiger Verarbeitung, Verlust, Zerstörung oder unbefugtem Zugriff zu schützen.</p>
+<p>(5) Der Mitarbeiter verpflichtet sich, sämtliche ihm im Rahmen seiner Tätigkeit bekannt werdenden personenbezogenen Daten und vertraulichen Informationen vertraulich zu behandeln, ausschließlich für die vorgesehenen Aufgaben zu verwenden und nicht unbefugt an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung des Arbeitsverhältnisses fort, soweit dies gesetzlich erforderlich ist.</p>
 """
     return subtitle, sections_html
 
