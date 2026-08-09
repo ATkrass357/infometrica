@@ -349,12 +349,7 @@ const AdminTasks = () => {
             <span className="hidden sm:inline">Aktualisieren</span>
           </button>
           <button
-            onClick={() => {
-              if (!showForm) {
-                setFormData(prev => ({ ...prev, category: activeTab }));
-              }
-              setShowForm(!showForm);
-            }}
+            onClick={() => setShowForm(!showForm)}
             className="flex items-center gap-2 px-4 py-2 bg-[#7aa2f7] text-white rounded-lg hover:bg-[#6b93e8] transition-colors"
             data-testid="create-task-btn"
           >
