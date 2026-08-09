@@ -161,12 +161,6 @@ const MitarbeiterAuftrage = () => {
                           <span>Website öffnen</span>
                         </a>
                       )}
-                      {task.due_date && (
-                        <div className="flex items-center gap-1">
-                          <Clock size={14} />
-                          <span>Fällig: {task.due_date}</span>
-                        </div>
-                      )}
                     </div>
                   </div>
 

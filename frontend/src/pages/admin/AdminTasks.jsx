@@ -38,8 +38,7 @@ const AdminTasks = () => {
     schritt1: '',
     schritt2: '',
     schritt3: '',
-    priority: 'Normal',
-    due_date: ''
+    priority: 'Normal'
   });
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState('bd');
@@ -106,8 +105,7 @@ const AdminTasks = () => {
         schritt1: '',
         schritt2: '',
         schritt3: '',
-        priority: 'Normal',
-        due_date: ''
+        priority: 'Normal'
       });
       fetchData();
     } catch (error) {
@@ -447,20 +445,6 @@ const AdminTasks = () => {
                   <option value="Hoch">Hoch</option>
                 </select>
               </div>
-
-              {/* Due Date */}
-              <div>
-                <label className="block text-sm font-medium text-[#9aa5ce] mb-1">
-                  Fälligkeitsdatum
-                </label>
-                <input
-                  type="date"
-                  value={formData.due_date}
-                  onChange={(e) => setFormData({...formData, due_date: e.target.value})}
-                  className="w-full px-4 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
-                  data-testid="task-duedate-input"
-                />
-              </div>
             </div>
 
             {/* Description Section */}
@@ -684,12 +668,6 @@ const AdminTasks = () => {
                         <Globe size={14} />
                         <span>Website</span>
                       </a>
-                    )}
-                    {task.due_date && (
-                      <div className="flex items-center gap-1">
-                        <Clock size={14} />
-                        <span>Fällig: {task.due_date}</span>
-                      </div>
                     )}
                   </div>
                 </div>
