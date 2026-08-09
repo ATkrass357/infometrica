@@ -32,6 +32,7 @@ const AdminTasks = () => {
   const [expandedTask, setExpandedTask] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
+    category: '',
     website: '',
     einleitung: '',
     schritt1: '',
@@ -41,6 +42,7 @@ const AdminTasks = () => {
     due_date: ''
   });
   const [submitting, setSubmitting] = useState(false);
+  const [activeTab, setActiveTab] = useState('bd');
   
   // Multi-assignment state
   const [assigningTask, setAssigningTask] = useState(null);
@@ -80,6 +82,11 @@ const AdminTasks = () => {
       toast.error('Bitte geben Sie einen Titel ein');
       return;
     }
+
+    if (!formData.category) {
+      toast.error('Bitte wählen Sie eine Kategorie (BD oder App Test)');
+      return;
+    }
     
     setSubmitting(true);
     
@@ -93,6 +100,7 @@ const AdminTasks = () => {
       setShowForm(false);
       setFormData({
         title: '',
+        category: '',
         website: '',
         einleitung: '',
         schritt1: '',
@@ -126,6 +134,23 @@ const AdminTasks = () => {
     } catch (error) {
       console.error('Error deleting task:', error);
       toast.error('Fehler beim Löschen');
+    }
+  };
+
+  // Assign category to a legacy/uncategorized task
+  const assignCategory = async (taskId, category) => {
+    try {
+      const token = localStorage.getItem('admin_token');
+      await axios.put(
+        `${BACKEND_URL}/api/admin/tasks/${taskId}/category`,
+        { category },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      toast.success(category === 'bd' ? 'Als BD-Aufgabe zugeordnet' : 'Als App-Test zugeordnet');
+      fetchData();
+    } catch (error) {
+      console.error('Error setting category:', error);
+      toast.error('Fehler beim Zuordnen der Kategorie');
     }
   };
 
@@ -260,6 +285,15 @@ const AdminTasks = () => {
     return employees.find(e => e.id === empId);
   };
 
+  // Category-split task lists (admin panel only)
+  const uncategorizedTasks = useMemo(
+    () => tasks.filter(t => t.category !== 'bd' && t.category !== 'app'),
+    [tasks]
+  );
+  const bdTasks = useMemo(() => tasks.filter(t => t.category === 'bd'), [tasks]);
+  const appTasks = useMemo(() => tasks.filter(t => t.category === 'app'), [tasks]);
+  const visibleTasks = activeTab === 'bd' ? bdTasks : appTasks;
+
   const getStatusColor = (status) => {
     switch (status) {
       case 'Offen': return 'bg-orange-500/20 text-orange-400';
@@ -315,7 +349,12 @@ const AdminTasks = () => {
             <span className="hidden sm:inline">Aktualisieren</span>
           </button>
           <button
-            onClick={() => setShowForm(!showForm)}
+            onClick={() => {
+              if (!showForm) {
+                setFormData(prev => ({ ...prev, category: activeTab }));
+              }
+              setShowForm(!showForm);
+            }}
             className="flex items-center gap-2 px-4 py-2 bg-[#7aa2f7] text-white rounded-lg hover:bg-[#6b93e8] transition-colors"
             data-testid="create-task-btn"
           >
@@ -345,6 +384,41 @@ const AdminTasks = () => {
                   data-testid="task-title-input"
                   required
                 />
+              </div>
+
+              {/* Category (required) */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-[#9aa5ce] mb-1">
+                  Kategorie *
+                </label>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({...formData, category: 'bd'})}
+                    className={`flex-1 px-4 py-3 rounded-lg border text-left transition-colors ${
+                      formData.category === 'bd'
+                        ? 'bg-[#7aa2f7]/15 border-[#7aa2f7] text-[#c0caf5]'
+                        : 'bg-[#1a1b26] border-[#292e42] text-[#9aa5ce] hover:border-[#565f89]'
+                    }`}
+                    data-testid="task-category-bd"
+                  >
+                    <span className="font-semibold block">BD</span>
+                    <span className="text-xs text-[#565f89]">Finanz-Tests / KYC</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({...formData, category: 'app'})}
+                    className={`flex-1 px-4 py-3 rounded-lg border text-left transition-colors ${
+                      formData.category === 'app'
+                        ? 'bg-[#9ece6a]/15 border-[#9ece6a] text-[#c0caf5]'
+                        : 'bg-[#1a1b26] border-[#292e42] text-[#9aa5ce] hover:border-[#565f89]'
+                    }`}
+                    data-testid="task-category-app"
+                  >
+                    <span className="font-semibold block">App Test</span>
+                    <span className="text-xs text-[#565f89]">Mobile-App-Tests</span>
+                  </button>
+                </div>
               </div>
 
               {/* Website */}
@@ -496,16 +570,80 @@ const AdminTasks = () => {
         </div>
       )}
 
+      {/* Category Tabs */}
+      <div className="flex gap-2 border-b border-[#292e42]" data-testid="task-category-tabs">
+        <button
+          onClick={() => setActiveTab('bd')}
+          className={`px-5 py-3 text-sm font-medium border-b-2 -mb-px transition-colors ${
+            activeTab === 'bd'
+              ? 'border-[#7aa2f7] text-[#c0caf5]'
+              : 'border-transparent text-[#9aa5ce] hover:text-[#c0caf5]'
+          }`}
+          data-testid="tab-bd"
+        >
+          BD · Finanz / KYC
+          <span className="ml-2 px-2 py-0.5 rounded-full text-xs bg-[#7aa2f7]/20 text-[#7aa2f7]">{bdTasks.length}</span>
+        </button>
+        <button
+          onClick={() => setActiveTab('app')}
+          className={`px-5 py-3 text-sm font-medium border-b-2 -mb-px transition-colors ${
+            activeTab === 'app'
+              ? 'border-[#9ece6a] text-[#c0caf5]'
+              : 'border-transparent text-[#9aa5ce] hover:text-[#c0caf5]'
+          }`}
+          data-testid="tab-app"
+        >
+          App Tests
+          <span className="ml-2 px-2 py-0.5 rounded-full text-xs bg-[#9ece6a]/20 text-[#9ece6a]">{appTasks.length}</span>
+        </button>
+      </div>
+
+      {/* Uncategorized tasks - require manual assignment */}
+      {uncategorizedTasks.length > 0 && (
+        <div className="bg-[#e0af68]/10 border border-[#e0af68]/30 rounded-xl p-4" data-testid="uncategorized-tasks">
+          <div className="flex items-start gap-3 mb-3">
+            <AlertCircle className="text-[#e0af68] flex-shrink-0 mt-0.5" size={20} />
+            <div>
+              <h3 className="font-medium text-[#e0af68]">Noch nicht kategorisiert ({uncategorizedTasks.length})</h3>
+              <p className="text-sm text-[#9aa5ce] mt-1">Bitte ordnen Sie diese Aufgaben einer Kategorie zu.</p>
+            </div>
+          </div>
+          <div className="space-y-2">
+            {uncategorizedTasks.map((task) => (
+              <div key={task.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 bg-[#16161e] p-3 rounded-lg">
+                <span className="text-[#c0caf5] font-medium">{task.title}</span>
+                <div className="flex gap-2 flex-shrink-0">
+                  <button
+                    onClick={() => assignCategory(task.id, 'bd')}
+                    className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[#7aa2f7]/15 text-[#7aa2f7] hover:bg-[#7aa2f7]/25 transition-colors"
+                    data-testid={`set-bd-${task.id}`}
+                  >
+                    → BD
+                  </button>
+                  <button
+                    onClick={() => assignCategory(task.id, 'app')}
+                    className="px-3 py-1.5 text-xs font-medium rounded-lg bg-[#9ece6a]/15 text-[#9ece6a] hover:bg-[#9ece6a]/25 transition-colors"
+                    data-testid={`set-app-${task.id}`}
+                  >
+                    → App Test
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Tasks List */}
       <div className="space-y-4" data-testid="tasks-list">
-        {tasks.length === 0 ? (
+        {visibleTasks.length === 0 ? (
           <div className="bg-[#16161e] border border-[#292e42] rounded-xl p-12 text-center">
             <ListChecks size={48} className="mx-auto mb-4 text-[#565f89]" />
-            <h3 className="text-lg font-medium text-[#c0caf5] mb-2">Keine Aufgaben vorhanden</h3>
-            <p className="text-[#9aa5ce]">Erstellen Sie Ihre erste Aufgabe mit dem Button oben.</p>
+            <h3 className="text-lg font-medium text-[#c0caf5] mb-2">Keine Aufgaben in dieser Kategorie</h3>
+            <p className="text-[#9aa5ce]">Erstellen Sie eine Aufgabe mit dem Button oben.</p>
           </div>
         ) : (
-          tasks.map((task) => (
+          visibleTasks.map((task) => (
             <div
               key={task.id}
               className="bg-[#16161e] border border-[#292e42] rounded-xl overflow-hidden"
@@ -522,6 +660,15 @@ const AdminTasks = () => {
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${getPriorityColor(task.priority)}`}>
                       {task.priority}
                     </span>
+                    {task.category && (
+                      <span className={`px-2 py-0.5 rounded text-xs font-medium ${
+                        task.category === 'bd'
+                          ? 'bg-[#7aa2f7]/20 text-[#7aa2f7]'
+                          : 'bg-[#9ece6a]/20 text-[#9ece6a]'
+                      }`}>
+                        {task.category === 'bd' ? 'BD' : 'App Test'}
+                      </span>
+                    )}
                   </div>
                   <div className="flex flex-wrap items-center gap-3 text-sm text-[#9aa5ce]">
                     <div className={`flex items-center gap-1 ${!task.assigned_to && (!task.assignments || task.assignments.length === 0) ? 'text-[#e0af68]' : ''}`}>

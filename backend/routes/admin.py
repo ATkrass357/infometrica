@@ -179,6 +179,7 @@ async def create_task(
     task = Task(
         id=str(uuid.uuid4()),
         title=task_data.title,
+        category=task_data.category,
         website=task_data.website,
         einleitung=task_data.einleitung,
         schritt1=task_data.schritt1,
@@ -237,6 +238,27 @@ async def delete_task(
         raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
     
     return {"message": "Aufgabe gelöscht"}
+
+
+@router.put("/tasks/{task_id}/category")
+async def update_task_category(
+    task_id: str,
+    data: dict,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Update the admin-panel category of a task ('bd' or 'app')"""
+    verify_admin_token(authorization)
+
+    category = (data or {}).get("category")
+    if category not in ("bd", "app"):
+        raise HTTPException(status_code=400, detail="Ungültige Kategorie")
+
+    result = await db.tasks.update_one({"id": task_id}, {"$set": {"category": category}})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
+
+    return {"message": "Kategorie aktualisiert", "category": category}
 
 
 @router.put("/tasks/{task_id}/credentials")

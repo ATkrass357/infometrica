@@ -49,6 +49,7 @@ class TaskAssignment(BaseModel):
 class Task(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
+    category: Optional[str] = None  # 'bd' (Finanz/KYC) or 'app' (App Tests) - admin panel only
     website: Optional[str] = None
     einleitung: Optional[str] = None
     schritt1: Optional[str] = None
@@ -73,6 +74,7 @@ class Task(BaseModel):
 
 class TaskCreate(BaseModel):
     title: str
+    category: Optional[str] = None  # 'bd' or 'app'
     website: Optional[str] = None
     einleitung: Optional[str] = None
     schritt1: Optional[str] = None
@@ -90,6 +92,7 @@ class TaskUpdate(BaseModel):
     status: Optional[str] = None
     priority: Optional[str] = None
     due_date: Optional[str] = None
+    category: Optional[str] = None
 
 class MultiAssignmentItem(BaseModel):
     """Single item in multi-assignment request"""

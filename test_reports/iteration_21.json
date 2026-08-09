@@ -1,0 +1,28 @@
+{
+  "summary": "Frontend admin task category-split feature tested. Tabs (BD/App Tests) render with count badges, tasks are created into the correct category, badges display on cards, tab filtering works, and the 'Noch nicht kategorisiert' banner shows legacy uncategorized tasks with → BD / → App Test buttons that correctly assign category via PUT /api/admin/tasks/{id}/category. One functional deviation from spec: the create form auto-preselects the category based on the active tab, so the mandatory manual selection requirement (and the 'submit without category' toast guard) is effectively bypassed by the UI.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {"component": "AdminTasks - Create form category pre-selection", "issue": "When 'Neue Aufgabe' is clicked, code sets formData.category = activeTab (AdminTasks.jsx lines 352-355). This violates the requirement 'category must be chosen manually by the admin (NOT auto-assigned)'. As a consequence, the guard `if (!formData.category) toast.error(...)` (line 86-89) is unreachable via normal UI flow — user can submit and always creates a task in the pre-selected category even without clicking a category button.", "selector": "[data-testid=\"create-task-btn\"] / [data-testid=\"task-category-bd\"]", "priority": "HIGH"}
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Remove the auto pre-selection of formData.category on form open in AdminTasks.jsx (lines 352-355). Initialize formData.category to '' so admin must manually click BD or App Test button; the existing toast validation (line 86-89) will then correctly block submission without a chosen category as per requirement."
+  ],
+  "critical_code_review_comments": [
+    "AdminTasks.jsx > 1000 lines — consider splitting the multi-assignment modal into its own component.",
+    "toggleEmployeeSelection uses setEmployeeCredentials(prev => ...) inside setSelectedEmployees(prev => ...) callback — nested state setters work but are fragile; prefer using a single effect or moving the credentials update outside the state updater.",
+    "Uncategorized filter uses `t.category !== 'bd' && t.category !== 'app'` which correctly captures null/undefined/other but consider a `category == null` explicit check for clarity."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped per request)", "frontend": "83% (5/6 acceptance criteria; category auto-preselection breaks manual-choice requirement)"},
+  "test_credentials": "admin@webora.de / Kp9!xRv2Lq@Zm7Tn4&Q (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "None persisted. Created TEST_BD_*, TEST_APP_*, TEST_UNCAT_* tasks during test and cleaned them all up via DELETE /api/admin/tasks/{id}. Also cleaned up leftover TEST_* tasks from prior iterations (TEST_TASK_MA_*, TEST_PerEmployee_*, TEST_Task_*).",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Verified via UI: tabs render with counts, tasks route into correct tab, BD/App Test badges appear on task cards, uncategorized banner shows legacy tasks with set-bd-{id}/set-app-{id} buttons that call PUT /api/admin/tasks/{id}/category and move the task into the chosen tab. There are 12 pre-existing legacy uncategorized tasks in the database still visible in the banner (e.g., 'Email Inbox Test Task', 'App XYZ testen', 'Website-Test: Startseite prüfen', 'Multi-Test Aufgabe', 'ff', '1', 'E-Mail Test Aufgabe'). Main agent may want to categorize/clean these. The one remaining functional issue is the auto pre-selection of category on form open — E1 should remove the pre-fill in the onClick of create-task-btn.",
+  "rca of the issue": "In AdminTasks.jsx onClick of create-task-btn (lines 352-355) executes `setFormData(prev => ({ ...prev, category: activeTab }))` before showing the form, which auto-assigns category = current active tab ('bd' or 'app'). Requirement explicitly states category must be chosen manually and submit must be blocked with a toast when no category is chosen. Fix: remove that setFormData call so category stays '' until admin clicks task-category-bd or task-category-app."
+}
