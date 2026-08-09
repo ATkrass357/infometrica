@@ -10,7 +10,6 @@ import os
 
 # Import SMS service
 from services.sms_service import send_task_assigned_sms
-from services.ai_task_service import generate_app_test_task
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -277,7 +276,13 @@ async def ai_generate_task(
     })
 
     try:
+        from services.ai_task_service import generate_app_test_task
         result = await generate_app_test_task(app_name, existing_names)
+    except ModuleNotFoundError:
+        raise HTTPException(
+            status_code=503,
+            detail="KI-Funktion nicht verfügbar: Bibliothek 'emergentintegrations' ist auf dem Server nicht installiert."
+        )
     except Exception as e:
         raise HTTPException(status_code=502, detail=f"KI-Generierung fehlgeschlagen: {e}")
 
