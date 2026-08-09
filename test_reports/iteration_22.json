@@ -1,0 +1,27 @@
+{
+  "summary": "Frontend-only testing of the AI-generator for App-Test tasks on /admin/tasks. All 5 required scenarios PASS: (1) AI panel appears only when 'App Test' category is selected; (2) AI generates title/Einleitung/Schritt1-3 with German text in ~7s and shows success toast; (3) Task is created and appears under the 'App Tests' tab with the App Test badge; (4) Duplicate generation returns HTTP 409 and the UI shows a German error toast ('Für die App \"...\" existiert bereits eine Aufgabe.') without overwriting form fields; (5) AI panel is NOT rendered when 'BD' category is selected. Created task and leftover 'TestApp QA Zeta 2026' task were cleaned up via API.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/test_reports/screenshots_contract_dialog/created.png",
+    "/app/test_reports/screenshots_contract_dialog/dup_toast.png"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "AdminTasks.jsx generateWithAI flow correctly handles 200 (fills form + success toast) and 409 (error toast, no overwrite). Verified end-to-end.",
+    "AI panel conditional rendering (formData.category==='app') works correctly - hidden on BD.",
+    "Note: Prior testing runs left an orphan task 'QA-Check: ... TestApp QA Zeta 2026'; recommend adding a cleanup step in test docs or a backend maintenance endpoint. Cleaned during this run."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "n/a (skipped per request)", "frontend": "100% (5/5 scenarios)"},
+  "test_credentials": "admin@webora.de / Kp9!xRv2Lq@Zm7Tn4&Q (from /app/memory/test_credentials.md)",
+  "seed_data_creation": "Created task with unique app_name 'UniqueQA-1786285920' and deleted it via DELETE /api/admin/tasks/{id}. Also deleted leftover 'TestApp QA Zeta 2026' task from prior runs.",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "AI generation via Gemini takes ~5-15s. Duplicate detection is case-insensitive (backend lowercases ai_app_name). Login route is /admin/login. Admin login sets both localStorage 'admin_token' and 'login_time'. To avoid 409 on retest, always use a fresh unique app name (e.g. include timestamp).",
+  "rca of the issue": "N/A - no issues found"
+}

@@ -19,7 +19,8 @@ import {
   Search,
   Users,
   Check,
-  ChevronRight
+  ChevronRight,
+  Sparkles
 } from 'lucide-react';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -33,6 +34,7 @@ const AdminTasks = () => {
   const [formData, setFormData] = useState({
     title: '',
     category: '',
+    ai_app_name: '',
     website: '',
     einleitung: '',
     schritt1: '',
@@ -42,6 +44,8 @@ const AdminTasks = () => {
   });
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState('bd');
+  const [aiAppName, setAiAppName] = useState('');
+  const [aiGenerating, setAiGenerating] = useState(false);
   
   // Multi-assignment state
   const [assigningTask, setAssigningTask] = useState(null);
@@ -74,6 +78,44 @@ const AdminTasks = () => {
     }
   };
 
+  const generateWithAI = async () => {
+    if (!aiAppName.trim()) {
+      toast.error('Bitte geben Sie einen App-Namen ein');
+      return;
+    }
+    setAiGenerating(true);
+    try {
+      const token = localStorage.getItem('admin_token');
+      const res = await axios.post(
+        `${BACKEND_URL}/api/admin/tasks/ai-generate`,
+        { app_name: aiAppName.trim() },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const d = res.data;
+      setFormData(prev => ({
+        ...prev,
+        category: 'app',
+        ai_app_name: d.ai_app_name || aiAppName.trim().toLowerCase(),
+        title: d.title || prev.title,
+        einleitung: d.einleitung || '',
+        schritt1: d.schritt1 || '',
+        schritt2: d.schritt2 || '',
+        schritt3: d.schritt3 || ''
+      }));
+      toast.success('Aufgabe mit KI generiert – bitte prüfen und speichern');
+    } catch (error) {
+      const status = error?.response?.status;
+      const detail = error?.response?.data?.detail;
+      if (status === 409) {
+        toast.error(detail || 'Für diese App existiert bereits eine Aufgabe');
+      } else {
+        toast.error(detail || 'KI-Generierung fehlgeschlagen');
+      }
+    } finally {
+      setAiGenerating(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -97,9 +139,11 @@ const AdminTasks = () => {
       
       toast.success('Aufgabe erfolgreich erstellt');
       setShowForm(false);
+      setAiAppName('');
       setFormData({
         title: '',
         category: '',
+        ai_app_name: '',
         website: '',
         einleitung: '',
         schritt1: '',
@@ -413,6 +457,49 @@ const AdminTasks = () => {
                   </button>
                 </div>
               </div>
+
+              {/* AI Generator (only for App Test category) */}
+              {formData.category === 'app' && (
+                <div className="md:col-span-2 bg-gradient-to-r from-[#7aa2f7]/10 to-[#bb9af7]/10 border border-[#7aa2f7]/30 rounded-lg p-4" data-testid="ai-generator-panel">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles size={18} className="text-[#bb9af7]" />
+                    <span className="text-sm font-semibold text-[#c0caf5]">Mit KI generieren</span>
+                  </div>
+                  <p className="text-xs text-[#9aa5ce] mb-3">
+                    App-Namen eingeben – die KI erstellt Titel, Einleitung und Schritt 1–3 automatisch. Keine App wird doppelt vergeben.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="text"
+                      value={aiAppName}
+                      onChange={(e) => setAiAppName(e.target.value)}
+                      onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); generateWithAI(); } }}
+                      className="flex-1 px-4 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                      placeholder="z. B. Revolut, N26, Trade Republic..."
+                      data-testid="ai-app-name-input"
+                    />
+                    <button
+                      type="button"
+                      onClick={generateWithAI}
+                      disabled={aiGenerating}
+                      className="flex items-center justify-center gap-2 px-5 py-2 bg-[#bb9af7] text-[#1a1b26] font-semibold rounded-lg hover:bg-[#bb9af7]/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
+                      data-testid="ai-generate-btn"
+                    >
+                      {aiGenerating ? (
+                        <>
+                          <RefreshCw size={16} className="animate-spin" />
+                          <span>Generiere...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles size={16} />
+                          <span>Generieren</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Website */}
               <div>

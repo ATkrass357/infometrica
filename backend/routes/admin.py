@@ -10,6 +10,7 @@ import os
 
 # Import SMS service
 from services.sms_service import send_task_assigned_sms
+from services.ai_task_service import generate_app_test_task
 
 router = APIRouter(prefix="/api/admin", tags=["admin"])
 
@@ -180,6 +181,7 @@ async def create_task(
         id=str(uuid.uuid4()),
         title=task_data.title,
         category=task_data.category,
+        ai_app_name=(task_data.ai_app_name or "").strip().lower() or None,
         website=task_data.website,
         einleitung=task_data.einleitung,
         schritt1=task_data.schritt1,
@@ -238,6 +240,50 @@ async def delete_task(
         raise HTTPException(status_code=404, detail="Aufgabe nicht gefunden")
     
     return {"message": "Aufgabe gelöscht"}
+
+
+@router.post("/tasks/ai-generate")
+async def ai_generate_task(
+    data: dict,
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Generate an App-Test task via AI (Gemini 3 Flash) from an app name.
+    Prevents duplicate app tasks by checking existing app-category tasks."""
+    verify_admin_token(authorization)
+
+    app_name = (data or {}).get("app_name", "").strip()
+    if not app_name:
+        raise HTTPException(status_code=400, detail="Bitte einen App-Namen eingeben")
+
+    normalized = app_name.lower()
+
+    # Duplicate guard: never generate a task for an app that already has one
+    existing_app_tasks = await db.tasks.find(
+        {"category": "app"}, {"_id": 0, "title": 1, "ai_app_name": 1}
+    ).to_list(500)
+
+    for t in existing_app_tasks:
+        if (t.get("ai_app_name") or "").strip().lower() == normalized:
+            raise HTTPException(
+                status_code=409,
+                detail=f"Für die App \"{app_name}\" existiert bereits eine Aufgabe."
+            )
+
+    existing_names = sorted({
+        (t.get("ai_app_name") or t.get("title") or "").strip()
+        for t in existing_app_tasks
+        if (t.get("ai_app_name") or t.get("title"))
+    })
+
+    try:
+        result = await generate_app_test_task(app_name, existing_names)
+    except Exception as e:
+        raise HTTPException(status_code=502, detail=f"KI-Generierung fehlgeschlagen: {e}")
+
+    result["ai_app_name"] = normalized
+    result["category"] = "app"
+    return result
 
 
 @router.put("/tasks/{task_id}/category")

@@ -50,6 +50,7 @@ class Task(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     title: str
     category: Optional[str] = None  # 'bd' (Finanz/KYC) or 'app' (App Tests) - admin panel only
+    ai_app_name: Optional[str] = None  # normalized app/exchange name if generated/tracked via AI
     website: Optional[str] = None
     einleitung: Optional[str] = None
     schritt1: Optional[str] = None
@@ -75,6 +76,7 @@ class Task(BaseModel):
 class TaskCreate(BaseModel):
     title: str
     category: Optional[str] = None  # 'bd' or 'app'
+    ai_app_name: Optional[str] = None
     website: Optional[str] = None
     einleitung: Optional[str] = None
     schritt1: Optional[str] = None
