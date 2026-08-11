@@ -89,7 +89,31 @@ const VollzeitBody = ({ signedDate }) => (
       <p className="mt-2">(3) Das Recht zur fristlosen Kündigung aus wichtigem Grund bleibt hiervon unberührt.</p>
     </div>
     <div>
-      <p className="font-bold text-[#0A0A0A]">§9 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p className="font-bold text-[#0A0A0A]">§9 Sozialversicherung und Versicherungsschutz</p>
+      <p>Der Arbeitgeber meldet den Arbeitnehmer ordnungsgemäß bei der zuständigen gesetzlichen Krankenkasse zur Sozialversicherung an. Der Arbeitnehmer ist im Rahmen der gesetzlichen Sozialversicherung kranken-, pflege-, renten- und arbeitslosenversichert. Die Arbeitnehmer- und Arbeitgeberbeiträge werden vom Arbeitgeber einbehalten bzw. abgeführt; die Lohnsteuer wird nach den gesetzlichen Vorschriften an das Finanzamt abgeführt. Auf Wunsch erhält der Arbeitnehmer eine Bestätigung der Anmeldung zur Sozialversicherung.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§10 Sonderzahlungen (13. und 14. Gehalt)</p>
+      <p>Ein gesetzlicher Anspruch auf ein 13. oder 14. Monatsgehalt besteht nach deutschem Recht nicht und wird über die in §4 vereinbarte Vergütung hinaus nicht geschuldet. Zusätzliche Sonderzahlungen wie Urlaubs- oder Weihnachtsgeld werden nur gewährt, wenn sie ausdrücklich und schriftlich gesondert vereinbart werden. Werden solche Zahlungen freiwillig geleistet, erfolgt dies ohne Anerkennung einer Rechtspflicht; eine mehrmalige Zahlung begründet keinen Anspruch für die Zukunft (kein Anspruch aus betrieblicher Übung).</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§11 Tarifbindung und Mindestlohn</p>
+      <p>Auf dieses Arbeitsverhältnis findet kein Tarifvertrag Anwendung; es gelten die Regelungen dieses Vertrages sowie die einschlägigen gesetzlichen Bestimmungen. Der Arbeitgeber hält den jeweils geltenden gesetzlichen Mindestlohn nach dem Mindestlohngesetz (MiLoG) ein. Sofern zukünftig ein auf das Arbeitsverhältnis anwendbarer Tarifvertrag für allgemeinverbindlich erklärt wird, gelten dessen zwingende Bestimmungen vorrangig.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§12 Vertraulichkeit – konkrete Verstöße und Folgen</p>
+      <p>(1) Zur Klarstellung, welches Verhalten einen Verstoß gegen die Vertraulichkeits- und Datenschutzpflichten darstellt, gilt insbesondere Folgendes als Verstoß:</p>
+      <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
+        <li>die Weitergabe von Test-Zugangsdaten, Ident-Links, Kunden-, Partner- oder Auftraggeberinformationen an Dritte;</li>
+        <li>das Anfertigen, Speichern oder Weiterleiten von Screenshots, Foto-, Ton- oder Videoaufnahmen der Test- oder Ident-Verfahren außerhalb der ausdrücklich vorgesehenen Reports;</li>
+        <li>die Nutzung überlassener Daten, Ausweisdaten oder Test-Accounts für private oder vertragsfremde Zwecke;</li>
+        <li>die Veröffentlichung oder Weitergabe von Informationen über Auftraggeber, Partner, Testinhalte oder Testmethoden gegenüber Dritten oder in sozialen Medien;</li>
+        <li>das Unterlassen der fristgerechten Löschung überlassener Daten nach Abschluss des jeweiligen Tests.</li>
+      </ul>
+      <p className="mt-2">(2) Bei einem Verstoß haftet der Arbeitnehmer nach den gesetzlichen Bestimmungen. Das Recht des Arbeitgebers zur außerordentlichen (fristlosen) Kündigung aus wichtigem Grund sowie zur Geltendmachung von Schadensersatz bleibt ausdrücklich vorbehalten.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§13 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
       <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
       <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
       <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
@@ -151,7 +175,31 @@ const TeilzeitBody = ({ signedDate }) => (
       <p>Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird dadurch die Gültigkeit des übrigen Vertrages nicht berührt. Anstelle der unwirksamen Bestimmung tritt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.</p>
     </div>
     <div>
-      <p className="font-bold text-[#0A0A0A]">§12 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p className="font-bold text-[#0A0A0A]">§12 Sozialversicherung und Versicherungsschutz</p>
+      <p>Der Arbeitgeber meldet den Arbeitnehmer ordnungsgemäß bei der zuständigen gesetzlichen Krankenkasse zur Sozialversicherung an. Der Arbeitnehmer ist im Rahmen der gesetzlichen Sozialversicherung kranken-, pflege-, renten- und arbeitslosenversichert. Die Arbeitnehmer- und Arbeitgeberbeiträge werden vom Arbeitgeber einbehalten bzw. abgeführt; die Lohnsteuer wird nach den gesetzlichen Vorschriften an das Finanzamt abgeführt. Auf Wunsch erhält der Arbeitnehmer eine Bestätigung der Anmeldung zur Sozialversicherung.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§13 Sonderzahlungen (13. und 14. Gehalt)</p>
+      <p>Ein gesetzlicher Anspruch auf ein 13. oder 14. Monatsgehalt besteht nach deutschem Recht nicht und wird über die in §4 vereinbarte Vergütung hinaus nicht geschuldet. Zusätzliche Sonderzahlungen wie Urlaubs- oder Weihnachtsgeld werden nur gewährt, wenn sie ausdrücklich und schriftlich gesondert vereinbart werden. Werden solche Zahlungen freiwillig geleistet, erfolgt dies ohne Anerkennung einer Rechtspflicht; eine mehrmalige Zahlung begründet keinen Anspruch für die Zukunft (kein Anspruch aus betrieblicher Übung).</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§14 Tarifbindung und Mindestlohn</p>
+      <p>Auf dieses Arbeitsverhältnis findet kein Tarifvertrag Anwendung; es gelten die Regelungen dieses Vertrages sowie die einschlägigen gesetzlichen Bestimmungen. Der Arbeitgeber hält den jeweils geltenden gesetzlichen Mindestlohn nach dem Mindestlohngesetz (MiLoG) ein. Sofern zukünftig ein auf das Arbeitsverhältnis anwendbarer Tarifvertrag für allgemeinverbindlich erklärt wird, gelten dessen zwingende Bestimmungen vorrangig.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§15 Vertraulichkeit – konkrete Verstöße und Folgen</p>
+      <p>(1) Zur Klarstellung, welches Verhalten einen Verstoß gegen die Vertraulichkeits- und Datenschutzpflichten darstellt, gilt insbesondere Folgendes als Verstoß:</p>
+      <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
+        <li>die Weitergabe von Test-Zugangsdaten, Ident-Links, Kunden-, Partner- oder Auftraggeberinformationen an Dritte;</li>
+        <li>das Anfertigen, Speichern oder Weiterleiten von Screenshots, Foto-, Ton- oder Videoaufnahmen der Test- oder Ident-Verfahren außerhalb der ausdrücklich vorgesehenen Reports;</li>
+        <li>die Nutzung überlassener Daten, Ausweisdaten oder Test-Accounts für private oder vertragsfremde Zwecke;</li>
+        <li>die Veröffentlichung oder Weitergabe von Informationen über Auftraggeber, Partner, Testinhalte oder Testmethoden gegenüber Dritten oder in sozialen Medien;</li>
+        <li>das Unterlassen der fristgerechten Löschung überlassener Daten nach Abschluss des jeweiligen Tests.</li>
+      </ul>
+      <p className="mt-2">(2) Bei einem Verstoß haftet der Arbeitnehmer nach den gesetzlichen Bestimmungen. Das Recht des Arbeitgebers zur außerordentlichen (fristlosen) Kündigung aus wichtigem Grund sowie zur Geltendmachung von Schadensersatz bleibt ausdrücklich vorbehalten.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§16 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
       <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
       <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
       <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
@@ -209,7 +257,31 @@ const MinijobBody = ({ signedDate }) => (
       <p>Sollten einzelne Bestimmungen dieses Vertrages unwirksam sein oder werden, wird dadurch die Gültigkeit des übrigen Vertrages nicht berührt. Anstelle der unwirksamen Bestimmung tritt eine wirksame Regelung, die dem wirtschaftlichen Zweck der unwirksamen Bestimmung am nächsten kommt.</p>
     </div>
     <div>
-      <p className="font-bold text-[#0A0A0A]">§11 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p className="font-bold text-[#0A0A0A]">§11 Sozialversicherung und Versicherungsschutz</p>
+      <p>Der Arbeitgeber meldet den Arbeitnehmer bei der Minijob-Zentrale (Deutsche Rentenversicherung Knappschaft-Bahn-See) an und führt die pauschalen Abgaben ab. Der Arbeitnehmer ist in der gesetzlichen Rentenversicherung versicherungspflichtig, kann sich hiervon jedoch auf schriftlichen Antrag befreien lassen. Ein eigenständiger Kranken-, Pflege- oder Arbeitslosenversicherungsschutz entsteht durch die geringfügige Beschäftigung allein nicht; für einen anderweitigen Krankenversicherungsschutz (z. B. Familienversicherung oder anderweitige Pflichtversicherung) ist der Arbeitnehmer selbst verantwortlich. Auf Wunsch erhält der Arbeitnehmer eine Bestätigung der Anmeldung.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§12 Sonderzahlungen (13. und 14. Gehalt)</p>
+      <p>Ein gesetzlicher Anspruch auf ein 13. oder 14. Monatsgehalt besteht nach deutschem Recht nicht und wird über die vereinbarte Vergütung hinaus nicht geschuldet. Zu beachten ist zudem die in §3 genannte Verdienstgrenze für geringfügige Beschäftigungen, die durch Sonderzahlungen nicht überschritten werden darf. Etwaige zusätzliche Zahlungen werden nur gewährt, wenn sie ausdrücklich und schriftlich gesondert vereinbart werden; eine mehrmalige freiwillige Zahlung begründet keinen Anspruch für die Zukunft (kein Anspruch aus betrieblicher Übung).</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§13 Tarifbindung und Mindestlohn</p>
+      <p>Auf dieses Arbeitsverhältnis findet kein Tarifvertrag Anwendung; es gelten die Regelungen dieses Vertrages sowie die einschlägigen gesetzlichen Bestimmungen. Der Arbeitgeber hält den jeweils geltenden gesetzlichen Mindestlohn nach dem Mindestlohngesetz (MiLoG) ein. Sofern zukünftig ein auf das Arbeitsverhältnis anwendbarer Tarifvertrag für allgemeinverbindlich erklärt wird, gelten dessen zwingende Bestimmungen vorrangig.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§14 Vertraulichkeit – konkrete Verstöße und Folgen</p>
+      <p>(1) Zur Klarstellung, welches Verhalten einen Verstoß gegen die Vertraulichkeits- und Datenschutzpflichten darstellt, gilt insbesondere Folgendes als Verstoß:</p>
+      <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
+        <li>die Weitergabe von Test-Zugangsdaten, Ident-Links, Kunden-, Partner- oder Auftraggeberinformationen an Dritte;</li>
+        <li>das Anfertigen, Speichern oder Weiterleiten von Screenshots, Foto-, Ton- oder Videoaufnahmen der Test- oder Ident-Verfahren außerhalb der ausdrücklich vorgesehenen Reports;</li>
+        <li>die Nutzung überlassener Daten, Ausweisdaten oder Test-Accounts für private oder vertragsfremde Zwecke;</li>
+        <li>die Veröffentlichung oder Weitergabe von Informationen über Auftraggeber, Partner, Testinhalte oder Testmethoden gegenüber Dritten oder in sozialen Medien;</li>
+        <li>das Unterlassen der fristgerechten Löschung überlassener Daten nach Abschluss des jeweiligen Tests.</li>
+      </ul>
+      <p className="mt-2">(2) Bei einem Verstoß haftet der Arbeitnehmer nach den gesetzlichen Bestimmungen. Das Recht des Arbeitgebers zur außerordentlichen (fristlosen) Kündigung aus wichtigem Grund sowie zur Geltendmachung von Schadensersatz bleibt ausdrücklich vorbehalten.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§15 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
       <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
       <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
       <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
@@ -311,7 +383,31 @@ const VollzeitATBody = ({ signedDate }) => (
       <p>Es gilt österreichisches Recht. Gerichtsstand ist Frankfurt am Main bzw. das örtlich zuständige Gericht in Österreich.</p>
     </div>
     <div>
-      <p className="font-bold text-[#0A0A0A]">§9 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p className="font-bold text-[#0A0A0A]">§9 Sozialversicherung, Anmeldung und Versicherungsschutz</p>
+      <p>Der Arbeitgeber meldet den Arbeitnehmer vor Arbeitsantritt bei der Österreichischen Gesundheitskasse (ÖGK) zur Pflichtversicherung an. Der Arbeitnehmer ist dadurch nach dem Allgemeinen Sozialversicherungsgesetz (ASVG) kranken-, unfall-, pensions- und arbeitslosenversichert. Die Sozialversicherungsbeiträge sowie die Lohnsteuer werden vom Arbeitgeber ordnungsgemäß einbehalten und an die zuständigen Stellen abgeführt. Auf Wunsch wird dem Arbeitnehmer eine Kopie der Anmeldebestätigung ausgehändigt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§10 Sonderzahlungen (13. und 14. Gehalt)</p>
+      <p>Der Arbeitnehmer hat Anspruch auf die kollektivvertraglich vorgesehenen Sonderzahlungen, nämlich einen Urlaubszuschuss (13. Gehalt) und eine Weihnachtsremuneration (14. Gehalt). Jede Sonderzahlung beträgt grundsätzlich ein Monatsentgelt und wird üblicherweise mit dem Juni-Bezug (Urlaubszuschuss) sowie mit dem November-Bezug (Weihnachtsremuneration) ausbezahlt. Bei unterjährigem Beginn oder Ende des Arbeitsverhältnisses werden die Sonderzahlungen aliquot (anteilig) berechnet. Erfolgsabhängige Provisionen bleiben von den Sonderzahlungen unberührt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§11 Kollektivvertrag</p>
+      <p>Auf dieses Arbeitsverhältnis findet der fachlich einschlägige Kollektivvertrag in seiner jeweils gültigen Fassung Anwendung; im Zweifel gilt der Kollektivvertrag für Angestellte im Handel. Der Kollektivvertrag regelt insbesondere Mindestgehälter, Sonderzahlungen, Arbeitszeit, Urlaub und Kündigungsfristen. Enthält der Kollektivvertrag für den Arbeitnehmer günstigere Bestimmungen als dieser Vertrag, so gehen diese vor. Der jeweils gültige Kollektivvertrag kann beim Arbeitgeber eingesehen werden.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§12 Vertraulichkeit – konkrete Verstöße und Folgen</p>
+      <p>(1) Zur Klarstellung, welches Verhalten einen Verstoß gegen die Vertraulichkeits- und Datenschutzpflichten darstellt, gilt insbesondere Folgendes als Verstoß:</p>
+      <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
+        <li>die Weitergabe von Test-Zugangsdaten, Ident-Links, Kunden-, Partner- oder Auftraggeberinformationen an Dritte;</li>
+        <li>das Anfertigen, Speichern oder Weiterleiten von Screenshots, Foto-, Ton- oder Videoaufnahmen der Test- oder Ident-Verfahren außerhalb der ausdrücklich vorgesehenen Reports;</li>
+        <li>die Nutzung überlassener Daten, Ausweisdaten oder Test-Accounts für private oder vertragsfremde Zwecke;</li>
+        <li>die Veröffentlichung oder Weitergabe von Informationen über Auftraggeber, Partner, Testinhalte oder Testmethoden gegenüber Dritten oder in sozialen Medien;</li>
+        <li>das Unterlassen der fristgerechten Löschung überlassener Daten nach Abschluss des jeweiligen Tests.</li>
+      </ul>
+      <p className="mt-2">(2) Bei einem Verstoß haftet der Arbeitnehmer nach den gesetzlichen Bestimmungen; eine in diesem Vertrag vereinbarte Vertragsstrafe (5.000 € pro Fall) bleibt unberührt. Das Recht des Arbeitgebers zur vorzeitigen Auflösung des Arbeitsverhältnisses aus wichtigem Grund (Entlassung) sowie zur Geltendmachung von Schadensersatz bleibt ausdrücklich vorbehalten.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§13 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
       <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
       <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
       <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
@@ -348,7 +444,31 @@ const TeilzeitATBody = ({ signedDate }) => (
       <p>Gesetzliche Regelungen Österreich. Gerichtsstand Frankfurt am Main bzw. Österreich.</p>
     </div>
     <div>
-      <p className="font-bold text-[#0A0A0A]">§7 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
+      <p className="font-bold text-[#0A0A0A]">§7 Sozialversicherung, Anmeldung und Versicherungsschutz</p>
+      <p>Der Arbeitgeber meldet den Arbeitnehmer vor Arbeitsantritt bei der Österreichischen Gesundheitskasse (ÖGK) zur Pflichtversicherung an. Der Arbeitnehmer ist dadurch nach dem Allgemeinen Sozialversicherungsgesetz (ASVG) kranken-, unfall-, pensions- und arbeitslosenversichert. Die Sozialversicherungsbeiträge sowie die Lohnsteuer werden vom Arbeitgeber ordnungsgemäß einbehalten und an die zuständigen Stellen abgeführt. Auf Wunsch wird dem Arbeitnehmer eine Kopie der Anmeldebestätigung ausgehändigt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§8 Sonderzahlungen (13. und 14. Gehalt)</p>
+      <p>Der Arbeitnehmer hat Anspruch auf die kollektivvertraglich vorgesehenen Sonderzahlungen, nämlich einen Urlaubszuschuss (13. Gehalt) und eine Weihnachtsremuneration (14. Gehalt). Jede Sonderzahlung beträgt grundsätzlich ein Monatsentgelt (bezogen auf das Fixgehalt) und wird üblicherweise mit dem Juni-Bezug (Urlaubszuschuss) sowie mit dem November-Bezug (Weihnachtsremuneration) ausbezahlt. Bei unterjährigem Beginn oder Ende des Arbeitsverhältnisses werden die Sonderzahlungen aliquot (anteilig) berechnet. Erfolgsabhängige Provisionen bleiben von den Sonderzahlungen unberührt.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§9 Kollektivvertrag</p>
+      <p>Auf dieses Arbeitsverhältnis findet der fachlich einschlägige Kollektivvertrag in seiner jeweils gültigen Fassung Anwendung; im Zweifel gilt der Kollektivvertrag für Angestellte im Handel. Der Kollektivvertrag regelt insbesondere Mindestgehälter, Sonderzahlungen, Arbeitszeit, Urlaub und Kündigungsfristen. Enthält der Kollektivvertrag für den Arbeitnehmer günstigere Bestimmungen als dieser Vertrag, so gehen diese vor. Der jeweils gültige Kollektivvertrag kann beim Arbeitgeber eingesehen werden.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§10 Vertraulichkeit – konkrete Verstöße und Folgen</p>
+      <p>(1) Zur Klarstellung, welches Verhalten einen Verstoß gegen die Vertraulichkeits- und Datenschutzpflichten darstellt, gilt insbesondere Folgendes als Verstoß:</p>
+      <ul className="list-disc list-inside mt-2 ml-4 space-y-1">
+        <li>die Weitergabe von Test-Zugangsdaten, Ident-Links, Kunden-, Partner- oder Auftraggeberinformationen an Dritte;</li>
+        <li>das Anfertigen, Speichern oder Weiterleiten von Screenshots, Foto-, Ton- oder Videoaufnahmen der Test- oder Ident-Verfahren außerhalb der ausdrücklich vorgesehenen Reports;</li>
+        <li>die Nutzung überlassener Daten, Ausweisdaten oder Test-Accounts für private oder vertragsfremde Zwecke;</li>
+        <li>die Veröffentlichung oder Weitergabe von Informationen über Auftraggeber, Partner, Testinhalte oder Testmethoden gegenüber Dritten oder in sozialen Medien;</li>
+        <li>das Unterlassen der fristgerechten Löschung überlassener Daten nach Abschluss des jeweiligen Tests.</li>
+      </ul>
+      <p className="mt-2">(2) Bei einem Verstoß haftet der Arbeitnehmer nach den gesetzlichen Bestimmungen; eine in diesem Vertrag vereinbarte Vertragsstrafe (5.000 € pro Fall) bleibt unberührt. Das Recht des Arbeitgebers zur vorzeitigen Auflösung des Arbeitsverhältnisses aus wichtigem Grund (Entlassung) sowie zur Geltendmachung von Schadensersatz bleibt ausdrücklich vorbehalten.</p>
+    </div>
+    <div>
+      <p className="font-bold text-[#0A0A0A]">§11 Datenschutz, Datensicherheit und ausschließliche Testzwecke</p>
       <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
       <p className="mt-2">(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
       <p className="mt-2">(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
