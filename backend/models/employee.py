@@ -51,6 +51,7 @@ class Task(BaseModel):
     title: str
     category: Optional[str] = None  # 'bd' (Finanz/KYC) or 'app' (App Tests) - admin panel only
     ai_app_name: Optional[str] = None  # normalized app/exchange name if generated/tracked via AI
+    provision: Optional[float] = 0  # commission in EUR shown to the employee
     website: Optional[str] = None
     einleitung: Optional[str] = None
     schritt1: Optional[str] = None
@@ -77,6 +78,7 @@ class TaskCreate(BaseModel):
     title: str
     category: Optional[str] = None  # 'bd' or 'app'
     ai_app_name: Optional[str] = None
+    provision: Optional[float] = 0
     website: Optional[str] = None
     einleitung: Optional[str] = None
     schritt1: Optional[str] = None

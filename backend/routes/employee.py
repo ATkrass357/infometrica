@@ -224,7 +224,9 @@ async def get_employee_stats(
     open_tasks = 0
     in_progress = 0
     completed = 0
+    total_provision = 0.0
     for task in all_tasks:
+        total_provision += float(task.get("provision") or 0)
         status = task.get("status", "Offen")
         if task.get("assignments"):
             for a in task["assignments"]:
@@ -242,7 +244,8 @@ async def get_employee_stats(
         "total_tasks": total_tasks,
         "open_tasks": open_tasks,
         "in_progress": in_progress,
-        "completed": completed
+        "completed": completed,
+        "total_provision": round(total_provision, 2)
     }
 
 @router.post("/init-employee")

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, Clock, AlertCircle, TrendingUp } from 'lucide-react';
+import { CheckCircle, Clock, AlertCircle, TrendingUp, Wallet } from 'lucide-react';
 import axios from 'axios';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -10,6 +10,7 @@ const MitarbeiterDashboard = () => {
     open_tasks: 0,
     in_progress: 0,
     completed: 0,
+    total_provision: 0,
   });
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -75,6 +76,14 @@ const MitarbeiterDashboard = () => {
       color: 'purple',
       bgColor: 'bg-purple-100',
       textColor: 'text-purple-600',
+    },
+    {
+      title: 'Provision gesamt',
+      value: `${Number(stats.total_provision || 0).toFixed(2)} €`,
+      icon: Wallet,
+      color: 'emerald',
+      bgColor: 'bg-emerald-100',
+      textColor: 'text-emerald-600',
     },
   ];
 
@@ -154,7 +163,11 @@ const MitarbeiterDashboard = () => {
                       }`}>
                         {task.priority}
                       </span>
-                      {task.due_date && <span>Fällig: {task.due_date}</span>}
+                      {task.provision > 0 && (
+                        <span className="px-2 py-1 rounded-full bg-emerald-100 text-emerald-700 font-semibold">
+                          {Number(task.provision).toFixed(2)} €
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>

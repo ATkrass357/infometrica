@@ -40,7 +40,8 @@ const AdminTasks = () => {
     schritt1: '',
     schritt2: '',
     schritt3: '',
-    priority: 'Normal'
+    priority: 'Normal',
+    provision: ''
   });
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState('bd');
@@ -133,7 +134,10 @@ const AdminTasks = () => {
     
     try {
       const token = localStorage.getItem('admin_token');
-      await axios.post(`${BACKEND_URL}/api/admin/tasks`, formData, {
+      await axios.post(`${BACKEND_URL}/api/admin/tasks`, {
+        ...formData,
+        provision: parseFloat(formData.provision) || 0
+      }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       
@@ -149,7 +153,8 @@ const AdminTasks = () => {
         schritt1: '',
         schritt2: '',
         schritt3: '',
-        priority: 'Normal'
+        priority: 'Normal',
+        provision: ''
       });
       fetchData();
     } catch (error) {
@@ -532,6 +537,23 @@ const AdminTasks = () => {
                   <option value="Hoch">Hoch</option>
                 </select>
               </div>
+
+              {/* Provision */}
+              <div>
+                <label className="block text-sm font-medium text-[#9aa5ce] mb-1">
+                  Provision (€)
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={formData.provision}
+                  onChange={(e) => setFormData({...formData, provision: e.target.value})}
+                  className="w-full px-4 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] focus:outline-none focus:border-[#7aa2f7]"
+                  placeholder="z. B. 50"
+                  data-testid="task-provision-input"
+                />
+              </div>
             </div>
 
             {/* Description Section */}
@@ -733,6 +755,11 @@ const AdminTasks = () => {
                           : 'bg-[#9ece6a]/20 text-[#9ece6a]'
                       }`}>
                         {task.category === 'bd' ? 'BD' : 'App Test'}
+                      </span>
+                    )}
+                    {task.provision > 0 && (
+                      <span className="px-2 py-0.5 rounded text-xs font-medium bg-[#e0af68]/20 text-[#e0af68]">
+                        {Number(task.provision).toFixed(2)} €
                       </span>
                     )}
                   </div>

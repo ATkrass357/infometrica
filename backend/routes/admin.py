@@ -181,6 +181,7 @@ async def create_task(
         title=task_data.title,
         category=task_data.category,
         ai_app_name=(task_data.ai_app_name or "").strip().lower() or None,
+        provision=task_data.provision or 0,
         website=task_data.website,
         einleitung=task_data.einleitung,
         schritt1=task_data.schritt1,

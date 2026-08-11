@@ -85,7 +85,12 @@ const MitarbeiterAuftrage = () => {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Meine Aufträge</h1>
-          <p className="text-gray-600 mt-1">{tasks.length} Aufgabe(n) insgesamt</p>
+          <p className="text-gray-600 mt-1">
+            {tasks.length} Aufgabe(n) insgesamt
+            <span className="ml-2 font-semibold text-emerald-600" data-testid="auftrage-total-provision">
+              · Provision gesamt: {tasks.reduce((s, t) => s + (Number(t.provision) || 0), 0).toFixed(2)} €
+            </span>
+          </p>
         </div>
         <button
           onClick={fetchTasks}
@@ -147,6 +152,11 @@ const MitarbeiterAuftrage = () => {
                       <span className={`px-2 py-0.5 rounded text-xs font-medium border ${getPriorityColor(task.priority)}`}>
                         {task.priority}
                       </span>
+                      {task.provision > 0 && (
+                        <span className="px-2 py-0.5 rounded text-xs font-semibold border bg-emerald-100 text-emerald-700 border-emerald-200" data-testid={`task-provision-${task.id}`}>
+                          Provision: {Number(task.provision).toFixed(2)} €
+                        </span>
+                      )}
                     </div>
                     
                     <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
