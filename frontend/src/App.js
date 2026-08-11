@@ -15,6 +15,7 @@ import AdminApplications from "@/pages/admin/AdminApplications";
 import AdminTasks from "@/pages/admin/AdminTasks";
 import AdminVerifications from "@/pages/admin/AdminVerifications";
 import AdminContracts from "@/pages/admin/AdminContracts";
+import AdminSettings from "@/pages/admin/AdminSettings";
 import AdminDokumente from "@/pages/admin/AdminDokumente";
 import AdminAnosim from "@/pages/admin/AdminAnosim";
 import AdminEmailInbox from "@/pages/admin/AdminEmailInbox";
@@ -106,6 +107,16 @@ function App() {
               <ProtectedRoute>
                 <AdminLayout>
                   <AdminContracts />
+                </AdminLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/settings"
+            element={
+              <ProtectedRoute>
+                <AdminLayout>
+                  <AdminSettings />
                 </AdminLayout>
               </ProtectedRoute>
             }

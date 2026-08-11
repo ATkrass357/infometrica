@@ -68,7 +68,9 @@ German.
 `cd ~/infometrica && git stash && git pull origin main && cd frontend && npm run build && sudo systemctl restart precision-backend && sudo systemctl restart nginx`
 
 ## Last Updated
-2026-06-30 (5): Provision für Aufgaben/Probeaufträge. Admin kann beim Erstellen einer Aufgabe eine Provision in € angeben (Feld „Provision (€)" im AdminTasks-Formular; Badge auf Admin-Karte). Mitarbeiter sehen die Provision in € neben jedem Auftrag (MitarbeiterAuftrage + Dashboard-Liste) sowie eine Gesamtsumme: Dashboard-Statuskarte „Provision gesamt" + Zeile im Aufträge-Header. Backend: `provision: float` in Task/TaskCreate (employee.py), gespeichert in create_task; `/api/employee/stats` liefert zusätzlich `total_provision` (Summe über alle zugewiesenen Aufgaben). Verifiziert per curl: create(provision=50)→assign→employee/tasks zeigt 50€, stats.total_provision=50. Nebenbei: altes due_date auch aus MitarbeiterDashboard entfernt.
+2026-06-30 (6): Admin-Einstellungsseite `/admin/settings` erstellt (vorher hatte der „Einstellungen"-Nav-Link keine Route). Neue Seite `AdminSettings.jsx` mit Tab „Arbeitsverträge", in dem nur eingeloggte Admins (ProtectedRoute) alle 7 Vertragsvorlagen lesen können. Wiederverwendung der Exporte `ContractBody`, `CONTRACT_TITLES/SUBTITLES/POSITIONS` aus ContractTemplates.jsx; Vertrag wird als weißes Dokument gerendert, links Vertragstyp-Auswahl. Route in App.js (ProtectedRoute + AdminLayout). Testing-Agent iteration_23: 100% – Login, Nav, Tab, alle Vertragstypen, AT-spezifische Klauseln (ÖGK/Kollektivvertrag) & DE (Mindestlohn/Sozialversicherung), Datenschutz-Klausel vorhanden, ProtectedRoute-Redirect verifiziert.
+
+2026-06-30 (5): Provision für Aufgaben/Probeaufträge (Admin-Feld €, Mitarbeiter sieht Betrag je Auftrag + „Provision gesamt" Summe auf Dashboard). Backend total_provision in /api/employee/stats. Verifiziert.
 
 2026-06-30 (4): Bewerber-Anliegen in DE- & AT-Arbeitsverträge eingearbeitet (Sozialversicherung/Anmeldung, 13./14. Gehalt, Kollektivvertrag/Tarifbindung, konkrete Verstöße). 5 Arbeitsverträge, Frontend+Backend, verifiziert.
 
