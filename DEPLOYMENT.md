@@ -90,9 +90,18 @@ sleep 4 && curl -s http://127.0.0.1:8001/api/ && echo ""     # → {"message":"H
 ```bash
 echo 'REACT_APP_BACKEND_URL=https://webora.de' > /root/infometrica/frontend/.env
 cd /root/infometrica/frontend
-yarn install --frozen-lockfile
+# yarn.lock ist im Repo -> reproduzierbare Installation.
+# --network-timeout hilft bei langsamer/instabiler VPS-Verbindung.
+yarn install --frozen-lockfile --network-timeout 1000000
 yarn build
 ```
+> Falls "No lockfile found" ODER "Couldn't find package ... on the npm registry" erscheint:
+> ```bash
+> cd /root/infometrica && git fetch origin && git reset --hard origin/main
+> cd frontend && yarn cache clean
+> yarn install --network-timeout 1000000
+> yarn build
+> ```
 > Bei „killed" (zu wenig RAM): Swap anlegen und erneut `yarn build`:
 > ```bash
 > fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && echo '/swapfile none swap sw 0 0' >> /etc/fstab
