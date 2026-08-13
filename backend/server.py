@@ -175,3 +175,14 @@ async def seed_admin():
         "last_login": None,
     })
     logger.info("Admin account created for %s", new_email)
+
+
+@app.on_event("startup")
+async def sync_templates():
+    """Keep contract templates in sync with the code version on every startup."""
+    try:
+        from routes.applications import sync_contract_templates
+        await sync_contract_templates(db)
+        logger.info("Contract templates synced")
+    except Exception as e:
+        logger.error("Contract template sync failed: %s", e)

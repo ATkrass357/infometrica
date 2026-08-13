@@ -804,6 +804,40 @@ CONTRACT_TITLE_MAP = {
 
 START_DATE_PLACEHOLDER = "{{START_DATE}}"
 
+# Bump this whenever the code-side contract text changes so that live/prod
+# databases with older seeded templates get automatically refreshed on startup.
+CONTRACT_TEMPLATE_VERSION = 2
+
+
+def _code_template(contract_type: str) -> dict:
+    subtitle, body_html = _build_contract_html_parts(contract_type, START_DATE_PLACEHOLDER)
+    return {
+        "type": contract_type,
+        "title": CONTRACT_TITLE_MAP.get(contract_type, "ARBEITSVERTRAG"),
+        "subtitle": subtitle,
+        "position": CONTRACT_POSITIONS.get(contract_type, ""),
+        "body_html": body_html,
+        "template_version": CONTRACT_TEMPLATE_VERSION,
+    }
+
+
+async def sync_contract_templates(db):
+    """Refresh contract templates from code when the DB copy is missing or older.
+
+    Runs on startup so that changes made in code reach the live database even
+    when a template record was already seeded (older versions are upgraded).
+    """
+    for contract_type in ALL_CONTRACT_TYPES:
+        existing = await db.contract_templates.find_one({"type": contract_type})
+        code_doc = _code_template(contract_type)
+        if not existing:
+            await db.contract_templates.insert_one(dict(code_doc))
+            continue
+        if existing.get("template_version", 0) < CONTRACT_TEMPLATE_VERSION:
+            await db.contract_templates.update_one(
+                {"type": contract_type}, {"$set": code_doc}
+            )
+
 
 def _require_admin(authorization):
     if not authorization or not authorization.startswith("Bearer "):
@@ -821,14 +855,7 @@ async def _get_template(db, contract_type: str) -> dict:
     doc = await db.contract_templates.find_one({"type": contract_type}, {"_id": 0})
     if doc:
         return doc
-    subtitle, body_html = _build_contract_html_parts(contract_type, START_DATE_PLACEHOLDER)
-    doc = {
-        "type": contract_type,
-        "title": CONTRACT_TITLE_MAP.get(contract_type, "ARBEITSVERTRAG"),
-        "subtitle": subtitle,
-        "position": CONTRACT_POSITIONS.get(contract_type, ""),
-        "body_html": body_html,
-    }
+    doc = _code_template(contract_type)
     await db.contract_templates.insert_one(dict(doc))
     return doc
 
