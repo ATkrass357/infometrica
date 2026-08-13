@@ -629,33 +629,42 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
         subtitle = "Teilzeit (Österreich)"
         sections_html = f"""
 <h3>§1 Beginn und Dauer</h3>
-<p>Das Arbeitsverhältnis beginnt am {signed_date} und ist unbefristet. Probezeit: 1 Monat.</p>
+<p>Das Arbeitsverhältnis beginnt am {signed_date} und ist unbefristet. Die ersten vier Wochen gelten als Probezeit im Sinne des österreichischen Angestelltengesetzes (AngG).</p>
 
 <h3>§2 Tätigkeit</h3>
-<p>IT Application Tester – App-Tests, Schwachstellenanalyse, Ident-Verfahren Testing, Reporting.</p>
+<p>IT Application Tester – App-Tests, Schwachstellenanalyse, Ident-Verfahren-Testing und Reporting im Homeoffice.</p>
 
 <h3>§3 Arbeitszeit</h3>
-<p>20 Stunden pro Woche (flexibel).</p>
+<p>Die regelmäßige Arbeitszeit beträgt 20 Stunden pro Woche. Die Arbeitszeit ist frei einteilbar; es gibt keine festen Arbeitstage. Aufträge können von Montag bis Sonntag frei angenommen und bearbeitet werden. Pro bearbeiteter Aufgabe wird eine (1) Arbeitsstunde angerechnet.</p>
 
 <h3>§4 Vergütung</h3>
-<p>Fixgehalt: 2.200,00 € brutto monatlich bei 20 Wochenstunden + erfolgsabhängige Provisionen.</p>
+<p>Das Fixgehalt beträgt 2.200,00 € brutto pro Monat bei 20 Wochenstunden, zuzüglich erfolgsabhängiger Provisionen. Die Vergütung ist am Monatsende fällig.</p>
 
-<h3>§5 Vertraulichkeit und Datenschutz</h3>
-<p>Strenge NDA + DSGVO. Alle Daten werden nach Testabschluss innerhalb von 30 Tagen gelöscht. Vertragsstrafe bei Verstoß: 5.000 €.</p>
+<h3>§5 Mehr- und Überstunden</h3>
+<p>Über die vereinbarten 20 Wochenstunden hinausgehende Arbeitsstunden (Mehr-/Überstunden) werden mit 13,90 € brutto pro Stunde ausbezahlt.</p>
 
-<h3>§6 Sonstiges</h3>
-<p>Gesetzliche Regelungen Österreich. Gerichtsstand Frankfurt am Main bzw. Österreich.</p>
+<h3>§6 Urlaubsanspruch</h3>
+<p>Der Arbeitnehmer hat Anspruch auf 24 Werktage bezahlten Erholungsurlaub pro Kalenderjahr. Bei unterjährigem Beginn oder Ende des Arbeitsverhältnisses wird der Urlaubsanspruch aliquot (anteilig) berechnet.</p>
 
-<h3>§7 Sozialversicherung, Anmeldung und Versicherungsschutz</h3>
+<h3>§7 Kündigung</h3>
+<p>Für die Beendigung des Arbeitsverhältnisses gelten die gesetzlichen Kündigungsfristen und Kündigungstermine nach dem österreichischen Angestelltengesetz (AngG). Jede Kündigung hat schriftlich zu erfolgen. Das Recht zur vorzeitigen Auflösung des Arbeitsverhältnisses aus wichtigem Grund (Entlassung bzw. vorzeitiger Austritt) bleibt unberührt.</p>
+
+<h3>§8 Sozialversicherung, Anmeldung und Versicherungsschutz</h3>
 <p>Der Arbeitgeber meldet den Arbeitnehmer vor Arbeitsantritt bei der Österreichischen Gesundheitskasse (ÖGK) zur Pflichtversicherung an. Der Arbeitnehmer ist dadurch nach dem Allgemeinen Sozialversicherungsgesetz (ASVG) kranken-, unfall-, pensions- und arbeitslosenversichert. Die Sozialversicherungsbeiträge sowie die Lohnsteuer werden vom Arbeitgeber ordnungsgemäß einbehalten und an die zuständigen Stellen abgeführt. Auf Wunsch wird dem Arbeitnehmer eine Kopie der Anmeldebestätigung ausgehändigt.</p>
 
-<h3>§8 Sonderzahlungen (13. und 14. Gehalt)</h3>
+<h3>§9 Sonderzahlungen (13. und 14. Gehalt)</h3>
 <p>Der Arbeitnehmer hat Anspruch auf die kollektivvertraglich vorgesehenen Sonderzahlungen, nämlich einen Urlaubszuschuss (13. Gehalt) und eine Weihnachtsremuneration (14. Gehalt). Jede Sonderzahlung beträgt grundsätzlich ein Monatsentgelt (bezogen auf das Fixgehalt) und wird üblicherweise mit dem Juni-Bezug (Urlaubszuschuss) sowie mit dem November-Bezug (Weihnachtsremuneration) ausbezahlt. Bei unterjährigem Beginn oder Ende des Arbeitsverhältnisses werden die Sonderzahlungen aliquot (anteilig) berechnet. Erfolgsabhängige Provisionen bleiben von den Sonderzahlungen unberührt.</p>
 
-<h3>§9 Kollektivvertrag</h3>
-<p>Auf dieses Arbeitsverhältnis findet der fachlich einschlägige Kollektivvertrag in seiner jeweils gültigen Fassung Anwendung; im Zweifel gilt der Kollektivvertrag für Angestellte im Handel. Der Kollektivvertrag regelt insbesondere Mindestgehälter, Sonderzahlungen, Arbeitszeit, Urlaub und Kündigungsfristen. Enthält der Kollektivvertrag für den Arbeitnehmer günstigere Bestimmungen als dieser Vertrag, so gehen diese vor. Der jeweils gültige Kollektivvertrag kann beim Arbeitgeber eingesehen werden.</p>
+<h3>§10 Kollektivvertrag</h3>
+<p>Auf dieses Arbeitsverhältnis findet der Kollektivvertrag für Angestellte von Unternehmen im Bereich Dienstleistungen in der automatischen Datenverarbeitung und Informationstechnik (IT-Kollektivvertrag) in seiner jeweils gültigen Fassung Anwendung. Der Kollektivvertrag regelt insbesondere Mindestgehälter, Sonderzahlungen, Arbeitszeit, Urlaub und Kündigungsfristen. Enthält der Kollektivvertrag für den Arbeitnehmer günstigere Bestimmungen als dieser Vertrag, so gehen diese vor. Der jeweils gültige Kollektivvertrag kann beim Arbeitgeber eingesehen werden.</p>
 
-<h3>§10 Vertraulichkeit &ndash; konkrete Verstöße und Folgen</h3>
+<h3>§11 Arbeitsmittel und Homeoffice</h3>
+<p>Der Arbeitnehmer erbringt seine Tätigkeit im Homeoffice mit eigenen Geräten (insbesondere eigenem Computer/Laptop und Internetanschluss). Der Arbeitgeber stellt keine Arbeitsgeräte zur Verfügung. Ein gesonderter Aufwand- oder Kostenersatz für die Tätigkeit von zu Hause (z. B. Strom, Internet, Arbeitsplatz) wird nicht geleistet und ist mit der Vergütung nach §4 abgegolten.</p>
+
+<h3>§12 Vertraulichkeit und Datenschutz</h3>
+<p>Der Arbeitnehmer verpflichtet sich zur strengen Vertraulichkeit (NDA) sowie zur vollständigen Einhaltung der DSGVO. Sämtliche im Rahmen der Tätigkeit überlassenen Daten werden nicht an Dritte weitergegeben und nach Abschluss des jeweiligen Tests innerhalb von 30 Tagen unwiderruflich gelöscht.</p>
+
+<h3>§13 Vertraulichkeit &ndash; konkrete Verstöße und Folgen</h3>
 <p>(1) Zur Klarstellung, welches Verhalten einen Verstoß gegen die Vertraulichkeits- und Datenschutzpflichten darstellt, gilt insbesondere Folgendes als Verstoß:</p>
 <ul>
   <li>die Weitergabe von Test-Zugangsdaten, Ident-Links, Kunden-, Partner- oder Auftraggeberinformationen an Dritte;</li>
@@ -664,9 +673,12 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
   <li>die Veröffentlichung oder Weitergabe von Informationen über Auftraggeber, Partner, Testinhalte oder Testmethoden gegenüber Dritten oder in sozialen Medien;</li>
   <li>das Unterlassen der fristgerechten Löschung überlassener Daten nach Abschluss des jeweiligen Tests.</li>
 </ul>
-<p>(2) Bei einem Verstoß haftet der Arbeitnehmer nach den gesetzlichen Bestimmungen; eine in diesem Vertrag vereinbarte Vertragsstrafe (5.000 € pro Fall) bleibt unberührt. Das Recht des Arbeitgebers zur vorzeitigen Auflösung des Arbeitsverhältnisses aus wichtigem Grund (Entlassung) sowie zur Geltendmachung von Schadensersatz bleibt ausdrücklich vorbehalten.</p>
+<p>(2) Bei einem Verstoß haftet der Arbeitnehmer nach den gesetzlichen Bestimmungen. Das Recht des Arbeitgebers zur vorzeitigen Auflösung des Arbeitsverhältnisses aus wichtigem Grund (Entlassung) sowie zur Geltendmachung von Schadensersatz bleibt ausdrücklich vorbehalten.</p>
 
-<h3>§11 Datenschutz, Datensicherheit und ausschließliche Testzwecke</h3>
+<h3>§14 Anwendbares Recht und Gerichtsstand</h3>
+<p>Auf dieses Arbeitsverhältnis ist ausschließlich österreichisches Recht anwendbar. Als Gerichtsstand wird ausschließlich das für den Arbeitsort örtlich zuständige Gericht in Österreich vereinbart.</p>
+
+<h3>§15 Datenschutz, Datensicherheit und ausschließliche Testzwecke</h3>
 <p>(1) Der Arbeitgeber verarbeitet personenbezogene Daten der Mitarbeiter sowie im Rahmen der Tätigkeit erhobene oder verarbeitete Daten ausschließlich zur Durchführung des Arbeitsverhältnisses sowie der vereinbarten Test-, Prüf- und Verifizierungsaufgaben. Die Verarbeitung erfolgt unter Beachtung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 13 und 32 DSGVO.</p>
 <p>(2) Im Rahmen von Test- und Verifizierungsprozessen können, soweit für die jeweilige Testaufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten werden ausschließlich für den jeweiligen Testzweck verwendet, nicht unbefugt an Dritte weitergegeben und nicht länger gespeichert, als es für den jeweiligen Zweck erforderlich ist oder gesetzliche Aufbewahrungspflichten dies vorsehen. Anschließend werden die Daten gelöscht oder, soweit erforderlich, anonymisiert.</p>
 <p>(3) Sämtliche im Rahmen von Test- und Verifizierungsabläufen verwendeten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Testzwecken. Eine tatsächliche Eröffnung von Bankkonten, Zahlungsverkehrskonten oder sonstigen Finanzkonten auf Grundlage der für Testzwecke bereitgestellten Daten durch den Arbeitgeber erfolgt nicht.</p>
@@ -676,22 +688,28 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
         return subtitle, sections_html
 
     if contract_type == "freiberufler_at":
-        subtitle = "Selbstständig / Freiberufler (Österreich, ausschließlich Provision)"
+        subtitle = "Selbstständig / Freiberufler (Österreich)"
         sections_html = f"""
-<h3>§1 Gegenstand</h3>
-<p>Der Auftragnehmer erbringt als selbstständiger Freiberufler IT Application Testing-Dienstleistungen (App-Tests, Schwachstellenanalyse, Ident-Verfahren-Testing, Reporting) für den Auftraggeber.</p>
+<h3>§1 Gegenstand und Status</h3>
+<p>Der Auftragnehmer erbringt als selbstständiger, freiberuflicher Unternehmer IT Application Testing-Dienstleistungen (App-Tests, Schwachstellenanalyse, Ident-Verfahren-Testing, Reporting) für den Auftraggeber. Es wird ausdrücklich kein Arbeits- oder Angestelltenverhältnis begründet.</p>
 
-<h3>§2 Vergütung</h3>
-<p>Die Vergütung erfolgt ausschließlich provisionsbasiert (je nach vereinbarter Provision pro erfolgreichem Test / Report / Projekt). Kein Fixgehalt.</p>
+<h3>§2 Leistungsumfang</h3>
+<p>Der Auftragnehmer stellt für die vereinbarten Leistungen im Durchschnitt rund 20 Stunden pro Woche zur Verfügung. Zeit und Ort der Leistungserbringung bestimmt der Auftragnehmer im Rahmen der Projektanforderungen selbst.</p>
 
-<h3>§3 Vertraulichkeit und Datenschutz (NDA + DSGVO)</h3>
-<p>Der Auftragnehmer verpflichtet sich zur strengsten Vertraulichkeit. Alle Daten sind nach Abschluss des Tests innerhalb von 30 Tagen vom Auftragnehmer und allen Partnern unwiderruflich zu löschen. Bei Verstoß beträgt die Vertragsstrafe 5.000 € pro Fall. Volle Einhaltung der DSGVO.</p>
+<h3>§3 Vergütung und Rechnungsstellung</h3>
+<p>Der Auftragnehmer erhält ein monatliches Honorar in Höhe von 2.200,00 € und stellt dem Auftraggeber hierüber jeweils zum Monatsletzten eine ordnungsgemäße Rechnung. Zusätzlich vereinbarte Provisionen werden im jeweiligen Folgemonat abgerechnet. Etwaige Umsatzsteuer ist vom Auftragnehmer gemäß den für ihn geltenden steuerlichen Bestimmungen auszuweisen.</p>
 
-<h3>§4 Dauer und Kündigung</h3>
-<p>Unbefristet, kündbar mit 14 Tagen Frist. Es besteht kein Arbeitsverhältnis – der Auftragnehmer ist selbstständig und für seine Sozialversicherung selbst verantwortlich.</p>
+<h3>§4 Selbstständigkeit, Steuern und Sozialversicherung</h3>
+<p>Der Auftragnehmer ist selbstständig tätig und für die Abfuhr seiner Steuern sowie für seine Sozialversicherung (z. B. SVS) selbst verantwortlich. Eine Anmeldung zur Sozialversicherung durch den Auftraggeber erfolgt nicht. Es besteht kein Anspruch auf Sonderzahlungen (z. B. 13./14. Gehalt), Urlaubsentgelt oder sonstige arbeitsrechtliche Ansprüche; ein Kollektivvertrag findet keine Anwendung.</p>
 
-<h3>§5 Gerichtsstand</h3>
-<p>Frankfurt am Main bzw. örtlich zuständiges Gericht in Österreich.</p>
+<h3>§5 Vertraulichkeit und Datenschutz (NDA + DSGVO)</h3>
+<p>Der Auftragnehmer verpflichtet sich zur strengsten Vertraulichkeit. Überlassene Daten werden nicht an Dritte weitergegeben und nach Abschluss des Tests innerhalb von 30 Tagen unwiderruflich gelöscht. Es gilt die vollständige Einhaltung der DSGVO. Bei einem Verstoß gegen die Vertraulichkeits- und Datenschutzpflichten beträgt die Vertragsstrafe 5.000 € pro Fall; die Geltendmachung eines darüber hinausgehenden Schadens bleibt vorbehalten.</p>
+
+<h3>§6 Dauer und Kündigung</h3>
+<p>Der Vertrag wird auf unbestimmte Zeit geschlossen und kann von beiden Seiten mit einer Frist von 14 Tagen gekündigt werden. Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt unberührt.</p>
+
+<h3>§7 Anwendbares Recht und Gerichtsstand</h3>
+<p>Es ist ausschließlich österreichisches Recht anwendbar. Als Gerichtsstand wird ausschließlich das örtlich zuständige Gericht in Österreich vereinbart.</p>
 """
         return subtitle, sections_html
 

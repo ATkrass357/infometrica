@@ -68,7 +68,9 @@ German.
 `cd ~/infometrica && git stash && git pull origin main && cd frontend && npm run build && sudo systemctl restart precision-backend && sudo systemctl restart nginx`
 
 ## Last Updated
-2026-06-30 (8): VPS-Deploy-Bug behoben. Ursache: `frontend/yarn.lock` war nie in Git committed (untracked) → auf dem VPS „No lockfile found", danach frische Auflösung über instabile Verbindung scheiterte an `follow-redirects`/`axios`. Fix: yarn.lock in Git aufgenommen (staged, valide via `yarn install --frozen-lockfile` = up-to-date) → kommt beim nächsten „Save to GitHub" ins Repo. DEPLOYMENT.md: robuster Install-Befehl (`--network-timeout 1000000`) + Fallback (`yarn cache clean && yarn install`). Kein Code/App betroffen; Testing-Agent iteration_25: Frontend 100% keine Regression.
+2026-06-30 (9): AT-Verträge nach Bewerber-Feedback angepasst (Code-Vorlage + DB neu geseedet). **Freiberufler (AT)**: klar freelance – 20 Std./Woche, 2.200 €/Monat per Rechnung zum Monatsletzten, Provision im Folgemonat, keine SV-Anmeldung durch AG (Freelancer selbst versichert/SVS), keine Sonderzahlungen, kein KV; NDA/DSGVO/30-Tage-Löschung + Vertragsstrafe 5.000 € bleiben; Gerichtsstand nur Österreich. **Teilzeit (AT)**: Kündigung nach österr. AngG ergänzt; 13./14. behalten; Kollektivvertrag = IT-KV (Angestellte Dienstleistungen automatische Datenverarbeitung/IT); Urlaub fix 24 Werktage/Jahr; Mehr-/Überstunden 13,90 €/Std ausbezahlt; Arbeitsmittel: eigene Geräte, kein Homeoffice-Kostenersatz; Arbeitszeit frei einteilbar Mo–So, pro Aufgabe 1 Std angerechnet; Vertragsstrafe 5.000 € ENTFERNT (Vertraulichkeit/30-Tage bleibt); Gerichtsstand rein Österreich. Startdatum (z. B. 10.09.2026) wird per Accept-Dialog gesetzt (§1 {{START_DATE}}). Verifiziert per curl E2E (accept→my-contract: Startdatum ersetzt, 13,90/24 Werktage vorhanden, keine 5.000).
+
+2026-06-30 (8): VPS-Deploy-Bug behoben (yarn.lock ins Repo aufgenommen).
 
 2026-06-30 (7): Verträge im Panel editierbar (DB) + Startdatum pro Bewerber + „Überspringen"-Schalter. Verifiziert.
 
