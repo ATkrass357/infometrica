@@ -34,6 +34,8 @@ const AdminApplications = () => {
   const [statusFilter, setStatusFilter] = useState('all');
   const [acceptApp, setAcceptApp] = useState(null);
   const [acceptType, setAcceptType] = useState('vollzeit');
+  const [acceptStartDate, setAcceptStartDate] = useState('');
+  const [acceptAllowSkip, setAcceptAllowSkip] = useState(false);
   const [approvingQuiz, setApprovingQuiz] = useState(false);
 
   const fetchApplications = async () => {
@@ -116,6 +118,8 @@ const AdminApplications = () => {
 
   const handleAccept = (app) => {
     setAcceptType('vollzeit');
+    setAcceptStartDate('');
+    setAcceptAllowSkip(false);
     setAcceptApp(app);
   };
 
@@ -125,9 +129,14 @@ const AdminApplications = () => {
 
     try {
       const token = localStorage.getItem('admin_token');
+      let startDateFormatted = '';
+      if (acceptStartDate) {
+        const [y, m, d] = acceptStartDate.split('-');
+        startDateFormatted = `${d}.${m}.${y}`;
+      }
       await axios.post(
         `${BACKEND_URL}/api/applications/${acceptApp.id}/accept`,
-        { contract_type: acceptType },
+        { contract_type: acceptType, start_date: startDateFormatted || null, allow_skip: acceptAllowSkip },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -592,6 +601,31 @@ const AdminApplications = () => {
                 </button>
               ))}
             </div>
+
+            {/* Custom start date + skip toggle */}
+            <div className="space-y-3 mb-5 border-t border-[#292e42] pt-4">
+              <div>
+                <label className="block text-sm font-medium text-[#9aa5ce] mb-1">Startdatum (optional)</label>
+                <input
+                  type="date"
+                  value={acceptStartDate}
+                  onChange={(e) => setAcceptStartDate(e.target.value)}
+                  className="w-full px-3 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] text-sm"
+                  data-testid="accept-start-date"
+                />
+                <p className="text-xs text-[#565f89] mt-1">Ersetzt im Vertrag (§1) das „Datum der Unterzeichnung". Leer = Unterschriftsdatum.</p>
+              </div>
+              <label className="flex items-center gap-3 cursor-pointer select-none" data-testid="accept-allow-skip">
+                <input
+                  type="checkbox"
+                  checked={acceptAllowSkip}
+                  onChange={(e) => setAcceptAllowSkip(e.target.checked)}
+                  className="w-4 h-4 accent-[#9ece6a]"
+                />
+                <span className="text-sm text-[#c0caf5]">Bewerber darf den Vertrag vorerst überspringen</span>
+              </label>
+            </div>
+
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setAcceptApp(null)}

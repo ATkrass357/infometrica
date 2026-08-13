@@ -249,10 +249,19 @@ async def accept_application(
     contract_type = (data or {}).get("contract_type", "vollzeit")
     if contract_type not in ("vollzeit", "teilzeit", "minijob", "minijob_at", "vollzeit_at", "teilzeit_at", "freiberufler_at"):
         contract_type = "vollzeit"
-    
+
+    start_date = (data or {}).get("start_date") or None  # e.g. "01.08.2026"
+    allow_skip = bool((data or {}).get("allow_skip", False))
+
     await db.applications.update_one(
         {"id": application_id},
-        {"$set": {"status": "Akzeptiert", "contract_type": contract_type, "accepted_at": datetime.utcnow()}}
+        {"$set": {
+            "status": "Akzeptiert",
+            "contract_type": contract_type,
+            "contract_start_date": start_date,
+            "contract_can_skip": allow_skip,
+            "accepted_at": datetime.utcnow()
+        }}
     )
     
     # Send SMS notification
@@ -755,7 +764,133 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
     return subtitle, sections_html
 
 
-# Download signed contract as HTML (for print/save as PDF)
+# ---------------------------------------------------------------------------
+# Editable contract templates (stored in DB, global) + start date + skip
+# ---------------------------------------------------------------------------
+ALL_CONTRACT_TYPES = ["vollzeit", "teilzeit", "minijob", "minijob_at", "vollzeit_at", "teilzeit_at", "freiberufler_at"]
+
+CONTRACT_POSITIONS = {
+    "vollzeit": "Mitarbeiter in der Verifikations Testung",
+    "teilzeit": "Mitarbeiter/in in der Daten- und Produktprüfung (Teilzeit)",
+    "minijob": "Mitarbeiter/in in der Daten- und Produktprüfung (Minijob)",
+    "minijob_at": "IT-Applikations-Tester (Werkvertrag)",
+    "vollzeit_at": "IT Application Tester (Vollzeit · Österreich)",
+    "teilzeit_at": "IT Application Tester (Teilzeit · Österreich)",
+    "freiberufler_at": "IT Application Tester (Freiberufler · Österreich)",
+}
+
+CONTRACT_TITLE_MAP = {
+    "minijob_at": "WERKVERTRAG",
+    "freiberufler_at": "DIENSTLEISTUNGSVERTRAG",
+}
+
+START_DATE_PLACEHOLDER = "{{START_DATE}}"
+
+
+def _require_admin(authorization):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    payload = decode_token(authorization.split(" ")[1])
+    if not payload or payload.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Nur Administratoren")
+    return payload
+
+
+async def _get_template(db, contract_type: str) -> dict:
+    """Return the (editable) contract template from DB, seeding from code on first use."""
+    if contract_type not in ALL_CONTRACT_TYPES:
+        contract_type = "vollzeit"
+    doc = await db.contract_templates.find_one({"type": contract_type}, {"_id": 0})
+    if doc:
+        return doc
+    subtitle, body_html = _build_contract_html_parts(contract_type, START_DATE_PLACEHOLDER)
+    doc = {
+        "type": contract_type,
+        "title": CONTRACT_TITLE_MAP.get(contract_type, "ARBEITSVERTRAG"),
+        "subtitle": subtitle,
+        "position": CONTRACT_POSITIONS.get(contract_type, ""),
+        "body_html": body_html,
+    }
+    await db.contract_templates.insert_one(dict(doc))
+    return doc
+
+
+@router.get("/contract-templates")
+async def list_contract_templates(authorization: str = Header(None), db: AsyncIOMotorDatabase = Depends(get_db)):
+    """Admin: list all editable contract templates (seeds missing ones)."""
+    _require_admin(authorization)
+    return [await _get_template(db, t) for t in ALL_CONTRACT_TYPES]
+
+
+@router.put("/contract-templates/{contract_type}")
+async def update_contract_template(contract_type: str, data: dict = Body(default={}), authorization: str = Header(None), db: AsyncIOMotorDatabase = Depends(get_db)):
+    """Admin: update an editable contract template (global)."""
+    _require_admin(authorization)
+    if contract_type not in ALL_CONTRACT_TYPES:
+        raise HTTPException(status_code=400, detail="Unbekannter Vertragstyp")
+    await _get_template(db, contract_type)  # ensure it exists
+    update = {}
+    for field in ("title", "subtitle", "position", "body_html"):
+        if field in data and data[field] is not None:
+            update[field] = data[field]
+    if not update:
+        raise HTTPException(status_code=400, detail="Keine Änderungen")
+    await db.contract_templates.update_one({"type": contract_type}, {"$set": update})
+    return await _get_template(db, contract_type)
+
+
+@router.get("/my-contract")
+async def get_my_contract(authorization: str = Header(None), db: AsyncIOMotorDatabase = Depends(get_db)):
+    """Applicant: get the contract template for their assigned type, with the start date filled in."""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    payload = decode_token(authorization.split(" ")[1])
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    application = await db.applications.find_one({"email": payload.get("sub")}, {"_id": 0})
+    if not application:
+        raise HTTPException(status_code=404, detail="Bewerbung nicht gefunden")
+
+    contract_type = application.get("contract_type", "vollzeit")
+    tpl = await _get_template(db, contract_type)
+    start_date = application.get("contract_start_date") or datetime.utcnow().strftime("%d.%m.%Y")
+    body = tpl["body_html"].replace(START_DATE_PLACEHOLDER, start_date)
+    address = f"{application.get('strasse', '')} · {application.get('postleitzahl', '')} {application.get('stadt', '')}".strip(" ·")
+    return {
+        "type": contract_type,
+        "title": tpl["title"],
+        "subtitle": tpl["subtitle"],
+        "position": tpl["position"],
+        "body_html": body,
+        "start_date": start_date,
+        "can_skip": bool(application.get("contract_can_skip", False)),
+        "name": application.get("name", ""),
+        "address": address,
+    }
+
+
+@router.post("/skip-contract")
+async def skip_contract(authorization: str = Header(None), db: AsyncIOMotorDatabase = Depends(get_db)):
+    """Applicant: skip signing the contract for now (only if enabled by admin)."""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    payload = decode_token(authorization.split(" ")[1])
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    application = await db.applications.find_one({"email": payload.get("sub")})
+    if not application:
+        raise HTTPException(status_code=404, detail="Bewerbung nicht gefunden")
+    if application.get("status") != "Akzeptiert":
+        raise HTTPException(status_code=400, detail="Nur nach Akzeptanz möglich")
+    if not application.get("contract_can_skip", False):
+        raise HTTPException(status_code=403, detail="Überspringen ist für diese Bewerbung nicht freigegeben")
+    await db.applications.update_one(
+        {"id": application["id"]},
+        {"$set": {"status": "Vertrag unterschrieben", "contract_skipped": True, "contract_skipped_at": datetime.utcnow()}}
+    )
+    return {"message": "Vertrag vorerst übersprungen", "status": "Vertrag unterschrieben"}
+
+
 @router.get("/download-contract")
 async def download_contract(
     token: str = None,
@@ -817,11 +952,11 @@ async def download_contract(
     sig_img_html = f'<img src="data:image/png;base64,{sig_base64}" style="width:100%;height:auto;max-height:120px;object-fit:contain;" />' if sig_base64 else ""
 
     contract_type = application.get("contract_type", "vollzeit")
-    subtitle, sections_html = _build_contract_html_parts(contract_type, signed_date)
-    contract_title = {
-        "minijob_at": "WERKVERTRAG",
-        "freiberufler_at": "DIENSTLEISTUNGSVERTRAG",
-    }.get(contract_type, "ARBEITSVERTRAG")
+    tpl = await _get_template(db, contract_type)
+    start_date = application.get("contract_start_date") or signed_date
+    sections_html = tpl["body_html"].replace(START_DATE_PLACEHOLDER, start_date)
+    subtitle = tpl["subtitle"]
+    contract_title = tpl["title"]
 
     from fastapi.responses import HTMLResponse
     

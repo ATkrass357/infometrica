@@ -1,5 +1,5 @@
-import React, { useState, useRef } from 'react';
-import { FileSignature, PenTool, RotateCcw, CheckCircle, AlertTriangle, CreditCard } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { FileSignature, PenTool, RotateCcw, CheckCircle, AlertTriangle, CreditCard, SkipForward } from 'lucide-react';
 import SignatureCanvas from 'react-signature-canvas';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -7,20 +7,53 @@ import { Label } from '../../components/ui/label';
 import { toast } from 'sonner';
 import axios from 'axios';
 import { WeboraLogo } from '../../components/Logo';
-import { ContractBody, CONTRACT_POSITIONS, CONTRACT_SUBTITLES, CONTRACT_TITLES } from './ContractTemplates';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
 const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
   const [iban, setIban] = useState('');
   const [isSigning, setIsSigning] = useState(false);
+  const [isSkipping, setIsSkipping] = useState(false);
+  const [contractData, setContractData] = useState(null);
   const signatureRef = useRef(null);
 
-  const contractType = applicant?.contract_type || 'vollzeit';
-  const positionLabel = CONTRACT_POSITIONS[contractType] || CONTRACT_POSITIONS.vollzeit;
-  const contractSubtitle = CONTRACT_SUBTITLES[contractType] || CONTRACT_SUBTITLES.vollzeit;
-  const contractTitle = CONTRACT_TITLES[contractType] || CONTRACT_TITLES.vollzeit;
-  const signedDate = new Date().toLocaleDateString('de-DE');
+  useEffect(() => {
+    const fetchContract = async () => {
+      try {
+        const token = localStorage.getItem('employee_token');
+        const res = await axios.get(`${BACKEND_URL}/api/applications/my-contract`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setContractData(res.data);
+      } catch (error) {
+        console.error('Error loading contract:', error);
+        toast.error('Vertrag konnte nicht geladen werden');
+      }
+    };
+    fetchContract();
+  }, []);
+
+  const contractTitle = contractData?.title || 'ARBEITSVERTRAG';
+  const contractSubtitle = contractData?.subtitle || '';
+  const positionLabel = contractData?.position || '';
+  const signedDate = contractData?.start_date || new Date().toLocaleDateString('de-DE');
+  const canSkip = contractData?.can_skip || false;
+
+  const handleSkip = async () => {
+    setIsSkipping(true);
+    try {
+      const token = localStorage.getItem('employee_token');
+      await axios.post(`${BACKEND_URL}/api/applications/skip-contract`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      toast.success('Vertrag vorerst übersprungen – Sie können später unterschreiben.');
+      onContractSigned();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || 'Überspringen nicht möglich');
+    } finally {
+      setIsSkipping(false);
+    }
+  };
 
   const formatIBAN = (value) => {
     const cleaned = value.replace(/\s/g, '').toUpperCase();
@@ -150,7 +183,11 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
 
                 <p className="italic text-slate-600">Dieser Vertrag wird zwischen den oben genannten Parteien geschlossen und beinhaltet die nachfolgenden Vereinbarungen:</p>
 
-                <ContractBody type={contractType} signedDate={signedDate} />
+                <div
+                  className="contract-html space-y-3 [&_h3]:font-bold [&_h3]:text-[#0A0A0A] [&_h3]:mt-4 [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:mt-1 [&_p]:mt-1"
+                  data-testid="contract-body"
+                  dangerouslySetInnerHTML={{ __html: contractData?.body_html || '<p>Vertrag wird geladen…</p>' }}
+                />
 
                 {/* Signatures */}
                 <div className="pt-6 mt-6 border-t border-slate-300">
@@ -240,6 +277,23 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                 </span>
               )}
             </Button>
+
+            {canSkip && (
+              <div className="pt-2">
+                <button
+                  onClick={handleSkip}
+                  disabled={isSkipping || isSigning}
+                  className="w-full h-12 flex items-center justify-center gap-2 text-slate-600 hover:text-[#0EA5E9] border border-slate-200 hover:border-[#0EA5E9] rounded-xl transition-colors disabled:opacity-50"
+                  data-testid="skip-contract-btn"
+                >
+                  <SkipForward size={18} />
+                  {isSkipping ? 'Wird übersprungen…' : 'Später unterschreiben'}
+                </button>
+                <p className="text-xs text-slate-400 text-center mt-2">
+                  Sie können den Vertrag jetzt überspringen und später unterschreiben.
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

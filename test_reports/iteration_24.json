@@ -1,0 +1,27 @@
+{
+  "summary": "Frontend-only verification of admin contract editor (Einstellungen → Arbeitsverträge) and Bewerbungen accept-dialog additions. Logged in via real form as admin@webora.de. All required data-testids present and functional. Edited Vollzeit(DE) subtitle, verified save + toast + persistence across contract-type switches, then successfully reverted to original value ('für Angestellte und Mitarbeiter'). Verified AT contracts render AT-specific content (Vollzeit/Teilzeit AT + Freiberufler AT mention ÖGK/Kollektivvertrag/Österreich; Minijob AT renders as Werkvertrag which is AT-appropriate). Verified accept dialog on a 'Neu' application now includes accept-start-date input and accept-allow-skip checkbox; dialog was CANCELLED without mutating any application.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Bewerbungen accept dialog", "issues": ["'Startdatum (optional)' uses browser-native date input (mm/dd/yyyy). Per project design guidelines, consider using shadcn Calendar/DatePicker for consistency with rest of admin UI (dark theme)."]}
+    ]
+  },
+  "test_report_links": ["/app/test_reports/screenshots_contract_dialog/accept_dialog.png"],
+  "action_items": [
+    "Spec vs implementation mismatch (info only, NOT a bug): review_request lists contract types 'werkstudent' and 'freiberufler' (DE) but the deployed panel exposes 7 types = vollzeit, teilzeit, minijob (DE) + vollzeit_at, teilzeit_at, minijob_at, freiberufler_at (AT). Confirm this is the intended final set.",
+    "Optional: replace native date input in accept dialog with shadcn DatePicker for design consistency."
+  ],
+  "critical_code_review_comments": [
+    "No blocking issues found. Editor, save, persistence, revert, AT/DE distinction, accept-dialog new fields (start date + allow-skip), and cancel-without-mutation all work end-to-end via UI."
+  ],
+  "updated_files": [],
+  "success_rate": { "backend": "not tested (per request)", "frontend": "100%" },
+  "test_credentials": "admin@webora.de / Kp9!xRv2Lq@Zm7Tn4&Q (form login)",
+  "seed_data_creation": "None. Temporarily changed Vollzeit(DE) subtitle to 'TESTAUTOSUB_für Angestellte und Mitarbeiter' to verify persistence, then reverted to original 'für Angestellte und Mitarbeiter'. Final verify after cache re-fetch confirmed original value. No applications were accepted (dialog cancelled).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Admin login via form works. Contract editor testids: mode-preview, mode-edit, contract-type-{vollzeit|teilzeit|minijob|vollzeit_at|teilzeit_at|minijob_at|freiberufler_at}, contract-document, contract-editor, edit-title, edit-subtitle, edit-position, edit-body-html, save-contract-btn. Note: after save the UI auto-switches back to preview mode — re-click mode-edit to inspect the edit inputs again. Accept dialog testids: accept-dialog, accept-start-date, accept-allow-skip, accept-dialog-cancel, and per-row accept-application-{id}. Applications page currently has 36 rows with visible accept buttons.",
+  "rca of the issue": "N/A — all requested UI surfaces work as specified."
+}
