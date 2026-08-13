@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { Trash2, Eye, RefreshCw, MapPin, UserCheck, CheckCircle, X, Clock, Shield, Unlock, Search, ClipboardList } from 'lucide-react';
+import { Trash2, Eye, RefreshCw, MapPin, UserCheck, CheckCircle, X, Clock, Shield, Unlock, Search, ClipboardList, FilePen } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+
+const CONTRACT_OPTIONS = [
+  { value: 'vollzeit', label: 'Vollzeit', desc: 'Testmonat 1.200 €, danach 2.900 € · ca. 40 Std./Woche' },
+  { value: 'teilzeit', label: 'Teilzeit', desc: '20 Std./Woche · 2.200 € brutto + Provision · Probezeit 3 Monate' },
+  { value: 'minijob', label: 'Minijob', desc: 'Provision 50–300 €/Auftrag · max. 603 €/Monat' },
+  { value: 'minijob_at', label: 'Minijob AT', desc: 'Werkvertrag · Vergütung pro Test · selbstständig' },
+  { value: 'vollzeit_at', label: 'Vollzeit AT', desc: 'Österreich · 40 Std./Woche · 2.900 € brutto' },
+  { value: 'teilzeit_at', label: 'Teilzeit AT', desc: 'Österreich · 20 Std./Woche · 2.200 € brutto + Provision' },
+  { value: 'freiberufler_at', label: 'Freiberufler AT', desc: 'Österreich · selbstständig · ausschließlich Provision' },
+];
+
+const CONTRACT_LABELS = CONTRACT_OPTIONS.reduce((acc, o) => { acc[o.value] = o.label; return acc; }, {});
 
 const QUIZ_QUESTIONS = {
   1: 'Deutscher Staatsbürger?',
@@ -36,6 +48,7 @@ const AdminApplications = () => {
   const [acceptType, setAcceptType] = useState('vollzeit');
   const [acceptStartDate, setAcceptStartDate] = useState('');
   const [acceptAllowSkip, setAcceptAllowSkip] = useState(false);
+  const [dialogMode, setDialogMode] = useState('accept'); // 'accept' | 'reassign'
   const [approvingQuiz, setApprovingQuiz] = useState(false);
 
   const fetchApplications = async () => {
@@ -117,9 +130,26 @@ const AdminApplications = () => {
   };
 
   const handleAccept = (app) => {
+    setDialogMode('accept');
     setAcceptType('vollzeit');
     setAcceptStartDate('');
     setAcceptAllowSkip(false);
+    setAcceptApp(app);
+  };
+
+  // Convert "dd.mm.yyyy" -> "yyyy-mm-dd" for the native date input
+  const toInputDate = (deDate) => {
+    if (!deDate || !deDate.includes('.')) return '';
+    const [d, m, y] = deDate.split('.');
+    if (!d || !m || !y) return '';
+    return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`;
+  };
+
+  const handleChangeContract = (app) => {
+    setDialogMode('reassign');
+    setAcceptType(app.contract_type || 'vollzeit');
+    setAcceptStartDate(toInputDate(app.contract_start_date));
+    setAcceptAllowSkip(!!app.contract_can_skip);
     setAcceptApp(app);
   };
 
@@ -134,21 +164,25 @@ const AdminApplications = () => {
         const [y, m, d] = acceptStartDate.split('-');
         startDateFormatted = `${d}.${m}.${y}`;
       }
-      await axios.post(
-        `${BACKEND_URL}/api/applications/${acceptApp.id}/accept`,
-        { contract_type: acceptType, start_date: startDateFormatted || null, allow_skip: acceptAllowSkip },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      toast.success('Bewerbung akzeptiert! Der Bewerber kann nun seine Verifizierung durchführen.');
+      if (dialogMode === 'reassign') {
+        await axios.put(
+          `${BACKEND_URL}/api/applications/${acceptApp.id}/contract-type`,
+          { contract_type: acceptType, start_date: startDateFormatted || null, allow_skip: acceptAllowSkip },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        toast.success('Vertrag geändert.');
+      } else {
+        await axios.post(
+          `${BACKEND_URL}/api/applications/${acceptApp.id}/accept`,
+          { contract_type: acceptType, start_date: startDateFormatted || null, allow_skip: acceptAllowSkip },
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        toast.success('Bewerbung akzeptiert! Der Bewerber kann nun seine Verifizierung durchführen.');
+      }
       setAcceptApp(null);
       fetchApplications();
     } catch (error) {
-      const errorMsg = error.response?.data?.detail || 'Fehler beim Akzeptieren';
+      const errorMsg = error.response?.data?.detail || 'Fehler beim Speichern';
       toast.error(errorMsg);
     } finally {
       setProcessingId(null);
@@ -342,6 +376,16 @@ const AdminApplications = () => {
                             )}
                           </button>
                         )}
+                        {app.status !== 'Neu' && !app.contract_signed_at && (
+                          <button
+                            onClick={() => handleChangeContract(app)}
+                            className="p-2 text-[#e0af68] hover:bg-[#e0af68]/10 rounded-lg transition-colors"
+                            title="Vertrag ändern"
+                            data-testid={`change-contract-${app.id}`}
+                          >
+                            <FilePen size={18} />
+                          </button>
+                        )}
                         <button
                           onClick={() => handleDelete(app.id)}
                           className="p-2 text-[#f7768e] hover:bg-[#f7768e]/10 rounded-lg transition-colors"
@@ -396,6 +440,11 @@ const AdminApplications = () => {
                   {app.status === 'Neu' && (
                     <button onClick={() => handleAccept(app)} disabled={processingId === app.id} className="p-2 text-[#9ece6a] hover:bg-[#9ece6a]/10 rounded-lg disabled:opacity-50" data-testid={`accept-application-mobile-${app.id}`}>
                       {processingId === app.id ? <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-[#9ece6a]"></div> : <UserCheck size={18} />}
+                    </button>
+                  )}
+                  {app.status !== 'Neu' && !app.contract_signed_at && (
+                    <button onClick={() => handleChangeContract(app)} className="p-2 text-[#e0af68] hover:bg-[#e0af68]/10 rounded-lg" title="Vertrag ändern" data-testid={`change-contract-mobile-${app.id}`}>
+                      <FilePen size={18} />
                     </button>
                   )}
                   <button onClick={() => handleDelete(app.id)} className="p-2 text-[#f7768e] hover:bg-[#f7768e]/10 rounded-lg" data-testid={`delete-application-mobile-${app.id}`}>
@@ -471,6 +520,19 @@ const AdminApplications = () => {
                     <p className="text-sm text-[#565f89]">Position</p>
                     <p className="text-[#c0caf5] font-medium">{selectedApp.position}</p>
                   </div>
+                  {selectedApp.status !== 'Neu' && (
+                    <div>
+                      <p className="text-sm text-[#565f89]">Zugewiesener Vertrag</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="px-2.5 py-1 bg-[#e0af68]/10 text-[#e0af68] rounded-full text-sm font-medium" data-testid="detail-contract-type">
+                          {CONTRACT_LABELS[selectedApp.contract_type] || selectedApp.contract_type}
+                        </span>
+                        {selectedApp.contract_signed_at
+                          ? <span className="text-xs text-[#9ece6a] flex items-center gap-1"><CheckCircle size={12} /> unterschrieben</span>
+                          : <span className="text-xs text-[#565f89]">noch nicht unterschrieben</span>}
+                      </div>
+                    </div>
+                  )}
                   <div>
                     <p className="text-sm text-[#565f89]">Anschreiben</p>
                     <p className="text-[#9aa5ce] whitespace-pre-wrap">{selectedApp.message}</p>
@@ -551,6 +613,19 @@ const AdminApplications = () => {
                   Akzeptieren
                 </button>
               )}
+              {selectedApp.status !== 'Neu' && !selectedApp.contract_signed_at && (
+                <button
+                  onClick={() => {
+                    handleChangeContract(selectedApp);
+                    setSelectedApp(null);
+                  }}
+                  className="px-6 py-2 bg-[#e0af68] text-white rounded-lg hover:bg-[#e0af68]/80 transition-colors flex items-center justify-center gap-2"
+                  data-testid="change-contract-detail-btn"
+                >
+                  <FilePen size={18} />
+                  Vertrag ändern
+                </button>
+              )}
               <button
                 onClick={() => {
                   handleDelete(selectedApp.id);
@@ -569,20 +644,16 @@ const AdminApplications = () => {
       {acceptApp && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50" data-testid="accept-dialog">
           <div className="bg-[#16161e] border border-[#292e42] rounded-xl w-full max-w-md p-6">
-            <h3 className="text-lg font-bold text-[#c0caf5] mb-1">Bewerbung akzeptieren</h3>
+            <h3 className="text-lg font-bold text-[#c0caf5] mb-1">
+              {dialogMode === 'reassign' ? 'Vertrag ändern' : 'Bewerbung akzeptieren'}
+            </h3>
             <p className="text-sm text-[#9aa5ce] mb-4">
-              Wählen Sie den Vertragstyp für <strong className="text-[#c0caf5]">{acceptApp.name}</strong>.
+              {dialogMode === 'reassign'
+                ? <>Weisen Sie <strong className="text-[#c0caf5]">{acceptApp.name}</strong> einen anderen Vertrag zu (nur solange nicht unterschrieben).</>
+                : <>Wählen Sie den Vertragstyp für <strong className="text-[#c0caf5]">{acceptApp.name}</strong>.</>}
             </p>
             <div className="space-y-2 mb-6">
-              {[
-                { value: 'vollzeit', label: 'Vollzeit', desc: 'Testmonat 1.200 €, danach 2.900 € · ca. 40 Std./Woche' },
-                { value: 'teilzeit', label: 'Teilzeit', desc: '20 Std./Woche · 2.200 € brutto + Provision · Probezeit 3 Monate' },
-                { value: 'minijob', label: 'Minijob', desc: 'Provision 50–300 €/Auftrag · max. 603 €/Monat' },
-                { value: 'minijob_at', label: 'Minijob AT', desc: 'Werkvertrag · Vergütung pro Test · selbstständig' },
-                { value: 'vollzeit_at', label: 'Vollzeit AT', desc: 'Österreich · 40 Std./Woche · 2.900 € brutto' },
-                { value: 'teilzeit_at', label: 'Teilzeit AT', desc: 'Österreich · 20 Std./Woche · 2.200 € brutto + Provision' },
-                { value: 'freiberufler_at', label: 'Freiberufler AT', desc: 'Österreich · selbstständig · ausschließlich Provision' },
-              ].map((opt) => (
+              {CONTRACT_OPTIONS.map((opt) => (
                 <button
                   key={opt.value}
                   onClick={() => setAcceptType(opt.value)}
@@ -645,7 +716,7 @@ const AdminApplications = () => {
                 ) : (
                   <UserCheck size={18} />
                 )}
-                Akzeptieren
+                {dialogMode === 'reassign' ? 'Vertrag speichern' : 'Akzeptieren'}
               </button>
             </div>
           </div>

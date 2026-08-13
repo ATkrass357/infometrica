@@ -272,6 +272,38 @@ async def accept_application(
     return {"message": "Bewerbung akzeptiert", "status": "Akzeptiert", "contract_type": contract_type}
 
 
+# Change assigned contract type (Admin only) - allowed until the contract is signed
+@router.put("/{application_id}/contract-type")
+async def change_contract_type(
+    application_id: str,
+    data: dict = Body(default={}),
+    authorization: str = Header(None),
+    db: AsyncIOMotorDatabase = Depends(get_db)
+):
+    """Reassign a different contract to an applicant as long as it is not yet signed."""
+    _require_admin(authorization)
+
+    application = await db.applications.find_one({"id": application_id})
+    if not application:
+        raise HTTPException(status_code=404, detail="Bewerbung nicht gefunden")
+
+    if application.get("contract_signed_at"):
+        raise HTTPException(status_code=400, detail="Vertrag wurde bereits unterschrieben und kann nicht mehr geändert werden")
+
+    contract_type = (data or {}).get("contract_type")
+    if contract_type not in ALL_CONTRACT_TYPES:
+        raise HTTPException(status_code=400, detail="Unbekannter Vertragstyp")
+
+    update = {"contract_type": contract_type}
+    if "start_date" in data:
+        update["contract_start_date"] = (data.get("start_date") or None)
+    if "allow_skip" in data:
+        update["contract_can_skip"] = bool(data.get("allow_skip"))
+
+    await db.applications.update_one({"id": application_id}, {"$set": update})
+    return {"message": "Vertrag geändert", "contract_type": contract_type}
+
+
 # Verify/Unlock applicant (Admin only) - final step
 @router.post("/{application_id}/unlock")
 async def unlock_applicant(
