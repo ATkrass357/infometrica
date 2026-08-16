@@ -373,7 +373,12 @@ async def telegram_webhook(request: Request, db: AsyncIOMotorDatabase = Depends(
 # Serve chat images
 @router.get("/image/{filename}")
 async def get_chat_image(filename: str):
-    filepath = os.path.join(UPLOAD_DIR, filename)
-    if not os.path.exists(filepath):
+    # Prevent path traversal: only allow a bare filename inside UPLOAD_DIR
+    safe_name = os.path.basename(filename)
+    filepath = os.path.realpath(os.path.join(UPLOAD_DIR, safe_name))
+    upload_root = os.path.realpath(UPLOAD_DIR)
+    if not filepath.startswith(upload_root + os.sep):
+        raise HTTPException(status_code=404, detail="Bild nicht gefunden")
+    if not os.path.isfile(filepath):
         raise HTTPException(status_code=404, detail="Bild nicht gefunden")
     return FileResponse(filepath)
