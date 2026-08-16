@@ -1,5 +1,18 @@
 # Prysm Technologies (ehemals Keyperion / Precision Labs) – PRD
 
+## 🔴 SICHERHEITSVORFALL & BEHEBUNG (2026-08-16)
+**Vorfall:** Unbefugter Zugriff aufs Admin-Panel; Fremde konnten Accounts anlegen/akzeptieren.
+**Ursachen (per Security-Audit + Code bestätigt):**
+1. `utils/auth.py`: `SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "<hartkodiertes Default>")` – `JWT_SECRET_KEY` fehlte in .env → jeder mit Kenntnis des (öffentlichen) Quellcodes konnte Admin-JWTs fälschen.
+2. Viele Admin-/Daten-Endpunkte prüften nur `authorization.startswith("Bearer ")`, ohne das Token zu dekodieren oder `role=="admin"` zu prüfen (Broken Access Control) → z. B. `POST /accept`, `GET /applications/`, `DELETE`, Verifikations-Bilder.
+3. BOLA: `GET /api/contracts/{id}` gab jeden Vertrag (IBAN/Gehalt/PII) ohne Eigentümerprüfung heraus.
+**Behebung (verifiziert, 23/23 Backend-Tests grün):**
+- `JWT_SECRET_KEY` (starkes Zufalls-Secret) in `backend/.env` gesetzt; `auth.py` startet NICHT mehr ohne Secret (fail-closed, kein Default).
+- `_require_admin(authorization)` (dekodiert Token + prüft role=="admin") auf allen Admin-Endpunkten in `applications.py` erzwungen (get_applications, accept, unlock, contract-type, delete, delete_verification, verification-image).
+- `contracts.py`: neue Helfer `_verify_token`/`_require_admin`; Admin-Zwang auf create/list; Eigentümerprüfung (employee_email == token.sub, Admin-Bypass) auf get_contract/sign/download.
+- Verifiziert: gefälschte/alte-Secret/Applicant-Tokens → 401/403; echter Admin + Applicant-Eigenzugriff → 200.
+**⚠️ NOCH VOM NUTZER AUF VPS ZU TUN:** neues `JWT_SECRET_KEY` in VPS-.env setzen (invalidiert alle alten/gestohlenen Tokens), Admin-Passwort ändern, DB von durch Angreifer angelegten Bewerbungen bereinigen, Code deployen + Backend neu starten. Regressions-Suite: `backend/tests/test_security_auth_remediation.py`.
+
 ## 🔵 Rebrand → Webora (2026-06)
 - Kompletter Rebrand **Keyperion Technologies → Webora** (Frontend, Backend-Texte, Verträge, Mails, index.html, Impressum, SMS-Texte).
 - **Design: Hellblau/Weiß** (grün #00C853/emerald/green → sky #0EA5E9 / sky-* Klassen; rgba 0,200,83 → 14,165,233).

@@ -32,6 +32,22 @@ def get_db():
     return db
 
 
+def _verify_token(authorization):
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    payload = decode_token(authorization.split(" ")[1])
+    if not payload:
+        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    return payload
+
+
+def _require_admin(authorization):
+    payload = _verify_token(authorization)
+    if payload.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Nur Administratoren")
+    return payload
+
+
 class ContractCreate(BaseModel):
     employee_id: str
     employee_name: str
@@ -55,8 +71,7 @@ async def create_contract(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Admin creates a contract for an employee to sign"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    _require_admin(authorization)
     
     # Generate contract ID
     contract_id = f"contract-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:6]}"
@@ -121,13 +136,16 @@ async def get_contract(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Get contract details"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    payload = _verify_token(authorization)
     
     contract = await db.contracts.find_one({"id": contract_id}, {"_id": 0})
     
     if not contract:
         raise HTTPException(status_code=404, detail="Vertrag nicht gefunden")
+    
+    # Ownership check: only the owning employee or an admin may read a contract
+    if payload.get("role") != "admin" and contract.get("employee_email") != payload.get("sub"):
+        raise HTTPException(status_code=403, detail="Kein Zugriff auf diesen Vertrag")
     
     return contract
 
@@ -139,8 +157,7 @@ async def get_all_contracts(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Get all contracts (Admin only)"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    _require_admin(authorization)
     
     contracts = await db.contracts.find({}, {"_id": 0}).sort("created_at", -1).to_list(100)
     
@@ -156,20 +173,17 @@ async def sign_contract(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Employee signs a contract"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
-    
-    token = authorization.split(" ")[1]
-    payload = decode_token(token)
-    
-    if not payload:
-        raise HTTPException(status_code=401, detail="Ungültiger Token")
+    payload = _verify_token(authorization)
     
     # Get contract
     contract = await db.contracts.find_one({"id": contract_id})
     
     if not contract:
         raise HTTPException(status_code=404, detail="Vertrag nicht gefunden")
+    
+    # Ownership check: only the owning employee (or admin) may sign
+    if payload.get("role") != "admin" and contract.get("employee_email") != payload.get("sub"):
+        raise HTTPException(status_code=403, detail="Kein Zugriff auf diesen Vertrag")
     
     if contract["status"] == "signed":
         raise HTTPException(status_code=400, detail="Vertrag bereits unterschrieben")
@@ -234,13 +248,16 @@ async def download_contract(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Download signed contract as PDF"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    payload = _verify_token(authorization)
     
     contract = await db.contracts.find_one({"id": contract_id})
     
     if not contract:
         raise HTTPException(status_code=404, detail="Vertrag nicht gefunden")
+    
+    # Ownership check: only the owning employee (or admin) may download
+    if payload.get("role") != "admin" and contract.get("employee_email") != payload.get("sub"):
+        raise HTTPException(status_code=403, detail="Kein Zugriff auf diesen Vertrag")
     
     if contract["status"] != "signed":
         raise HTTPException(status_code=400, detail="Vertrag noch nicht unterschrieben")

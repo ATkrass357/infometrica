@@ -4,7 +4,12 @@ from datetime import datetime, timedelta
 from typing import Optional
 import os
 
-SECRET_KEY = os.environ.get("JWT_SECRET_KEY", "your-secret-key-change-in-production-2026")
+SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
+if not SECRET_KEY:
+    raise RuntimeError(
+        "JWT_SECRET_KEY is not set. Refusing to start with an insecure default. "
+        "Set a strong random JWT_SECRET_KEY in the environment."
+    )
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 Tage
 

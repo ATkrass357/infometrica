@@ -218,8 +218,7 @@ async def get_applications(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Get all applications (Admin only)"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    _require_admin(authorization)
     
     # Get all applications, sorted by creation date (newest first)
     applications = await db.applications.find({}, {"_id": 0, "password_hash": 0}).sort("created_at", -1).to_list(1000)
@@ -236,8 +235,7 @@ async def accept_application(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Accept an application with a chosen contract type - allows user to upload verification"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    _require_admin(authorization)
     
     application = await db.applications.find_one({"id": application_id})
     if not application:
@@ -312,8 +310,7 @@ async def unlock_applicant(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Unlock applicant after verification review - gives full access"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    _require_admin(authorization)
     
     application = await db.applications.find_one({"id": application_id})
     if not application:
@@ -1121,8 +1118,7 @@ async def get_verification_image(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Get verification image as base64 (Admin only - no download)"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    _require_admin(authorization)
     
     if side not in ["front", "back"]:
         raise HTTPException(status_code=400, detail="Seite muss 'front' oder 'back' sein")
@@ -1163,8 +1159,7 @@ async def delete_verification(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Delete verification documents (Admin only)"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    _require_admin(authorization)
     
     application = await db.applications.find_one({"id": application_id})
     if not application:
@@ -1198,8 +1193,7 @@ async def delete_application(
     db: AsyncIOMotorDatabase = Depends(get_db)
 ):
     """Delete an application (Admin only)"""
-    if not authorization or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Keine Autorisierung")
+    _require_admin(authorization)
     
     # First delete any verification files
     application = await db.applications.find_one({"id": application_id})
