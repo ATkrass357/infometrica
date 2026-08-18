@@ -1,5 +1,11 @@
 # Prysm Technologies (ehemals Keyperion / Precision Labs) – PRD
 
+## 🟢 Brute-Force-Schutz Admin-Login (2026-08-18)
+- `POST /api/admin/login` mit MongoDB-basiertem Rate-Limiting: nach **5 Fehlversuchen** je `{IP}:{Email}` → **15 Min Sperre** (HTTP 429, DE-Meldung). Zähler wird bei Erfolg gelöscht, nach Ablauf der Sperre zurückgesetzt.
+- Client-IP via `X-Forwarded-For` (hinter Nginx). Neues DB-Audit-Log `admin_login_audit` (email, ip, success, reason, created_at) – Audit-Fehler blockieren den Login nie (fail-safe).
+- Collections: `login_attempts` (identifier, failed_count, locked_until_ts), `admin_login_audit`. Code: routes/admin.py.
+- Verifiziert per curl: korrekter Login 200, 5× 401, 6.× 429, korrektes PW bei aktiver Sperre 429, Audit-Log geschrieben. Test-Daten bereinigt.
+
 ## 🟢 DSGVO-Klausel Freiberufler AT (2026-08-18)
 - §8 „Datenschutz, Datensicherheit und ausschließliche Testzwecke (DSGVO)" mit 30-Tage-Löschung der Testdaten in `freiberufler_at` ergänzt (routes/applications.py, _build_contract_html_parts).
 - `CONTRACT_TEMPLATE_VERSION` 2 → 3 → alle Vorlagen re-seeden beim Start. Verifiziert (DB: version=3, §8 + „Löschung der Testdaten" + „30 Tagen" vorhanden). ⚠️ VPS: Backend neu starten, damit Sync greift.
