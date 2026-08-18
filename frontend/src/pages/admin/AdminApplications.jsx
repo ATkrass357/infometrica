@@ -647,7 +647,7 @@ const AdminApplications = () => {
       {/* Accept dialog: choose contract type */}
       {acceptApp && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center p-4 z-50" data-testid="accept-dialog">
-          <div className="bg-[#16161e] border border-[#292e42] rounded-xl w-full max-w-md p-6">
+          <div className="bg-[#16161e] border border-[#292e42] rounded-xl w-full max-w-md p-6 max-h-[90vh] overflow-y-auto">
             <h3 className="text-lg font-bold text-[#c0caf5] mb-1">
               {dialogMode === 'reassign' ? 'Vertrag ändern' : 'Bewerbung akzeptieren'}
             </h3>
