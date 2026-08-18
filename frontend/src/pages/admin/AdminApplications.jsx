@@ -48,6 +48,7 @@ const AdminApplications = () => {
   const [acceptType, setAcceptType] = useState('vollzeit');
   const [acceptStartDate, setAcceptStartDate] = useState('');
   const [acceptAllowSkip, setAcceptAllowSkip] = useState(false);
+  const [acceptContractor, setAcceptContractor] = useState('');
   const [dialogMode, setDialogMode] = useState('accept'); // 'accept' | 'reassign'
   const [approvingQuiz, setApprovingQuiz] = useState(false);
 
@@ -134,6 +135,7 @@ const AdminApplications = () => {
     setAcceptType('vollzeit');
     setAcceptStartDate('');
     setAcceptAllowSkip(false);
+    setAcceptContractor('');
     setAcceptApp(app);
   };
 
@@ -150,6 +152,7 @@ const AdminApplications = () => {
     setAcceptType(app.contract_type || 'vollzeit');
     setAcceptStartDate(toInputDate(app.contract_start_date));
     setAcceptAllowSkip(!!app.contract_can_skip);
+    setAcceptContractor(app.contractor || '');
     setAcceptApp(app);
   };
 
@@ -164,17 +167,18 @@ const AdminApplications = () => {
         const [y, m, d] = acceptStartDate.split('-');
         startDateFormatted = `${d}.${m}.${y}`;
       }
+      const contractorValue = acceptType === 'freiberufler_at' ? (acceptContractor.trim() || null) : null;
       if (dialogMode === 'reassign') {
         await axios.put(
           `${BACKEND_URL}/api/applications/${acceptApp.id}/contract-type`,
-          { contract_type: acceptType, start_date: startDateFormatted || null, allow_skip: acceptAllowSkip },
+          { contract_type: acceptType, start_date: startDateFormatted || null, allow_skip: acceptAllowSkip, contractor: contractorValue },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         toast.success('Vertrag geändert.');
       } else {
         await axios.post(
           `${BACKEND_URL}/api/applications/${acceptApp.id}/accept`,
-          { contract_type: acceptType, start_date: startDateFormatted || null, allow_skip: acceptAllowSkip },
+          { contract_type: acceptType, start_date: startDateFormatted || null, allow_skip: acceptAllowSkip, contractor: contractorValue },
           { headers: { Authorization: `Bearer ${token}` } }
         );
         toast.success('Bewerbung akzeptiert! Der Bewerber kann nun seine Verifizierung durchführen.');
@@ -672,6 +676,22 @@ const AdminApplications = () => {
                 </button>
               ))}
             </div>
+
+            {/* Auftragnehmer (nur Freiberufler) */}
+            {acceptType === 'freiberufler_at' && (
+              <div className="mb-5">
+                <label className="block text-sm font-medium text-[#9aa5ce] mb-1">Auftragnehmer (eigene Firma des Freiberuflers)</label>
+                <textarea
+                  value={acceptContractor}
+                  onChange={(e) => setAcceptContractor(e.target.value)}
+                  rows={3}
+                  placeholder={"z. B.\nMustermann IT e.U.\nHauptstraße 1, 1010 Wien\nUID: ATU12345678"}
+                  className="w-full px-3 py-2 bg-[#1a1b26] border border-[#292e42] rounded-lg text-[#c0caf5] text-sm resize-y"
+                  data-testid="accept-contractor"
+                />
+                <p className="text-xs text-[#565f89] mt-1">Frei eintragbar (Firmenname, Adresse, UID …). Erscheint im Vertrag im „Auftragnehmer"-Block. Leer = Name/Adresse des Bewerbers.</p>
+              </div>
+            )}
 
             {/* Custom start date + skip toggle */}
             <div className="space-y-3 mb-5 border-t border-[#292e42] pt-4">

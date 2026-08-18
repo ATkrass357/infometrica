@@ -1,5 +1,11 @@
 # Prysm Technologies (ehemals Keyperion / Precision Labs) – PRD
 
+## 🟢 Auftragnehmer-Freitextfeld (nur Freiberufler) (2026-08-18)
+- Beim Freiberufler-Vertrag (`freiberufler_at`) kann der Admin im Accept-/Vertrag-ändern-Dialog ein freies Textfeld „Auftragnehmer" (eigene Firma des Freelancers: Name, Adresse, UID …) eingeben. Nur bei `freiberufler_at` sichtbar; bei allen anderen Verträgen unverändert.
+- Backend: `contractor` in accept + change-contract-type gespeichert, in `my-contract` + Admin-Liste (ApplicationResponse) zurückgegeben. Download-Vertrag: bei Freiberufler „Auftraggeber/Auftragnehmer"-Labels + `contractor`-Block statt Arbeitnehmer-Name/Adresse (leer = Fallback Name/Adresse). Erste Zeile = Unterzeichner.
+- Frontend: Admin-Dialog Textarea (data-testid `accept-contractor`), Unterschriftsseite zeigt bei Freiberufler „Auftraggeber/Auftragnehmer" + contractor (whitespace-pre-line).
+- Verifiziert per curl E2E (accept freiberufler_at + contractor → Admin-Liste + my-contract liefern contractor korrekt). Frontend kompiliert fehlerfrei.
+
 ## 🟢 Brute-Force-Schutz Admin-Login (2026-08-18)
 - `POST /api/admin/login` mit MongoDB-basiertem Rate-Limiting: nach **5 Fehlversuchen** je `{IP}:{Email}` → **15 Min Sperre** (HTTP 429, DE-Meldung). Zähler wird bei Erfolg gelöscht, nach Ablauf der Sperre zurückgesetzt.
 - Client-IP via `X-Forwarded-For` (hinter Nginx). Neues DB-Audit-Log `admin_login_audit` (email, ip, success, reason, created_at) – Audit-Fehler blockieren den Login nie (fail-safe).

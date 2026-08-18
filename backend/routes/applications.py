@@ -250,6 +250,9 @@ async def accept_application(
 
     start_date = (data or {}).get("start_date") or None  # e.g. "01.08.2026"
     allow_skip = bool((data or {}).get("allow_skip", False))
+    # Freies Auftragnehmer-Feld (nur für Freiberufler-Vertrag relevant)
+    contractor = (data or {}).get("contractor")
+    contractor = contractor.strip() if isinstance(contractor, str) and contractor.strip() else None
 
     await db.applications.update_one(
         {"id": application_id},
@@ -258,6 +261,7 @@ async def accept_application(
             "contract_type": contract_type,
             "contract_start_date": start_date,
             "contract_can_skip": allow_skip,
+            "contractor": contractor,
             "accepted_at": datetime.utcnow()
         }}
     )
@@ -297,6 +301,9 @@ async def change_contract_type(
         update["contract_start_date"] = (data.get("start_date") or None)
     if "allow_skip" in data:
         update["contract_can_skip"] = bool(data.get("allow_skip"))
+    if "contractor" in data:
+        c = data.get("contractor")
+        update["contractor"] = c.strip() if isinstance(c, str) and c.strip() else None
 
     await db.applications.update_one({"id": application_id}, {"$set": update})
     return {"message": "Vertrag geändert", "contract_type": contract_type}
@@ -948,6 +955,7 @@ async def get_my_contract(authorization: str = Header(None), db: AsyncIOMotorDat
         "can_skip": bool(application.get("contract_can_skip", False)),
         "name": application.get("name", ""),
         "address": address,
+        "contractor": application.get("contractor") or "",
     }
 
 
@@ -1040,6 +1048,28 @@ async def download_contract(
     subtitle = tpl["subtitle"]
     contract_title = tpl["title"]
 
+    # Freiberufler: freies "Auftragnehmer"-Feld statt Arbeitnehmer-Name/Adresse
+    is_freelance = contract_type == "freiberufler_at"
+    contractor_text = (application.get("contractor") or "").strip()
+    if is_freelance:
+        employer_label = "Auftraggeber:"
+        employer_sig_label = "Auftraggeber"
+        party_label = "Auftragnehmer:"
+        signer_sig_label = "Auftragnehmer"
+        if contractor_text:
+            party_html = "".join(f"<p>{line}</p>" for line in contractor_text.split("\n") if line.strip())
+            signer_name = contractor_text.split("\n")[0].strip()
+        else:
+            party_html = f"<p>{name}</p><p>{address}</p>"
+            signer_name = name
+    else:
+        employer_label = "Arbeitgeber:"
+        employer_sig_label = "Arbeitgeber"
+        party_label = "Arbeitnehmer:"
+        signer_sig_label = "Arbeitnehmer"
+        party_html = f"<p>{name}</p><p>{address}</p>"
+        signer_name = name
+
     from fastapi.responses import HTMLResponse
     
     html = f"""<!DOCTYPE html>
@@ -1078,16 +1108,15 @@ async def download_contract(
 
 <div class="parties">
   <div>
-    <p class="label">Arbeitgeber:</p>
+    <p class="label">{employer_label}</p>
     <p>MO Handel & Service, Inh. Mariusz Otok</p>
     <p>Darmstädter Landstraße 60</p>
     <p>65462 Ginsheim-Gustavsburg</p>
     <p style="color:#666;margin-top:4px;">vertreten durch Mariusz Otok</p>
   </div>
   <div>
-    <p class="label">Arbeitnehmer:</p>
-    <p>{name}</p>
-    <p>{address}</p>
+    <p class="label">{party_label}</p>
+    {party_html}
   </div>
 </div>
 
@@ -1099,14 +1128,14 @@ async def download_contract(
   <div class="sig-block">
     <p style="color:#666;margin-bottom:8px;">Ginsheim-Gustavsburg, {signed_date}</p>
     <div class="sig-line"><span style="font-family:'Brush Script MT',cursive,'Segoe Script','Comic Sans MS',sans-serif;font-size:22pt;color:#222;">Mariusz Otok</span></div>
-    <p class="sig-name">Mariusz Otok · Arbeitgeber</p>
+    <p class="sig-name">Mariusz Otok · {employer_sig_label}</p>
   </div>
   <div class="sig-block">
     <p style="color:#666;margin-bottom:8px;">Unterschrieben am {signed_date}</p>
     <div class="sig-line">
       {sig_img_html}
     </div>
-    <p class="sig-name">{name} · Arbeitnehmer</p>
+    <p class="sig-name">{signer_name} · {signer_sig_label}</p>
   </div>
 </div>
 

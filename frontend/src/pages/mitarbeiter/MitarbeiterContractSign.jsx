@@ -38,6 +38,9 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
   const positionLabel = contractData?.position || '';
   const signedDate = contractData?.start_date || new Date().toLocaleDateString('de-DE');
   const canSkip = contractData?.can_skip || false;
+  const isFreelance = contractData?.type === 'freiberufler_at';
+  const contractor = (contractData?.contractor || '').trim();
+  const signerName = isFreelance && contractor ? contractor.split('\n')[0] : (applicant?.full_name || applicant?.name);
 
   const handleSkip = async () => {
     setIsSkipping(true);
@@ -168,16 +171,22 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                 {/* Parties */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-4 border-b border-slate-200">
                   <div>
-                    <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitgeber:</p>
+                    <p className="font-semibold text-[#0A0A0A] mb-1">{isFreelance ? 'Auftraggeber:' : 'Arbeitgeber:'}</p>
                     <p>MO Handel & Service, Inh. Mariusz Otok</p>
                     <p>Darmstädter Landstraße 60</p>
                     <p>65462 Ginsheim-Gustavsburg</p>
                     <p className="text-slate-500 mt-1">vertreten durch Mariusz Otok</p>
                   </div>
                   <div>
-                    <p className="font-semibold text-[#0A0A0A] mb-1">Arbeitnehmer:</p>
-                    <p>{applicant?.full_name || applicant?.name}</p>
-                    <p>{applicant?.address || 'Adresse wird ergänzt'}</p>
+                    <p className="font-semibold text-[#0A0A0A] mb-1">{isFreelance ? 'Auftragnehmer:' : 'Arbeitnehmer:'}</p>
+                    {isFreelance && contractor ? (
+                      <p className="whitespace-pre-line" data-testid="contract-contractor">{contractor}</p>
+                    ) : (
+                      <>
+                        <p>{applicant?.full_name || applicant?.name}</p>
+                        <p>{applicant?.address || 'Adresse wird ergänzt'}</p>
+                      </>
+                    )}
                   </div>
                 </div>
 
@@ -196,12 +205,12 @@ const MitarbeiterContractSign = ({ applicant, onContractSigned }) => {
                     <div>
                       <div className="border-b border-slate-400 pb-1 mb-1"></div>
                       <p className="text-xs text-slate-500">Mariusz Otok</p>
-                      <p className="text-xs text-slate-500">Arbeitgeber</p>
+                      <p className="text-xs text-slate-500">{isFreelance ? 'Auftraggeber' : 'Arbeitgeber'}</p>
                     </div>
                     <div>
                       <div className="border-b border-slate-400 pb-1 mb-1"></div>
-                      <p className="text-xs text-slate-500">{applicant?.full_name || applicant?.name}</p>
-                      <p className="text-xs text-slate-500">Arbeitnehmer</p>
+                      <p className="text-xs text-slate-500">{signerName}</p>
+                      <p className="text-xs text-slate-500">{isFreelance ? 'Auftragnehmer' : 'Arbeitnehmer'}</p>
                     </div>
                   </div>
                 </div>

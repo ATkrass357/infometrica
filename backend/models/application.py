@@ -57,6 +57,7 @@ class ApplicationResponse(BaseModel):
     contract_signed_at: Optional[datetime] = None
     contract_start_date: Optional[str] = None
     contract_can_skip: Optional[bool] = None
+    contractor: Optional[str] = None
     verification_front: Optional[str] = None
     verification_back: Optional[str] = None
     verified_at: Optional[datetime] = None
