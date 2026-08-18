@@ -739,6 +739,14 @@ def _build_contract_html_parts(contract_type: str, signed_date: str):
 
 <h3>§7 Anwendbares Recht und Gerichtsstand</h3>
 <p>Es ist ausschließlich österreichisches Recht anwendbar. Als Gerichtsstand wird ausschließlich das örtlich zuständige Gericht in Österreich vereinbart.</p>
+
+<h3>§8 Datenschutz, Datensicherheit und ausschließliche Testzwecke (DSGVO)</h3>
+<p>(1) Der Auftragnehmer verarbeitet personenbezogene Daten ausschließlich zur Erbringung der vereinbarten Test-, Prüf- und Verifizierungsaufgaben und unter strikter Einhaltung der geltenden datenschutzrechtlichen Vorschriften, insbesondere der Art. 5, 6, 28 und 32 DSGVO.</p>
+<p>(2) Im Rahmen der Test- und Verifizierungsprozesse können, soweit für die jeweilige Aufgabe erforderlich, insbesondere Identitätsdaten, Daten aus Ausweisdokumenten sowie Foto- oder Videoaufnahmen verarbeitet werden. Diese Daten dienen ausschließlich dem jeweiligen Testzweck, werden nicht an Dritte weitergegeben und nicht länger gespeichert, als es für den Zweck erforderlich ist.</p>
+<p>(3) <strong>Löschung der Testdaten:</strong> Sämtliche im Rahmen eines Tests überlassenen oder erhobenen Daten (insbesondere Ausweisdaten, Ident-Aufzeichnungen, Test-Accounts, Zugangsdaten und Screenshots) sind vom Auftragnehmer unverzüglich, spätestens jedoch innerhalb von 30 Tagen nach Abschluss des jeweiligen Tests, vollständig und unwiederbringlich zu löschen. Auf Verlangen ist eine Löschbestätigung vorzulegen.</p>
+<p>(4) Sämtliche für Testzwecke bereitgestellten Daten und Identitätsnachweise dienen ausschließlich der Durchführung von Tests. Eine tatsächliche Eröffnung von Bank-, Zahlungsverkehrs- oder sonstigen Finanzkonten auf Grundlage dieser Daten erfolgt nicht.</p>
+<p>(5) Der Auftragnehmer trifft geeignete technische und organisatorische Maßnahmen gemäß Art. 32 DSGVO, um die Daten vor unbefugtem Zugriff, Verlust oder Missbrauch zu schützen. Soweit er als Auftragsverarbeiter im Sinne von Art. 28 DSGVO tätig wird, gelten die Weisungen des Auftraggebers; eine gesonderte Auftragsverarbeitungsvereinbarung kann verlangt werden.</p>
+<p>(6) Die Verschwiegenheits- und Datenschutzpflichten dieses Vertrages bestehen auch nach Beendigung des Vertragsverhältnisses unbefristet fort.</p>
 """
         return subtitle, sections_html
 
@@ -835,7 +843,7 @@ START_DATE_PLACEHOLDER = "{{START_DATE}}"
 
 # Bump this whenever the code-side contract text changes so that live/prod
 # databases with older seeded templates get automatically refreshed on startup.
-CONTRACT_TEMPLATE_VERSION = 2
+CONTRACT_TEMPLATE_VERSION = 3
 
 
 def _code_template(contract_type: str) -> dict:

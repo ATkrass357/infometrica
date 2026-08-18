@@ -1,5 +1,9 @@
 # Prysm Technologies (ehemals Keyperion / Precision Labs) – PRD
 
+## 🟢 DSGVO-Klausel Freiberufler AT (2026-08-18)
+- §8 „Datenschutz, Datensicherheit und ausschließliche Testzwecke (DSGVO)" mit 30-Tage-Löschung der Testdaten in `freiberufler_at` ergänzt (routes/applications.py, _build_contract_html_parts).
+- `CONTRACT_TEMPLATE_VERSION` 2 → 3 → alle Vorlagen re-seeden beim Start. Verifiziert (DB: version=3, §8 + „Löschung der Testdaten" + „30 Tagen" vorhanden). ⚠️ VPS: Backend neu starten, damit Sync greift.
+
 ## 🔴 SICHERHEITSVORFALL & BEHEBUNG (2026-08-16)
 **Vorfall:** Unbefugter Zugriff aufs Admin-Panel; Fremde konnten Accounts anlegen/akzeptieren.
 **Ursachen (per Security-Audit + Code bestätigt):**
